@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Nastya is here</title>
     </head>
     <body>
         <h1>All Role:</h1>
@@ -26,10 +26,7 @@
             </tr>
             <%
                         }
-                        Role role = myDAO.readRole(61);
-                        
-                        
-                        
+                        Role role = myDAO.readRole(61);                     
             %>
             
         </table>
