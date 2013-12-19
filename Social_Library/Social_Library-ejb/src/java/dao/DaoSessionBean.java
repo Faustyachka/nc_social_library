@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+package dao;
 
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
@@ -11,7 +11,7 @@ import javax.ejb.SessionContext;
  *
  * @author Felix
  */
-public class Test implements SessionBean {
+public class DaoSessionBean implements SessionBean {
     
     private SessionContext context;
 
@@ -59,8 +59,4 @@ public class Test implements SessionBean {
     }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method" or "Web Service > Add Operation")
-
-    public int culc(int a, int b) {
-        return a + b;
-    }
 }

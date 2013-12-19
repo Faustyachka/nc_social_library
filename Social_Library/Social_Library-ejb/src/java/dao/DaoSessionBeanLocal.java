@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+package dao;
 
 import javax.ejb.EJBLocalObject;
 
@@ -10,8 +10,6 @@ import javax.ejb.EJBLocalObject;
  *
  * @author Felix
  */
-public interface TestLocal extends EJBLocalObject {
-
-    int culc(int a, int b);
+public interface DaoSessionBeanLocal extends EJBLocalObject {
     
 }
