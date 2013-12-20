@@ -24,11 +24,5 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    <ejb-local-ref>
-        <ejb-ref-name>Test</ejb-ref-name>
-        <ejb-ref-type>Session</ejb-ref-type>
-        <local-home>test.TestLocalHome</local-home>
-        <local>test.TestLocal</local>
-        <ejb-link>Social_Library-ejb.jar#Test</ejb-link>
-    </ejb-local-ref>
+    
 </web-app>
