@@ -1,10 +1,9 @@
-<<<<<<< HEAD
-*.class
-
 # Package Files #
+*.class
 *.jar
 *.war
 *.ear
+/Social_Library/nbproject/
 /Social_Library/build/
 /Social_Library/Social_Library-war/dist/
 /Social_Library/Social_Library-war/build/
@@ -19,7 +18,3 @@
 >>>>>>> d861b0880473446b790c006a82640882f5ae2ed4
 =======
 
-
-*.jar
-*.war
->>>>>>> test commit
