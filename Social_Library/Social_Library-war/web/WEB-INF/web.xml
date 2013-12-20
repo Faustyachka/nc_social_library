@@ -8,6 +8,10 @@
         <servlet-name>NewServlet</servlet-name>
         <servlet-class>test.NewServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RoleServlet</servlet-name>
+        <servlet-class>sociallibrary.role.RoleServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TestServlet</servlet-name>
         <url-pattern>/TestServlet</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RoleServlet</servlet-name>
+        <url-pattern>/RoleServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -24,5 +32,4 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    
 </web-app>

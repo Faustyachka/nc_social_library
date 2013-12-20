@@ -4,6 +4,7 @@
  */
 package sociallibrary.daofactory;
 
+import javax.servlet.ServletException;
 import sociallibrary.dao.RoleDAO;
 import sociallibrary.daoimpl.RoleDAOImpl;
 
@@ -12,7 +13,7 @@ import sociallibrary.daoimpl.RoleDAOImpl;
  * @author Cotil1ion
  */
 public class RoleDAOFactory {
-    public static RoleDAO create() {
-return (new RoleDAOImpl());
+    public static RoleDAO create() throws ServletException{
+        return (new RoleDAOImpl());
 }    
 }

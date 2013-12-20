@@ -19,6 +19,15 @@
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>
+        <session>
+            <display-name>RoleGrudSB</display-name>
+            <ejb-name>RoleGrud</ejb-name>
+            <local-home>sociallibrary.dto.RoleGrudLocalHome</local-home>
+            <local>sociallibrary.dto.RoleGrudLocal</local>
+            <ejb-class>sociallibrary.dto.RoleGrud</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+        </session>
         </enterprise-beans>
     <assembly-descriptor>
         <container-transaction>
@@ -31,6 +40,13 @@
         <container-transaction>
             <method>
                 <ejb-name>NewSessionBean</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>RoleGrud</ejb-name>
                 <method-name>*</method-name>
             </method>
             <trans-attribute>Required</trans-attribute>
