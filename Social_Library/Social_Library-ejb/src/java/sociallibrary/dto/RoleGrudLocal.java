@@ -4,6 +4,7 @@
  */
 package sociallibrary.dto;
 
+import java.util.List;
 import javax.ejb.EJBLocalObject;
 
 /**
@@ -11,5 +12,7 @@ import javax.ejb.EJBLocalObject;
  * @author Felix
  */
 public interface RoleGrudLocal extends EJBLocalObject {
+
+    List<Role> viewRole();
     
 }

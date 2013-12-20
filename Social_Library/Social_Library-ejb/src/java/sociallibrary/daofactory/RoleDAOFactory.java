@@ -13,7 +13,7 @@ import sociallibrary.daoimpl.RoleDAOImpl;
  * @author Cotil1ion
  */
 public class RoleDAOFactory {
-    public static RoleDAO create() throws ServletException{
+    public static RoleDAOImpl create() throws ServletException{
         return (new RoleDAOImpl());
 }    
 }

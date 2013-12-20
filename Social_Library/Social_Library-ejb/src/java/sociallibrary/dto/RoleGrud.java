@@ -4,8 +4,14 @@
  */
 package sociallibrary.dto;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
+import javax.servlet.ServletException;
+import sociallibrary.dao.RoleDAO;
+import sociallibrary.daofactory.RoleDAOFactory;
+import sociallibrary.daoimpl.RoleDAOImpl;
 
 /**
  *
@@ -59,4 +65,11 @@ public class RoleGrud implements SessionBean {
     }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method" or "Web Service > Add Operation")
+
+    public List<Role> viewRole() throws ServletException {
+        RoleDAOImpl role = new RoleDAOFactory().create(); 
+        List<Role> allRole = new ArrayList<Role>();
+        allRole = role.getAllRole();
+        return allRole;
+    }
 }
