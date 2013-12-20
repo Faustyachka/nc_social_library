@@ -2,15 +2,6 @@
 <ejb-jar version="2.1" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/ejb-jar_2_1.xsd">
   <enterprise-beans>
         <session>
-            <display-name>TestSB</display-name>
-            <ejb-name>Test</ejb-name>
-            <local-home>test.TestLocalHome</local-home>
-            <local>test.TestLocal</local>
-            <ejb-class>test.Test</ejb-class>
-            <session-type>Stateless</session-type>
-            <transaction-type>Container</transaction-type>
-        </session>
-        <session>
             <display-name>DaoSessionBeanSB</display-name>
             <ejb-name>DaoSessionBean</ejb-name>
             <local-home>dao.DaoSessionBeanLocalHome</local-home>
@@ -21,13 +12,6 @@
         </session>
         </enterprise-beans>
     <assembly-descriptor>
-        <container-transaction>
-            <method>
-                <ejb-name>Test</ejb-name>
-                <method-name>*</method-name>
-            </method>
-            <trans-attribute>Required</trans-attribute>
-        </container-transaction>
         <container-transaction>
             <method>
                 <ejb-name>DaoSessionBean</ejb-name>
