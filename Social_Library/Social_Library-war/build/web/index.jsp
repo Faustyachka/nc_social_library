@@ -11,11 +11,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<<<<<<< HEAD
+
         <title>Nastya is here11</title>
-=======
-        <title>Nastya is here</title
->>>>>>> d861b0880473446b790c006a82640882f5ae2ed4
+
+        <title>Nastya is here</title>
+
     </head>
     <body>
         <h1>All Role:</h1>
