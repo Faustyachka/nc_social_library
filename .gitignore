@@ -4,3 +4,8 @@
 *.jar
 *.war
 *.ear
+/Social_Library/build/
+/Social_Library/Social_Library-war/dist/
+/Social_Library/Social_Library-war/build/
+/Social_Library/Social_Library-ejb/dist/
+/Social_Library/Social_Library-ejb/build/

@@ -23,4 +23,5 @@
         <local>test.TestLocal</local>
         <ejb-link>Social_Library-ejb.jar#Test</ejb-link>
     </ejb-local-ref>
+   
 </web-app>
