@@ -6,7 +6,7 @@ package sociallibrary.dto;
 
 /**
  *
- * @author Felix
+ * @author Felix test
  */
 public class Role {
     private int id;
