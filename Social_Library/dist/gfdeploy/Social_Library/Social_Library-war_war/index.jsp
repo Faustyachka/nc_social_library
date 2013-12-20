@@ -11,11 +11,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<<<<<<< HEAD
 
         <title>Nastya is here11</title>
 
         <title>Nastya is here</title>
 
+=======
+        <title>Nastya is here</title
+>>>>>>> test commit
     </head>
     <body>
         <h1>All Role:</h1>
@@ -30,7 +34,11 @@
             </tr>
             <%
                         }
+<<<<<<< HEAD
                         Role role = myDAO.readRole(61);                     
+=======
+                        Role role = myDAO.readRole(200);                     
+>>>>>>> test commit
             %>
             
         </table>
