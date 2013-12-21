@@ -52,6 +52,8 @@ public class DAOImpl implements DAO{
         }
     }
     
+  
+    @Override
     public List<Role> getAllRole() throws ServletException {
         List<Role> allRole = new ArrayList<Role>();
         Connection conn = null;
@@ -71,6 +73,9 @@ public class DAOImpl implements DAO{
         }
         return allRole;
     }
+
+   
+    @Override
     public Role readRole(int id) throws ServletException{
         Connection conn = null;
         Role role = new Role();
@@ -94,6 +99,8 @@ public class DAOImpl implements DAO{
         }
         return role;
     }
+    
+    @Override
     public void createRole(Role role) throws ServletException {
         Connection conn = null;
         try {
@@ -112,6 +119,8 @@ public class DAOImpl implements DAO{
             }
         }
     }
+    
+    @Override
     public void deleteRole(Role role) throws ServletException {
         Connection conn = null;
         try {
@@ -130,6 +139,8 @@ public class DAOImpl implements DAO{
             }
         }
     }
+    
+    @Override
     public Role updateRole(Role role, String name) throws ServletException {
         Connection conn = null;
         try {
@@ -152,8 +163,10 @@ public class DAOImpl implements DAO{
     }
     
     /*
-     * GRUD Users
+     * CRUD Users
      */
+    
+    @Override
     public void createUsers(Users users) throws ServletException {
         Connection conn = null;
         try {
@@ -183,7 +196,9 @@ public class DAOImpl implements DAO{
         }
     }
     
-    public Users readUsers(int id) throws ServletException{
+    @Override
+    public Users readUsers(int id) throws ServletException
+    {
         Connection conn = null;
         Users users = new Users();
         try {
@@ -214,6 +229,7 @@ public class DAOImpl implements DAO{
         return users;
     }
     
+    @Override
     public void updateUsers(Users usersOld, Users usersNew) throws ServletException {
         Connection conn = null;
         try {
@@ -246,6 +262,7 @@ public class DAOImpl implements DAO{
         }
     }
     
+    @Override
     public void deleteUsers(Users users) throws ServletException {
         Connection conn = null;
         try {
@@ -266,8 +283,10 @@ public class DAOImpl implements DAO{
     }
     
     /*
-     * GRUD Library
+     * CRUD Library
      */
+    
+    @Override
     public void createLibrary(Library library) throws ServletException {
         Connection conn = null;
         try {
@@ -293,6 +312,8 @@ public class DAOImpl implements DAO{
             }
         }
     }
+    
+    @Override
     public Library readLibrary(int id) throws ServletException{
         Connection conn = null;
         Library library = new Library();
@@ -321,6 +342,7 @@ public class DAOImpl implements DAO{
         return library;
     }
     
+    @Override
     public void updateLibrary(Library libraryOld, Library libraryNew) throws ServletException {
         Connection conn = null;
         try {
@@ -348,6 +370,7 @@ public class DAOImpl implements DAO{
         }
     }
     
+    @Override
     public void deleteLibrary(Library library) throws ServletException {
         Connection conn = null;
         try {
@@ -367,8 +390,10 @@ public class DAOImpl implements DAO{
     }
     
     /*
-     * grud Catolog
+     * Crud Catolog
      */
+    
+    @Override
     public void createCatalog(Catalog catalog) throws ServletException {
         Connection conn = null;
         try {
@@ -386,31 +411,5 @@ public class DAOImpl implements DAO{
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    public void insert(Role user) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void update(Role user) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void delete(int roleId) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
+     
 }
