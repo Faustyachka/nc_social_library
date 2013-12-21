@@ -183,9 +183,87 @@ public class DAOImpl implements DAO{
         }
     }
     
+    public Users readUsers(int id) throws ServletException{
+        Connection conn = null;
+        Users users = new Users();
+        try {
+            conn = getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE id="+id);
+            while (rs.next()) {
+                users.setId(rs.getInt(1));
+                users.setFirstName(rs.getString(2));
+                users.setLastName(rs.getString(3));
+                users.setEmail(rs.getString(4));
+                users.setLogin(rs.getString(5));
+                users.setPassword(rs.getString(6));
+                users.setGender(rs.getInt(7));
+                users.setConfirmed(rs.getInt(8));
+                users.setBanned(rs.getInt(9));
+                users.setRegistrationDate(rs.getString(10));
+                users.setNotify(rs.getInt(11));
+                users.setRole(rs.getInt(12));
+            }    
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+        return users;
+    }
     
+    public void updateUsers(Users usersOld, Users usersNew) throws ServletException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE users SET first_name = ?," + 
+                        "last_name = ?, email = ?, login = ?, password = ?," + 
+                        "gender = ?, confirmed = ?, banned = ?, registration_date = '01.01.2013'," +
+                        "notify = ?, role=? WHERE id = ?");
+            pstmt.setString(1, usersNew.getFirstName());
+            pstmt.setString(2, usersNew.getLastName());
+            pstmt.setString(3, usersNew.getEmail());
+            pstmt.setString(4, usersNew.getLogin());
+            pstmt.setString(5, usersNew.getPassword());
+            pstmt.setInt(6, usersNew.getGender());
+            pstmt.setInt(7, usersNew.getConfirmed());
+            pstmt.setInt(8, usersNew.getBanned());
+            pstmt.setInt(9, usersNew.getNotify());
+            pstmt.setInt(10, usersNew.getRole());
+            pstmt.setInt(11, usersOld.getId());          
+      
+            pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
     
-    
+    public void deleteUsers(Users users) throws ServletException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM users WHERE id=?");
+            pstmt.setInt(1, users.getId());
+            
+            pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
     
     
     
