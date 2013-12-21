@@ -475,13 +475,13 @@ public class DAOImpl implements DAO{
             }
         }
     }
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
-=======
+//=======
 //<<<<<<< HEAD
      
 //=======
->>>>>>> 4660b0d546a90ce53188a857e1b46cdd66208764
+//>>>>>>> 4660b0d546a90ce53188a857e1b46cdd66208764
     
     /*
      * crud Rating
@@ -573,9 +573,9 @@ public class DAOImpl implements DAO{
             }
         }
     }
-<<<<<<< HEAD
+//<<<<<<< HEAD
    
-=======
+//=======
     
     /*
      * crud author
@@ -914,5 +914,5 @@ public class DAOImpl implements DAO{
     
     
 //>>>>>>> 07ed8152fbc8ada83440d9a2a47245eab25261e3
->>>>>>> 4660b0d546a90ce53188a857e1b46cdd66208764
+//>>>>>>> 4660b0d546a90ce53188a857e1b46cdd66208764
 }
