@@ -5,15 +5,15 @@
 package sociallibrary.daofactory;
 
 import javax.servlet.ServletException;
-import sociallibrary.dao.RoleDAO;
-import sociallibrary.daoimpl.RoleDAOImpl;
+import sociallibrary.dao.DAO;
+import sociallibrary.daoimpl.DAOImpl;
 
 /**
  *
  * @author Cotil1ion
  */
-public class RoleDAOFactory {
-    public static RoleDAOImpl create() throws ServletException{
-        return (new RoleDAOImpl());
+public class DAOFactory {
+    public static DAOImpl create() throws ServletException{
+        return (new DAOImpl());
 }    
 }

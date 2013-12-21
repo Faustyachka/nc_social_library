@@ -9,7 +9,7 @@ import sociallibrary.dto.Role;
  *
  * @author Cotil1ion
  */
-public interface RoleDAO {
+public interface DAO {
      public void insert(Role user);
      public void update(Role user);
      public void delete(int roleId);    

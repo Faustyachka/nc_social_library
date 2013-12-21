@@ -9,9 +9,9 @@ import java.util.List;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 import javax.servlet.ServletException;
-import sociallibrary.dao.RoleDAO;
-import sociallibrary.daofactory.RoleDAOFactory;
-import sociallibrary.daoimpl.RoleDAOImpl;
+import sociallibrary.dao.DAO;
+import sociallibrary.daofactory.DAOFactory;
+import sociallibrary.daoimpl.DAOImpl;
 
 /**
  *
@@ -67,7 +67,7 @@ public class RoleGrud implements SessionBean {
     // "Insert Code > Add Business Method" or "Web Service > Add Operation")
 
     public List<Role> viewRole() throws ServletException {
-        RoleDAOImpl role = new RoleDAOFactory().create(); 
+        DAOImpl role = new DAOFactory().create(); 
         List<Role> allRole = new ArrayList<Role>();
         allRole = role.getAllRole();
         return allRole;
