@@ -3,12 +3,12 @@
 *.jar
 *.war
 *.ear
-/Social_Library/nbproject/
-/Social_Library/build/
-/Social_Library/Social_Library-war/dist/
-/Social_Library/Social_Library-war/build/
-/Social_Library/Social_Library-ejb/dist/
-/Social_Library/Social_Library-ejb/build/
+Social_Library/nbproject/
+Social_Library/build/
+Social_Library/Social_Library-war/dist/
+Social_Library/Social_Library-war/build/
+Social_Library/Social_Library-ejb/dist/
+Social_Library/Social_Library-ejb/build/
 *.class
 
 # Package Files #
