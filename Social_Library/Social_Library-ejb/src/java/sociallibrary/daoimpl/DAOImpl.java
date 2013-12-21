@@ -797,6 +797,99 @@ public class DAOImpl implements DAO{
         }
     }
     
+    /*
+     * crud book_author
+     */
+     
+    public void createBookAuthor(BookAuthor bookauthor) throws ServletException
+    {
+         Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO book_author VALUES (?, ?, ?)");
+           
+            pstmt.setInt(1, bookauthor.getId());
+            pstmt.setInt(2,bookauthor.getBook());
+            pstmt.setInt(2,bookauthor.getAuthor());
+            pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
+    
+    
+     public BookAuthor readBookAuthor(int id) throws ServletException
+     {
+         Connection conn = null;
+         BookAuthor bookauthor=new BookAuthor();
+        try {
+            conn = getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM book_author WHERE id="+id);
+            while (rs.next()) {
+               
+                bookauthor.setId(rs.getInt(1));
+                bookauthor.setBook(rs.getInt(2));
+                bookauthor.setAuthor(rs.getInt(3));
+            }    
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+        return bookauthor;
+     }
+    
+    
+    public void updateBookAuthor(BookAuthor bookauthorOld, BookAuthor bookauthorNew) throws ServletException
+    {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE booka_uthor SET book=?, author=? WHERE id=?");
+            
+            pstmt.setInt(1,bookauthorNew.getBook() );
+            pstmt.setInt(2,bookauthorNew.getAuthor() );
+            pstmt.setInt(3, bookauthorOld.getId());
+            
+            pstmt.executeUpdate();            
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
+    
+    
+    public void deleteBookAuthor(BookAuthor bookauthor) throws ServletException
+    {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM book_author WHERE id=?");
+            pstmt.setInt(1, bookauthor.getId());
+            
+            pstmt.executeUpdate();  
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
     
     
     
