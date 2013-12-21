@@ -475,9 +475,9 @@ public class DAOImpl implements DAO{
             }
         }
     }
-<<<<<<< HEAD
+//<<<<<<< HEAD
      
-=======
+//=======
     
     /*
      * crud Rating
@@ -583,17 +583,7 @@ public class DAOImpl implements DAO{
     
     
     
-    public void insert(Role user) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void update(Role user) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void delete(int roleId) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
     
->>>>>>> 07ed8152fbc8ada83440d9a2a47245eab25261e3
+    
+//>>>>>>> 07ed8152fbc8ada83440d9a2a47245eab25261e3
 }
