@@ -265,10 +265,106 @@ public class DAOImpl implements DAO{
         }
     }
     
+    /*
+     * GRUD Library
+     */
+    public void createLibrary(Library library) throws ServletException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO library VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            pstmt.setInt(1, library.getId());
+            pstmt.setString(2, library.getIsbn());
+            pstmt.setString(3, library.getTitle());
+            pstmt.setString(4, library.getCover());
+            pstmt.setString(5, library.getDescription());
+            pstmt.setInt(6, library.getPages());
+            pstmt.setInt(7, library.getAuthor());
+            pstmt.setInt(8, library.getGanre());
+            pstmt.setInt(9, library.getUsers());
+            pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
+    public Library readLibrary(int id) throws ServletException{
+        Connection conn = null;
+        Library library = new Library();
+        try {
+            conn = getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM library WHERE id="+id);
+            while (rs.next()) {
+                library.setId(rs.getInt(1));
+                library.setIsbn(rs.getString(2));
+                library.setTitle(rs.getString(3));
+                library.setCover(rs.getString(4));
+                library.setDescription(rs.getString(5));
+                library.setPages(rs.getInt(6));
+                library.setAuthor(rs.getInt(7));
+                library.setGanre(rs.getInt(8));
+                library.setUsers(rs.getInt(9));     
+            }    
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+        return library;
+    }
     
+    public void updateLibrary(Library libraryOld, Library libraryNew) throws ServletException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE library SET isbn = ?, title = ?," +
+                                            "cover = ?, description = ?, pages = ?," + 
+                                            "author = ?, genre = ?, users = ? WHERE id=?");
+            pstmt.setString(1, libraryNew.getIsbn());
+            pstmt.setString(2, libraryNew.getTitle());
+            pstmt.setString(3, libraryNew.getCover());
+            pstmt.setString(4, libraryNew.getDescription());
+            pstmt.setInt(5, libraryNew.getPages());
+            pstmt.setInt(6, libraryNew.getAuthor());
+            pstmt.setInt(7, libraryNew.getGanre());
+            pstmt.setInt(8, libraryNew.getUsers());
+            pstmt.setInt(9, libraryOld.getId());
+            pstmt.executeUpdate();            
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
     
-    
-    
+    public void deleteLibrary(Library library) throws ServletException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM library WHERE id=?");
+            pstmt.setInt(1, library.getId());
+            
+            pstmt.executeUpdate();  
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
     
     
     
