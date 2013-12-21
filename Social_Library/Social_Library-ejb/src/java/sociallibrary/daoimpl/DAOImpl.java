@@ -390,7 +390,11 @@ public class DAOImpl implements DAO{
     }
     
     /*
+<<<<<<< HEAD
      * Crud Catolog
+=======
+     * crud Catolog
+>>>>>>> 07ed8152fbc8ada83440d9a2a47245eab25261e3
      */
     
     @Override
@@ -403,6 +407,7 @@ public class DAOImpl implements DAO{
             pstmt.setInt(1, catalog.getId());
             pstmt.setInt(2, catalog.getUsers());
             pstmt.setInt(3, catalog.getBook());        
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             throw new ServletException("Cannot obtain connection", ex);
         } finally {
@@ -411,5 +416,184 @@ public class DAOImpl implements DAO{
             }
         }
     }
+    public Catalog readCatalog(int id) throws ServletException{
+        Connection conn = null;
+        Catalog catalog = new Catalog();
+        try {
+            conn = getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM catalog WHERE id="+id);
+            while (rs.next()) {
+                catalog.setId(rs.getInt(1));
+                catalog.setUsers(rs.getInt(2));
+                catalog.setBook(rs.getInt(3));
+                     
+            }    
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+        return catalog;
+    }
+    
+    public void updateCatalog(Catalog catalogOld, Catalog catalogNew) throws ServletException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE catalog SET users=?, book=? WHERE id=?");
+            pstmt.setInt(1, catalogNew.getUsers());
+            pstmt.setInt(2, catalogNew.getBook());
+            pstmt.setInt(3, catalogOld.getId());
+            
+            pstmt.executeUpdate();            
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
+    public void deleteCatalog(Catalog catalog) throws ServletException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM catalog WHERE id=?");
+            pstmt.setInt(1, catalog.getId());
+            
+            pstmt.executeUpdate();  
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
+<<<<<<< HEAD
      
+=======
+    
+    /*
+     * crud Rating
+     */
+    public void createRating(Rating rating) throws ServletException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO rating VALUES (?, ?, ?, ?)");
+            pstmt.setInt(1, rating.getId());
+            pstmt.setInt(2, rating.getRate());
+            pstmt.setInt(3, rating.getUsers());
+            pstmt.setInt(4, rating.getBook());
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
+    
+    public Rating readRating(int id) throws ServletException{
+        Connection conn = null;
+        Rating rating = new Rating();
+        try {
+            conn = getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM rating WHERE id="+id);
+            while (rs.next()) {
+                rating.setId(rs.getInt(1));
+                rating.setRate(rs.getInt(2));
+                rating.setUsers(rs.getInt(3));
+                rating.setBook(rs.getInt(4));
+            }    
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+        return rating;
+    }
+    public void updateRating(Rating ratingOld, Rating ratingNew) throws ServletException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE rating SET rate=?, users=?, book=? WHERE id=?");
+            pstmt.setInt(1, ratingNew.getRate());
+            pstmt.setInt(2, ratingNew.getUsers());
+            pstmt.setInt(3, ratingNew.getBook());
+            pstmt.setInt(4, ratingOld.getId());
+            
+            pstmt.executeUpdate();            
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
+    
+    public void deleteRating(Rating rating) throws ServletException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM rating WHERE id=?");
+            pstmt.setInt(1, rating.getId());
+            
+            pstmt.executeUpdate();  
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public void insert(Role user) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void update(Role user) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void delete(int roleId) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+>>>>>>> 07ed8152fbc8ada83440d9a2a47245eab25261e3
 }
