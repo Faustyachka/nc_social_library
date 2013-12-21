@@ -13,9 +13,7 @@ import sociallibrary.entyti.*;
  * @author Cotil1ion
  */
 public interface DAO {
-    // public void insert(Role user);
-    // public void update(Role user);
-    // public void delete(int roleId); 
+   
      public List<Role> getAllRole() throws ServletException;
      public Role readRole(int id) throws ServletException;
      public void createRole(Role role) throws ServletException;
@@ -30,6 +28,9 @@ public interface DAO {
      public void updateLibrary(Library libraryOld, Library libraryNew) throws ServletException;
      public void deleteLibrary(Library library) throws ServletException;
      public void createCatalog(Catalog catalog) throws ServletException;
+     public Catalog readCatalog(int id) throws ServletException;
+     public void updateCatalog(Catalog catalogOld, Catalog catalogNew) throws ServletException;
+     public void deleteCatalog(Catalog catalog) throws ServletException;
      public void createRating(Rating rating) throws ServletException;
      public Rating readRating(int id) throws ServletException;
      public void updateRating(Rating ratingOld, Rating ratingNew) throws ServletException;
@@ -38,4 +39,16 @@ public interface DAO {
      public BookAuthor readBookAuthor(int id) throws ServletException;
      public void updateBookAuthor(BookAuthor bookauthorOld, BookAuthor bookauthorNew) throws ServletException;
      public void deleteBookAuthor(BookAuthor bookauthor) throws ServletException;
+     public void createAuthor(Author author) throws ServletException;
+     public Author readAuthor(int id) throws ServletException;
+      public void updateAuthor(Author authorOld, Author authorNew) throws ServletException;
+      public void deleteAuthor(Author author) throws ServletException;
+      public void createGenre(Genre genre) throws ServletException;
+      public Genre readGenre(int id) throws ServletException;
+      public void updateGenre(Genre genreOld, Genre genreNew) throws ServletException ;
+      public void deleteGenre(Genre genre) throws ServletException;
+      public void createBookGanre(BookGanre bookGanre) throws ServletException;
+      public BookGanre readBookGanre(int id) throws ServletException;
+      public void updateBookGenre(BookGanre bookGanreOld, BookGanre bookGanreNew) throws ServletException;
+      public void deleteBookGenre(BookGanre bookGanre) throws ServletException;
 }
