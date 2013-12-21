@@ -8,5 +8,5 @@
 **/private/
 **/build/
 **/dist/
-
+build.xml
 *.class
