@@ -475,13 +475,19 @@ public class DAOImpl implements DAO{
             }
         }
     }
+<<<<<<< HEAD
+
+=======
 //<<<<<<< HEAD
      
 //=======
+>>>>>>> 4660b0d546a90ce53188a857e1b46cdd66208764
     
     /*
      * crud Rating
      */
+    
+    @Override
     public void createRating(Rating rating) throws ServletException {
         Connection conn = null;
         try {
@@ -502,6 +508,8 @@ public class DAOImpl implements DAO{
         }
     }
     
+    
+    @Override
     public Rating readRating(int id) throws ServletException{
         Connection conn = null;
         Rating rating = new Rating();
@@ -524,6 +532,8 @@ public class DAOImpl implements DAO{
         }
         return rating;
     }
+    
+    @Override
     public void updateRating(Rating ratingOld, Rating ratingNew) throws ServletException {
         Connection conn = null;
         try {
@@ -545,6 +555,7 @@ public class DAOImpl implements DAO{
         }
     }
     
+    @Override
     public void deleteRating(Rating rating) throws ServletException {
         Connection conn = null;
         try {
@@ -562,6 +573,9 @@ public class DAOImpl implements DAO{
             }
         }
     }
+<<<<<<< HEAD
+   
+=======
     
     /*
      * crud author
@@ -900,4 +914,5 @@ public class DAOImpl implements DAO{
     
     
 //>>>>>>> 07ed8152fbc8ada83440d9a2a47245eab25261e3
+>>>>>>> 4660b0d546a90ce53188a857e1b46cdd66208764
 }
