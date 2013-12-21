@@ -5,9 +5,7 @@
 package sociallibrary.daofactory;
 
 import javax.servlet.ServletException;
-import sociallibrary.dao.DAO;
 import sociallibrary.daoimpl.DAOImpl;
-
 /**
  *
  * @author Cotil1ion
