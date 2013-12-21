@@ -9,13 +9,9 @@
 /Social_Library/Social_Library-war/build/
 /Social_Library/Social_Library-ejb/dist/
 /Social_Library/Social_Library-ejb/build/
-=======
 *.class
 
 # Package Files #
 
-<<<<<<< HEAD
->>>>>>> d861b0880473446b790c006a82640882f5ae2ed4
-=======
 
 /Social_Library/dist/
