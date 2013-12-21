@@ -7,9 +7,7 @@ package sociallibrary.dao;
 import java.util.List;
 import javax.servlet.ServletException;
 import sociallibrary.dto.Role;
-import sociallibrary.entyti.Catalog;
-import sociallibrary.entyti.Library;
-import sociallibrary.entyti.Users;
+import sociallibrary.entyti.*;
 /**
  *
  * @author Cotil1ion
@@ -32,4 +30,12 @@ public interface DAO {
      public void updateLibrary(Library libraryOld, Library libraryNew) throws ServletException;
      public void deleteLibrary(Library library) throws ServletException;
      public void createCatalog(Catalog catalog) throws ServletException;
+     public void createRating(Rating rating) throws ServletException;
+     public Rating readRating(int id) throws ServletException;
+     public void updateRating(Rating ratingOld, Rating ratingNew) throws ServletException;
+     public void deleteRating(Rating rating) throws ServletException;
+     public void createBookAuthor(BookAuthor bookauthor) throws ServletException;
+     public BookAuthor readBookAuthor(int id) throws ServletException;
+     public void updateBookAuthor(BookAuthor bookauthorOld, BookAuthor bookauthorNew) throws ServletException;
+     public void deleteBookAuthor(BookAuthor bookauthor) throws ServletException;
 }
