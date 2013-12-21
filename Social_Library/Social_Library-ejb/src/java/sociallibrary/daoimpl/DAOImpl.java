@@ -367,7 +367,7 @@ public class DAOImpl implements DAO{
     }
     
     /*
-     * grud Catolog
+     * crud Catolog
      */
     public void createCatalog(Catalog catalog) throws ServletException {
         Connection conn = null;
@@ -386,8 +386,65 @@ public class DAOImpl implements DAO{
             }
         }
     }
+    public Catalog readCatalog(int id) throws ServletException{
+        Connection conn = null;
+        Catalog catalog = new Catalog();
+        try {
+            conn = getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM catalog WHERE id="+id);
+            while (rs.next()) {
+                catalog.setId(rs.getInt(1));
+                catalog.setUsers(rs.getInt(2));
+                catalog.setBook(rs.getInt(3));
+                     
+            }    
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+        return catalog;
+    }
     
-    
+    public void updateCatalog(Catalog catalogOld, Catalog catalogNew) throws ServletException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE catalog SET users=?, book=? WHERE id=?");
+            pstmt.setInt(1, catalogNew.getUsers());
+            pstmt.setInt(2, catalogNew.getBook());
+            pstmt.setInt(3, catalogOld.getId());
+            
+            pstmt.executeUpdate();            
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
+    public void deleteCatalog(Catalog catalog) throws ServletException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM catalog WHERE id=?");
+            pstmt.setInt(1, catalog.getId());
+            
+            pstmt.executeUpdate();  
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
     
     
     
