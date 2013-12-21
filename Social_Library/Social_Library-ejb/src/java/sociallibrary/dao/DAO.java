@@ -87,9 +87,7 @@ public interface DAO
      public BookAuthor readBookAuthor(int id) throws ServletException;
      public void updateBookAuthor(BookAuthor bookauthorOld, BookAuthor bookauthorNew) throws ServletException;
      public void deleteBookAuthor(BookAuthor bookauthor) throws ServletException;
-<<<<<<< HEAD
-     
-=======
+
      public void createAuthor(Author author) throws ServletException;
      public Author readAuthor(int id) throws ServletException;
       public void updateAuthor(Author authorOld, Author authorNew) throws ServletException;
@@ -102,5 +100,5 @@ public interface DAO
       public BookGenre readBookGanre(int id) throws ServletException;
       public void updateBookGenre(BookGenre bookGanreOld, BookGenre bookGanreNew) throws ServletException;
       public void deleteBookGenre(BookGenre bookGanre) throws ServletException;
->>>>>>> 0e121e9f473fb9c9e11fe591873e0c86eca9724d
+
 }

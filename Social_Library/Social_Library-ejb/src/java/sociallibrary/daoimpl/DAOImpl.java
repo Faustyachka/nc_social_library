@@ -658,20 +658,6 @@ public class DAOImpl implements DAO{
             }
         }
     }
-<<<<<<< HEAD
-=======
-//<<<<<<< HEAD
-
-//=======
-//<<<<<<< HEAD
-
-//=======
-//<<<<<<< HEAD
-     
-//=======
-//>>>>>>> 4660b0d546a90ce53188a857e1b46cdd66208764
-//>>>>>>> 699966e408406fb38d1ebdcda62b0ba6531467a4
->>>>>>> 0e121e9f473fb9c9e11fe591873e0c86eca9724d
     
     /*
      function for inserting rating
@@ -794,18 +780,7 @@ public class DAOImpl implements DAO{
             }
         }
     }
-<<<<<<< HEAD
 
-=======
-//<<<<<<< HEAD
- 
-//=======
-//<<<<<<< HEAD
-   
-//=======
-    
-//>>>>>>> 699966e408406fb38d1ebdcda62b0ba6531467a4
->>>>>>> 0e121e9f473fb9c9e11fe591873e0c86eca9724d
     /*
      function for inserting authors
      */
@@ -1037,16 +1012,14 @@ public class DAOImpl implements DAO{
     /*
      function for inserting book_genres
      */
-<<<<<<< HEAD
     public void createBookGenre(BookGenre bookGenre) throws ServletException 
     {
         try 
         {
-=======
     public void createBookGenre(BookGenre bookGanre) throws ServletException {
         Connection conn = null;
         try {
->>>>>>> 0e121e9f473fb9c9e11fe591873e0c86eca9724d
+
             conn = getConnection();
             
             PreparedStatement pstmt = conn.prepareStatement("INSERT INTO book_genre VALUES (?, ?, ?)");
@@ -1278,23 +1251,5 @@ public class DAOImpl implements DAO{
             }
         }
     }
-<<<<<<< HEAD
 
-=======
-//<<<<<<< HEAD
-
-//
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//>>>>>>> 07ed8152fbc8ada83440d9a2a47245eab25261e3
-//>>>>>>> 4660b0d546a90ce53188a857e1b46cdd66208764
-//>>>>>>> 699966e408406fb38d1ebdcda62b0ba6531467a4
->>>>>>> 0e121e9f473fb9c9e11fe591873e0c86eca9724d
 }
