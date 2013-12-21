@@ -366,6 +366,26 @@ public class DAOImpl implements DAO{
         }
     }
     
+    /*
+     * grud Catolog
+     */
+    public void createCatalog(Catalog catalog) throws ServletException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO catalog VALUES(?, ?, ?)");
+            pstmt.setInt(1, catalog.getId());
+            pstmt.setInt(2, catalog.getUsers());
+            pstmt.setInt(3, catalog.getBook());        
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
     
     
     
