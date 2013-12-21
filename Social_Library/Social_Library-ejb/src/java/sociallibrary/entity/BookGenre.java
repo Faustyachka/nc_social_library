@@ -1,17 +1,17 @@
-package sociallibrary.entyti;
+package sociallibrary.entity;
 
-public class BookGanre {
+public class BookGenre {
     private int id;
     private int book;
-    private int ganre;
+    private int genre;
 
-    public BookGanre() {
+    public BookGenre() {
     }
 
-    public BookGanre(int id, int book, int ganre) {
+    public BookGenre(int id, int book, int ganre) {
         this.id = id;
         this.book = book;
-        this.ganre = ganre;
+        this.genre = ganre;
     }
 
     public int getBook() {
@@ -22,12 +22,12 @@ public class BookGanre {
         this.book = book;
     }
 
-    public int getGanre() {
-        return ganre;
+    public int getGenre() {
+        return genre;
     }
 
-    public void setGanre(int ganre) {
-        this.ganre = ganre;
+    public void setGenre(int ganre) {
+        this.genre = ganre;
     }
 
     public int getId() {

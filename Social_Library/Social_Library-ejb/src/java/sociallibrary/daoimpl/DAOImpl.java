@@ -10,7 +10,7 @@ import java.util.Locale;
 import javax.sql.*;
 import javax.naming.*;
 import javax.servlet.*;
-import sociallibrary.entyti.*;
+import sociallibrary.entity.*;
 
 public class DAOImpl implements DAO{
     
@@ -733,7 +733,7 @@ public class DAOImpl implements DAO{
     /*
      * crud book_genre
      */
-    public void createBookGanre(BookGanre bookGanre) throws ServletException {
+    public void createBookGanre(BookGenre bookGanre) throws ServletException {
         Connection conn = null;
         try {
             conn = getConnection();
@@ -741,7 +741,7 @@ public class DAOImpl implements DAO{
             PreparedStatement pstmt = conn.prepareStatement("INSERT INTO book_genre VALUES (?, ?, ?)");
             pstmt.setInt(1, bookGanre.getId());
             pstmt.setInt(2, bookGanre.getBook());
-            pstmt.setInt(3, bookGanre.getGanre());
+            pstmt.setInt(3, bookGanre.getGenre());
             pstmt.executeUpdate();
         } catch (SQLException ex) {
             throw new ServletException("Cannot obtain connection", ex);
@@ -752,9 +752,9 @@ public class DAOImpl implements DAO{
         }
     }
     
-    public BookGanre readBookGanre(int id) throws ServletException{
+    public BookGenre readBookGanre(int id) throws ServletException{
         Connection conn = null;
-        BookGanre bookGanre = new BookGanre();
+        BookGenre bookGanre = new BookGenre();
         try {
             conn = getConnection();
             Statement stmt = conn.createStatement();
@@ -762,7 +762,7 @@ public class DAOImpl implements DAO{
             while (rs.next()) {
                 bookGanre.setId(rs.getInt(1));
                 bookGanre.setBook(rs.getInt(2));
-                bookGanre.setGanre(rs.getInt(3));
+                bookGanre.setGenre(rs.getInt(3));
             }    
         } catch (SQLException ex) {
             throw new ServletException("Cannot obtain connection", ex);
@@ -774,14 +774,14 @@ public class DAOImpl implements DAO{
         return bookGanre;
     }
     
-    public void updateBookGenre(BookGanre bookGanreOld, BookGanre bookGanreNew) throws ServletException {
+    public void updateBookGenre(BookGenre bookGanreOld, BookGenre bookGanreNew) throws ServletException {
         Connection conn = null;
         try {
             conn = getConnection();
             
             PreparedStatement pstmt = conn.prepareStatement("UPDATE book_genre SET book=?, genre=? WHERE id=?");
             pstmt.setInt(1, bookGanreNew.getBook());
-            pstmt.setInt(2, bookGanreNew.getGanre());
+            pstmt.setInt(2, bookGanreNew.getGenre());
             pstmt.setInt(3, bookGanreOld.getId());
             pstmt.executeUpdate();            
         } catch (SQLException ex) {
@@ -793,7 +793,7 @@ public class DAOImpl implements DAO{
         }
     }
     
-    public void deleteBookGenre(BookGanre bookGanre) throws ServletException {
+    public void deleteBookGenre(BookGenre bookGanre) throws ServletException {
         Connection conn = null;
         try {
             conn = getConnection();

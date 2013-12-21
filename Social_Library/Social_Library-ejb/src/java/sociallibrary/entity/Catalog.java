@@ -1,4 +1,4 @@
-package sociallibrary.entyti;
+package sociallibrary.entity;
 
 public class Catalog {
     private int id;

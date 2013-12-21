@@ -7,7 +7,7 @@ package sociallibrary.dao;
 import java.util.List;
 import javax.servlet.ServletException;
 import sociallibrary.dto.Role;
-import sociallibrary.entyti.*;
+import sociallibrary.entity.*;
 /**
  *
  * @author Cotil1ion
