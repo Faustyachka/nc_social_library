@@ -476,9 +476,9 @@ public class DAOImpl implements DAO{
             }
         }
     }
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
-=======
+//=======
 //<<<<<<< HEAD
 
 //=======
@@ -486,7 +486,7 @@ public class DAOImpl implements DAO{
      
 //=======
 //>>>>>>> 4660b0d546a90ce53188a857e1b46cdd66208764
->>>>>>> 699966e408406fb38d1ebdcda62b0ba6531467a4
+//>>>>>>> 699966e408406fb38d1ebdcda62b0ba6531467a4
     
     /*
      * crud Rating
@@ -575,14 +575,14 @@ public class DAOImpl implements DAO{
             }
         }
     }
-<<<<<<< HEAD
+//<<<<<<< HEAD
  
-=======
+//=======
 //<<<<<<< HEAD
    
 //=======
     
->>>>>>> 699966e408406fb38d1ebdcda62b0ba6531467a4
+//>>>>>>> 699966e408406fb38d1ebdcda62b0ba6531467a4
     /*
      * crud author
      */
@@ -739,7 +739,7 @@ public class DAOImpl implements DAO{
     /*
      * crud book_genre
      */
-    public void createBookGanre(BookGenre bookGanre) throws ServletException {
+    public void createBookGenre(BookGenre bookGanre) throws ServletException {
         Connection conn = null;
         try {
             conn = getConnection();
@@ -910,9 +910,9 @@ public class DAOImpl implements DAO{
             }
         }
     }
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
-=======
+//
     
     
     
@@ -924,5 +924,5 @@ public class DAOImpl implements DAO{
     
 //>>>>>>> 07ed8152fbc8ada83440d9a2a47245eab25261e3
 //>>>>>>> 4660b0d546a90ce53188a857e1b46cdd66208764
->>>>>>> 699966e408406fb38d1ebdcda62b0ba6531467a4
+//>>>>>>> 699966e408406fb38d1ebdcda62b0ba6531467a4
 }

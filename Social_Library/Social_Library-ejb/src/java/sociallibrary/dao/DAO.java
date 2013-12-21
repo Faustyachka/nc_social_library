@@ -47,8 +47,8 @@ public interface DAO {
       public Genre readGenre(int id) throws ServletException;
       public void updateGenre(Genre genreOld, Genre genreNew) throws ServletException ;
       public void deleteGenre(Genre genre) throws ServletException;
-      public void createBookGanre(BookGanre bookGanre) throws ServletException;
-      public BookGanre readBookGanre(int id) throws ServletException;
-      public void updateBookGenre(BookGanre bookGanreOld, BookGanre bookGanreNew) throws ServletException;
-      public void deleteBookGenre(BookGanre bookGanre) throws ServletException;
+      public void createBookGenre(BookGenre bookGanre) throws ServletException;
+      public BookGenre readBookGanre(int id) throws ServletException;
+      public void updateBookGenre(BookGenre bookGanreOld, BookGenre bookGanreNew) throws ServletException;
+      public void deleteBookGenre(BookGenre bookGanre) throws ServletException;
 }
