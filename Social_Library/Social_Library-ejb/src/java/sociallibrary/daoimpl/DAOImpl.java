@@ -1,16 +1,11 @@
 package sociallibrary.daoimpl;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Locale;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.servlet.ServletException;
-import javax.sql.DataSource;
-import sociallibrary.dao.DAO;
+import sociallibrary.connections.ConnectionOracle;
 import sociallibrary.dto.Role;
 import sociallibrary.entity.*;
 
@@ -18,11 +13,11 @@ import sociallibrary.entity.*;
    Class CRUD
  */
 
-public class DAOImpl implements DAO{
-    
-    private DataSource dataSource;
+public class DAOImpl //implements DAO
+{
+    private ConnectionOracle conn;
+    private Connection con;
     private Role role;
-    private Connection conn;
     private Users users;
     private Library library;
     private Catalog catalog;
@@ -34,107 +29,40 @@ public class DAOImpl implements DAO{
     private ResultSet rs;
     private static final String selectQuery="SELECT * FROM ? WHERE id= ?";
     private static final String deleteQuery="DELETE FROM ? WHERE id =?";
-    
-    /*
-     Constructor connect to connection pool
-    */
-    public DAOImpl() throws ServletException 
-    {
-        Locale.setDefault(Locale.ENGLISH);
-        if (dataSource != null) 
-        {
-            return;
-        }
-        try 
-        {
-	Context ic = new InitialContext();
-	dataSource = (DataSource) ic.lookup("jdbc/test");
-        } 
-        catch (NamingException ex) 
-        {
-            throw new ServletException("Cannot retrieve jdbc/HRDB", ex);
-        }
-     }
-    
-    
-    /*
-     function establishes connection to connection pool
-     */
-     public Connection getConnection() throws ServletException
-     {
-         Locale.setDefault(Locale.ENGLISH);
-            try 
-            {
-                conn = dataSource.getConnection();
-                conn.setAutoCommit(false);
-                return conn;
-            } 
-            catch (SQLException ex) 
-            {
-                throw new ServletException("Cannot obtain connection", ex);
-            }
-        }
+    private static final String insertRoleQuery="INSERT INTO role VALUES(?, ?)";
+    private static final String updateRoleQuery="UPDATE role SET name =? where id=?";
+    private static final String insertUsersQuery="INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '11.02.2013', ?, ?)";
+    private static final String updateUsersQuery="UPDATE users SET first_name = ?," + 
+                        "last_name = ?, email = ?, login = ?, password = ?," + 
+                        "gender = ?, confirmed = ?, banned = ?, registration_date = '01.01.2013'," +
+                        "notify = ?, role=? WHERE id = ?";
+    private static final String insertLibraryQuery="INSERT INTO library VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String updateLibraryQuery="UPDATE library SET isbn = ?, title = ?," +
+                                            "cover = ?, description = ?, pages = ?," + 
+                                            "author = ?, genre = ?, users = ? WHERE id=?";
+    private static final String insertCatalogQuery="INSERT INTO catalog VALUES(?, ?, ?)";
+    private static final String updateCatalogQuery="UPDATE catalog SET users=?, book=? WHERE id=?";
+    private static final String insertRatingQuery="INSERT INTO rating VALUES (?, ?, ?, ?)";
+    private static final String updateRatingQuery="UPDATE rating SET rate=?, users=?, book=? WHERE id=?";
+    private static final String insertAuthorQuery="INSERT INTO author VALUES (?, ?)";
+    private static final String updateAuthorQuery="UPDATE author SET author=? WHERE id=?";
+    private static final String insertGenreQuery="INSERT INTO genre VALUES (?, ?)";
+    private static final String updateGenreQuery="UPDATE genre SET genre=? WHERE id=?";
+    private static final String insertBookGenreQuery="INSERT INTO book_genre VALUES (?, ?, ?)";
+    private static final String updateBookGenreQuery="UPDATE book_genre SET book=?, genre=? WHERE id=?";;
+    private static final String insertBookAuthorQuery="INSERT INTO book_author VALUES (?, ?, ?)";
+    private static final String updateBookAuthorQuery="UPDATE book_author SET book=?, author=? WHERE id=?";
      
-     /*
-      function for connection release
-      */
-    public void releaseConnection(Connection conn) throws ServletException 
-    {
-        Locale.setDefault(Locale.ENGLISH);
-        try 
-        {
-            conn.close();
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot release connection", ex);
-        }
-    }
-
-    /*
-    @Override
-    public Role getAllRole() throws ServletException 
-    {
-        List <Role> allRole = new ArrayList <Role>();
-        Connection conn = null;
-        try 
-        {
-            conn = getConnection();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT id, name FROM role");
-            
-            while (rs.next()) 
-            {
-                allRole.add(new Role(rs.getInt(1), rs.getString(2)));
-            }
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
-            {
-                releaseConnection(conn);
-            }
-        }
-        
-        for(Role item :allRole )
-            return item;
-        
-    }*/
-  
     /*
      function for reading roles from database
      */
-    public Role readRole(int id) throws ServletException
+    public Role readRole(int id)
     {
         role = new Role();
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectQuery);
+            con=conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(selectQuery);
             stmt.setString(1, "role");
             stmt.setInt(2, role.getId());
             
@@ -145,114 +73,135 @@ public class DAOImpl implements DAO{
                 role.setId(rs.getInt(1));
                 role.setName(rs.getString(2));
             }
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+           if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
+            }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
             }
         }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
+        }
+        
         return role;
     }
   
     /*
      function for inserting role to database
      */
-    public void createRole(Role role) throws ServletException 
+    public void createRole(Role role)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO role VALUES(?, ?)");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(insertRoleQuery);
             
             pstmt.setInt(1, role.getId());
             pstmt.setString(2, role.getName());
             
             pstmt.executeUpdate();
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+            if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
  
     /*
      function for deleting role from database
      */
-    public void deleteRole(Role role) throws ServletException 
+    public void deleteRole(Role role) 
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(deleteQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(deleteQuery);
             
             stmt.setString(1, "role");
             stmt.setInt(2, role.getId());
             
             stmt.executeUpdate();
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+            if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
   
     /*
      function for updating role in database
      */
-    public void updateRole(Role roleNew, Role roleOld) throws ServletException 
+    public void updateRole(Role roleNew, Role roleOld)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE role SET name =? where id=?");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(updateRoleQuery);
             
             pstmt.setString(1, roleNew.getName());
             pstmt.setInt(2, roleOld.getId());
             
             pstmt.executeUpdate();
-            
-        } catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+            if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
-        }   
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
+        }
     }
     
     /*
      function for inserting users
      */
-    public void createUsers(Users users) throws ServletException 
+    public void createUsers(Users users)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '11.02.2013', ?, ?)");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(insertUsersQuery);
             
             pstmt.setInt(1, users.getId());
             pstmt.setString(2, users.getFirstName());
@@ -267,18 +216,22 @@ public class DAOImpl implements DAO{
             pstmt.setInt(11, users.getRole());
             
             pstmt.executeUpdate();
-            
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+            if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
@@ -286,13 +239,13 @@ public class DAOImpl implements DAO{
     /*
      function for reading users
      */
-    public Users readUsers(int id) throws ServletException
+    public Users readUsers(int id)
     {
         users = new Users();
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(selectQuery);
             stmt.setString(1, "users");
             stmt.setInt(2, users.getId());
             
@@ -313,17 +266,22 @@ public class DAOImpl implements DAO{
                 users.setNotify(rs.getInt(11));
                 users.setRole(rs.getInt(12));
             }
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
         return users;
     }
@@ -332,15 +290,11 @@ public class DAOImpl implements DAO{
     /*
      function for updating users
      */
-    public void updateUsers(Users usersOld, Users usersNew) throws ServletException 
+    public void updateUsers(Users usersOld, Users usersNew)  
     {
         try {
-            conn = getConnection();
-            
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE users SET first_name = ?," + 
-                        "last_name = ?, email = ?, login = ?, password = ?," + 
-                        "gender = ?, confirmed = ?, banned = ?, registration_date = '01.01.2013'," +
-                        "notify = ?, role=? WHERE id = ?");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(updateUsersQuery);
             
             pstmt.setString(1, usersNew.getFirstName());
             pstmt.setString(2, usersNew.getLastName());
@@ -355,59 +309,67 @@ public class DAOImpl implements DAO{
             pstmt.setInt(11, usersOld.getId());          
       
             pstmt.executeUpdate();
-            
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+            if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
     /*
      delete users in database
      */
-    public void deleteUsers(Users users) throws ServletException 
+    public void deleteUsers(Users users)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(deleteQuery);
+           con=conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(deleteQuery);
             
             stmt.setString(1, "users");
             stmt.setInt(2, users.getId());
             
             stmt.executeUpdate();
-            
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+            if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
     /*
      function for inserting books
      */
-    public void createLibrary(Library library) throws ServletException 
+    public void createLibrary(Library library)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO library VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(insertLibraryQuery);
             
             pstmt.setInt(1, library.getId());
             pstmt.setString(2, library.getIsbn());
@@ -419,31 +381,36 @@ public class DAOImpl implements DAO{
             pstmt.setInt(8, library.getGanre());
             pstmt.setInt(9, library.getUsers());
             
-            pstmt.executeUpdate();  
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+            pstmt.executeUpdate(); 
+            if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
     /*
      function for reading books
      */
-    public Library readLibrary(int id) throws ServletException
+    public Library readLibrary(int id)
     {
         library = new Library();
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(selectQuery);
             stmt.setString(1, "library");
             stmt.setInt(2, library.getId());
             
@@ -461,33 +428,34 @@ public class DAOImpl implements DAO{
                 library.setGanre(rs.getInt(8));
                 library.setUsers(rs.getInt(9));     
             }  
-        
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
         return library;
     }
     
   
     
-    public void updateLibrary(Library libraryOld, Library libraryNew) throws ServletException 
+    public void updateLibrary(Library libraryOld, Library libraryNew)
     {
         try 
         {
-            conn = getConnection();
-            
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE library SET isbn = ?, title = ?," +
-                                            "cover = ?, description = ?, pages = ?," + 
-                                            "author = ?, genre = ?, users = ? WHERE id=?");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(updateLibraryQuery);
             
             pstmt.setString(1, libraryNew.getIsbn());
             pstmt.setString(2, libraryNew.getTitle());
@@ -499,87 +467,100 @@ public class DAOImpl implements DAO{
             pstmt.setInt(8, libraryNew.getUsers());
             pstmt.setInt(9, libraryOld.getId());
             
-            pstmt.executeUpdate();            
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+            pstmt.executeUpdate(); 
+            if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
-  
-    
-    public void deleteLibrary(Library library) throws ServletException 
+    public void deleteLibrary(Library library)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(deleteQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(deleteQuery);
             
             stmt.setString(1, "library");
             stmt.setInt(2, library.getId());
             
             stmt.executeUpdate();
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+            if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
       
     /*
      function for inserting users whose take books to local library
      */
-    public void createCatalog(Catalog catalog) throws ServletException 
+    public void createCatalog(Catalog catalog)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO catalog VALUES(?, ?, ?)");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(insertCatalogQuery);
             
             pstmt.setInt(1, catalog.getId());
             pstmt.setInt(2, catalog.getUsers());
             pstmt.setInt(3, catalog.getBook());  
             
             pstmt.executeUpdate();
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
     /*
      function for reading catalog
      */
-    public Catalog readCatalog(int id) throws ServletException
+    public Catalog readCatalog(int id)
     {
         catalog = new Catalog();
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(selectQuery);
             stmt.setString(1, "calalog");
             stmt.setInt(2, catalog.getId());
             
@@ -591,83 +572,99 @@ public class DAOImpl implements DAO{
                 catalog.setUsers(rs.getInt(2));
                 catalog.setBook(rs.getInt(3));
             }    
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+       if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
         return catalog;
     }
     
     
-    public void updateCatalog(Catalog catalogOld, Catalog catalogNew) throws ServletException 
+    public void updateCatalog(Catalog catalogOld, Catalog catalogNew)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE catalog SET users=?, book=? WHERE id=?");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(updateCatalogQuery);
             
             pstmt.setInt(1, catalogNew.getUsers());
             pstmt.setInt(2, catalogNew.getBook());
             pstmt.setInt(3, catalogOld.getId());
             
             pstmt.executeUpdate();            
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
     
-    public void deleteCatalog(Catalog catalog) throws ServletException 
+    public void deleteCatalog(Catalog catalog) 
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(deleteQuery);
+           con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(deleteQuery);
             
             stmt.setString(1, "catalog");
             stmt.setInt(2, catalog.getId());
             
             stmt.executeUpdate(); 
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
+            }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
             }
         }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
+        }
     }
+
     
     /*
      function for inserting rating
      */
-    public void createRating(Rating rating) throws ServletException 
+    public void createRating(Rating rating)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO rating VALUES (?, ?, ?, ?)");
+           con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(insertRatingQuery);
             
             pstmt.setInt(1, rating.getId());
             pstmt.setInt(2, rating.getRate());
@@ -675,30 +672,35 @@ public class DAOImpl implements DAO{
             pstmt.setInt(4, rating.getBook());
             
             pstmt.executeUpdate();
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
   
     /*
      function for reading rating
      */
-    public Rating readRating(int id) throws ServletException
+    public Rating readRating(int id)
     {
         rating = new Rating();
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(selectQuery);
             stmt.setString(1, "rating");
             stmt.setInt(2, rating.getId());
             
@@ -711,28 +713,33 @@ public class DAOImpl implements DAO{
                 rating.setUsers(rs.getInt(3));
                 rating.setBook(rs.getInt(4));
             }    
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
         return rating;
     }
     
   
     
-    public void updateRating(Rating ratingOld, Rating ratingNew) throws ServletException 
+    public void updateRating(Rating ratingOld, Rating ratingNew)
     {
         try {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE rating SET rate=?, users=?, book=? WHERE id=?");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(updateRatingQuery);
             
             pstmt.setInt(1, ratingNew.getRate());
             pstmt.setInt(2, ratingNew.getUsers());
@@ -740,84 +747,99 @@ public class DAOImpl implements DAO{
             pstmt.setInt(4, ratingOld.getId());
             
             pstmt.executeUpdate();            
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
    
    
-    public void deleteRating(Rating rating) throws ServletException 
+    public void deleteRating(Rating rating) 
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(deleteQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(deleteQuery);
             
             stmt.setString(1, "rating");
             stmt.setInt(2, rating.getId());
             
             stmt.executeUpdate(); 
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
 
     /*
      function for inserting authors
      */
-    public void createAuthor(Author author) throws ServletException 
+    public void createAuthor(Author author)
     {
         try {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO author VALUES (?, ?)");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(insertAuthorQuery);
             
             pstmt.setInt(1, author.getId());
             pstmt.setString(2, author.getAuthor());
             
             pstmt.executeUpdate();
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
     /*
      function for reading authors
      */
-    public Author readAuthor(int id) throws ServletException
+    public Author readAuthor(int id)
     {
         author = new Author();
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(selectQuery);
             stmt.setString(1, "author");
             stmt.setInt(2, author.getId());
             
@@ -827,111 +849,133 @@ public class DAOImpl implements DAO{
             {
                 author.setId(rs.getInt(1));
                 author.setAuthor(rs.getString(2));               
-            }    
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+            
+            } 
+            if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        }
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
         return author;
     }
     
     
-    public void updateAuthor(Author authorOld, Author authorNew) throws ServletException 
+    public void updateAuthor(Author authorOld, Author authorNew)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE author SET author=? WHERE id=?");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(updateAuthorQuery);
             
             pstmt.setString(1, authorNew.getAuthor());
             pstmt.setInt(2, authorOld.getId());
             
             pstmt.executeUpdate();            
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
     
-    public void deleteAuthor(Author author) throws ServletException 
+    public void deleteAuthor(Author author)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(deleteQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(deleteQuery);
             
             stmt.setString(1, "author");
             stmt.setInt(2, author.getId());
             
             stmt.executeUpdate(); 
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
 
     /*
      function for inserting genres
      */
-    public void createGenre(Genre genre) throws ServletException 
+    public void createGenre(Genre genre)
     {
-        try {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO genre VALUES (?, ?)");
+        try 
+        {
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(insertGenreQuery);
             
             pstmt.setInt(1, genre.getId());
             pstmt.setString(2, genre.getGenre());
             
             pstmt.executeUpdate();
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
    /*
      function for reading genre
      */
-    public Genre readGenre(int id) throws ServletException
+    public Genre readGenre(int id)
     {
         genre = new Genre();
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(selectQuery);
             stmt.setString(1, "genre");
             stmt.setInt(2, genre.getId());
             
@@ -942,117 +986,132 @@ public class DAOImpl implements DAO{
                 genre.setId(rs.getInt(1));
                 genre.setGenre(rs.getString(2));               
             }    
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
         return genre;
     }
     
   
-    public void updateGenre(Genre genreOld, Genre genreNew) throws ServletException 
+    public void updateGenre(Genre genreOld, Genre genreNew)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE genre SET genre=? WHERE id=?");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(updateGenreQuery);
             
             pstmt.setString(1, genreNew.getGenre());
             pstmt.setInt(2, genreOld.getId());
             
             pstmt.executeUpdate();            
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
   
-    public void deleteGenre(Genre genre) throws ServletException 
+    public void deleteGenre(Genre genre)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(deleteQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(deleteQuery);
             
             stmt.setString(1, "genre");
             stmt.setInt(2, genre.getId());
             
             stmt.executeUpdate();  
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
     /*
      function for inserting book_genres
      */
-    public void createBookGenre(BookGenre bookGenre) throws ServletException 
-    {
-        try 
-        {
-    public void createBookGenre(BookGenre bookGanre) throws ServletException {
-        Connection conn = null;
-        try {
 
-            conn = getConnection();
-            
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO book_genre VALUES (?, ?, ?)");
+    public void createBookGenre(BookGenre bookGenre)
+    {
+        try {
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(insertBookGenreQuery);
             
             pstmt.setInt(1, bookGenre.getId());
             pstmt.setInt(2, bookGenre.getBook());
             pstmt.setInt(3, bookGenre.getGenre());
             
             pstmt.executeUpdate();
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
     /*
      function for reading book_genre
      */
-    public BookGenre readBookGenre(int id) throws ServletException
+    public BookGenre readBookGenre(int id)
     {
         bookGenre = new BookGenre();
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(selectQuery);
             stmt.setString(1, "bookGenre");
             stmt.setInt(2, bookGenre.getId());
             
@@ -1064,114 +1123,133 @@ public class DAOImpl implements DAO{
                 bookGenre.setBook(rs.getInt(2));
                 bookGenre.setGenre(rs.getInt(3));
             }    
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
         return bookGenre;
     }
     
     
-    public void updateBookGenre(BookGenre bookGenreOld, BookGenre bookGenreNew) throws ServletException 
+    public void updateBookGenre(BookGenre bookGenreOld, BookGenre bookGenreNew)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE book_genre SET book=?, genre=? WHERE id=?");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(updateBookGenreQuery);
             
             pstmt.setInt(1, bookGenreNew.getBook());
             pstmt.setInt(2, bookGenreNew.getGenre());
             pstmt.setInt(3, bookGenreOld.getId());
             
             pstmt.executeUpdate();            
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
     
-    public void deleteBookGenre(BookGenre bookGenre) throws ServletException 
+    public void deleteBookGenre(BookGenre bookGenre)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(deleteQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(deleteQuery);
             
             stmt.setString(1, "book_genre");
             stmt.setInt(2, bookGenre.getId());
             
             stmt.executeUpdate();
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
      /*
      function for inserting book_author
      */
-    public void createBookAuthor(BookAuthor bookauthor) throws ServletException
+    public void createBookAuthor(BookAuthor bookauthor)
     {
          try 
          {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO book_author VALUES (?, ?, ?)");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(insertBookAuthorQuery);
            
             pstmt.setInt(1, bookauthor.getId());
             pstmt.setInt(2,bookauthor.getBook());
             pstmt.setInt(2,bookauthor.getAuthor());
             
             pstmt.executeUpdate();
-            
-        } 
-         catch (SQLException ex) 
-         {
-            throw new ServletException("Cannot obtain connection", ex);
-         } 
-         finally 
-         {
-            if (conn != null) 
+          if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
     /*
      function for reading book_author
      */
-     public BookAuthor readBookAuthor(int id) throws ServletException
+     public BookAuthor readBookAuthor(int id)
      {
          bookauthor=new BookAuthor();
             try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(selectQuery);
             stmt.setString(1, "book_author");
             stmt.setInt(2, bookauthor.getId());
             
@@ -1182,73 +1260,88 @@ public class DAOImpl implements DAO{
                     bookauthor.setBook(rs.getInt(2));
                     bookauthor.setAuthor(rs.getInt(3));
                 }    
-            } 
-            catch (SQLException ex) 
+            if (con != null) 
             {
-                throw new ServletException("Cannot obtain connection", ex);
-            } 
-            finally 
+                con.close();
+            }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
             {
-                if (conn != null) 
-                {
-                    releaseConnection(conn);
-                }
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
         return bookauthor;
      }
     
     
     
-    public void updateBookAuthor(BookAuthor bookauthorOld, BookAuthor bookauthorNew) throws ServletException
+    public void updateBookAuthor(BookAuthor bookauthorOld, BookAuthor bookauthorNew)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE book_author SET book=?, author=? WHERE id=?");
+            con = conn.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(updateBookAuthorQuery);
             
             pstmt.setInt(1,bookauthorNew.getBook() );
             pstmt.setInt(2,bookauthorNew.getAuthor() );
             pstmt.setInt(3, bookauthorOld.getId());
             
             pstmt.executeUpdate();            
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
     
     
     
-    public void deleteBookAuthor(BookAuthor bookauthor) throws ServletException
+    public void deleteBookAuthor(BookAuthor bookauthor)
     {
         try 
         {
-            conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(deleteQuery);
+            con = conn.getConnection();
+            PreparedStatement stmt = con.prepareStatement(deleteQuery);
             
             stmt.setString(1, "book_author");
             stmt.setInt(2, bookauthor.getId());
             
             stmt.executeUpdate();
-        } 
-        catch (SQLException ex) 
-        {
-            throw new ServletException("Cannot obtain connection", ex);
-        } 
-        finally 
-        {
-            if (conn != null) 
+        if (con != null) 
             {
-                releaseConnection(conn);
+                con.close();
             }
+        } 
+        catch (SQLException e) 
+        {
+            while(e!=null)
+            {
+                e.printStackTrace();
+                e=e.getNextException();
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("IOExeption:"+e);
         }
     }
 

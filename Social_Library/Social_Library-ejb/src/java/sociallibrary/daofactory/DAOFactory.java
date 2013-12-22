@@ -4,14 +4,13 @@
  */
 package sociallibrary.daofactory;
 
-import javax.servlet.ServletException;
 import sociallibrary.daoimpl.DAOImpl;
 /**
  *
  * @author Cotil1ion
  */
 public class DAOFactory {
-    public static DAOImpl create() throws ServletException{
+    public static DAOImpl create() {
         return (new DAOImpl());
 }    
 }

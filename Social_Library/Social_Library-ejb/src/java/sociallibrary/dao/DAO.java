@@ -4,7 +4,6 @@
  */
 package sociallibrary.dao;
 
-import javax.servlet.ServletException;
 import sociallibrary.dto.Role;
 import sociallibrary.entity.*;
 /**
@@ -19,86 +18,75 @@ public interface DAO
     /*
      crud for table role in database
      */
-     public Role readRole(int id) throws ServletException;
-     public void createRole(Role role) throws ServletException;
-     public void deleteRole(Role role) throws ServletException;
-     public void updateRole(Role roleNew, Role roleOld) throws ServletException;
+     public Role readRole(int id);
+     public void createRole(Role role);
+     public void deleteRole(Role role);
+     public void updateRole(Role roleNew, Role roleOld);
      
      /*
       crud for table users in database
       */
-     public void createUsers(Users users) throws ServletException;
-     public Users readUsers(int id) throws ServletException;
-     public void updateUsers(Users usersOld, Users usersNew) throws ServletException;
-     public void deleteUsers(Users users) throws ServletException;
+     public void createUsers(Users users);
+     public Users readUsers(int id);
+     public void updateUsers(Users usersOld, Users usersNew);
+     public void deleteUsers(Users users);
      
      /*
       crud for table library in daatabase
       */
-     public void createLibrary(Library library) throws ServletException;
-     public Library readLibrary(int id) throws ServletException;
-     public void updateLibrary(Library libraryOld, Library libraryNew) throws ServletException;
-     public void deleteLibrary(Library library) throws ServletException;
+     public void createLibrary(Library library);
+     public Library readLibrary(int id);
+     public void updateLibrary(Library libraryOld, Library libraryNew);
+     public void deleteLibrary(Library library);
      
      /*
       crud for table catalog in database
       */
-     public void createCatalog(Catalog catalog) throws ServletException;
-     public Catalog readCatalog(int id) throws ServletException;
-     public void updateCatalog(Catalog catalogOld, Catalog catalogNew) throws ServletException;
-     public void deleteCatalog(Catalog catalog) throws ServletException;
+     public void createCatalog(Catalog catalog);
+     public Catalog readCatalog(int id);
+     public void updateCatalog(Catalog catalogOld, Catalog catalogNew);
+     public void deleteCatalog(Catalog catalog);
      
      /*
       crud for table rating in database
       */
-     public void createRating(Rating rating) throws ServletException;
-     public Rating readRating(int id) throws ServletException;
-     public void updateRating(Rating ratingOld, Rating ratingNew) throws ServletException;
-     public void deleteRating(Rating rating) throws ServletException;
+     public void createRating(Rating rating);
+     public Rating readRating(int id);
+     public void updateRating(Rating ratingOld, Rating ratingNew);
+     public void deleteRating(Rating rating);
      
      /*
       crud for table author
       */
-     public void createAuthor(Author author) throws ServletException;
-     public Author readAuthor(int id) throws ServletException;
-     public void updateAuthor(Author authorOld, Author authorNew) throws ServletException;
-     public void deleteAuthor(Author author) throws ServletException;
+     public void createAuthor(Author author);
+     public Author readAuthor(int id);
+     public void updateAuthor(Author authorOld, Author authorNew);
+     public void deleteAuthor(Author author);
      
      /*
       crud for table genre
       */
-     public void createGenre(Genre genre) throws ServletException;
-     public Genre readGenre(int id) throws ServletException;
-     public void updateGenre(Genre genreOld, Genre genreNew) throws ServletException;
-     public void deleteGenre(Genre genre) throws ServletException;
+     public void createGenre(Genre genre);
+     public Genre readGenre(int id);
+     public void updateGenre(Genre genreOld, Genre genreNew);
+     public void deleteGenre(Genre genre);
      
      /*
       crud for table book_genre
       */
-     public void createBookGenre(BookGenre bookGenre) throws ServletException;
-     public BookGenre readBookGenre(int id) throws ServletException;
-     public void updateBookGenre(BookGenre bookGenreOld, BookGenre bookGenreNew) throws ServletException;
-     public void deleteBookGenre(BookGenre bookGanre) throws ServletException;
+     public void createBookGenre(BookGenre bookGenre);
+     public BookGenre readBookGenre(int id);
+     public void updateBookGenre(BookGenre bookGenreOld, BookGenre bookGenreNew);
+     public void deleteBookGenre(BookGenre bookGanre);
      
      /*
       crud for table book_author
       */
-     public void createBookAuthor(BookAuthor bookauthor) throws ServletException;
-     public BookAuthor readBookAuthor(int id) throws ServletException;
-     public void updateBookAuthor(BookAuthor bookauthorOld, BookAuthor bookauthorNew) throws ServletException;
-     public void deleteBookAuthor(BookAuthor bookauthor) throws ServletException;
+     public void createBookAuthor(BookAuthor bookauthor);
+     public BookAuthor readBookAuthor(int id);
+     public void updateBookAuthor(BookAuthor bookauthorOld, BookAuthor bookauthorNew);
+     public void deleteBookAuthor(BookAuthor bookauthor);
 
-     public void createAuthor(Author author) throws ServletException;
-     public Author readAuthor(int id) throws ServletException;
-      public void updateAuthor(Author authorOld, Author authorNew) throws ServletException;
-      public void deleteAuthor(Author author) throws ServletException;
-      public void createGenre(Genre genre) throws ServletException;
-      public Genre readGenre(int id) throws ServletException;
-      public void updateGenre(Genre genreOld, Genre genreNew) throws ServletException ;
-      public void deleteGenre(Genre genre) throws ServletException;
-      public void createBookGenre(BookGenre bookGanre) throws ServletException;
-      public BookGenre readBookGanre(int id) throws ServletException;
-      public void updateBookGenre(BookGenre bookGanreOld, BookGenre bookGanreNew) throws ServletException;
-      public void deleteBookGenre(BookGenre bookGanre) throws ServletException;
+    
 
 }
