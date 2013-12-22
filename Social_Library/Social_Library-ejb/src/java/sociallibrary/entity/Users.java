@@ -26,6 +26,11 @@ public class Users {
         return banned;
     }
 
+    @Override
+    public String toString() {
+        return "Users{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", login=" + login + ", password=" + password + ", gender=" + gender + ", confirmed=" + confirmed + ", banned=" + banned + ", registrationDate=" + registrationDate + ", notify=" + notify + ", role=" + role + '}';
+    }
+
     public void setBanned(int danned) {
         this.banned = danned;
     }

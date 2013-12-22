@@ -48,7 +48,7 @@ public class ConnectionOracle {
                 {
 			connectionOracle = new ConnectionOracle();
                         conn = dataSource.getConnection();
-                        conn.setAutoCommit(false);
+                        conn.setAutoCommit(true);
                           
 		}
         

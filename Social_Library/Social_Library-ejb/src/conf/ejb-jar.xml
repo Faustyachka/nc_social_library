@@ -28,6 +28,15 @@
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>
+        <session>
+            <display-name>RegistrationSessionBeanSB</display-name>
+            <ejb-name>RegistrationSessionBean</ejb-name>
+            <local-home>socaillibrary.registration.RegistrationSessionBeanLocalHome</local-home>
+            <local>socaillibrary.registration.RegistrationSessionBeanLocal</local>
+            <ejb-class>socaillibrary.registration.RegistrationSessionBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+        </session>
         </enterprise-beans>
     <assembly-descriptor>
         <container-transaction>
@@ -47,6 +56,13 @@
         <container-transaction>
             <method>
                 <ejb-name>RoleGrud</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>RegistrationSessionBean</ejb-name>
                 <method-name>*</method-name>
             </method>
             <trans-attribute>Required</trans-attribute>
