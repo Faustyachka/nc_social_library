@@ -88,17 +88,17 @@ public interface DAO
      public void updateBookAuthor(BookAuthor bookauthorOld, BookAuthor bookauthorNew) throws ServletException;
      public void deleteBookAuthor(BookAuthor bookauthor) throws ServletException;
 
-     public void createAuthor(Author author) throws ServletException;
-     public Author readAuthor(int id) throws ServletException;
-      public void updateAuthor(Author authorOld, Author authorNew) throws ServletException;
-      public void deleteAuthor(Author author) throws ServletException;
-      public void createGenre(Genre genre) throws ServletException;
-      public Genre readGenre(int id) throws ServletException;
-      public void updateGenre(Genre genreOld, Genre genreNew) throws ServletException ;
-      public void deleteGenre(Genre genre) throws ServletException;
-      public void createBookGenre(BookGenre bookGanre) throws ServletException;
-      public BookGenre readBookGanre(int id) throws ServletException;
-      public void updateBookGenre(BookGenre bookGanreOld, BookGenre bookGanreNew) throws ServletException;
-      public void deleteBookGenre(BookGenre bookGanre) throws ServletException;
+//     public void createAuthor(Author author) throws ServletException;
+//     public Author readAuthor(int id) throws ServletException;
+//      public void updateAuthor(Author authorOld, Author authorNew) throws ServletException;
+//      public void deleteAuthor(Author author) throws ServletException;
+//      public void createGenre(Genre genre) throws ServletException;
+//      public Genre readGenre(int id) throws ServletException;
+//      public void updateGenre(Genre genreOld, Genre genreNew) throws ServletException ;
+//      public void deleteGenre(Genre genre) throws ServletException;
+//      public void createBookGenre(BookGenre bookGanre) throws ServletException;
+//      public BookGenre readBookGanre(int id) throws ServletException;
+//      public void updateBookGenre(BookGenre bookGanreOld, BookGenre bookGanreNew) throws ServletException;
+//      public void deleteBookGenre(BookGenre bookGanre) throws ServletException;
 
 }
