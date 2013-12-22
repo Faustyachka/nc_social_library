@@ -1012,10 +1012,10 @@ public class DAOImpl implements DAO{
     /*
      function for inserting book_genres
      */
-    public void createBookGenre(BookGenre bookGenre) throws ServletException 
-    {
-        try 
-        {
+//    public void createBookGenre(BookGenre bookGenre) throws ServletException 
+//    {
+//        try 
+//        {
     public void createBookGenre(BookGenre bookGanre) throws ServletException {
         Connection conn = null;
         try {
