@@ -13,6 +13,6 @@ import javax.ejb.EJBLocalObject;
  */
 public interface RoleGrudLocal extends EJBLocalObject {
 
-    List<Role> viewRole();
+   // List<Role> viewRole();
     
 }

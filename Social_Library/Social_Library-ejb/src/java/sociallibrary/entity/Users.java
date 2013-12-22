@@ -26,7 +26,7 @@ public class Users {
         return banned;
     }
 
-    @Override
+       /** {@inheritDoc} */
     public String toString() {
         return "Users{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", login=" + login + ", password=" + password + ", gender=" + gender + ", confirmed=" + confirmed + ", banned=" + banned + ", registrationDate=" + registrationDate + ", notify=" + notify + ", role=" + role + '}';
     }
