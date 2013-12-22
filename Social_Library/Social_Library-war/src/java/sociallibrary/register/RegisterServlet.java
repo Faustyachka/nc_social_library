@@ -68,7 +68,7 @@ public class RegisterServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+        /** {@inheritDoc} */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
@@ -81,7 +81,7 @@ public class RegisterServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+       /** {@inheritDoc} */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
@@ -91,7 +91,7 @@ public class RegisterServlet extends HttpServlet {
      * Returns a short description of the servlet.
      * @return a String containing servlet description
      */
-    @Override
+       /** {@inheritDoc} */
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
