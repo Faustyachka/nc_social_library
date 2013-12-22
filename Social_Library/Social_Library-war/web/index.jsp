@@ -10,35 +10,11 @@
 
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-        
-
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <h1>All Role:</h1>
-        <jsp:useBean class="dao.MyDAO" id="myDAO" scope="application"/>
-        <table border="1">
-            <%
-                        for (Role r : myDAO.getAllRole()) {
-            %>
-            <tr>
-                <td><%=r.getId()%></td>
-                <td><%=r.getName()%></td>
-            </tr>
-            <%
-                        }
-                        Role role = myDAO.readRole(200);                     
-            %>
-            
-        </table>
-            <h3>Read Role</h3>
-            <table>
-                
-            <td><%=role.getId()%></td>
-            <td><%=role.getName()%></td>
-            
-            </table>
+        <h1>Hello:</h1>
+            <h3>Guest</h3>         
     </body>
 </html>
 
