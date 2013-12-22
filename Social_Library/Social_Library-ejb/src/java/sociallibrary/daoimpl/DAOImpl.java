@@ -1073,8 +1073,7 @@ public class DAOImpl //implements DAO
      */
 
     public void createBookGenre(BookGenre bookGenre)
-    {
-        try {
+    {        try {
             con = conn.getConnection();
             PreparedStatement pstmt = con.prepareStatement(insertBookGenreQuery);
             
