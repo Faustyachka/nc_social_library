@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ejb-jar version="2.1" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/ejb-jar_2_1.xsd">
-    <display-name>Social Library-ejb</display-name>
+    <display-name>Social_Library-ejb</display-name>
     <enterprise-beans>
-  </enterprise-beans>
-</ejb-jar>
+        <entity>
+            <display-name>NewEntityEB</display-name>
+            <ejb-name>NewEntityBean</ejb-name>
+            <local-home>test.NewEntityLocalHome</local-home>
+            <local>test.NewEntityLocal</local>
+            <ejb-class>test.NewEntityBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Long</prim-key-class>
+            <reentrant>false</reentrant>
+            <abstract-schema-name>NewEntity</abstract-schema-name>
+            <cmp-field>
+                <field-name>pk</field-name>
+            </cmp-field>
+            <primkey-field>pk</primkey-field>
+        </entity>
+        </enterprise-beans>
+    <assembly-descriptor>
+        <container-transaction>
+            <method>
+                <ejb-name>NewEntityBean</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        </assembly-descriptor>
+    </ejb-jar>
