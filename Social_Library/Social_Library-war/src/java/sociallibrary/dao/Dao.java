@@ -23,7 +23,7 @@ private DataSource dataSource;
         }
         try {
 	Context ic = new InitialContext();
-	dataSource = (DataSource) ic.lookup("jdbc/test");
+	dataSource = (DataSource) ic.lookup("jdbc/test1");
         } catch (NamingException ex) {
             throw new ServletException(
                     "Cannot retrieve java:comp/env/jdbc/HRDB", ex);
@@ -36,7 +36,7 @@ private DataSource dataSource;
             return conn;
         } catch (SQLException ex) {
             throw new ServletException(
-                    "Cannot obtain connection", ex);
+                    "Cannot obtajin connection", ex);
         }
     }
 
@@ -127,7 +127,7 @@ public void createUsers(Users users) throws ServletException {
         try {
            conn = getConnection();
            //USERS_
-            PreparedStatement pr = conn.prepareStatement("INSERT INTO Users (ID,FIRST_NAME,LAST_NAME,EMAIL,LOGIN,PASSWORD,GENDER,CONFIRMED,BANNED,REGISTRATION_DATE,NOTIFY,ROLE) values(11, 'Beginner', 'user', 'asjdhj@sjv.i', 'login', 'pass', 1, 1, 0, TO_DATE('2015/10/26', 'yyyy/mm/dd'), 1, 1)");
+            PreparedStatement pr = conn.prepareStatement("INSERT INTO users values(?, ?, ?, ?, ?, ?, ?, ?, ?, '25.12.2013', ?, ?)");
             pr.setInt(1, users.getId());
             pr.setString(2, users.getFirsName());
             pr.setString(3, users.getLastName());
@@ -151,5 +151,93 @@ public void createUsers(Users users) throws ServletException {
         }
 
 }
+    public Users viewUsers(int id) throws ServletException {
+    Users users = new Users();
+    Connection conn = null;
+        try {
+            conn = getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM users where id="+id);
+            while (rs.next()) {
+                users.setId(rs.getInt(1));
+                users.setFirsName(rs.getString(2));
+                users.setLastName(rs.getString(3));
+                users.setEmail(rs.getString(4));
+                users.setLogin(rs.getString(5));
+                // =))))
+                users.setPassword(rs.getString(6));
+                users.setGender(rs.getInt(7));
+                users.setConfirmed(rs.getInt(8));
+                users.setBanned(rs.getInt(9));
+                users.setRegistrationData(rs.getString(10));
+                users.setNotify(rs.getInt(11));
+                users.setRole(rs.getInt(12));
+                
+                
+                
+            }
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+        return users;
+}
+
+    public Users viewUsersByLogin(String login) throws ServletException {
+    Users users = new Users();
+    Connection conn = null;
+        try {
+            conn = getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM users where login='"+login+"'");
+            while (rs.next()) {
+                users.setId(rs.getInt(1));
+                users.setFirsName(rs.getString(2));
+                users.setLastName(rs.getString(3));
+                users.setEmail(rs.getString(4));
+                users.setLogin(rs.getString(5));
+                // =))))
+                users.setPassword(rs.getString(6));
+                users.setGender(rs.getInt(7));
+                users.setConfirmed(rs.getInt(8));
+                users.setBanned(rs.getInt(9));
+                users.setRegistrationData(rs.getString(10));
+                users.setNotify(rs.getInt(11));
+                users.setRole(rs.getInt(12));
+
+
+
+            }
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+        return users;
+}
+public void updateUsersConfirmed(Users users) throws ServletException {
+    Connection conn = null;
+        try {
+           conn = getConnection();
+           //USERS_
+            PreparedStatement pr = conn.prepareStatement("UPDATE users SET confirmed=1 WHERE id=?");
+            pr.setInt(1, users.getId());
+            pr.executeUpdate();
+
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+
+}
+
 
 }

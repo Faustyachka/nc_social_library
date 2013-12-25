@@ -1,17 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package sociallibrary.registration;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.ServerException;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.CreateException;
 import javax.ejb.FinderException;
+import javax.mail.Message.RecipientType;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -43,37 +45,42 @@ public class NewServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         Users users = new Users();
-        users.setId(11);
+        users.setId(18);
         users.setFirsName(request.getParameter("firsName"));
         users.setLastName(request.getParameter("lastName"));
         users.setEmail(request.getParameter("email"));
         users.setLogin(request.getParameter("login"));
         users.setPassword(request.getParameter("password"));
         users.setGender(1);
-        users.setConfirmed(1);
+        users.setConfirmed(0);
         users.setBanned(1);
         users.setRegistrationData("2013/12/25");
         users.setNotify(1);
         users.setRole(1);
-        Short ids =22;
+            
+        Dao dao = new Dao();
+        dao.createUsers(users);
+
+        String mailSub = "Registration on Social Library";
+        String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/ConfirmedRegistration?users="+users.getLogin()+"'";
         try {
-            Dao dao = new Dao();
-            dao.createUsers(users);
-            Role roles = dao.viewRole(1);
-            String r=roles.getName();
-            out.print(r);
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");
+            out.println("<title>Configyration</title>");
             out.println("</head>");
-            out.println("<body>");
-            String aaqaa= "name";
+            out.println("You are registration! Please complite registration on you mail!");
+            out.println("<body>");           
             out.println("</body>");
             out.println("</html>");
+            sendMail(users.getEmail(), mailSub, mailText);
 
-        } finally {
+        } catch (NamingException e) {
+            throw new ServerException("Naming error", e);
+        } catch (MessagingException e) {
+            throw new ServerException("Sending error", e);
+        }
+        finally {
             out.close();
-
         }
     }
     @Override
@@ -93,6 +100,20 @@ public class NewServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
+    }
+
+    private Session getMailSession() throws NamingException {
+        Context c = new InitialContext();
+        return (Session) c.lookup("java:comp/env/mailSession");
+    }
+
+    private void sendMail(String email, String subject, String body) throws NamingException, MessagingException {
+        Session mailSession = getMailSession();
+        MimeMessage message = new MimeMessage(mailSession);
+        message.setSubject(subject);
+        message.setRecipients(RecipientType.TO, InternetAddress.parse(email, false));
+        message.setText(body);
+        Transport.send(message);
     }
 }
 
