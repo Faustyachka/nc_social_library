@@ -16,5 +16,7 @@
     <body>
         <h1>Hello World!</h1>
         <a href="Registration.jsp">Registration</a>
+        <br>
+        <a href="authentication.jsp">Authentication</a>
     </body>
 </html>

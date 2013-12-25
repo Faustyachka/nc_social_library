@@ -9,6 +9,10 @@
         <servlet-name>ConfirmedRegistration</servlet-name>
         <servlet-class>sociallibrary.registration.ConfirmedRegistration</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>authentication</servlet-name>
+        <servlet-class>authentication.authentication</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
@@ -16,6 +20,10 @@
     <servlet-mapping>
         <servlet-name>ConfirmedRegistration</servlet-name>
         <url-pattern>/ConfirmedRegistration</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>authentication</servlet-name>
+        <url-pattern>/authentication</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
