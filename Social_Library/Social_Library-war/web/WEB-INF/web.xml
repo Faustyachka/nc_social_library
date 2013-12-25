@@ -3,7 +3,7 @@
 <web-app>
     <servlet>
         <servlet-name>NewServlet</servlet-name>
-        <servlet-class>sociallibrary.registration.NewServlet</servlet-class>
+        <servlet-class>sociallibrary.registration.RegistrationServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ConfirmedRegistration</servlet-name>

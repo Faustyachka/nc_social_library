@@ -31,7 +31,7 @@ import sociallibrary.entity.Users;
  *
  * @author Felix
  */
-public class NewServlet extends HttpServlet {
+public class RegistrationServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
