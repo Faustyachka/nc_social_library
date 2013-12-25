@@ -23,7 +23,7 @@ private DataSource dataSource;
         }
         try {
 	Context ic = new InitialContext();
-	dataSource = (DataSource) ic.lookup("jdbc/test1");
+	dataSource = (DataSource) ic.lookup("jdbc/test");
         } catch (NamingException ex) {
             throw new ServletException(
                     "Cannot retrieve java:comp/env/jdbc/HRDB", ex);
@@ -127,7 +127,7 @@ public void createUsers(Users users) throws ServletException {
         try {
            conn = getConnection();
            //USERS_
-            PreparedStatement pr = conn.prepareStatement("INSERT INTO users values(?, ?, ?, ?, ?, ?, ?, ?, ?, '25.12.2013', ?, ?)");
+            PreparedStatement pr = conn.prepareStatement("INSERT INTO users values(?, ?, ?, ?, ?, ?, ?, ?, ?, TO_DATE('2014/12/25', 'yyyy/mm/dd'), ?, ?)");
             pr.setInt(1, users.getId());
             pr.setString(2, users.getFirsName());
             pr.setString(3, users.getLastName());
