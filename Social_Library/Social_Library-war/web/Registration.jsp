@@ -15,20 +15,36 @@
     </head>
     <body>
         <form method="POST" action="NewServlet">
-            Fist Name:
-            <input name="firsName">
-            <br>
-            Last Name:
-            <input name="lastName">
-            <br>
-            Email:
-            <input name="email">
-            <br>
-            Login:
-            <input name="login">
-            <br>
-            Password:
-            <input name="password">
+            <table border="0">
+
+                <tbody>
+                    <tr>
+                        <td>            Fist Name:
+                        </td>
+                        <td><input name="firsName"></td>
+                    </tr>
+                    <tr>
+                        <td>            Last Name:
+                        </td>
+                        <td>  <input name="lastName"></td>
+                    </tr>
+                    <tr>
+                        <td>            Email:
+                        </td>
+                        <td>      <input name="email"></td>
+                    </tr>
+                    <tr>
+                        <td>            Login:
+                        </td>
+                        <td>  <input name="login"></td>
+                    </tr>
+                    <tr>
+                        <td>            Password:
+                        </td>
+                        <td><input name="password" type="password"></td>
+                    </tr>
+                </tbody>
+            </table>
             <br>
             <input type="Submit">
         </form>

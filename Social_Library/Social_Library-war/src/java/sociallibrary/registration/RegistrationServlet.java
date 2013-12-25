@@ -4,16 +4,24 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.ServerException;
 import java.util.Collection;
+import java.util.Properties;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.CreateException;
 import javax.ejb.FinderException;
+import javax.mail.Authenticator;
+import javax.mail.Message;
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -45,7 +53,10 @@ public class RegistrationServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         Users users = new Users();
-        users.setId(18);
+        //полная лажа, пока нету бд с секвинсами
+        Random generator = new Random();
+        int rand = generator.nextInt(1000000)+50;
+        users.setId(rand);
         users.setFirsName(request.getParameter("firsName"));
         users.setLastName(request.getParameter("lastName"));
         users.setEmail(request.getParameter("email"));
@@ -102,17 +113,36 @@ public class RegistrationServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-    private Session getMailSession() throws NamingException {
-        Context c = new InitialContext();
-        return (Session) c.lookup("java:comp/env/mailSession");
-    }
-
     private void sendMail(String email, String subject, String body) throws NamingException, MessagingException {
-        Session mailSession = getMailSession();
+        Properties mailProps = new Properties();
+        mailProps.put("mail.smtp.host", "smtp.gmail.com");
+        mailProps.put("mail.smtp.auth", "true");
+        mailProps.put("mail.smtp.port", "465");
+        mailProps.put("mail.smtp.socketFactory.port", "465");
+        mailProps.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        mailProps.put("mail.smtp.socketFactory.fallback", "false");
+        Session mailSession = Session.getInstance(mailProps, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return (new PasswordAuthentication("its.ti.02", "starosta"));
+            }
+        });
+        
         MimeMessage message = new MimeMessage(mailSession);
-        message.setSubject(subject);
-        message.setRecipients(RecipientType.TO, InternetAddress.parse(email, false));
-        message.setText(body);
+        message.setFrom(new InternetAddress("its.ti.02@gmail.com"));
+        String[] emails = {email}; //адреса получателей
+        InternetAddress dests[] = new InternetAddress[emails.length];
+        for (int i = 0; i < emails.length; i++) {
+            dests[i] = new InternetAddress(emails[i].trim().toLowerCase());
+        }
+        message.setRecipients(Message.RecipientType.TO, dests);
+        message.setSubject(subject, "KOI8-R");
+        Multipart mp = new MimeMultipart();
+        MimeBodyPart mbp1 = new MimeBodyPart();
+        mbp1.setText(body, "KOI8-R");
+        mp.addBodyPart(mbp1);
+        message.setContent(mp);
+        message.setSentDate(new java.util.Date());
         Transport.send(message);
     }
 }
