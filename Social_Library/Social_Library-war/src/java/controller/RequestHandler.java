@@ -3,6 +3,7 @@ package Controller;
 
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
+import model.registration.Registration;
 
 
 public class RequestHandler {
@@ -24,6 +25,7 @@ public static RequestHandler getInstance(){
 private RequestHandler(){
     commands.put("rating", new ScoreCommand());
     commands.put("nocommand", new NoCommand());
+    commands.put("registration ", new Registration ());
     
 }
 
