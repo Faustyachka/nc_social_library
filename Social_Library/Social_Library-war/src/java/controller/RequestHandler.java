@@ -3,6 +3,7 @@ package Controller;
 
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
+import model.authorization.SignIn;
 import model.registration.ConfirmUser;
 import model.registration.Registration;
 
@@ -29,7 +30,7 @@ private RequestHandler(){
     commands.put("nocommand", new NoCommand());
     commands.put("registration", new Registration ());
     commands.put("confirmUser", new ConfirmUser () );
-    
+    commands.put("signin", new SignIn());
 }
 
 public Command getCommand(HttpServletRequest request){

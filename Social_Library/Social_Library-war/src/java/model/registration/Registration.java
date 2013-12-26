@@ -45,7 +45,7 @@ public class Registration implements Command {
         users.setNotify(1);
         users.setRole(1);
         Dao dao = new Dao();
-        //dao.createUsers(users);
+        dao.createUsers(users);
         String mailSub = "Registration on Social Library";
         String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Servlet?users=" + users.getLogin() + "&command=confirmUser'";
         String mail[] = new String[1];

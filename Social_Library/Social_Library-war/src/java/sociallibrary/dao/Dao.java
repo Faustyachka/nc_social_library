@@ -223,6 +223,7 @@ public void createUsers(Users users) throws ServletException {
 public void updateUsersConfirmed(Users users) throws ServletException {
     Connection conn = null;
         try {
+
            conn = getConnection();
            //USERS_
             PreparedStatement pr = conn.prepareStatement("UPDATE users SET confirmed=1 WHERE id=?");
@@ -238,6 +239,29 @@ public void updateUsersConfirmed(Users users) throws ServletException {
         }
 
 }
+
+    public Users findUsersByLogin(String login) throws ServletException {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT login, password FROM users where login='" + login + "'");
+            Users users = new Users();
+            if (rs.next()) {
+                users.setLogin(rs.getString(1));
+                users.setPassword(rs.getString(2));
+            } else {
+                users = null;
+            }
+            return users;
+        } catch (SQLException ex) {
+            throw new ServletException("Cannot obtain connection", ex);
+        } finally {
+            if (conn != null) {
+                releaseConnection(conn);
+            }
+        }
+    }
 
 
 }
