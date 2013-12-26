@@ -18,7 +18,8 @@ public class ConfigurationManager {
     public static final String SCORE_PAGE ="/rating.jsp";
     public static final String ERROR_PAGE="/error_page.jsp";
     public static final String USER_PAGE="/user.jsp";
-     public static final String REGISTR_PAGE="/registration.jsp";
+    public static final String REGISTR_PAGE="/registration.jsp";
+    public static final String INDEX_PAGE="/index.jsp";
     
 //    
 //    public static ConfigurationManager getInstance(){

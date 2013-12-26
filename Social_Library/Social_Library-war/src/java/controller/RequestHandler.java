@@ -25,7 +25,7 @@ public static RequestHandler getInstance(){
 private RequestHandler(){
     commands.put("rating", new ScoreCommand());
     commands.put("nocommand", new NoCommand());
-    commands.put("registration ", new Registration ());
+    commands.put("registration", new Registration ());
     
 }
 

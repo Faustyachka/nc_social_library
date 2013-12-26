@@ -14,7 +14,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form method="POST" action="NewServlet">
+        <form method="POST" action="Servlet">
+             <input type="hidden" value="registration" name="command" />
             <table border="0">
 
                 <tbody>

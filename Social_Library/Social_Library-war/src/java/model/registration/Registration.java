@@ -78,7 +78,7 @@ public class Registration implements Command {
 //            throw new ServerException("Sending error", e);
 //        }
 
-        page= ConfigurationManager.REGISTR_PAGE;
+        page= ConfigurationManager.INDEX_PAGE;
         return page;
     }
 }
