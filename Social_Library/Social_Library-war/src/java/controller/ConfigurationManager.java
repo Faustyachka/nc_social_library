@@ -14,7 +14,7 @@ public class ConfigurationManager {
     
     private static ConfigurationManager instance=null;
     private ResourceBundle resourcebundle=null;
-    
+    //This is all page for forward after action is completed
     public static final String SCORE_PAGE ="/rating.jsp";
     public static final String ERROR_PAGE="/error_page.jsp";
     public static final String USER_PAGE="/user.jsp";

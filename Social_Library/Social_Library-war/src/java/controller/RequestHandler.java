@@ -22,6 +22,7 @@ public static RequestHandler getInstance(){
     }
         
     }
+///Associates a key-object, which executes
 private RequestHandler(){
     commands.put("rating", new ScoreCommand());
     commands.put("nocommand", new NoCommand());

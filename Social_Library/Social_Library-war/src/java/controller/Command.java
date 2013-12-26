@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author П
  */
+
+/// Thia ia interface for Comand, all class must extend and realize it.
+
 public interface Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
     

@@ -114,36 +114,36 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     private void sendMail(String email, String subject, String body) throws NamingException, MessagingException {
-        Properties mailProps = new Properties();
-        mailProps.put("mail.smtp.host", "smtp.gmail.com");
-        mailProps.put("mail.smtp.auth", "true");
-        mailProps.put("mail.smtp.port", "465");
-        mailProps.put("mail.smtp.socketFactory.port", "465");
-        mailProps.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        mailProps.put("mail.smtp.socketFactory.fallback", "false");
-        Session mailSession = Session.getInstance(mailProps, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return (new PasswordAuthentication("its.ti.02", "starosta"));
-            }
-        });
-        
-        MimeMessage message = new MimeMessage(mailSession);
-        message.setFrom(new InternetAddress("its.ti.02@gmail.com"));
-        String[] emails = {email}; //адреса получателей
-        InternetAddress dests[] = new InternetAddress[emails.length];
-        for (int i = 0; i < emails.length; i++) {
-            dests[i] = new InternetAddress(emails[i].trim().toLowerCase());
-        }
-        message.setRecipients(Message.RecipientType.TO, dests);
-        message.setSubject(subject, "KOI8-R");
-        Multipart mp = new MimeMultipart();
-        MimeBodyPart mbp1 = new MimeBodyPart();
-        mbp1.setText(body, "KOI8-R");
-        mp.addBodyPart(mbp1);
-        message.setContent(mp);
-        message.setSentDate(new java.util.Date());
-        Transport.send(message);
+//        Properties mailProps = new Properties();
+//        mailProps.put("mail.smtp.host", "smtp.gmail.com");
+//        mailProps.put("mail.smtp.auth", "true");
+//        mailProps.put("mail.smtp.port", "465");
+//        mailProps.put("mail.smtp.socketFactory.port", "465");
+//        mailProps.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+//        mailProps.put("mail.smtp.socketFactory.fallback", "false");
+//        Session mailSession = Session.getInstance(mailProps, new Authenticator() {
+//            @Override
+//            protected PasswordAuthentication getPasswordAuthentication() {
+//                return (new PasswordAuthentication("its.ti.02", "starosta"));
+//            }
+//        });
+//
+//        MimeMessage message = new MimeMessage(mailSession);
+//        message.setFrom(new InternetAddress("its.ti.02@gmail.com"));
+//        String[] emails = {email}; //адреса получателей
+//        InternetAddress dests[] = new InternetAddress[emails.length];
+//        for (int i = 0; i < emails.length; i++) {
+//            dests[i] = new InternetAddress(emails[i].trim().toLowerCase());
+//        }
+//        message.setRecipients(Message.RecipientType.TO, dests);
+//        message.setSubject(subject, "KOI8-R");
+//        Multipart mp = new MimeMultipart();
+//        MimeBodyPart mbp1 = new MimeBodyPart();
+//        mbp1.setText(body, "KOI8-R");
+//        mp.addBodyPart(mbp1);
+//        message.setContent(mp);
+//        message.setSentDate(new java.util.Date());
+//        Transport.send(message);
     }
 }
 

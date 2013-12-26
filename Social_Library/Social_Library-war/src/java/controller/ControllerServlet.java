@@ -5,7 +5,6 @@
 package Controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author П
  */
+
+///This servlet called for any action in app using parapetr "command"
+
 public class ControllerServlet extends HttpServlet {
 
     RequestHandler requesthandler = RequestHandler.getInstance();
@@ -56,6 +58,7 @@ public class ControllerServlet extends HttpServlet {
 
    
    
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);

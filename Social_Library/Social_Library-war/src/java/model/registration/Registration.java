@@ -8,37 +8,16 @@ package model.registration;
 import Controller.Command;
 import Controller.ConfigurationManager;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.rmi.ServerException;
-import java.util.Collection;
-import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.CreateException;
-import javax.ejb.FinderException;
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sociallibrary.dao.Dao;
-import sociallibrary.entity.Role;
 import sociallibrary.entity.Users;
+import model.email.EmailSender;
 
 /**
  *
@@ -70,13 +49,13 @@ public class Registration implements Command {
         dao.createUsers(users);
         String mailSub = "Registration on Social Library";
         String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/ConfirmedRegistration?users="+users.getLogin()+"'";
-//            sendMail(users.getEmail(), mailSub, mailText);
-//
-//        } catch (NamingException e) {
-//            throw new ServerException("Naming error", e);
-//        } catch (MessagingException e) {
-//            throw new ServerException("Sending error", e);
-//        }
+        String mail[] = new String[1];
+        mail[0]=users.getEmail();
+        try {
+            EmailSender.sendEmail(mail, mailText, mailSub);
+        } catch (MessagingException ex) {
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         page= ConfigurationManager.INDEX_PAGE;
         return page;
