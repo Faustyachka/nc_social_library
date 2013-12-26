@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package model.registration;
 
 import Controller.Command;
@@ -26,13 +25,13 @@ import model.email.EmailSender;
 public class Registration implements Command {
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         String page= null;
+        String page = null;
 
         response.setContentType("text/html;charset=UTF-8");
         Users users = new Users();
         //полная лажа, пока нету бд с секвинсами
         Random generator = new Random();
-        int rand = generator.nextInt(1000000)+50;
+        int rand = generator.nextInt(1000000) + 50;
         users.setId(rand);
         users.setFirsName(request.getParameter("firsName"));
         users.setLastName(request.getParameter("lastName"));
@@ -46,18 +45,18 @@ public class Registration implements Command {
         users.setNotify(1);
         users.setRole(1);
         Dao dao = new Dao();
-        dao.createUsers(users);
+        //dao.createUsers(users);
         String mailSub = "Registration on Social Library";
-        String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/ConfirmedRegistration?users="+users.getLogin()+"'";
+        String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Servlet?users=" + users.getLogin() + "&command=confirmUser'";
         String mail[] = new String[1];
-        mail[0]=users.getEmail();
+        mail[0] = users.getEmail();
         try {
-            EmailSender.sendEmail(mail, mailText, mailSub);
+            EmailSender.sendEmail(mail, mailSub, mailText);
         } catch (MessagingException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        page= ConfigurationManager.INDEX_PAGE;
+        page = ConfigurationManager.INDEX_PAGE;
         return page;
     }
 }
