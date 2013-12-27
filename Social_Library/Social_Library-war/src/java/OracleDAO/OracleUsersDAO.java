@@ -69,7 +69,7 @@ public class OracleUsersDAO implements UsersDAO{
     }
 
     public Users readUsers(int id) {
-        users = new Users();
+        Users users = new Users();
         try
         {
         Connection conn=conn1.getConnection();
