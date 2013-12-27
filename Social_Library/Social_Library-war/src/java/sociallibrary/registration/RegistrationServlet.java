@@ -30,9 +30,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sociallibrary.*;
-import sociallibrary.dao.Dao;
-import sociallibrary.entity.Role;
-import sociallibrary.entity.Users;
+//import sociallibrary.dao.Dao;
+//import sociallibrary.entity.Role;
+//import sociallibrary.entity.Users;
 
 
 /**
@@ -52,47 +52,47 @@ public class RegistrationServlet extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        Users users = new Users();
+//        Users users = new Users();
         //полная лажа, пока нету бд с секвинсами
         Random generator = new Random();
         int rand = generator.nextInt(1000000)+50;
-        users.setId(rand);
-        users.setFirsName(request.getParameter("firsName"));
-        users.setLastName(request.getParameter("lastName"));
-        users.setEmail(request.getParameter("email"));
-        users.setLogin(request.getParameter("login"));
-        users.setPassword(request.getParameter("password"));
-        users.setGender(1);
-        users.setConfirmed(0);
-        users.setBanned(1);
-        users.setRegistrationData("2013/12/25");
-        users.setNotify(1);
-        users.setRole(1);
+//        users.setId(rand);
+//        users.setFirsName(request.getParameter("firsName"));
+//        users.setLastName(request.getParameter("lastName"));
+//        users.setEmail(request.getParameter("email"));
+//        users.setLogin(request.getParameter("login"));
+//        users.setPassword(request.getParameter("password"));
+//        users.setGender(1);
+//        users.setConfirmed(0);
+//        users.setBanned(1);
+//        users.setRegistrationData("2013/12/25");
+//        users.setNotify(1);
+//        users.setRole(1);
             
-        Dao dao = new Dao();
-        dao.createUsers(users);
+//        Dao dao = new Dao();
+//        dao.createUsers(users);
 
         String mailSub = "Registration on Social Library";
-        String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/ConfirmedRegistration?users="+users.getLogin()+"'";
-        try {
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Configyration</title>");
-            out.println("</head>");
-            out.println("You are registration! Please complite registration on you mail!");
-            out.println("<body>");           
-            out.println("</body>");
-            out.println("</html>");
-            sendMail(users.getEmail(), mailSub, mailText);
-
-        } catch (NamingException e) {
-            throw new ServerException("Naming error", e);
-        } catch (MessagingException e) {
-            throw new ServerException("Sending error", e);
-        }
-        finally {
-            out.close();
-        }
+//        String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/ConfirmedRegistration?users="+users.getLogin()+"'";
+//        try {
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Configyration</title>");
+//            out.println("</head>");
+//            out.println("You are registration! Please complite registration on you mail!");
+//            out.println("<body>");
+//            out.println("</body>");
+//            out.println("</html>");
+//            sendMail(users.getEmail(), mailSub, mailText);
+//
+//        } catch (NamingException e) {
+//            throw new ServerException("Naming error", e);
+//        } catch (MessagingException e) {
+//            throw new ServerException("Sending error", e);
+//        }
+//        finally {
+//            out.close();
+//        }
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

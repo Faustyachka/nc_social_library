@@ -11,8 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sociallibrary.dao.Dao;
-import sociallibrary.entity.Users;
+//import sociallibrary.dao.Dao;
+//import sociallibrary.entity.Users;
 
 /**
  *
@@ -31,10 +31,10 @@ public class ConfirmedRegistration extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        Dao dao = new Dao();
-        
-        Users users = dao.viewUsersByLogin(request.getParameter("users"));
-        dao.updateUsersConfirmed(users);
+//        Dao dao = new Dao();
+//
+//        Users users = dao.viewUsersByLogin(request.getParameter("users"));
+//        dao.updateUsersConfirmed(users);
         try {
             
             out.println("<html>");
