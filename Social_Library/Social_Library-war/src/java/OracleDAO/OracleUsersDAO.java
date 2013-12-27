@@ -21,11 +21,12 @@ import java.sql.SQLException;
 public class OracleUsersDAO implements UsersDAO{
 
    private Oracle conn1;
-   private Users users;
-   private static final String selectQuery="SELECT * FROM users WHERE id=?";
-   private static final String deleteQuery="DELETE FROM users WHERE id =?";
-   private static final String insertUsersQuery="INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-   private static final String updateUsersQuery="UPDATE users SET first_name = ?," +
+    private ResultSet rs;
+    private Connection conn;
+    private static final String selectQuery="SELECT * FROM ? WHERE id=?";
+    private static final String deleteQuery="DELETE FROM ? WHERE id =?";
+    private static final String insertUsersQuery="INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, TO_DATE('11.02.2013','dd.mm.yyyy'), ?)";
+    private static final String updateUsersQuery="UPDATE users SET first_name = ?," +
                         "last_name = ?, email = ?, login = ?, password = ?," +
                         "gender = ?, confirmed = ?, banned = ?, registration_date = ?," +
                         "notify = ? WHERE id = ?";
