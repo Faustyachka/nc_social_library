@@ -9,7 +9,6 @@ package OracleDAO;
 import OracleConnection.Oracle;
 import TransferObject.BookGenre;
 import TransferObjectInterface.BookGenreDAO;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,36 +21,27 @@ import java.sql.SQLException;
 public class OracleBookGenreDAO implements BookGenreDAO{
 
     private Oracle conn1;
-    private ResultSet rs;
-    private Connection conn;
-    private static final String selectQuery="SELECT * FROM ? WHERE id=?";
-    private static final String deleteQuery="DELETE FROM ? WHERE id =?";
+    private static final String selectQuery="SELECT * FROM book_genre WHERE id=?";
+    private static final String deleteQuery="DELETE FROM book_genre WHERE id =?";
      private static final String insertBookGenreQuery="INSERT INTO book_genre VALUES (?, ?, ?)";
     private static final String updateBookGenreQuery="UPDATE book_genre SET book=?, genre=? WHERE id=?";
     private BookGenre bookGenre;
 
-     public OracleBookGenreDAO()
-    {
+    public void createBookGenre(BookGenre bookGenre) {
         try
         {
-        conn=conn1.getConnection();
-        }
-        catch(IOException e1)
-        {
-            System.out.println("IOExeption:"+e1);
-        }
-        
-    }
-
-    public void createBookGenre(BookGenre bookGenre) {
+        Connection conn=conn1.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(insertBookGenreQuery);
 
             pstmt.setLong(1, bookGenre.getId());
 
             pstmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -67,18 +57,25 @@ public class OracleBookGenreDAO implements BookGenreDAO{
         bookGenre = new BookGenre();
         try
         {
+        Connection conn=conn1.getConnection();
+        try
+        {
             PreparedStatement stmt = conn.prepareStatement(selectQuery);
-            stmt.setString(1, "bookGenre");
-            stmt.setLong(2, bookGenre.getId());
 
-            rs=stmt.executeQuery();
+            stmt.setLong(1, bookGenre.getId());
+
+            ResultSet rs=stmt.executeQuery();
 
             while (rs.next())
             {
                 bookGenre.setId(rs.getLong(1));
             }
-                conn.close();
-            
+            rs.close();
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -95,13 +92,19 @@ public class OracleBookGenreDAO implements BookGenreDAO{
     public void updateBookGenre(BookGenre bookGenreOld, BookGenre bookGenreNew) {
         try
         {
+        Connection conn=conn1.getConnection();
+        try
+        {
             PreparedStatement pstmt = conn.prepareStatement(updateBookGenreQuery);
 
             pstmt.setLong(1, bookGenreOld.getId());
 
             pstmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -113,17 +116,22 @@ public class OracleBookGenreDAO implements BookGenreDAO{
         }
     }
 
-    public void deleteBookGenre(BookGenre bookGanre) {
+    public void deleteBookGenre(BookGenre bookGenre) {
+        try
+        {
+        Connection conn=conn1.getConnection();
         try
         {
             PreparedStatement stmt = conn.prepareStatement(deleteQuery);
 
-            stmt.setString(1, "book_genre");
-            stmt.setLong(2, bookGenre.getId());
+            stmt.setLong(1, bookGenre.getId());
 
             stmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {

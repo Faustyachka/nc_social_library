@@ -8,7 +8,6 @@ package OracleDAO;
 import OracleConnection.Oracle;
 import TransferObject.BookAuthor;
 import TransferObjectInterface.BookAuthorDAO;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,28 +20,16 @@ import java.sql.SQLException;
 public class OracleBookAuthorDAO implements BookAuthorDAO {
 
     private Oracle conn1;
-    private ResultSet rs;
-    private Connection conn;
-    private static final String selectQuery="SELECT * FROM ? WHERE id=?";
-    private static final String deleteQuery="DELETE FROM ? WHERE id =?";
+    private static final String selectQuery="SELECT * FROM book_author WHERE id=?";
+    private static final String deleteQuery="DELETE FROM book_author WHERE id =?";
     private static final String insertBookAuthorQuery="INSERT INTO book_author VALUES (?, ?, ?)";
     private static final String updateBookAuthorQuery="UPDATE book_author SET book=?, author=? WHERE id=?";
     private BookAuthor bookauthor;
 
-     public OracleBookAuthorDAO()
-    {
+    public void createBookAuthor(BookAuthor bookauthor) {
         try
         {
-        conn=conn1.getConnection();
-        }
-        catch(IOException e)
-        {
-            System.out.println("IOExeption:"+e);
-        }
-        
-    }
-
-    public void createBookAuthor(BookAuthor bookauthor) {
+        Connection conn=conn1.getConnection();
         try
          {
             PreparedStatement pstmt = conn.prepareStatement(insertBookAuthorQuery);
@@ -50,9 +37,11 @@ public class OracleBookAuthorDAO implements BookAuthorDAO {
             pstmt.setLong(1, bookauthor.getId());
 
             pstmt.executeUpdate();
-          
-                conn.close();
-            
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -66,19 +55,26 @@ public class OracleBookAuthorDAO implements BookAuthorDAO {
 
     public BookAuthor readBookAuthor(int id) {
         bookauthor=new BookAuthor();
-            try
+        try
         {
+        Connection conn=conn1.getConnection();
+            try
+            {
             PreparedStatement stmt = conn.prepareStatement(selectQuery);
-            stmt.setString(1, "book_author");
-            stmt.setLong(2, bookauthor.getId());
 
-            rs = stmt.executeQuery();
+            stmt.setLong(1, bookauthor.getId());
+
+             ResultSet rs = stmt.executeQuery();
                 while (rs.next())
                 {
                     bookauthor.setId(rs.getLong(1));
                 }
+             rs.close();
+        }
+            finally
+            {
                 conn.close();
-            
+            }
         }
         catch (SQLException e)
         {
@@ -95,13 +91,19 @@ public class OracleBookAuthorDAO implements BookAuthorDAO {
     public void updateBookAuthor(BookAuthor bookauthorOld, BookAuthor bookauthorNew) {
         try
         {
+        Connection conn=conn1.getConnection();
+        try
+        {
             PreparedStatement pstmt = conn.prepareStatement(updateBookAuthorQuery);
 
             pstmt.setLong(3, bookauthorOld.getId());
 
             pstmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+             conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -114,16 +116,21 @@ public class OracleBookAuthorDAO implements BookAuthorDAO {
     }
 
     public void deleteBookAuthor(BookAuthor bookauthor) {
+        try
+        {
+        Connection conn=conn1.getConnection();
          try
         {
             PreparedStatement stmt = conn.prepareStatement(deleteQuery);
 
-            stmt.setString(1, "book_author");
-            stmt.setLong(2, bookauthor.getId());
+            stmt.setLong(1, bookauthor.getId());
 
             stmt.executeUpdate();
-                conn.close();
-            
+        }
+         finally
+         {
+             conn.close();
+         }
         }
         catch (SQLException e)
         {

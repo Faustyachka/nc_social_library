@@ -8,7 +8,6 @@ package OracleDAO;
 import OracleConnection.Oracle;
 import TransferObject.Genre;
 import TransferObjectInterface.GenreDAO;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,28 +20,16 @@ import java.sql.SQLException;
 public class OracleGenreDAO implements GenreDAO{
 
     private Oracle conn1;
-    private ResultSet rs;
-    private Connection conn;
-    private static final String selectQuery="SELECT * FROM ? WHERE id=?";
-    private static final String deleteQuery="DELETE FROM ? WHERE id =?";
+    private static final String selectQuery="SELECT * FROM genre WHERE id=?";
+    private static final String deleteQuery="DELETE FROM genre WHERE id =?";
     private static final String insertGenreQuery="INSERT INTO genre VALUES (?, ?)";
     private static final String updateGenreQuery="UPDATE genre SET genre=? WHERE id=?";
     private Genre genre;
 
-     public OracleGenreDAO()
-    {
+    public void createGenre(Genre genre) {
         try
         {
-        conn=conn1.getConnection();
-        }
-        catch(IOException e1)
-        {
-            System.out.println("IOExeption:"+e1);
-        }
-       
-    }
-
-    public void createGenre(Genre genre) {
+        Connection conn=conn1.getConnection();
         try
         {
             PreparedStatement pstmt = conn.prepareStatement(insertGenreQuery);
@@ -51,8 +38,11 @@ public class OracleGenreDAO implements GenreDAO{
             pstmt.setString(2, genre.getGenre());
 
             pstmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -68,19 +58,26 @@ public class OracleGenreDAO implements GenreDAO{
         genre = new Genre();
         try
         {
+        Connection conn=conn1.getConnection();
+        try
+        {
             PreparedStatement stmt = conn.prepareStatement(selectQuery);
-            stmt.setString(1, "genre");
-            stmt.setInt(2, genre.getId());
 
-            rs=stmt.executeQuery();
+            stmt.setInt(1, genre.getId());
+
+            ResultSet rs=stmt.executeQuery();
 
             while (rs.next())
             {
                 genre.setId(rs.getInt(1));
                 genre.setGenre(rs.getString(2));
             }
-                conn.close();
-            
+            rs.close();
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -97,14 +94,20 @@ public class OracleGenreDAO implements GenreDAO{
     public void updateGenre(Genre genreOld, Genre genreNew) {
         try
         {
+        Connection conn=conn1.getConnection();
+        try
+        {
             PreparedStatement pstmt = conn.prepareStatement(updateGenreQuery);
 
             pstmt.setString(1, genreNew.getGenre());
             pstmt.setInt(2, genreOld.getId());
 
             pstmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -119,14 +122,19 @@ public class OracleGenreDAO implements GenreDAO{
     public void deleteGenre(Genre genre) {
         try
         {
+        Connection conn=conn1.getConnection();
+        try
+        {
             PreparedStatement stmt = conn.prepareStatement(deleteQuery);
 
-            stmt.setString(1, "genre");
-            stmt.setInt(2, genre.getId());
+            stmt.setInt(1, genre.getId());
 
             stmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {

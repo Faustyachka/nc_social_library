@@ -8,7 +8,6 @@ package OracleDAO;
 import OracleConnection.Oracle;
 import TransferObject.Rating;
 import TransferObjectInterface.RatingDAO;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,28 +20,16 @@ import java.sql.SQLException;
 public class OracleRatingDAO implements RatingDAO{
 
     private Oracle conn1;
-    private ResultSet rs;
-    private Connection conn;
-    private static final String selectQuery="SELECT * FROM ? WHERE id=?";
-    private static final String deleteQuery="DELETE FROM ? WHERE id =?";
+    private static final String selectQuery="SELECT * FROM rating WHERE id=?";
+    private static final String deleteQuery="DELETE FROM rating WHERE id =?";
     private static final String insertRatingQuery="INSERT INTO rating VALUES (?, ?, ?, ?)";
     private static final String updateRatingQuery="UPDATE rating SET rate=?, users=?, book=? WHERE id=?";
     private Rating rating;
 
-     public OracleRatingDAO()
-    {
+    public void createRating(Rating rating) {
         try
         {
-        conn=conn1.getConnection();
-        }
-        catch(IOException e1)
-        {
-            System.out.println("IOExeption:"+e1);
-        }
-        
-    }
-
-    public void createRating(Rating rating) {
+        Connection conn=conn1.getConnection();
         try
         {
             PreparedStatement pstmt = conn.prepareStatement(insertRatingQuery);
@@ -51,8 +38,11 @@ public class OracleRatingDAO implements RatingDAO{
             pstmt.setInt(2, rating.getRate());
 
             pstmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+             conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -68,18 +58,25 @@ public class OracleRatingDAO implements RatingDAO{
         rating = new Rating();
         try
         {
+        Connection conn=conn1.getConnection();
+        try
+        {
             PreparedStatement stmt = conn.prepareStatement(selectQuery);
-            stmt.setString(1, "rating");
-            stmt.setInt(2, rating.getId());
+            
+            stmt.setInt(1, rating.getId());
 
-            rs=stmt.executeQuery();
+            ResultSet rs=stmt.executeQuery();
 
             while (rs.next())
             {
                 rating.setId(rs.getInt(1));
             }
-                conn.close();
-            
+            rs.close();
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -94,6 +91,9 @@ public class OracleRatingDAO implements RatingDAO{
     }
 
     public void updateRating(Rating ratingOld, Rating ratingNew) {
+        try
+        {
+        Connection conn=conn1.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(updateRatingQuery);
 
@@ -101,8 +101,11 @@ public class OracleRatingDAO implements RatingDAO{
             pstmt.setInt(2, ratingOld.getId());
 
             pstmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -117,14 +120,19 @@ public class OracleRatingDAO implements RatingDAO{
     public void deleteRating(Rating rating) {
         try
         {
+        Connection conn=conn1.getConnection();
+        try
+        {
             PreparedStatement stmt = conn.prepareStatement(deleteQuery);
 
-            stmt.setString(1, "rating");
-            stmt.setInt(2, rating.getId());
+            stmt.setInt(1, rating.getId());
 
             stmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+             conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -136,5 +144,4 @@ public class OracleRatingDAO implements RatingDAO{
         }
 
     }
-
 }

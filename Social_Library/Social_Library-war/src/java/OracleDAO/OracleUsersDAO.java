@@ -8,8 +8,8 @@ package OracleDAO;
 import OracleConnection.Oracle;
 import TransferObject.Users;
 import TransferObjectInterface.UsersDAO;
-import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,31 +21,18 @@ import java.sql.SQLException;
 public class OracleUsersDAO implements UsersDAO{
 
    private Oracle conn1;
-    private ResultSet rs;
-    private Connection conn;
-    private static final String selectQuery="SELECT * FROM ? WHERE id=?";
-    private static final String deleteQuery="DELETE FROM ? WHERE id =?";
-    private static final String insertUsersQuery="INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '11.02.2013', ?)";
-    private static final String updateUsersQuery="UPDATE users SET first_name = ?," +
+   private Users users;
+   private static final String selectQuery="SELECT * FROM users WHERE id=?";
+   private static final String deleteQuery="DELETE FROM users WHERE id =?";
+   private static final String insertUsersQuery="INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+   private static final String updateUsersQuery="UPDATE users SET first_name = ?," +
                         "last_name = ?, email = ?, login = ?, password = ?," +
-                        "gender = ?, confirmed = ?, banned = ?, registration_date = '01.01.2013'," +
+                        "gender = ?, confirmed = ?, banned = ?, registration_date = ?," +
                         "notify = ? WHERE id = ?";
-    private Users users;
-
-    public OracleUsersDAO()
-    {
-        try
-        {
-        conn=conn1.getConnection();
-        }
-        catch(IOException e1)
-        {
-            System.out.println("IOExeption:"+e1);
-        }
-        
-    }
 
     public void createUsers(Users users) {
+        try{
+        Connection conn=conn1.getConnection();
         try
         {
             PreparedStatement pstmt = conn.prepareStatement(insertUsersQuery);
@@ -59,12 +46,15 @@ public class OracleUsersDAO implements UsersDAO{
             pstmt.setInt(7, users.getGender());
             pstmt.setInt(8, users.getConfirmed());
             pstmt.setInt(9, users.getBanned());
-            pstmt.setInt(10, users.getNotify());
+            pstmt.setDate(10,(Date) users.getRegistrationDate());
+            pstmt.setInt(11, users.getNotify());
 
             pstmt.executeUpdate();
-
+        }
+        finally
+        {
             conn.close();
-
+        }
         }
         catch (SQLException e)
         {
@@ -74,19 +64,19 @@ public class OracleUsersDAO implements UsersDAO{
                 e=e.getNextException();
             }
         }
+
     }
 
     public Users readUsers(int id) {
         users = new Users();
         try
         {
+        Connection conn=conn1.getConnection();
+        try
+        {
             PreparedStatement stmt = conn.prepareStatement(selectQuery);
-            stmt.setString(1, "users");
-            stmt.setInt(2, id);
-
-
-
-            rs = stmt.executeQuery();
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
 
            while (rs.next())
             {
@@ -102,7 +92,12 @@ public class OracleUsersDAO implements UsersDAO{
                 users.setRegistrationDate(rs.getDate(10));
                 users.setNotify(rs.getShort(11));
             }
-
+            rs.close();
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -117,6 +112,9 @@ public class OracleUsersDAO implements UsersDAO{
     }
 
     public void updateUsers(Users usersOld, Users usersNew) {
+        try
+        {
+        Connection conn=conn1.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(updateUsersQuery);
 
@@ -132,9 +130,11 @@ public class OracleUsersDAO implements UsersDAO{
             pstmt.setLong(11, usersOld.getId());
 
             pstmt.executeUpdate();
-
-                conn.close();
-
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -149,15 +149,19 @@ public class OracleUsersDAO implements UsersDAO{
     public void deleteUsers(Users users) {
         try
         {
+        Connection conn=conn1.getConnection();
+        try
+        {
             PreparedStatement stmt = conn.prepareStatement(deleteQuery);
 
-            stmt.setString(1, "users");
-            stmt.setLong(2, users.getId());
+            stmt.setLong(1, users.getId());
 
             stmt.executeUpdate();
-
-                conn.close();
-
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {

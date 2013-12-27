@@ -8,7 +8,6 @@ package OracleDAO;
 import OracleConnection.Oracle;
 import TransferObjectInterface.LibraryDAO;
 import TransferObject.Library;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,30 +20,18 @@ import java.sql.SQLException;
 public class OracleLibraryDAO implements LibraryDAO{
 
     private Oracle conn1;
-    private ResultSet rs;
-    private Connection conn;
-    private static final String selectQuery="SELECT * FROM ? WHERE id=?";
-    private static final String deleteQuery="DELETE FROM ? WHERE id =?";
-    private static final String insertLibraryQuery="INSERT INTO library VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String selectQuery="SELECT * FROM library WHERE id=?";
+    private static final String deleteQuery="DELETE FROM library WHERE id =?";
+    private static final String insertLibraryQuery="INSERT INTO library VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String updateLibraryQuery="UPDATE library SET isbn = ?, title = ?," +
                                             "cover = ?, description = ?, pages = ?," +
-                                            "author = ?, genre = ?, users = ? WHERE id=?";
+                                            "author = ?, genre = ? WHERE id=?";
     private Library library;
 
-     public OracleLibraryDAO()
-    {
+    public void createLibrary(Library library) {
         try
         {
-        conn=conn1.getConnection();
-        }
-        catch(IOException e1)
-        {
-            System.out.println("IOExeption:"+e1);
-        }
-        
-    }
-
-    public void createLibrary(Library library) {
+        Connection conn=conn1.getConnection();
         try
         {
             PreparedStatement pstmt = conn.prepareStatement(insertLibraryQuery);
@@ -55,10 +42,15 @@ public class OracleLibraryDAO implements LibraryDAO{
             pstmt.setString(4, library.getCover());
             pstmt.setString(5, library.getDescription());
             pstmt.setInt(6, library.getPages());
+            pstmt.setLong(7,library.getAuthor());
+            pstmt.setInt(8,library.getGenre());
 
             pstmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -72,13 +64,16 @@ public class OracleLibraryDAO implements LibraryDAO{
 
     public Library readLibrary(int id) {
        library = new Library();
+       try
+       {
+       Connection conn=conn1.getConnection();
         try
         {
             PreparedStatement stmt = conn.prepareStatement(selectQuery);
             stmt.setString(1, "library");
             stmt.setLong(2, library.getId());
 
-            rs=stmt.executeQuery();
+            ResultSet rs=stmt.executeQuery();
 
             while (rs.next())
             {
@@ -91,9 +86,13 @@ public class OracleLibraryDAO implements LibraryDAO{
                 library.setAuthor(rs.getLong(7));
                 library.setGenre(rs.getInt(8));
             }
-                conn.close();
-            
+            rs.close();
         }
+        finally
+        {
+             conn.close();
+        }
+       }
         catch (SQLException e)
         {
             while(e!=null)
@@ -109,6 +108,9 @@ public class OracleLibraryDAO implements LibraryDAO{
     public void updateLibrary(Library libraryOld, Library libraryNew) {
         try
         {
+        Connection conn=conn1.getConnection();
+        try
+        {
             PreparedStatement pstmt = conn.prepareStatement(updateLibraryQuery);
 
             pstmt.setString(1, libraryNew.getIsbn());
@@ -118,11 +120,14 @@ public class OracleLibraryDAO implements LibraryDAO{
             pstmt.setInt(5, libraryNew.getPages());
             pstmt.setLong(6, libraryNew.getAuthor());
             pstmt.setInt(7, libraryNew.getGenre());
-            pstmt.setLong(9, libraryOld.getId());
+            pstmt.setLong(8, libraryOld.getId());
 
             pstmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -137,14 +142,19 @@ public class OracleLibraryDAO implements LibraryDAO{
     public void deleteLibrary(Library library) {
         try
         {
+        Connection conn=conn1.getConnection();
+        try
+        {
             PreparedStatement stmt = conn.prepareStatement(deleteQuery);
 
-            stmt.setString(1, "library");
-            stmt.setLong(2, library.getId());
+            stmt.setLong(1, library.getId());
 
             stmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {

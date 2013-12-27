@@ -8,7 +8,6 @@ package OracleDAO;
 import OracleConnection.Oracle;
 import TransferObjectInterface.CatalogDAO;
 import TransferObject.Catalog;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,27 +20,16 @@ import java.sql.SQLException;
 public class OracleCatalogDAO implements CatalogDAO{
 
    private Oracle conn1;
-    private ResultSet rs;
-    private Connection conn;
-    private static final String selectQuery="SELECT * FROM ? WHERE id=?";
-    private static final String deleteQuery="DELETE FROM ? WHERE id =?";
+    private static final String selectQuery="SELECT * FROM catalog WHERE id=?";
+    private static final String deleteQuery="DELETE FROM catalog WHERE id =?";
     private static final String insertCatalogQuery="INSERT INTO catalog VALUES(?, ?, ?)";
     private static final String updateCatalogQuery="UPDATE catalog SET users=?, book=? WHERE id=?";
     private Catalog catalog;
 
-     public OracleCatalogDAO()
-    {
+    public void createCatalog(Catalog catalog) {
         try
         {
-        conn=conn1.getConnection();
-        }
-        catch(IOException e1)
-        {
-            System.out.println("IOExeption:"+e1);
-        }
-    }
-
-    public void createCatalog(Catalog catalog) {
+        Connection conn=conn1.getConnection();
          try
         {
             PreparedStatement pstmt = conn.prepareStatement(insertCatalogQuery);
@@ -49,8 +37,11 @@ public class OracleCatalogDAO implements CatalogDAO{
             pstmt.setLong(1, catalog.getId());
 
             pstmt.executeUpdate();
-                conn.close();
-            
+        }
+         finally
+         {
+             conn.close();
+         }
         }
         catch (SQLException e)
         {
@@ -66,18 +57,25 @@ public class OracleCatalogDAO implements CatalogDAO{
         catalog = new Catalog();
         try
         {
+        Connection conn=conn1.getConnection();
+        try
+        {
             PreparedStatement stmt = conn.prepareStatement(selectQuery);
-            stmt.setString(1, "calalog");
-            stmt.setLong(2, catalog.getId());
 
-            rs = stmt.executeQuery();
+            stmt.setLong(1, catalog.getId());
+
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next())
             {
                 catalog.setId(rs.getLong(1));
             }
-                conn.close();
-            
+            rs.close();
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -92,6 +90,8 @@ public class OracleCatalogDAO implements CatalogDAO{
     }
 
     public void updateCatalog(Catalog catalogOld, Catalog catalogNew) {
+        try{
+        Connection conn=conn1.getConnection();
         try
         {
             PreparedStatement pstmt = conn.prepareStatement(updateCatalogQuery);
@@ -99,8 +99,11 @@ public class OracleCatalogDAO implements CatalogDAO{
             pstmt.setLong(1, catalogOld.getId());
 
             pstmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
@@ -115,14 +118,19 @@ public class OracleCatalogDAO implements CatalogDAO{
     public void deleteCatalog(Catalog catalog) {
         try
         {
+        Connection conn=conn1.getConnection();
+        try
+        {
             PreparedStatement stmt = conn.prepareStatement(deleteQuery);
 
-            stmt.setString(1, "catalog");
-            stmt.setLong(2, catalog.getId());
+            stmt.setLong(1, catalog.getId());
 
             stmt.executeUpdate();
-                conn.close();
-            
+        }
+        finally
+        {
+            conn.close();
+        }
         }
         catch (SQLException e)
         {
