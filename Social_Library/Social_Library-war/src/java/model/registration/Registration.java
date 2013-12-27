@@ -17,7 +17,6 @@ import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sociallibrary.dao.Dao;
 import OracleDAO.OracleUsersDAO;
 import model.email.EmailSender;
 
