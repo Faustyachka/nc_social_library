@@ -13,13 +13,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author mazafaka
  */
 public class OracleUsersDAO implements UsersDAO{
-
+    public static final Logger log=Logger.getLogger(OracleAuthorDAO.class);
    private Oracle conn1;
     private ResultSet rs;
     private Connection conn;
@@ -61,8 +62,7 @@ public class OracleUsersDAO implements UsersDAO{
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
 
@@ -104,8 +104,7 @@ public class OracleUsersDAO implements UsersDAO{
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
 
@@ -141,8 +140,7 @@ public class OracleUsersDAO implements UsersDAO{
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
     }
@@ -168,8 +166,7 @@ public class OracleUsersDAO implements UsersDAO{
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+               log.error("SQLException"+e);
             }
         }
 

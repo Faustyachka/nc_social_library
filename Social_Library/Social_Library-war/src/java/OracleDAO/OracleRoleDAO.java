@@ -12,12 +12,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.apache.log4j.Logger;
+
 /**
  *
  * @author mazafaka
  */
 public class OracleRoleDAO implements RoleDAO{
-
+    public static final Logger log=Logger.getLogger(OracleAuthorDAO.class);
     private Oracle conn1;
     private static final String selectQuery="SELECT * FROM role WHERE id=?";
     private static final String deleteQuery="DELETE FROM role WHERE id =?";
