@@ -6,7 +6,10 @@ package model.registration;
 
 import Controller.Command;
 import Controller.ConfigurationManager;
+import TransferObject.Role;
+import TransferObject.Users;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,7 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sociallibrary.dao.Dao;
-import sociallibrary.entity.Users;
+import OracleDAO.OracleUsersDAO;
 import model.email.EmailSender;
 
 /**
@@ -29,23 +32,21 @@ public class Registration implements Command {
 
         response.setContentType("text/html;charset=UTF-8");
         Users users = new Users();
-        //полная лажа, пока нету бд с секвинсами
-        Random generator = new Random();
-        int rand = generator.nextInt(1000000) + 50;
-        users.setId(rand);
-        users.setFirsName(request.getParameter("firsName"));
+        users.setFirstName(request.getParameter("firsName"));
         users.setLastName(request.getParameter("lastName"));
         users.setEmail(request.getParameter("email"));
         users.setLogin(request.getParameter("login"));
         users.setPassword(request.getParameter("password"));
-        users.setGender(1);
-        users.setConfirmed(0);
-        users.setBanned(1);
-        users.setRegistrationData("2013/12/25");
-        users.setNotify(1);
-        users.setRole(1);
-        Dao dao = new Dao();
-        dao.createUsers(users);
+        users.setGender((short)1);
+        users.setConfirmed((short)0);
+        users.setBanned((short)0);
+        users.setRegistrationDate(new Date());
+        users.setNotify((short)0);
+        Role role = new Role();
+        role.setId((short)3);
+        users.setRole(role);
+        OracleUsersDAO daoUser = new OracleUsersDAO();
+        daoUser.createUsers(users);
         String mailSub = "Registration on Social Library";
         String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Servlet?users=" + users.getLogin() + "&command=confirmUser'";
         String mail[] = new String[1];

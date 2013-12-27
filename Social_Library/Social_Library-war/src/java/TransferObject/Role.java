@@ -35,6 +35,7 @@ public class Role implements Serializable {
     private List<Users> usersList;
 
     public Role() {
+        this.id = 1;
     }
 
     public Role(Short id) {

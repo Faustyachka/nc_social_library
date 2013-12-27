@@ -25,7 +25,7 @@ public class OracleUsersDAO implements UsersDAO{
     private Connection conn;
     private static final String selectQuery="SELECT * FROM ? WHERE id=?";
     private static final String deleteQuery="DELETE FROM ? WHERE id =?";
-    private static final String insertUsersQuery="INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '11.02.2013', ?)";
+    private static final String insertUsersQuery="INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, TO_DATE('11.02.2013','dd.mm.yyyy'), ?)";
     private static final String updateUsersQuery="UPDATE users SET first_name = ?," +
                         "last_name = ?, email = ?, login = ?, password = ?," +
                         "gender = ?, confirmed = ?, banned = ?, registration_date = '01.01.2013'," +
