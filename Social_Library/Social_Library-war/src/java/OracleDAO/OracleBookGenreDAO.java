@@ -13,13 +13,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import org.apache.log4j.Logger;
 /**
  *
  * @author mazafaka
  */
 public class OracleBookGenreDAO implements BookGenreDAO{
-
+    public static final Logger log=Logger.getLogger(OracleAuthorDAO.class);
     private Oracle conn1;
     private static final String selectQuery="SELECT * FROM book_genre WHERE id=?";
     private static final String deleteQuery="DELETE FROM book_genre WHERE id =?";
