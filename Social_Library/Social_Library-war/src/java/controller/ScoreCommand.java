@@ -22,7 +22,6 @@ class ScoreCommand implements Command {
 
     
 
-
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page=null;
             
