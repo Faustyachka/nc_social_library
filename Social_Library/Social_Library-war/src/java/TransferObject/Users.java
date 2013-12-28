@@ -83,6 +83,23 @@ public class Users implements Serializable {
         users.add(this);
     }
 
+    public Users(Users src) {
+        this.banned=src.getBanned();
+        this.catalogList=src.getCatalogList();
+        this.confirmed=src.getConfirmed();
+        this.email=src.getEmail();
+        this.firstName=src.getFirstName();
+        this.gender=src.getGender();
+        this.id=src.getId();
+        this.lastName=src.getLastName();
+        this.login=src.getLogin();
+        this.notify=src.getNotify();
+        this.password=src.getPassword();
+        this.ratingList = src.getRatingList();
+        this.registrationDate=src.getRegistrationDate();
+        this.role = src.getRole();
+    }
+
     public Long getId() {
         return id;
     }
