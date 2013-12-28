@@ -9,10 +9,12 @@ package OracleDAO;
 import OracleConnection.Oracle;
 import TransferObject.BookGenre;
 import TransferObjectInterface.BookGenreDAO;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 /**
  *
@@ -43,7 +45,9 @@ public class OracleBookGenreDAO implements BookGenreDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleBookGenreDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -77,7 +81,9 @@ public class OracleBookGenreDAO implements BookGenreDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleBookGenreDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -106,7 +112,9 @@ public class OracleBookGenreDAO implements BookGenreDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleBookGenreDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -133,7 +141,9 @@ public class OracleBookGenreDAO implements BookGenreDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleBookGenreDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {

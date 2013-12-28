@@ -9,10 +9,12 @@ package OracleDAO;
 import OracleConnection.Oracle;
 import TransferObject.Author;
 import TransferObjectInterface.AuthorDAO;
+import java.io.FileNotFoundException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 //import org.apache.taglibs.standard.lang.jstl.Logger;
 
@@ -51,7 +53,9 @@ public class OracleAuthorDAO implements AuthorDAO{
             }
             
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleAuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -86,7 +90,9 @@ public class OracleAuthorDAO implements AuthorDAO{
             }
             
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleAuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -115,7 +121,9 @@ public class OracleAuthorDAO implements AuthorDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleAuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -141,7 +149,9 @@ public class OracleAuthorDAO implements AuthorDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleAuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {

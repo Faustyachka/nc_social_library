@@ -8,10 +8,12 @@ package OracleDAO;
 import OracleConnection.Oracle;
 import TransferObjectInterface.RoleDAO;
 import TransferObject.Role;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -20,12 +22,12 @@ import org.apache.log4j.Logger;
  */
 public class OracleRoleDAO implements RoleDAO{
     public static final Logger log=Logger.getLogger(OracleAuthorDAO.class);
-    private Oracle conn1;
+    private Oracle conn1 = new Oracle();
     private static final String selectQuery="SELECT * FROM role WHERE id=?";
     private static final String deleteQuery="DELETE FROM role WHERE id =?";
-    private static final String insertRoleQuery="INSERT INTO role VALUES(?, ?)";
+    private static final String insertRoleQuery="INSERT INTO role (ID, NAME) VALUES(ROLE_ID.nextval, ?)";
     private static final String updateRoleQuery="UPDATE role SET name =? where id=?";
-    private Role role;
+    private Role role = new Role();
 
     public Role readRole(int id)
     {
@@ -53,7 +55,9 @@ public class OracleRoleDAO implements RoleDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleRoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -72,9 +76,7 @@ public class OracleRoleDAO implements RoleDAO{
         try
         {
             PreparedStatement pstmt = conn.prepareStatement(insertRoleQuery);
-
-            pstmt.setInt(1, role.getId());
-            pstmt.setString(2, role.getName());
+            pstmt.setString(1, role.getName());
 
             pstmt.executeUpdate();
         }
@@ -83,7 +85,9 @@ public class OracleRoleDAO implements RoleDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleRoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -110,7 +114,9 @@ public class OracleRoleDAO implements RoleDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleRoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -138,7 +144,9 @@ public class OracleRoleDAO implements RoleDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleRoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {

@@ -8,10 +8,12 @@ package OracleDAO;
 import OracleConnection.Oracle;
 import TransferObjectInterface.CatalogDAO;
 import TransferObject.Catalog;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 /**
  *
@@ -43,7 +45,9 @@ public class OracleCatalogDAO implements CatalogDAO{
              conn.close();
          }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleCatalogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -77,7 +81,9 @@ public class OracleCatalogDAO implements CatalogDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleCatalogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -105,7 +111,9 @@ public class OracleCatalogDAO implements CatalogDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleCatalogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -132,7 +140,9 @@ public class OracleCatalogDAO implements CatalogDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleCatalogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {

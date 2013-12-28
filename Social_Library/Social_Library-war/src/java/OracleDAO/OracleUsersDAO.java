@@ -8,11 +8,13 @@ package OracleDAO;
 import OracleConnection.Oracle;
 import TransferObject.Users;
 import TransferObjectInterface.UsersDAO;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -21,12 +23,12 @@ import org.apache.log4j.Logger;
  */
 public class OracleUsersDAO implements UsersDAO{
     public static final Logger log=Logger.getLogger(OracleAuthorDAO.class);
-   private Oracle conn1;
+    private Oracle conn1 = new Oracle();
     private ResultSet rs;
     private Connection conn;
     private static final String selectQuery="SELECT * FROM ? WHERE id=?";
     private static final String deleteQuery="DELETE FROM ? WHERE id =?";
-    private static final String insertUsersQuery="INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, TO_DATE('11.02.2013','dd.mm.yyyy'), ?)";
+    private static final String insertUsersQuery="INSERT INTO users VALUES ( users_id.nextval,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String updateUsersQuery="UPDATE users SET first_name = ?," +
                         "last_name = ?, email = ?, login = ?, password = ?," +
                         "gender = ?, confirmed = ?, banned = ?, registration_date = ?," +
@@ -34,23 +36,23 @@ public class OracleUsersDAO implements UsersDAO{
 
     public void createUsers(Users users) {
         try{
-        Connection conn=conn1.getConnection();
+        conn=conn1.getConnection();
         try
         {
             PreparedStatement pstmt = conn.prepareStatement(insertUsersQuery);
 
-            pstmt.setLong(1, users.getId());
-            pstmt.setString(2, users.getFirstName());
-            pstmt.setString(3, users.getLastName());
-            pstmt.setString(4, users.getEmail());
-            pstmt.setString(5, users.getLogin());
-            pstmt.setString(6, users.getPassword());
-            pstmt.setInt(7, users.getGender());
-            pstmt.setInt(8, users.getConfirmed());
-            pstmt.setInt(9, users.getBanned());
-            pstmt.setDate(10,(Date) users.getRegistrationDate());
-            pstmt.setInt(11, users.getNotify());
-
+            //pstmt.setLong(1, users.getId());
+            pstmt.setString(1, users.getFirstName());
+            pstmt.setString(2, users.getLastName());
+            pstmt.setString(3, users.getEmail());
+            pstmt.setString(4, users.getLogin());
+            pstmt.setString(5, users.getPassword());
+            pstmt.setInt(6, users.getGender());
+            pstmt.setInt(7, users.getConfirmed());
+            pstmt.setInt(8, users.getBanned());
+            pstmt.setDate(9,(Date) users.getRegistrationDate());
+            pstmt.setInt(10, users.getNotify());
+            pstmt.setInt(11, users.getRole().getId());
             pstmt.executeUpdate();
         }
         finally
@@ -58,7 +60,9 @@ public class OracleUsersDAO implements UsersDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleUsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -100,7 +104,9 @@ public class OracleUsersDAO implements UsersDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleUsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -136,7 +142,9 @@ public class OracleUsersDAO implements UsersDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleUsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -162,7 +170,9 @@ public class OracleUsersDAO implements UsersDAO{
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleUsersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {

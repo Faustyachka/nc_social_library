@@ -8,10 +8,12 @@ package OracleDAO;
 import OracleConnection.Oracle;
 import TransferObject.BookAuthor;
 import TransferObjectInterface.BookAuthorDAO;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -44,7 +46,9 @@ public class OracleBookAuthorDAO implements BookAuthorDAO {
             conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleBookAuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -76,7 +80,9 @@ public class OracleBookAuthorDAO implements BookAuthorDAO {
                 conn.close();
             }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleBookAuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -104,7 +110,9 @@ public class OracleBookAuthorDAO implements BookAuthorDAO {
              conn.close();
         }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleBookAuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
@@ -130,7 +138,9 @@ public class OracleBookAuthorDAO implements BookAuthorDAO {
              conn.close();
          }
         }
-        catch (SQLException e)
+        catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OracleBookAuthorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch (SQLException e)
         {
             while(e!=null)
             {
