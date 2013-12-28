@@ -6,6 +6,7 @@
 package TransferObject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -29,6 +30,9 @@ import javax.persistence.TemporalType;
 @Table(name = "USERS")
 @NamedQueries({@NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"), @NamedQuery(name = "Users.findById", query = "SELECT u FROM Users u WHERE u.id = :id"), @NamedQuery(name = "Users.findByFirstName", query = "SELECT u FROM Users u WHERE u.firstName = :firstName"), @NamedQuery(name = "Users.findByLastName", query = "SELECT u FROM Users u WHERE u.lastName = :lastName"), @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email"), @NamedQuery(name = "Users.findByLogin", query = "SELECT u FROM Users u WHERE u.login = :login"), @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password"), @NamedQuery(name = "Users.findByGender", query = "SELECT u FROM Users u WHERE u.gender = :gender"), @NamedQuery(name = "Users.findByConfirmed", query = "SELECT u FROM Users u WHERE u.confirmed = :confirmed"), @NamedQuery(name = "Users.findByBanned", query = "SELECT u FROM Users u WHERE u.banned = :banned"), @NamedQuery(name = "Users.findByRegistrationDate", query = "SELECT u FROM Users u WHERE u.registrationDate = :registrationDate"), @NamedQuery(name = "Users.findByNotify", query = "SELECT u FROM Users u WHERE u.notify = :notify")})
 public class Users implements Serializable {
+    //static storage for all users
+    private static List<Users> users;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -65,11 +69,18 @@ public class Users implements Serializable {
     @OneToMany(mappedBy = "users")
     private List<Rating> ratingList;
 
+
     public Users() {
+        if(users == null) users = new ArrayList<Users>();
+
+        users.add(this);
     }
 
     public Users(Long id) {
+        if(users == null) users = new ArrayList<Users>();
         this.id = id;
+
+        users.add(this);
     }
 
     public Long getId() {
