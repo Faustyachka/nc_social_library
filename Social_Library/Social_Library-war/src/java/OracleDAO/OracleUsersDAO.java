@@ -22,13 +22,13 @@ import org.apache.log4j.Logger;
  * @author mazafaka
  */
 public class OracleUsersDAO implements UsersDAO{
-    public static final Logger log=Logger.getLogger(OracleAuthorDAO.class);
+    public static final Logger log=Logger.getLogger(OracleUsersDAO.class);
     private Oracle conn1 = new Oracle();
     private ResultSet rs;
     private Connection conn;
     private static final String selectQuery="SELECT * FROM ? WHERE id=?";
     private static final String deleteQuery="DELETE FROM ? WHERE id =?";
-    private static final String insertUsersQuery="INSERT INTO users VALUES ( users_id.nextval,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String insertUsersQuery="INSERT INTO users VALUES ( users_id.nextval,?, ?, ?, ?, ?, ?, ?, ?, TO_DATE('29/12/2013','dd/mm/yyyy'), ?, ?)";
     private static final String updateUsersQuery="UPDATE users SET first_name = ?," +
                         "last_name = ?, email = ?, login = ?, password = ?," +
                         "gender = ?, confirmed = ?, banned = ?, registration_date = ?," +
@@ -50,9 +50,9 @@ public class OracleUsersDAO implements UsersDAO{
             pstmt.setInt(6, users.getGender());
             pstmt.setInt(7, users.getConfirmed());
             pstmt.setInt(8, users.getBanned());
-            pstmt.setDate(9,(Date) users.getRegistrationDate());
-            pstmt.setInt(10, users.getNotify());
-            pstmt.setInt(11, users.getRole().getId());
+//          pstmt.setDate(9,(Date) users.getRegistrationDate());
+            pstmt.setInt(9, users.getNotify());
+            pstmt.setInt(10, users.getRole().getId());
             pstmt.executeUpdate();
         }
         finally

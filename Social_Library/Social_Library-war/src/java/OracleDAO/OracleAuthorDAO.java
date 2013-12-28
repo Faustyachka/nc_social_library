@@ -16,7 +16,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
-//import org.apache.taglibs.standard.lang.jstl.Logger;
 
 
 /**

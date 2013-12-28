@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
  * @author mazafaka
  */
 public class OracleRoleDAO implements RoleDAO{
-    public static final Logger log=Logger.getLogger(OracleAuthorDAO.class);
+    public static final Logger log=Logger.getLogger(OracleRoleDAO.class);
     private Oracle conn1 = new Oracle();
     private static final String selectQuery="SELECT * FROM role WHERE id=?";
     private static final String deleteQuery="DELETE FROM role WHERE id =?";

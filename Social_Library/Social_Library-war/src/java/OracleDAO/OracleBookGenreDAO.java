@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
  * @author mazafaka
  */
 public class OracleBookGenreDAO implements BookGenreDAO{
-    public static final Logger log=Logger.getLogger(OracleAuthorDAO.class);
+    //public static final Logger log=Logger.getLogger(OracleBookGenreDAO.class);
     private Oracle conn1;
     private static final String selectQuery="SELECT * FROM book_genre WHERE id=?";
     private static final String deleteQuery="DELETE FROM book_genre WHERE id =?";

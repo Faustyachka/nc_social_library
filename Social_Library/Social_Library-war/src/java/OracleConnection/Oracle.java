@@ -28,11 +28,6 @@ public class Oracle {
             Context ic = new InitialContext();
             dataSource = (DataSource) ic.lookup("jdbc/test");
             conn = dataSource.getConnection();
-//            ResourceBundle jdbc = ResourceBundle.getBundle("connect", Locale.ENGLISH);
-//            //ResourceBundle name = ResourceBundle.getBundle("name");
-//            //ResourceBundle password = ResourceBundle.getBundle("password");
-//            conn = DriverManager.getConnection(jdbc.getString("jdbc"), jdbc.getString("name"), jdbc.getString("password"));
-            conn = DriverManager.getConnection("thin:@localhost:1521:XE","faust","");
             conn.setAutoCommit(true);
         }
         catch(NamingException e)

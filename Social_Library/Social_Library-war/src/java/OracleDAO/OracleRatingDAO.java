@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
  * @author mazafaka
  */
 public class OracleRatingDAO implements RatingDAO{
-    public static final Logger log=Logger.getLogger(OracleAuthorDAO.class);
+    public static final Logger log=Logger.getLogger(OracleRatingDAO.class);
     private Oracle conn1;
     private static final String selectQuery="SELECT * FROM rating WHERE id=?";
     private static final String deleteQuery="DELETE FROM rating WHERE id =?";

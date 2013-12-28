@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
  * @author mazafaka
  */
 public class OracleLibraryDAO implements LibraryDAO{
-    public static final Logger log=Logger.getLogger(OracleAuthorDAO.class);
+    public static final Logger log=Logger.getLogger(OracleLibraryDAO.class);
     private Oracle conn1;
     private static final String selectQuery="SELECT * FROM library WHERE id=?";
     private static final String deleteQuery="DELETE FROM library WHERE id =?";

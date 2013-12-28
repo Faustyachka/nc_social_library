@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
  * @author mazafaka
  */
 public class OracleGenreDAO implements GenreDAO{
-    public static final Logger log=Logger.getLogger(OracleAuthorDAO.class);
+    public static final Logger log=Logger.getLogger(OracleGenreDAO.class);
     private Oracle conn1;
     private static final String selectQuery="SELECT * FROM genre WHERE id=?";
     private static final String deleteQuery="DELETE FROM genre WHERE id =?";
