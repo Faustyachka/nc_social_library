@@ -26,7 +26,7 @@
                                        {this.value = ''; this.style.color = '#000';}" onblur="
                                        if (this.value == '') {this.value = 'Login';
                                            this.style.color = '#777';}" /></td>
-                       </tr>
+                    </tr>
                     <tr>
                         <td><input type="password" name="password" style="color: #777;"
                                    value="Password" onfocus="if (this.value == 'Password')

@@ -36,8 +36,6 @@ public class SignIn implements Command {
         } else {
             page = ConfigurationManager.REGISTR_PAGE;
         }
-
-        //////
         return null;
     }
 }

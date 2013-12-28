@@ -32,7 +32,6 @@ import javax.persistence.TemporalType;
 public class Users implements Serializable {
     //static storage for all users
     private static List<Users> users;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
