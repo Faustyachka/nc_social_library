@@ -25,11 +25,8 @@ public class OracleBookGenreDAO implements BookGenreDAO{
     private static final String deleteQuery="DELETE FROM book_genre WHERE id =?";
      private static final String insertBookGenreQuery="INSERT INTO book_genre VALUES (?, ?, ?)";
     private static final String updateBookGenreQuery="UPDATE book_genre SET book=?, genre=? WHERE id=?";
-    private BookGenre bookGenre;
 
     public void createBookGenre(BookGenre bookGenre) {
-        try
-        {
         Connection conn=conn1.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(insertBookGenreQuery);
@@ -38,25 +35,17 @@ public class OracleBookGenreDAO implements BookGenreDAO{
 
             pstmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
     }
 
     public BookGenre readBookGenre(int id) {
-        bookGenre = new BookGenre();
-        try
-        {
+        BookGenre bookGenre = new BookGenre();
         Connection conn=conn1.getConnection();
         try
         {
@@ -72,17 +61,11 @@ public class OracleBookGenreDAO implements BookGenreDAO{
             }
             rs.close();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
 
@@ -90,8 +73,6 @@ public class OracleBookGenreDAO implements BookGenreDAO{
     }
 
     public void updateBookGenre(BookGenre bookGenreOld, BookGenre bookGenreNew) {
-        try
-        {
         Connection conn=conn1.getConnection();
         try
         {
@@ -101,24 +82,16 @@ public class OracleBookGenreDAO implements BookGenreDAO{
 
             pstmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+               log.error("SQLException"+e);
             }
         }
     }
 
     public void deleteBookGenre(BookGenre bookGenre) {
-        try
-        {
         Connection conn=conn1.getConnection();
         try
         {
@@ -128,17 +101,11 @@ public class OracleBookGenreDAO implements BookGenreDAO{
 
             stmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
     }

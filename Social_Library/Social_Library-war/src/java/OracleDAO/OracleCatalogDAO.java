@@ -24,11 +24,8 @@ public class OracleCatalogDAO implements CatalogDAO{
     private static final String deleteQuery="DELETE FROM catalog WHERE id =?";
     private static final String insertCatalogQuery="INSERT INTO catalog VALUES(?, ?, ?)";
     private static final String updateCatalogQuery="UPDATE catalog SET users=?, book=? WHERE id=?";
-    private Catalog catalog;
 
     public void createCatalog(Catalog catalog) {
-        try
-        {
         Connection conn=conn1.getConnection();
          try
         {
@@ -38,25 +35,17 @@ public class OracleCatalogDAO implements CatalogDAO{
 
             pstmt.executeUpdate();
         }
-         finally
-         {
-             conn.close();
-         }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
     }
 
     public Catalog readCatalog(int id) {
-        catalog = new Catalog();
-        try
-        {
+        Catalog catalog = new Catalog();
         Connection conn=conn1.getConnection();
         try
         {
@@ -72,17 +61,11 @@ public class OracleCatalogDAO implements CatalogDAO{
             }
             rs.close();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
 
@@ -90,7 +73,6 @@ public class OracleCatalogDAO implements CatalogDAO{
     }
 
     public void updateCatalog(Catalog catalogOld, Catalog catalogNew) {
-        try{
         Connection conn=conn1.getConnection();
         try
         {
@@ -100,24 +82,16 @@ public class OracleCatalogDAO implements CatalogDAO{
 
             pstmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
     }
 
     public void deleteCatalog(Catalog catalog) {
-        try
-        {
         Connection conn=conn1.getConnection();
         try
         {
@@ -127,17 +101,11 @@ public class OracleCatalogDAO implements CatalogDAO{
 
             stmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+               log.error("SQLException"+e);
             }
         }
     }

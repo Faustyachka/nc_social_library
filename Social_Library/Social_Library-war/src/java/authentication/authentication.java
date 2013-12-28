@@ -5,81 +5,58 @@
 
 package authentication;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import OracleConnection.Oracle;
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import org.apache.log4j.Logger;
 
 /**
  *
- * @author Vladimir Ermolenko
+ * @author mazafaka
  */
 public class authentication extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet authentication</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>You were successfully authenticated</h1>");
-            //out.println("<h1>Servlet authentication at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-            
-        } finally { 
-            out.close();
-        }
-    } 
+    public static final Logger log=Logger.getLogger(authentication.class);
+    private Oracle conn1;
+    private ServletConfig config;
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    } 
+    public void init(ServletConfig config)
+        throws ServletException{
+            this.config=config;
+ }
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+  public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException,IOException{
+  PrintWriter out = response.getWriter();
+  Connection connection=null;
+  ResultSet rs;
+  String userName=new String("");
+  String passwrd=new String("");
+  response.setContentType("text/html");
+  try {
+  String sql = "select user,password from users";
+  Statement stat = connection.createStatement();
+  stat.executeQuery (sql);
+  rs = stat.getResultSet();
+  while (rs.next ()){
+  userName=rs.getString("user");
+  passwrd=rs.getString("password");
+  }
+  rs.close ();
+  stat.close ();
+  }catch(Exception e){
+  System.out.println("Exception is ;"+e);
+  }
+  if(userName.equals(request.getParameter("user")) &&
+  passwrd.equals(request.getParameter("pass"))){
+  out.println("User Authenticated");
+  }
+  else{
+  out.println("You are not an authentic person");
+  }
+  }
 
 }

@@ -26,11 +26,9 @@ public class OracleLibraryDAO implements LibraryDAO{
     private static final String updateLibraryQuery="UPDATE library SET isbn = ?, title = ?," +
                                             "cover = ?, description = ?, pages = ?," +
                                             "author = ?, genre = ? WHERE id=?";
-    private Library library;
 
     public void createLibrary(Library library) {
-        try
-        {
+       
         Connection conn=conn1.getConnection();
         try
         {
@@ -47,25 +45,17 @@ public class OracleLibraryDAO implements LibraryDAO{
 
             pstmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
     }
 
     public Library readLibrary(int id) {
-       library = new Library();
-       try
-       {
+       Library library = new Library();
        Connection conn=conn1.getConnection();
         try
         {
@@ -88,17 +78,11 @@ public class OracleLibraryDAO implements LibraryDAO{
             }
             rs.close();
         }
-        finally
-        {
-             conn.close();
-        }
-       }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
 
@@ -106,8 +90,7 @@ public class OracleLibraryDAO implements LibraryDAO{
     }
 
     public void updateLibrary(Library libraryOld, Library libraryNew) {
-        try
-        {
+        
         Connection conn=conn1.getConnection();
         try
         {
@@ -124,24 +107,17 @@ public class OracleLibraryDAO implements LibraryDAO{
 
             pstmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
     }
 
     public void deleteLibrary(Library library) {
-        try
-        {
+       
         Connection conn=conn1.getConnection();
         try
         {
@@ -151,17 +127,11 @@ public class OracleLibraryDAO implements LibraryDAO{
 
             stmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
     }

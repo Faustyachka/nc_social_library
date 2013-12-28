@@ -25,11 +25,10 @@ public class OracleRatingDAO implements RatingDAO{
     private static final String deleteQuery="DELETE FROM rating WHERE id =?";
     private static final String insertRatingQuery="INSERT INTO rating VALUES (?, ?, ?, ?)";
     private static final String updateRatingQuery="UPDATE rating SET rate=?, users=?, book=? WHERE id=?";
-    private Rating rating;
+   
 
     public void createRating(Rating rating) {
-        try
-        {
+        
         Connection conn=conn1.getConnection();
         try
         {
@@ -40,25 +39,18 @@ public class OracleRatingDAO implements RatingDAO{
 
             pstmt.executeUpdate();
         }
-        finally
-        {
-             conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+               log.error("SQLException"+e);
             }
         }
     }
 
     public Rating readRating(int id) {
-        rating = new Rating();
-        try
-        {
+        Rating rating = new Rating();
+        
         Connection conn=conn1.getConnection();
         try
         {
@@ -74,17 +66,12 @@ public class OracleRatingDAO implements RatingDAO{
             }
             rs.close();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
+       
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
 
@@ -92,8 +79,7 @@ public class OracleRatingDAO implements RatingDAO{
     }
 
     public void updateRating(Rating ratingOld, Rating ratingNew) {
-        try
-        {
+       
         Connection conn=conn1.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(updateRatingQuery);
@@ -103,24 +89,17 @@ public class OracleRatingDAO implements RatingDAO{
 
             pstmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+               log.error("SQLException"+e);
             }
         }
     }
 
     public void deleteRating(Rating rating) {
-        try
-        {
+       
         Connection conn=conn1.getConnection();
         try
         {
@@ -130,17 +109,11 @@ public class OracleRatingDAO implements RatingDAO{
 
             stmt.executeUpdate();
         }
-        finally
-        {
-             conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
 

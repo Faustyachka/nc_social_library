@@ -25,13 +25,11 @@ public class OracleRoleDAO implements RoleDAO{
     private static final String deleteQuery="DELETE FROM role WHERE id =?";
     private static final String insertRoleQuery="INSERT INTO role VALUES(?, ?)";
     private static final String updateRoleQuery="UPDATE role SET name =? where id=?";
-    private Role role;
 
     public Role readRole(int id)
     {
-        role = new Role();
-        try
-        {
+        Role role = new Role();
+        
         Connection conn=conn1.getConnection();
         try
         {
@@ -48,17 +46,12 @@ public class OracleRoleDAO implements RoleDAO{
             }
             rs.close();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
+       
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
 
@@ -66,8 +59,7 @@ public class OracleRoleDAO implements RoleDAO{
     }
 
     public void createRole(Role role) {
-        try
-        {
+        
         Connection conn=conn1.getConnection();
         try
         {
@@ -78,24 +70,17 @@ public class OracleRoleDAO implements RoleDAO{
 
             pstmt.executeUpdate();
         }
-        finally
-        {   
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
     }
 
     public void deleteRole(Role role) {
-        try
-        {
+        
         Connection conn=conn1.getConnection();
         try
         {
@@ -105,24 +90,18 @@ public class OracleRoleDAO implements RoleDAO{
 
             stmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
+        
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
     }
 
     public void updateRole(Role roleNew, Role roleOld) {
-        try
-        {
+        
         Connection conn=conn1.getConnection();
         try
         {
@@ -133,17 +112,12 @@ public class OracleRoleDAO implements RoleDAO{
 
             pstmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
+        
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
     }

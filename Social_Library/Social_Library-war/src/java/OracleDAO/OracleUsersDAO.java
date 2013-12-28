@@ -22,8 +22,6 @@ import org.apache.log4j.Logger;
 public class OracleUsersDAO implements UsersDAO{
     public static final Logger log=Logger.getLogger(OracleAuthorDAO.class);
    private Oracle conn1;
-    private ResultSet rs;
-    private Connection conn;
     private static final String selectQuery="SELECT * FROM ? WHERE id=?";
     private static final String deleteQuery="DELETE FROM ? WHERE id =?";
     private static final String insertUsersQuery="INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, TO_DATE('11.02.2013','dd.mm.yyyy'), ?)";
@@ -33,7 +31,7 @@ public class OracleUsersDAO implements UsersDAO{
                         "notify = ? WHERE id = ?";
 
     public void createUsers(Users users) {
-        try{
+        
         Connection conn=conn1.getConnection();
         try
         {
@@ -53,11 +51,7 @@ public class OracleUsersDAO implements UsersDAO{
 
             pstmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
+        
         catch (SQLException e)
         {
             while(e!=null)
@@ -69,9 +63,7 @@ public class OracleUsersDAO implements UsersDAO{
     }
 
     public Users readUsers(int id) {
-        users = new Users();
-        try
-        {
+        Users users = new Users();
         Connection conn=conn1.getConnection();
         try
         {
@@ -95,11 +87,7 @@ public class OracleUsersDAO implements UsersDAO{
             }
             rs.close();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
+        
         catch (SQLException e)
         {
             while(e!=null)
@@ -112,8 +100,7 @@ public class OracleUsersDAO implements UsersDAO{
     }
 
     public void updateUsers(Users usersOld, Users usersNew) {
-        try
-        {
+        
         Connection conn=conn1.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(updateUsersQuery);
@@ -131,11 +118,7 @@ public class OracleUsersDAO implements UsersDAO{
 
             pstmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
+       
         catch (SQLException e)
         {
             while(e!=null)
@@ -146,8 +129,7 @@ public class OracleUsersDAO implements UsersDAO{
     }
 
     public void deleteUsers(Users users) {
-        try
-        {
+       
         Connection conn=conn1.getConnection();
         try
         {
@@ -157,11 +139,7 @@ public class OracleUsersDAO implements UsersDAO{
 
             stmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
+        
         catch (SQLException e)
         {
             while(e!=null)

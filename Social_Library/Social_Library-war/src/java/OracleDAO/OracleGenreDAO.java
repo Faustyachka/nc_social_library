@@ -24,11 +24,8 @@ public class OracleGenreDAO implements GenreDAO{
     private static final String deleteQuery="DELETE FROM genre WHERE id =?";
     private static final String insertGenreQuery="INSERT INTO genre VALUES (?, ?)";
     private static final String updateGenreQuery="UPDATE genre SET genre=? WHERE id=?";
-    private Genre genre;
 
     public void createGenre(Genre genre) {
-        try
-        {
         Connection conn=conn1.getConnection();
         try
         {
@@ -39,25 +36,17 @@ public class OracleGenreDAO implements GenreDAO{
 
             pstmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
     }
 
     public Genre readGenre(int id) {
-        genre = new Genre();
-        try
-        {
+        Genre genre = new Genre();
         Connection conn=conn1.getConnection();
         try
         {
@@ -74,17 +63,11 @@ public class OracleGenreDAO implements GenreDAO{
             }
             rs.close();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
 
@@ -92,8 +75,6 @@ public class OracleGenreDAO implements GenreDAO{
     }
 
     public void updateGenre(Genre genreOld, Genre genreNew) {
-        try
-        {
         Connection conn=conn1.getConnection();
         try
         {
@@ -104,24 +85,17 @@ public class OracleGenreDAO implements GenreDAO{
 
             pstmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+                log.error("SQLException"+e);
             }
         }
     }
 
     public void deleteGenre(Genre genre) {
-        try
-        {
+      
         Connection conn=conn1.getConnection();
         try
         {
@@ -131,17 +105,11 @@ public class OracleGenreDAO implements GenreDAO{
 
             stmt.executeUpdate();
         }
-        finally
-        {
-            conn.close();
-        }
-        }
         catch (SQLException e)
         {
             while(e!=null)
             {
-                e.printStackTrace();
-                e=e.getNextException();
+               log.error("SQLException"+e);
             }
         }
     }

@@ -31,7 +31,6 @@ public class OracleAuthorDAO implements AuthorDAO{
     private static final String deleteQuery="DELETE FROM author WHERE id =?";
     private static final String insertAuthorQuery="INSERT INTO author VALUES (?, ?)";
     private static final String updateAuthorQuery="UPDATE author SET author=? WHERE id=?";
-    private Author author;
 
     public void createAuthor(Author author) {
         try
@@ -62,7 +61,7 @@ public class OracleAuthorDAO implements AuthorDAO{
     }
 
     public Author readAuthor(int id) {
-        author = new Author();
+        Author author = new Author();
         try
         {
             Connection conn=conn1.getConnection();
