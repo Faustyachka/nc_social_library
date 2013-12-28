@@ -44,7 +44,7 @@ public class Registration implements Command {
         role.setName("beginner");
         
         users.setId(status1.longValue());
-        users.setFirstName(request.getParameter("firsName"));
+        users.setFirstName(request.getParameter("firstName"));
         users.setLastName(request.getParameter("lastName"));
         users.setEmail(request.getParameter("email"));
         users.setLogin(request.getParameter("login"));
