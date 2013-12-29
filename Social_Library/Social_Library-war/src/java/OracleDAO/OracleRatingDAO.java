@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
 public class OracleRatingDAO implements RatingDAO {
 
     public static final Logger log = Logger.getLogger(OracleAuthorDAO.class);
-    private Oracle conn1;
+    private Oracle conn1 = new Oracle();
     private static final String selectQuery = "SELECT * FROM rating WHERE id=?";
     private static final String deleteQuery = "DELETE FROM rating WHERE id =?";
     private static final String insertRatingQuery = "INSERT INTO rating VALUES (rating_id.nextval, ?, ?, ?)";

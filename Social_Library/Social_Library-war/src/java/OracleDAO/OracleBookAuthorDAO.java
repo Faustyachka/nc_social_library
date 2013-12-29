@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
 public class OracleBookAuthorDAO implements BookAuthorDAO {
 
     public static final Logger log = Logger.getLogger(OracleBookAuthorDAO.class);
-    private Oracle conn1;
+    private Oracle conn1 = new Oracle();
     private static final String selectQuery = "SELECT * FROM book_author WHERE id=?";
     private static final String deleteQuery = "DELETE FROM book_author WHERE id =?";
     private static final String insertBookAuthorQuery = "INSERT INTO book_author VALUES (book_author.nextval, ?, ?)";

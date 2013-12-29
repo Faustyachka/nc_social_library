@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 public class OracleRoleDAO implements RoleDAO {
 
     public static final Logger log = Logger.getLogger(OracleRoleDAO.class);
-    private Oracle conn1;
+    private Oracle conn1 = new Oracle();
     private static final String selectQuery = "SELECT * FROM role WHERE id=?";
     private static final String deleteQuery = "DELETE FROM role WHERE id =?";
     private static final String insertRoleQuery = "INSERT INTO role VALUES(role_id.nextval, ?)";

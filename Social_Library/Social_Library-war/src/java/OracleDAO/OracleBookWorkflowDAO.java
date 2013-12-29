@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
  */
 public class OracleBookWorkflowDAO implements BookWorkflowDAO{
     public static final Logger log = Logger.getLogger(OracleBookWorkflowDAO.class);
-    private Oracle conn1;
+    private Oracle conn1 = new Oracle();
     private static final String selectQuery = "SELECT * FROM BookWorkflow WHERE id=?";
     private static final String deleteQuery = "DELETE FROM BookWorkflow WHERE id =?";
     private static final String insertBookWorkflowQuery = "INSERT INTO BookWorkflow VALUES(BookWorkflow_id.nextval, ?)";
