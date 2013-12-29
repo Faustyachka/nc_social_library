@@ -6,7 +6,9 @@
 package OracleDAO;
 
 import OracleConnection.Oracle;
+import TransferObject.Role;
 import TransferObject.Users;
+import TransferObjectInterface.RoleDAO;
 import TransferObjectInterface.UsersDAO;
 import java.sql.Connection;
 import java.sql.Date;
@@ -26,12 +28,11 @@ public class OracleUsersDAO implements UsersDAO{
     private Oracle conn1 = new Oracle();
     private static final String selectQuery="SELECT * FROM users WHERE id=?";
     private static final String deleteQuery="DELETE FROM users WHERE id =?";
-    private static final String insertUsersQuery="INSERT INTO users (ID,FIRST_NAME,LAST_NAME,EMAIL,LOGIN,PASSWORD,GENDER,CONFIRMED,BANNED,REGISTRATION_DATE,NOTIFY,ROLE) " +
-            " VALUES (users_id.nextval, ?, ?, ?, ?, ?, ?, ?, ?, TO_DATE('11.02.2013','dd.mm.yyyy'), ?,?)";
+    private static final String insertUsersQuery="INSERT INTO users VALUES (users_id.nextval, ?, ?, ?, ?, ?, ?, ?, ?, TO_DATE('11.02.2013','dd.mm.yyyy'), ?,?)";
     private static final String updateUsersQuery="UPDATE users SET first_name = ?," +
                         "last_name = ?, email = ?, login = ?, password = ?," +
                         "gender = ?, confirmed = ?, banned = ?, registration_date = ?," +
-                        "notify = ? WHERE id = ?";
+                        "notify = ? role = ? WHERE id = ?";
 
     public void createUsers(Users users) {
     BasicConfigurator.configure();
@@ -73,6 +74,7 @@ public class OracleUsersDAO implements UsersDAO{
             PreparedStatement stmt = conn.prepareStatement(selectQuery);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
+            RoleDAO r = new OracleRoleDAO();
 
            while (rs.next())
             {
@@ -87,6 +89,7 @@ public class OracleUsersDAO implements UsersDAO{
                 users.setBanned(rs.getShort(9));
                 users.setRegistrationDate(rs.getDate(10));
                 users.setNotify(rs.getShort(11));
+                users.setRole(r.readRole(rs.getInt(12)));
             }
             rs.close();
         }
@@ -116,7 +119,9 @@ public class OracleUsersDAO implements UsersDAO{
             pstmt.setInt(6, usersNew.getGender());
             pstmt.setInt(7, usersNew.getConfirmed());
             pstmt.setInt(8, usersNew.getBanned());
+            pstmt.setDate(9,(Date) usersNew.getRegistrationDate());
             pstmt.setInt(9, usersNew.getNotify());
+            pstmt.setInt(10, usersNew.getRole().getId());
             pstmt.setLong(11, usersOld.getId());
 
             pstmt.executeUpdate();

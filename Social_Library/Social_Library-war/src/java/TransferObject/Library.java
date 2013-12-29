@@ -6,8 +6,9 @@
 package TransferObject;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,48 +21,61 @@ import javax.persistence.Table;
 
 /**
  *
- * @author mazafaka
+ * @author Назар
  */
 @Entity
 @Table(name = "LIBRARY")
-@NamedQueries({@NamedQuery(name = "Library.findAll", query = "SELECT l FROM Library l"), @NamedQuery(name = "Library.findById", query = "SELECT l FROM Library l WHERE l.id = :id"), @NamedQuery(name = "Library.findByIsbn", query = "SELECT l FROM Library l WHERE l.isbn = :isbn"), @NamedQuery(name = "Library.findByTitle", query = "SELECT l FROM Library l WHERE l.title = :title"), @NamedQuery(name = "Library.findByCover", query = "SELECT l FROM Library l WHERE l.cover = :cover"), @NamedQuery(name = "Library.findByDescription", query = "SELECT l FROM Library l WHERE l.description = :description"), @NamedQuery(name = "Library.findByPages", query = "SELECT l FROM Library l WHERE l.pages = :pages"), @NamedQuery(name = "Library.findByAuthor", query = "SELECT l FROM Library l WHERE l.author = :author"), @NamedQuery(name = "Library.findByGenre", query = "SELECT l FROM Library l WHERE l.genre = :genre")})
+@NamedQueries({@NamedQuery(name = "Library.findAll", query = "SELECT l FROM Library l"), @NamedQuery(name = "Library.findById", query = "SELECT l FROM Library l WHERE l.id = :id"), @NamedQuery(name = "Library.findByIsbn", query = "SELECT l FROM Library l WHERE l.isbn = :isbn"), @NamedQuery(name = "Library.findByTitle", query = "SELECT l FROM Library l WHERE l.title = :title"), @NamedQuery(name = "Library.findByCover", query = "SELECT l FROM Library l WHERE l.cover = :cover"), @NamedQuery(name = "Library.findByDescription", query = "SELECT l FROM Library l WHERE l.description = :description"), @NamedQuery(name = "Library.findByPages", query = "SELECT l FROM Library l WHERE l.pages = :pages")})
 public class Library implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
+    @Basic(optional = false)
     @Column(name = "ISBN")
     private String isbn;
+    @Basic(optional = false)
     @Column(name = "TITLE")
     private String title;
+    @Basic(optional = false)
     @Column(name = "COVER")
     private String cover;
+    @Basic(optional = false)
     @Column(name = "DESCRIPTION")
     private String description;
+    @Basic(optional = false)
     @Column(name = "PAGES")
-    private Integer pages;
-    @Column(name = "AUTHOR")
-    private Long author;
-    @Column(name = "GENRE")
-    private Integer genre;
-    @OneToMany(mappedBy = "book")
-    private List<Catalog> catalogList;
+    private int pages;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book")
+    private Collection<Catalog> catalogCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book")
+    private Collection<Rating> ratingCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book")
+    private Collection<BookAuthor> bookAuthorCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book")
+    private Collection<BookGenre> bookGenreCollection;
+    @JoinColumn(name = "WORKFLOW", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private BookWorkflow workflow;
     @JoinColumn(name = "USERS", referencedColumnName = "ID")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Users users;
-    @OneToMany(mappedBy = "book")
-    private List<BookGenre> bookGenreList;
-    @OneToMany(mappedBy = "book")
-    private List<BookAuthor> bookAuthorList;
-    @OneToMany(mappedBy = "book")
-    private List<Rating> ratingList;
 
     public Library() {
     }
 
     public Library(Long id) {
         this.id = id;
+    }
+
+    public Library(Long id, String isbn, String title, String cover, String description, int pages) {
+        this.id = id;
+        this.isbn = isbn;
+        this.title = title;
+        this.cover = cover;
+        this.description = description;
+        this.pages = pages;
     }
 
     public Long getId() {
@@ -104,36 +118,52 @@ public class Library implements Serializable {
         this.description = description;
     }
 
-    public Integer getPages() {
+    public int getPages() {
         return pages;
     }
 
-    public void setPages(Integer pages) {
+    public void setPages(int pages) {
         this.pages = pages;
     }
 
-    public Long getAuthor() {
-        return author;
+    public Collection<Catalog> getCatalogCollection() {
+        return catalogCollection;
     }
 
-    public void setAuthor(Long author) {
-        this.author = author;
+    public void setCatalogCollection(Collection<Catalog> catalogCollection) {
+        this.catalogCollection = catalogCollection;
     }
 
-    public Integer getGenre() {
-        return genre;
+    public Collection<Rating> getRatingCollection() {
+        return ratingCollection;
     }
 
-    public void setGenre(Integer genre) {
-        this.genre = genre;
+    public void setRatingCollection(Collection<Rating> ratingCollection) {
+        this.ratingCollection = ratingCollection;
     }
 
-    public List<Catalog> getCatalogList() {
-        return catalogList;
+    public Collection<BookAuthor> getBookAuthorCollection() {
+        return bookAuthorCollection;
     }
 
-    public void setCatalogList(List<Catalog> catalogList) {
-        this.catalogList = catalogList;
+    public void setBookAuthorCollection(Collection<BookAuthor> bookAuthorCollection) {
+        this.bookAuthorCollection = bookAuthorCollection;
+    }
+
+    public Collection<BookGenre> getBookGenreCollection() {
+        return bookGenreCollection;
+    }
+
+    public void setBookGenreCollection(Collection<BookGenre> bookGenreCollection) {
+        this.bookGenreCollection = bookGenreCollection;
+    }
+
+    public BookWorkflow getWorkflow() {
+        return workflow;
+    }
+
+    public void setWorkflow(BookWorkflow workflow) {
+        this.workflow = workflow;
     }
 
     public Users getUsers() {
@@ -142,30 +172,6 @@ public class Library implements Serializable {
 
     public void setUsers(Users users) {
         this.users = users;
-    }
-
-    public List<BookGenre> getBookGenreList() {
-        return bookGenreList;
-    }
-
-    public void setBookGenreList(List<BookGenre> bookGenreList) {
-        this.bookGenreList = bookGenreList;
-    }
-
-    public List<BookAuthor> getBookAuthorList() {
-        return bookAuthorList;
-    }
-
-    public void setBookAuthorList(List<BookAuthor> bookAuthorList) {
-        this.bookAuthorList = bookAuthorList;
-    }
-
-    public List<Rating> getRatingList() {
-        return ratingList;
-    }
-
-    public void setRatingList(List<Rating> ratingList) {
-        this.ratingList = ratingList;
     }
 
     @Override

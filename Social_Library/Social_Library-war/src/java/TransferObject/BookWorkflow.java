@@ -22,54 +22,54 @@ import javax.persistence.Table;
  * @author Назар
  */
 @Entity
-@Table(name = "ROLE")
-@NamedQueries({@NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"), @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id"), @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")})
-public class Role implements Serializable {
+@Table(name = "BOOK_WORKFLOW")
+@NamedQueries({@NamedQuery(name = "BookWorkflow.findAll", query = "SELECT b FROM BookWorkflow b"), @NamedQuery(name = "BookWorkflow.findById", query = "SELECT b FROM BookWorkflow b WHERE b.id = :id"), @NamedQuery(name = "BookWorkflow.findByWorkflow", query = "SELECT b FROM BookWorkflow b WHERE b.workflow = :workflow")})
+public class BookWorkflow implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "ID")
-    private Short id;
+    private Integer id;
     @Basic(optional = false)
-    @Column(name = "NAME")
-    private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private Collection<Users> usersCollection;
+    @Column(name = "WORKFLOW")
+    private String workflow;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflow")
+    private Collection<Library> libraryCollection;
 
-    public Role() {
+    public BookWorkflow() {
     }
 
-    public Role(Short id) {
+    public BookWorkflow(Integer id) {
         this.id = id;
     }
 
-    public Role(Short id, String name) {
+    public BookWorkflow(Integer id, String workflow) {
         this.id = id;
-        this.name = name;
+        this.workflow = workflow;
     }
 
-    public Short getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Short id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getWorkflow() {
+        return workflow;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setWorkflow(String workflow) {
+        this.workflow = workflow;
     }
 
-    public Collection<Users> getUsersCollection() {
-        return usersCollection;
+    public Collection<Library> getLibraryCollection() {
+        return libraryCollection;
     }
 
-    public void setUsersCollection(Collection<Users> usersCollection) {
-        this.usersCollection = usersCollection;
+    public void setLibraryCollection(Collection<Library> libraryCollection) {
+        this.libraryCollection = libraryCollection;
     }
 
     @Override
@@ -82,10 +82,10 @@ public class Role implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Role)) {
+        if (!(object instanceof BookWorkflow)) {
             return false;
         }
-        Role other = (Role) object;
+        BookWorkflow other = (BookWorkflow) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -94,7 +94,7 @@ public class Role implements Serializable {
 
     @Override
     public String toString() {
-        return "TransferObject.Role[id=" + id + "]";
+        return "TransferObject.BookWorkflow[id=" + id + "]";
     }
 
 }

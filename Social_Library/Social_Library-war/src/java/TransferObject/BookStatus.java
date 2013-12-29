@@ -22,30 +22,30 @@ import javax.persistence.Table;
  * @author Назар
  */
 @Entity
-@Table(name = "ROLE")
-@NamedQueries({@NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"), @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id"), @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")})
-public class Role implements Serializable {
+@Table(name = "BOOK_STATUS")
+@NamedQueries({@NamedQuery(name = "BookStatus.findAll", query = "SELECT b FROM BookStatus b"), @NamedQuery(name = "BookStatus.findById", query = "SELECT b FROM BookStatus b WHERE b.id = :id"), @NamedQuery(name = "BookStatus.findByStatus", query = "SELECT b FROM BookStatus b WHERE b.status = :status")})
+public class BookStatus implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "ID")
     private Short id;
     @Basic(optional = false)
-    @Column(name = "NAME")
-    private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private Collection<Users> usersCollection;
+    @Column(name = "STATUS")
+    private String status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "status")
+    private Collection<Catalog> catalogCollection;
 
-    public Role() {
+    public BookStatus() {
     }
 
-    public Role(Short id) {
+    public BookStatus(Short id) {
         this.id = id;
     }
 
-    public Role(Short id, String name) {
+    public BookStatus(Short id, String status) {
         this.id = id;
-        this.name = name;
+        this.status = status;
     }
 
     public Short getId() {
@@ -56,20 +56,20 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getStatus() {
+        return status;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public Collection<Users> getUsersCollection() {
-        return usersCollection;
+    public Collection<Catalog> getCatalogCollection() {
+        return catalogCollection;
     }
 
-    public void setUsersCollection(Collection<Users> usersCollection) {
-        this.usersCollection = usersCollection;
+    public void setCatalogCollection(Collection<Catalog> catalogCollection) {
+        this.catalogCollection = catalogCollection;
     }
 
     @Override
@@ -82,10 +82,10 @@ public class Role implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Role)) {
+        if (!(object instanceof BookStatus)) {
             return false;
         }
-        Role other = (Role) object;
+        BookStatus other = (BookStatus) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -94,7 +94,7 @@ public class Role implements Serializable {
 
     @Override
     public String toString() {
-        return "TransferObject.Role[id=" + id + "]";
+        return "TransferObject.BookStatus[id=" + id + "]";
     }
 
 }

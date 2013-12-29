@@ -6,10 +6,10 @@
 package TransferObject;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,80 +24,75 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author mazafaka
+ * @author Назар
  */
 @Entity
 @Table(name = "USERS")
 @NamedQueries({@NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"), @NamedQuery(name = "Users.findById", query = "SELECT u FROM Users u WHERE u.id = :id"), @NamedQuery(name = "Users.findByFirstName", query = "SELECT u FROM Users u WHERE u.firstName = :firstName"), @NamedQuery(name = "Users.findByLastName", query = "SELECT u FROM Users u WHERE u.lastName = :lastName"), @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email"), @NamedQuery(name = "Users.findByLogin", query = "SELECT u FROM Users u WHERE u.login = :login"), @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password"), @NamedQuery(name = "Users.findByGender", query = "SELECT u FROM Users u WHERE u.gender = :gender"), @NamedQuery(name = "Users.findByConfirmed", query = "SELECT u FROM Users u WHERE u.confirmed = :confirmed"), @NamedQuery(name = "Users.findByBanned", query = "SELECT u FROM Users u WHERE u.banned = :banned"), @NamedQuery(name = "Users.findByRegistrationDate", query = "SELECT u FROM Users u WHERE u.registrationDate = :registrationDate"), @NamedQuery(name = "Users.findByNotify", query = "SELECT u FROM Users u WHERE u.notify = :notify")})
 public class Users implements Serializable {
-    //static storage for all users
-    private static List<Users> users;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
+    @Basic(optional = false)
     @Column(name = "FIRST_NAME")
     private String firstName;
+    @Basic(optional = false)
     @Column(name = "LAST_NAME")
     private String lastName;
+    @Basic(optional = false)
     @Column(name = "EMAIL")
     private String email;
+    @Basic(optional = false)
     @Column(name = "LOGIN")
     private String login;
+    @Basic(optional = false)
     @Column(name = "PASSWORD")
     private String password;
     @Column(name = "GENDER")
     private Short gender;
+    @Basic(optional = false)
     @Column(name = "CONFIRMED")
-    private Short confirmed;
+    private short confirmed;
+    @Basic(optional = false)
     @Column(name = "BANNED")
-    private Short banned;
+    private short banned;
+    @Basic(optional = false)
     @Column(name = "REGISTRATION_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date registrationDate;
+    @Basic(optional = false)
     @Column(name = "NOTIFY")
-    private Short notify;
+    private short notify;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    private Collection<Catalog> catalogCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    private Collection<Rating> ratingCollection;
     @JoinColumn(name = "ROLE", referencedColumnName = "ID")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Role role;
-    @OneToMany(mappedBy = "users")
-    private List<Catalog> catalogList;
-    @OneToMany(mappedBy = "users")
-    private List<Library> libraryList;
-    @OneToMany(mappedBy = "users")
-    private List<Rating> ratingList;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    private Collection<Library> libraryCollection;
 
     public Users() {
-        if(users == null) users = new ArrayList<Users>();
-
-        users.add(this);
     }
 
     public Users(Long id) {
-        if(users == null) users = new ArrayList<Users>();
         this.id = id;
-
-        users.add(this);
     }
 
-    public Users(Users src) {
-        this.banned=src.getBanned();
-        this.catalogList=src.getCatalogList();
-        this.confirmed=src.getConfirmed();
-        this.email=src.getEmail();
-        this.firstName=src.getFirstName();
-        this.gender=src.getGender();
-        this.id=src.getId();
-        this.lastName=src.getLastName();
-        this.login=src.getLogin();
-        this.notify=src.getNotify();
-        this.password=src.getPassword();
-        this.ratingList = src.getRatingList();
-        this.registrationDate=src.getRegistrationDate();
-        this.role = src.getRole();
+    public Users(Long id, String firstName, String lastName, String email, String login, String password, short confirmed, short banned, Date registrationDate, short notify) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.login = login;
+        this.password = password;
+        this.confirmed = confirmed;
+        this.banned = banned;
+        this.registrationDate = registrationDate;
+        this.notify = notify;
     }
 
     public Long getId() {
@@ -156,19 +151,19 @@ public class Users implements Serializable {
         this.gender = gender;
     }
 
-    public Short getConfirmed() {
+    public short getConfirmed() {
         return confirmed;
     }
 
-    public void setConfirmed(Short confirmed) {
+    public void setConfirmed(short confirmed) {
         this.confirmed = confirmed;
     }
 
-    public Short getBanned() {
+    public short getBanned() {
         return banned;
     }
 
-    public void setBanned(Short banned) {
+    public void setBanned(short banned) {
         this.banned = banned;
     }
 
@@ -180,12 +175,28 @@ public class Users implements Serializable {
         this.registrationDate = registrationDate;
     }
 
-    public Short getNotify() {
+    public short getNotify() {
         return notify;
     }
 
-    public void setNotify(Short notify) {
+    public void setNotify(short notify) {
         this.notify = notify;
+    }
+
+    public Collection<Catalog> getCatalogCollection() {
+        return catalogCollection;
+    }
+
+    public void setCatalogCollection(Collection<Catalog> catalogCollection) {
+        this.catalogCollection = catalogCollection;
+    }
+
+    public Collection<Rating> getRatingCollection() {
+        return ratingCollection;
+    }
+
+    public void setRatingCollection(Collection<Rating> ratingCollection) {
+        this.ratingCollection = ratingCollection;
     }
 
     public Role getRole() {
@@ -196,28 +207,12 @@ public class Users implements Serializable {
         this.role = role;
     }
 
-    public List<Catalog> getCatalogList() {
-        return catalogList;
+    public Collection<Library> getLibraryCollection() {
+        return libraryCollection;
     }
 
-    public void setCatalogList(List<Catalog> catalogList) {
-        this.catalogList = catalogList;
-    }
-
-    public List<Library> getLibraryList() {
-        return libraryList;
-    }
-
-    public void setLibraryList(List<Library> libraryList) {
-        this.libraryList = libraryList;
-    }
-
-    public List<Rating> getRatingList() {
-        return ratingList;
-    }
-
-    public void setRatingList(List<Rating> ratingList) {
-        this.ratingList = ratingList;
+    public void setLibraryCollection(Collection<Library> libraryCollection) {
+        this.libraryCollection = libraryCollection;
     }
 
     @Override

@@ -1,13 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package TransferObject;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,29 +12,32 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/**
- *
- * @author mazafaka
- */
 @Entity
 @Table(name = "AUTHOR")
 @NamedQueries({@NamedQuery(name = "Author.findAll", query = "SELECT a FROM Author a"), @NamedQuery(name = "Author.findById", query = "SELECT a FROM Author a WHERE a.id = :id"), @NamedQuery(name = "Author.findByAuthor", query = "SELECT a FROM Author a WHERE a.author = :author")})
 public class Author implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
+    @Basic(optional = false)
     @Column(name = "AUTHOR")
     private String author;
-    @OneToMany(mappedBy = "author")
-    private List<BookAuthor> bookAuthorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
+    private Collection<BookAuthor> bookAuthorCollection;
 
     public Author() {
     }
 
     public Author(Long id) {
         this.id = id;
+    }
+
+    public Author(Long id, String author) {
+        this.id = id;
+        this.author = author;
     }
 
     public Long getId() {
@@ -57,12 +56,12 @@ public class Author implements Serializable {
         this.author = author;
     }
 
-    public List<BookAuthor> getBookAuthorList() {
-        return bookAuthorList;
+    public Collection<BookAuthor> getBookAuthorCollection() {
+        return bookAuthorCollection;
     }
 
-    public void setBookAuthorList(List<BookAuthor> bookAuthorList) {
-        this.bookAuthorList = bookAuthorList;
+    public void setBookAuthorCollection(Collection<BookAuthor> bookAuthorCollection) {
+        this.bookAuthorCollection = bookAuthorCollection;
     }
 
     @Override
@@ -89,5 +88,4 @@ public class Author implements Serializable {
     public String toString() {
         return "TransferObject.Author[id=" + id + "]";
     }
-
 }

@@ -6,12 +6,16 @@
 package OracleDAO;
 
 import OracleConnection.Oracle;
+import TransferObject.BookWorkflow;
 import TransferObjectInterface.LibraryDAO;
 import TransferObject.Library;
+import TransferObjectInterface.BookWorkflowDAO;
+import TransferObjectInterface.UsersDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 /**
  *
@@ -22,26 +26,25 @@ public class OracleLibraryDAO implements LibraryDAO{
     private Oracle conn1;
     private static final String selectQuery="SELECT * FROM library WHERE id=?";
     private static final String deleteQuery="DELETE FROM library WHERE id =?";
-    private static final String insertLibraryQuery="INSERT INTO library VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String insertLibraryQuery="INSERT INTO library VALUES (library_id.nextval, ?, ?, ?, ?, ?, ?, ?)";
     private static final String updateLibraryQuery="UPDATE library SET isbn = ?, title = ?," +
                                             "cover = ?, description = ?, pages = ?," +
-                                            "author = ?, genre = ? WHERE id=?";
+                                            "users = ?, workflow = ? WHERE id=?";
 
     public void createLibrary(Library library) {
-       
+           BasicConfigurator.configure();
         Connection conn=conn1.getConnection();
         try
         {
             PreparedStatement pstmt = conn.prepareStatement(insertLibraryQuery);
 
-            pstmt.setLong(1, library.getId());
-            pstmt.setString(2, library.getIsbn());
-            pstmt.setString(3, library.getTitle());
-            pstmt.setString(4, library.getCover());
-            pstmt.setString(5, library.getDescription());
-            pstmt.setInt(6, library.getPages());
-            pstmt.setLong(7,library.getAuthor());
-            pstmt.setInt(8,library.getGenre());
+            pstmt.setString(1, library.getIsbn());
+            pstmt.setString(2, library.getTitle());
+            pstmt.setString(3, library.getCover());
+            pstmt.setString(4, library.getDescription());
+            pstmt.setInt(5, library.getPages());
+            pstmt.setLong(6,library.getUsers().getId());
+            pstmt.setInt(7,library.getWorkflow().getId());
 
             pstmt.executeUpdate();
         }
@@ -55,16 +58,18 @@ public class OracleLibraryDAO implements LibraryDAO{
     }
 
     public Library readLibrary(int id) {
+            BasicConfigurator.configure();
        Library library = new Library();
        Connection conn=conn1.getConnection();
-        try
+       UsersDAO u = new OracleUsersDAO();
+       BookWorkflowDAO w = new OracleBookWorkflowDAO();
+       try
         {
             PreparedStatement stmt = conn.prepareStatement(selectQuery);
-            stmt.setString(1, "library");
-            stmt.setLong(2, library.getId());
+            stmt.setLong(1, id);
 
             ResultSet rs=stmt.executeQuery();
-
+            BookWorkflow bw = new BookWorkflow();
             while (rs.next())
             {
                 library.setId(rs.getLong(1));
@@ -73,8 +78,8 @@ public class OracleLibraryDAO implements LibraryDAO{
                 library.setCover(rs.getString(4));
                 library.setDescription(rs.getString(5));
                 library.setPages(rs.getInt(6));
-                library.setAuthor(rs.getLong(7));
-                library.setGenre(rs.getInt(8));
+                library.setUsers(u.readUsers(rs.getInt(7)));
+                library.setWorkflow(w.readBookWorkflow(rs.getInt(8)));
             }
             rs.close();
         }
@@ -90,7 +95,7 @@ public class OracleLibraryDAO implements LibraryDAO{
     }
 
     public void updateLibrary(Library libraryOld, Library libraryNew) {
-        
+            BasicConfigurator.configure();
         Connection conn=conn1.getConnection();
         try
         {
@@ -101,8 +106,8 @@ public class OracleLibraryDAO implements LibraryDAO{
             pstmt.setString(3, libraryNew.getCover());
             pstmt.setString(4, libraryNew.getDescription());
             pstmt.setInt(5, libraryNew.getPages());
-            pstmt.setLong(6, libraryNew.getAuthor());
-            pstmt.setInt(7, libraryNew.getGenre());
+            pstmt.setLong(6, libraryNew.getUsers().getId());
+            pstmt.setInt(7, libraryNew.getWorkflow().getId());
             pstmt.setLong(8, libraryOld.getId());
 
             pstmt.executeUpdate();
@@ -117,7 +122,7 @@ public class OracleLibraryDAO implements LibraryDAO{
     }
 
     public void deleteLibrary(Library library) {
-       
+           BasicConfigurator.configure();
         Connection conn=conn1.getConnection();
         try
         {

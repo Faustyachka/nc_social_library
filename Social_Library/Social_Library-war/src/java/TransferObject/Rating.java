@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author mazafaka
+ * @author Назар
  */
 @Entity
 @Table(name = "RATING")
@@ -28,36 +28,42 @@ public class Rating implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "ID")
-    private Integer id;
+    private Long id;
+    @Basic(optional = false)
     @Column(name = "RATE")
-    private Short rate;
+    private short rate;
     @JoinColumn(name = "BOOK", referencedColumnName = "ID")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Library book;
     @JoinColumn(name = "USERS", referencedColumnName = "ID")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Users users;
 
     public Rating() {
     }
 
-    public Rating(Integer id) {
+    public Rating(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Rating(Long id, short rate) {
+        this.id = id;
+        this.rate = rate;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Short getRate() {
+    public short getRate() {
         return rate;
     }
 
-    public void setRate(Short rate) {
+    public void setRate(short rate) {
         this.rate = rate;
     }
 

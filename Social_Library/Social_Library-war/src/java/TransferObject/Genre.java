@@ -6,8 +6,9 @@
 package TransferObject;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,7 +19,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author mazafaka
+ * @author Назар
  */
 @Entity
 @Table(name = "GENRE")
@@ -29,16 +30,22 @@ public class Genre implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+    @Basic(optional = false)
     @Column(name = "GENRE")
     private String genre;
-    @OneToMany(mappedBy = "genre")
-    private List<BookGenre> bookGenreList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "genre")
+    private Collection<BookGenre> bookGenreCollection;
 
     public Genre() {
     }
 
     public Genre(Integer id) {
         this.id = id;
+    }
+
+    public Genre(Integer id, String genre) {
+        this.id = id;
+        this.genre = genre;
     }
 
     public Integer getId() {
@@ -57,12 +64,12 @@ public class Genre implements Serializable {
         this.genre = genre;
     }
 
-    public List<BookGenre> getBookGenreList() {
-        return bookGenreList;
+    public Collection<BookGenre> getBookGenreCollection() {
+        return bookGenreCollection;
     }
 
-    public void setBookGenreList(List<BookGenre> bookGenreList) {
-        this.bookGenreList = bookGenreList;
+    public void setBookGenreCollection(Collection<BookGenre> bookGenreCollection) {
+        this.bookGenreCollection = bookGenreCollection;
     }
 
     @Override

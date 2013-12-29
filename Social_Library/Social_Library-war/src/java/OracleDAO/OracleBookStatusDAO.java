@@ -1,8 +1,8 @@
 package OracleDAO;
 
 import OracleConnection.Oracle;
-import TransferObjectInterface.RoleDAO;
-import TransferObject.Role;
+import TransferObject.BookStatus;
+import TransferObjectInterface.BookStatusDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,18 +10,18 @@ import java.sql.SQLException;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-public class OracleRoleDAO implements RoleDAO {
+public class OracleBookStatusDAO implements BookStatusDAO {
 
-    public static final Logger log = Logger.getLogger(OracleRoleDAO.class);
+    public static final Logger log = Logger.getLogger(OracleBookStatusDAO.class);
     private Oracle conn1;
-    private static final String selectQuery = "SELECT * FROM role WHERE id=?";
-    private static final String deleteQuery = "DELETE FROM role WHERE id =?";
-    private static final String insertRoleQuery = "INSERT INTO role VALUES(role_id.nextval, ?)";
-    private static final String updateRoleQuery = "UPDATE role SET name =? where id=?";
+    private static final String selectQuery = "SELECT * FROM BookStatus WHERE id=?";
+    private static final String deleteQuery = "DELETE FROM BookStatus WHERE id =?";
+    private static final String insertBookStatusQuery = "INSERT INTO BookStatus VALUES(BookStatus_id.nextval, ?)";
+    private static final String updateBookStatusQuery = "UPDATE BookStatus SET Status =? where id=?";
 
-    public Role readRole(int id) {
+    public BookStatus readBookStatus(int id) {
         BasicConfigurator.configure();
-        Role role = new Role();
+        BookStatus BookStatus = new BookStatus();
 
         Connection conn = conn1.getConnection();
         try {
@@ -32,8 +32,8 @@ public class OracleRoleDAO implements RoleDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                role.setId(rs.getShort(1));
-                role.setName(rs.getString(2));
+                BookStatus.setId(rs.getShort(1));
+                BookStatus.setStatus(rs.getString(2));
             }
             rs.close();
         } catch (SQLException e) {
@@ -42,16 +42,16 @@ public class OracleRoleDAO implements RoleDAO {
             }
         }
 
-        return role;
+        return BookStatus;
     }
 
-    public void createRole(Role role) {
+    public void createBookStatus(BookStatus BookStatus) {
         BasicConfigurator.configure();
         Connection conn = conn1.getConnection();
         try {
-            PreparedStatement pstmt = conn.prepareStatement(insertRoleQuery);
+            PreparedStatement pstmt = conn.prepareStatement(insertBookStatusQuery);
 
-            pstmt.setString(1, role.getName());
+            pstmt.setString(1, BookStatus.getStatus());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -61,13 +61,13 @@ public class OracleRoleDAO implements RoleDAO {
         }
     }
 
-    public void deleteRole(Role role) {
+    public void deleteBookStatus(BookStatus BookStatus) {
         BasicConfigurator.configure();
         Connection conn = conn1.getConnection();
         try {
             PreparedStatement stmt = conn.prepareStatement(deleteQuery);
 
-            stmt.setInt(1, role.getId());
+            stmt.setInt(1, BookStatus.getId());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -77,14 +77,14 @@ public class OracleRoleDAO implements RoleDAO {
         }
     }
 
-    public void updateRole(Role roleNew, Role roleOld) {
+    public void updateBookStatus(BookStatus BookStatusNew, BookStatus BookStatusOld) {
         BasicConfigurator.configure();
         Connection conn = conn1.getConnection();
         try {
-            PreparedStatement pstmt = conn.prepareStatement(updateRoleQuery);
+            PreparedStatement pstmt = conn.prepareStatement(updateBookStatusQuery);
 
-            pstmt.setString(1, roleNew.getName());
-            pstmt.setInt(2, roleOld.getId());
+            pstmt.setString(1, BookStatusNew.getStatus());
+            pstmt.setInt(2, BookStatusOld.getId());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -94,4 +94,3 @@ public class OracleRoleDAO implements RoleDAO {
         }
     }
 }
-

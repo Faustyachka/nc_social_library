@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author mazafaka
+ * @author Назар
  */
 @Entity
 @Table(name = "BOOK_AUTHOR")
@@ -30,10 +30,10 @@ public class BookAuthor implements Serializable {
     @Column(name = "ID")
     private Long id;
     @JoinColumn(name = "AUTHOR", referencedColumnName = "ID")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Author author;
     @JoinColumn(name = "BOOK", referencedColumnName = "ID")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Library book;
 
     public BookAuthor() {
