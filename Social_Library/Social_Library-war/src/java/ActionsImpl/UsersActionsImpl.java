@@ -15,11 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
@@ -68,30 +63,4 @@ public class UsersActionsImpl implements UsersActions {
         return uList;
     }
 
-    public String SearchLastName(String lastname) {
-        String new2 = new String("");
-        try {
-            Locale.setDefault(Locale.ENGLISH);
-            Context ic = new InitialContext();
-            DataSource dataSource = (DataSource) ic.lookup("jdbc/test");
-            Connection conn = dataSource.getConnection();
-            conn.setAutoCommit(false);
-            PreparedStatement stmt = conn.prepareStatement(selectLastName);
-            stmt.setString(1, lastname);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                lastname = rs.getString(users.getFirstName());
-            }
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (NamingException e) {
-            log.error("Cannot retrieve jdbc/test" + e.getMessage());
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
-        }
-        return new2;
-    }
 }

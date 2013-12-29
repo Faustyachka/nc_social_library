@@ -15,5 +15,4 @@ import java.util.List;
 public interface UsersActions {
 
     public List<Users> searchUsersByParameter(String search, String param);
-    public String SearchLastName(String lastname);
 }
