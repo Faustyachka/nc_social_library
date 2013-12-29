@@ -13,6 +13,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 /**
@@ -20,35 +21,36 @@ import org.apache.log4j.Logger;
  * @author mazafaka
  */
 public class OracleUsersDAO implements UsersDAO{
-    public static final Logger log=Logger.getLogger(OracleAuthorDAO.class);
-    private Oracle conn1;
+
+    public static final Logger log=Logger.getLogger(OracleUsersDAO.class);
+    private Oracle conn1 = new Oracle();
     private static final String selectQuery="SELECT * FROM users WHERE id=?";
     private static final String deleteQuery="DELETE FROM users WHERE id =?";
-    private static final String insertUsersQuery="INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, TO_DATE('11.02.2013','dd.mm.yyyy'), ?)";
+    private static final String insertUsersQuery="INSERT INTO users (ID,FIRST_NAME,LAST_NAME,EMAIL,LOGIN,PASSWORD,GENDER,CONFIRMED,BANNED,REGISTRATION_DATE,NOTIFY,ROLE) " +
+            " VALUES (users_id.nextval, ?, ?, ?, ?, ?, ?, ?, ?, TO_DATE('11.02.2013','dd.mm.yyyy'), ?,?)";
     private static final String updateUsersQuery="UPDATE users SET first_name = ?," +
                         "last_name = ?, email = ?, login = ?, password = ?," +
                         "gender = ?, confirmed = ?, banned = ?, registration_date = ?," +
                         "notify = ? WHERE id = ?";
 
     public void createUsers(Users users) {
-        
+    BasicConfigurator.configure();
         Connection conn=conn1.getConnection();
         try
         {
             PreparedStatement pstmt = conn.prepareStatement(insertUsersQuery);
 
-            pstmt.setLong(1, users.getId());
-            pstmt.setString(2, users.getFirstName());
-            pstmt.setString(3, users.getLastName());
-            pstmt.setString(4, users.getEmail());
-            pstmt.setString(5, users.getLogin());
-            pstmt.setString(6, users.getPassword());
-            pstmt.setInt(7, users.getGender());
-            pstmt.setInt(8, users.getConfirmed());
-            pstmt.setInt(9, users.getBanned());
-            pstmt.setDate(10,(Date) users.getRegistrationDate());
-            pstmt.setInt(11, users.getNotify());
-
+            pstmt.setString(1, users.getFirstName());
+            pstmt.setString(2, users.getLastName());
+            pstmt.setString(3, users.getEmail());
+            pstmt.setString(4, users.getLogin());
+            pstmt.setString(5, users.getPassword());
+            pstmt.setInt(6, users.getGender());
+            pstmt.setInt(7, users.getConfirmed());
+            pstmt.setInt(8, users.getBanned());
+//          pstmt.setDate(9,(Date) users.getRegistrationDate());
+            pstmt.setInt(9, users.getNotify());
+            pstmt.setInt(10, users.getRole().getId());
             pstmt.executeUpdate();
         }
         
@@ -63,6 +65,7 @@ public class OracleUsersDAO implements UsersDAO{
     }
 
     public Users readUsers(int id) {
+            BasicConfigurator.configure();
         Users users = new Users();
         Connection conn=conn1.getConnection();
         try
@@ -100,7 +103,7 @@ public class OracleUsersDAO implements UsersDAO{
     }
 
     public void updateUsers(Users usersOld, Users usersNew) {
-        
+            BasicConfigurator.configure();
         Connection conn=conn1.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(updateUsersQuery);
@@ -129,7 +132,7 @@ public class OracleUsersDAO implements UsersDAO{
     }
 
     public void deleteUsers(Users users) {
-       
+           BasicConfigurator.configure();
         Connection conn=conn1.getConnection();
         try
         {

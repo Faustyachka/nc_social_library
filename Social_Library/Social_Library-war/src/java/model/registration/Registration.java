@@ -28,7 +28,7 @@ public class Registration implements Command {
 
     private Users users;
     private Role role;
-    private UsersDAO dao;
+    private UsersDAO dao = new OracleUsersDAO();
 
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,12 +39,10 @@ public class Registration implements Command {
         role=new Role();
         Short status0=0;
         Short status1=1;
-
-        role.setId(status1);
-        role.setName("beginner");
-        
+        role.setId((short)3);
         users.setId(status1.longValue());
         users.setFirstName(request.getParameter("firstName"));
+//        users.setFirstName("firstName");
         users.setLastName(request.getParameter("lastName"));
         users.setEmail(request.getParameter("email"));
         users.setLogin(request.getParameter("login"));

@@ -18,13 +18,13 @@ class NoCommand implements Command {
     public NoCommand() {
     }
 
-   
+
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       
+
         String page=null;
         page=ConfigurationManager.SCORE_PAGE;
-        
+
         return page;
     }
-    
+
 }

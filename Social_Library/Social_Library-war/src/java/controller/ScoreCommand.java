@@ -14,22 +14,22 @@ import javax.servlet.http.HttpServletResponse;
  * @author П
  */
 class ScoreCommand implements Command {
-    
-  
+
+
 
     public ScoreCommand () {
     }
 
-    
+
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page=null;
-            
+
         //session bean (busines logic)!
-               
-        
+
+
          page= ConfigurationManager.SCORE_PAGE;
         return page;
     }
-    
+
 }

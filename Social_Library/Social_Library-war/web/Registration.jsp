@@ -22,7 +22,7 @@
                     <tr>
                         <td>            Fist Name:
                         </td>
-                        <td><input name="firsName"></td>
+                        <td><input name="firstName"></td>
                     </tr>
                     <tr>
                         <td>            Last Name:
