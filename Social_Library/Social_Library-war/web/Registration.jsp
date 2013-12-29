@@ -20,7 +20,7 @@
 
                 <tbody>
                     <tr>
-                        <td>            Fist Name:
+                        <td>            First Name:
                         </td>
                         <td><input name="firstName"></td>
                     </tr>

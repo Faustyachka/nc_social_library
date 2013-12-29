@@ -15,7 +15,7 @@
     </head>
     <body>
         <h1>Authentication page</h1>
-        <form method="POST" action="authentication">
+        <form method="POST" action="SignIn">
             Enter please your login here:
             <input name="login">
             <br>
