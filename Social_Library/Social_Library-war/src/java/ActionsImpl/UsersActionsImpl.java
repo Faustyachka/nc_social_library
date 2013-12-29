@@ -25,7 +25,6 @@ import org.apache.log4j.Logger;
 public class UsersActionsImpl implements UsersActions {
 
     public static final Logger log = Logger.getLogger(UsersActionsImpl.class);
-//    private static final String selectParametr = "select id  from users where login = ?";
     private static final String selectLastName = "select * from users where lastName=?;";
     private Users users = new Users();
 
@@ -34,8 +33,7 @@ public class UsersActionsImpl implements UsersActions {
     }
 
     public List<Users> searchUsersByParameter(String where, String what) {
-
-//    public Users searchUsersByParameter(String where, String what) {
+// Search by parametr "what" in column = "where"
         BasicConfigurator.configure();
         UsersDAO u = new OracleUsersDAO();
         List<Users> uList = new ArrayList<Users>();
