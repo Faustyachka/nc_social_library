@@ -32,6 +32,12 @@
 (String)request.getParameter("mark"):"you have not made your choice yet!"
         </jsp:expression>
         <hr>
+        <% 
+            out.print(session.getAttribute("name"));
+        
+        %>
+        
+       <hr>
        
     </body>
 </html>

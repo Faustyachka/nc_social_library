@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -27,8 +28,10 @@ public class ControllerServlet extends HttpServlet {
         String page =null;
          try {
 
+              
+                
              Command command= requesthandler.getCommand(request);
-            page = command.execute(request, response);
+             page = command.execute(request, response);
 
 
          }catch(ServletException e){
