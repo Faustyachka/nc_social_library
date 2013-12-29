@@ -33,15 +33,14 @@ public class Registration implements Command {
     private UsersDAO dao = new OracleUsersDAO();
     private RoleDAO rDao = new OracleRoleDAO();
 
-
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = null;
 
         response.setContentType("text/html;charset=UTF-8");
         users = new Users();
-        role=new Role();
-        Short status0=0;
-        Short status1=1;
+        role = new Role();
+        Short status0 = 0;
+        Short status1 = 1;
         role = rDao.readRole(3);
         users.setFirstName(request.getParameter("firstName"));
         users.setLastName(request.getParameter("lastName"));
