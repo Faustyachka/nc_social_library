@@ -16,7 +16,7 @@ public class OracleAuthorDAO implements AuthorDAO {
     private Oracle conn1;
     private static final String selectQuery = "SELECT * FROM author WHERE id=?";
     private static final String deleteQuery = "DELETE FROM author WHERE id =?";
-    private static final String insertAuthorQuery = "INSERT INTO author VALUES (?, ?)";
+    private static final String insertAuthorQuery = "INSERT INTO author VALUES ( author_id.nextval , ?)";
     private static final String updateAuthorQuery = "UPDATE author SET author=? WHERE id=?";
 
     public void createAuthor(Author author) {
@@ -26,8 +26,7 @@ public class OracleAuthorDAO implements AuthorDAO {
             Connection conn = conn1.getConnection();
             try {
                 PreparedStatement pstmt = conn.prepareStatement(insertAuthorQuery);
-                pstmt.setLong(1, author.getId());
-                pstmt.setString(2, author.getAuthor());
+                pstmt.setString(1, author.getAuthor());
                 pstmt.executeUpdate();
             } finally {
                 conn.close();
@@ -49,7 +48,7 @@ public class OracleAuthorDAO implements AuthorDAO {
             try {
                 PreparedStatement stmt = conn.prepareStatement(selectQuery);
 
-                stmt.setLong(1, author.getId());
+                stmt.setLong(1, id);
                 ResultSet rs = stmt.executeQuery();
 
                 while (rs.next()) {
