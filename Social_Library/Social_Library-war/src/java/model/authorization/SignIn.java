@@ -24,14 +24,13 @@ public class SignIn implements Command {
         String page = ConfigurationManager.INDEX_PAGE;
         response.setContentType("text/html;charset=UTF-8");
         UsersActions uAction = new UsersActionsImpl();
-        Users uList = uAction.searchUsersByParameter("login", request.getParameter("login"));
-        uList.getPassword();
-       if (uList.getPassword().equals("123123")) {
+        List<Users> uList = uAction.searchUsersByParameter("login", request.getParameter("login"));
+//        uList.getPassword();
+       if (uList.get(0).getPassword().equals(request.getParameter("password"))) {
            page = ConfigurationManager.INDEX_PAGE;
        } else {
             page = ConfigurationManager.REGISTR_PAGE;
        }
-
         return page;
     }
 }

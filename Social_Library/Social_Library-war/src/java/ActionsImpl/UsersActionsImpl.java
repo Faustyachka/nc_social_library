@@ -20,6 +20,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 /**
@@ -29,28 +30,30 @@ import org.apache.log4j.Logger;
 public class UsersActionsImpl implements UsersActions {
 
     public static final Logger log = Logger.getLogger(UsersActionsImpl.class);
-    private static final String selectParametr = "select id  from users where ? = ?";
-    private static final String selectLastName = "select * from users where lastName=?";
+//    private static final String selectParametr = "select id  from users where login = ?";
+    private static final String selectLastName = "select * from users where lastName=?;";
     private Users users = new Users();
 
     public UsersActionsImpl() {
         users = new Users();
     }
 
-//    public List<Users> searchUsersByParameter(String where, String what)
+    public List<Users> searchUsersByParameter(String where, String what) {
 
-    public Users searchUsersByParameter(String where, String what) {
+//    public Users searchUsersByParameter(String where, String what) {
+        BasicConfigurator.configure();
         UsersDAO u = new OracleUsersDAO();
         List<Users> uList = new ArrayList<Users>();
+        String selectParametr = "select id  from users where "+where+" = ?";
         try {
+
             Oracle conn1 = new Oracle();
             Connection conn = conn1.getConnection();
             PreparedStatement stmt = conn.prepareStatement(selectParametr);
-            stmt.setString(1, where);
-            stmt.setString(2, what);
+            stmt.setString(1, what);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                users = u.readUsers(rs.getInt(1));
+                users = u.readUsers(rs.getInt("id"));
                 uList.add(users);
             }
             rs.close();
@@ -62,7 +65,7 @@ public class UsersActionsImpl implements UsersActions {
             }
         }
 
-        return users;
+        return uList;
     }
 
     public String SearchLastName(String lastname) {
