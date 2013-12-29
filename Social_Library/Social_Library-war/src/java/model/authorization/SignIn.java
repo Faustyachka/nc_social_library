@@ -26,11 +26,11 @@ public class SignIn implements Command {
         UsersActions uAction = new UsersActionsImpl();
         Users uList = uAction.searchUsersByParameter("login", request.getParameter("login"));
         uList.getPassword();
-//       if (uList.getPassword().equals("123123")) {
-//           page = ConfigurationManager.INDEX_PAGE;
-//       } else {
-//            page = ConfigurationManager.REGISTR_PAGE;
-//       }
+       if (uList.getPassword().equals("123123")) {
+           page = ConfigurationManager.INDEX_PAGE;
+       } else {
+            page = ConfigurationManager.REGISTR_PAGE;
+       }
 
         return page;
     }
