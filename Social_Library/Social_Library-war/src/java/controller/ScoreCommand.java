@@ -25,11 +25,9 @@ class ScoreCommand implements Command {
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page=null;
-
-        
+       
                 HttpSession session=request.getSession(true);
                 session.setAttribute("name", "Pavel!!!");
-
          page= ConfigurationManager.SCORE_PAGE;
         return page;
     }

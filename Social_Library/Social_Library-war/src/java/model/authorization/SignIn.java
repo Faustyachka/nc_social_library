@@ -28,9 +28,11 @@ public class SignIn implements Command {
 //        uList.getPassword();
        if (uList.size()!=0){
        if (uList.get(0).getPassword().equals(request.getParameter("password"))) {
-           page = ConfigurationManager.INDEX_PAGE;
+            HttpSession session=request.getSession(true);
+            session.setAttribute("role", (int) uList.get(0).getRole().getId());
+           page = ConfigurationManager.LOCAL_LIB;
        } else {
-            page = ConfigurationManager.REGISTR_PAGE;
+            page = ConfigurationManager.INDEX_PAGE;
        }
        } else {
             page =ConfigurationManager.INDEX_PAGE;

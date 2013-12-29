@@ -20,6 +20,7 @@ public class ConfigurationManager {
     public static final String USER_PAGE="/user.jsp";
     public static final String REGISTR_PAGE="/Registration.jsp";
     public static final String INDEX_PAGE="/index.jsp";
+    public static final String LOCAL_LIB="/locallib.jsp";
 
 //
 //    public static ConfigurationManager getInstance(){
