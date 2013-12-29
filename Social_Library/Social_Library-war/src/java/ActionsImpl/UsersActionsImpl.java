@@ -6,13 +6,18 @@
 package ActionsImpl;
 
 import ActionsInterfaces.UsersActions;
-import OracleConnection.Oracle;
 import TransferObject.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import org.apache.log4j.Logger;
+
 /**
  *
  * @author mazafaka
@@ -20,26 +25,40 @@ import org.apache.log4j.Logger;
 public class UsersActionsImpl implements UsersActions{
 
     public static final Logger log=Logger.getLogger(UsersActionsImpl.class);
-    private Oracle conn1;
     private static final String selectFirstName = "select firstName from users where firstName=?";
     private static final String selectLastName = "select lastName from users where lastName=?";
+    private Users users;
+
+    public UsersActionsImpl()
+    {
+        users=new Users();
+    }
 
      public String SearchFirstName(String firstname)
      {
-         Users users=new Users();
-         Connection conn=conn1.getConnection();
+          String new1=new String("");
          try
         {
-        PreparedStatement stmt = conn.prepareStatement(selectFirstName);
-        stmt.setString(1, firstname);
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next ())
-        {
-            firstname=rs.getString(users.getFirstName());
+             Locale.setDefault(Locale.ENGLISH);
+             Context ic = new InitialContext();
+             DataSource dataSource = (DataSource) ic.lookup("jdbc/test");
+             Connection conn = dataSource.getConnection();
+             conn.setAutoCommit(false);
+             PreparedStatement stmt = conn.prepareStatement(selectFirstName);
+             stmt.setString(1, firstname);
+             ResultSet rs = stmt.executeQuery();
+             while (rs.next ())
+             {
+                new1=rs.getString(users.getFirstName());
+             }
+             rs.close ();
+             stmt.close ();
+             conn.close();
         }
-        rs.close ();
-        stmt.close ();
-        }
+         catch(NamingException e)
+         {
+             log.error("Cannot retrieve jdbc/test"+e.getMessage());
+         }
         catch (SQLException e)
         {
             while(e!=null)
@@ -48,24 +67,33 @@ public class UsersActionsImpl implements UsersActions{
             }
         }
 
-         return firstname;
+         return new1;
      }
      public String SearchLastName(String lastname)
      {
-          Users users=new Users();
-         Connection conn=conn1.getConnection();
+         String new2=new String("");
          try
         {
-        PreparedStatement stmt = conn.prepareStatement(selectLastName);
-        stmt.setString(1, lastname);
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next ())
-        {
-            lastname=rs.getString(users.getFirstName());
+             Locale.setDefault(Locale.ENGLISH);
+             Context ic = new InitialContext();
+             DataSource dataSource = (DataSource) ic.lookup("jdbc/test");
+             Connection conn = dataSource.getConnection();
+             conn.setAutoCommit(false);
+             PreparedStatement stmt = conn.prepareStatement(selectLastName);
+             stmt.setString(1, lastname);
+             ResultSet rs = stmt.executeQuery();
+             while (rs.next ())
+             {
+                lastname=rs.getString(users.getFirstName());
+             }
+             rs.close ();
+             stmt.close ();
+             conn.close();
         }
-        rs.close ();
-        stmt.close ();
-        }
+         catch(NamingException e)
+         {
+             log.error("Cannot retrieve jdbc/test"+e.getMessage());
+         }
         catch (SQLException e)
         {
             while(e!=null)
@@ -73,6 +101,6 @@ public class UsersActionsImpl implements UsersActions{
                 log.error("SQLException"+e);
             }
         }
-         return lastname;
+         return new2;
      }
 }
