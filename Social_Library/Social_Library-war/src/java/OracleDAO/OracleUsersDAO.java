@@ -51,6 +51,7 @@ public class OracleUsersDAO implements UsersDAO{
             pstmt.setInt(9, users.getNotify());
             pstmt.setInt(10, users.getRole().getId());
             pstmt.executeUpdate();
+
         }
         
         catch (SQLException e)
@@ -60,7 +61,6 @@ public class OracleUsersDAO implements UsersDAO{
                 log.error("SQLException"+e);
             }
         }
-
     }
 
     public Users readUsers(int id) {
