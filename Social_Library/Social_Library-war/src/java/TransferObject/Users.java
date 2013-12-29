@@ -76,12 +76,26 @@ public class Users implements Serializable {
     private Collection<Library> libraryCollection;
 
     public Users() {
+
     }
 
     public Users(Long id) {
         this.id = id;
     }
-
+    public Users(Users u)
+    {
+        this.id = u.getId();
+        this.firstName = u.getFirstName();
+        this.lastName = u.getLastName();
+        this.email = u.getEmail();
+        this.login = u.getLogin();
+        this.password = u.getPassword();
+        this.confirmed = u.getConfirmed();
+        this.banned = u.getBanned();
+        this.registrationDate = u.getRegistrationDate();
+        this.notify = u.getNotify();
+        this.role = u.getRole();
+    }
     public Users(Long id, String firstName, String lastName, String email, String login, String password, short confirmed, short banned, Date registrationDate, short notify) {
         this.id = id;
         this.firstName = firstName;
