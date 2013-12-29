@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
 public class OracleBookGenreDAO implements BookGenreDAO {
 
     public static final Logger log = Logger.getLogger(OracleBookGenreDAO.class);
-    private Oracle conn1;
+    private Oracle conn1 = new Oracle();
     private static final String selectQuery = "SELECT * FROM book_genre WHERE id=?";
     private static final String deleteQuery = "DELETE FROM book_genre WHERE id =?";
     private static final String insertBookGenreQuery = "INSERT INTO book_genre VALUES (book_genre_id.nextval, ?, ?)";

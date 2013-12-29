@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 public class OracleBookStatusDAO implements BookStatusDAO {
 
     public static final Logger log = Logger.getLogger(OracleBookStatusDAO.class);
-    private Oracle conn1;
+    private Oracle conn1 = new Oracle();
     private static final String selectQuery = "SELECT * FROM BookStatus WHERE id=?";
     private static final String deleteQuery = "DELETE FROM BookStatus WHERE id =?";
     private static final String insertBookStatusQuery = "INSERT INTO BookStatus VALUES(BookStatus_id.nextval, ?)";

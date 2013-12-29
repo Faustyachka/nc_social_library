@@ -5,12 +5,15 @@
 
 package ActionsInterfaces;
 
+import TransferObject.Users;
+import java.util.List;
+
 /**
  *
  * @author mazafaka
  */
 public interface UsersActions {
 
-    public String SearchFirstName(String firstname);
+    public Users searchUsersByParameter(String search, String param);
     public String SearchLastName(String lastname);
 }

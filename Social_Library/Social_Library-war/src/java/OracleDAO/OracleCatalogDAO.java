@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 public class OracleCatalogDAO implements CatalogDAO {
 
     public static final Logger log = Logger.getLogger(OracleAuthorDAO.class);
-    private Oracle conn1;
+    private Oracle conn1 = new Oracle();
     private static final String selectQuery = "SELECT * FROM catalog WHERE id=?";
     private static final String deleteQuery = "DELETE FROM catalog WHERE id =?";
     private static final String insertCatalogQuery = "INSERT INTO catalog VALUES(catalog_id.nextval, ?, ?,?,?)";
