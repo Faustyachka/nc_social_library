@@ -29,9 +29,14 @@
 		</form>
 		<table border=1>
                     <%
-                        long i = 0;
+                    long i=0;
+                    try{
+                        i = Long.parseLong(request.getParameter("i"));
+                    }catch(Exception e){i=0;}
                         LibraryActions lib = new LibraryActionsImpl();
                         List<Library> books = lib.getBooksByIdInInterval(10*i, 10*(i+1));
+                        out.println(books.size());
+
                         for(Library bookEntity : books){
                     %>
                     <tr>
@@ -67,5 +72,10 @@
                         }
                     %>
 		</table>
+                <center>
+                <%for(long k = i; k<i+10; k++){%>
+                <a href="?i=<%=k%>"><%=k%></a>
+                <%}%>
+                </center>
 	</body>
 </html>

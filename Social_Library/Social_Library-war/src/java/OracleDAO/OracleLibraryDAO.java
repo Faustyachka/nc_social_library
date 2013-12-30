@@ -69,7 +69,7 @@ public class OracleLibraryDAO implements LibraryDAO{
             stmt.setLong(1, id);
 
             ResultSet rs=stmt.executeQuery();
-            BookWorkflow bw = new BookWorkflow();
+
             while (rs.next())
             {
                 library.setId(rs.getLong(1));

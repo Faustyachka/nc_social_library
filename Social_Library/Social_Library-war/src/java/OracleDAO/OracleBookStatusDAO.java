@@ -14,10 +14,10 @@ public class OracleBookStatusDAO implements BookStatusDAO {
 
     public static final Logger log = Logger.getLogger(OracleBookStatusDAO.class);
     private Oracle conn1 = new Oracle();
-    private static final String selectQuery = "SELECT * FROM BookStatus WHERE id=?";
-    private static final String deleteQuery = "DELETE FROM BookStatus WHERE id =?";
-    private static final String insertBookStatusQuery = "INSERT INTO BookStatus VALUES(BookStatus_id.nextval, ?)";
-    private static final String updateBookStatusQuery = "UPDATE BookStatus SET Status =? where id=?";
+    private static final String selectQuery = "SELECT * FROM Book_Status WHERE id=?";
+    private static final String deleteQuery = "DELETE FROM Book_Status WHERE id =?";
+    private static final String insertBookStatusQuery = "INSERT INTO Book_Status VALUES(BookStatus_id.nextval, ?)";
+    private static final String updateBookStatusQuery = "UPDATE Book_Status SET Status =? where id=?";
 
     public BookStatus readBookStatus(int id) {
         BasicConfigurator.configure();
