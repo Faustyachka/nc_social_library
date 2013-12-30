@@ -32,6 +32,9 @@ public class OracleRatingDAO implements RatingDAO {
             pstmt.setLong(3, rating.getBook().getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -59,6 +62,8 @@ public class OracleRatingDAO implements RatingDAO {
                 rating.setBook(l.readLibrary(rs.getInt(4)));
             }
             rs.close();
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -80,6 +85,9 @@ public class OracleRatingDAO implements RatingDAO {
             pstmt.setLong(4, ratingOld.getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -96,6 +104,9 @@ public class OracleRatingDAO implements RatingDAO {
             stmt.setLong(1, rating.getId());
 
             stmt.executeUpdate();
+
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);

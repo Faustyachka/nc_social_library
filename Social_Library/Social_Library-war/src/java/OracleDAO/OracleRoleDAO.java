@@ -36,6 +36,8 @@ public class OracleRoleDAO implements RoleDAO {
                 role.setName(rs.getString(2));
             }
             rs.close();
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -54,6 +56,9 @@ public class OracleRoleDAO implements RoleDAO {
             pstmt.setString(1, role.getName());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -70,6 +75,9 @@ public class OracleRoleDAO implements RoleDAO {
             stmt.setInt(1, role.getId());
 
             stmt.executeUpdate();
+
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -87,6 +95,9 @@ public class OracleRoleDAO implements RoleDAO {
             pstmt.setInt(2, roleOld.getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);

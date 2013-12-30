@@ -44,6 +44,8 @@ public class OracleBookWorkflowDAO implements BookWorkflowDAO{
                 BookWorkflow.setWorkflow(rs.getString(2));
             }
             rs.close();
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -62,6 +64,9 @@ public class OracleBookWorkflowDAO implements BookWorkflowDAO{
             pstmt.setString(1, BookWorkflow.getWorkflow());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -78,6 +83,8 @@ public class OracleBookWorkflowDAO implements BookWorkflowDAO{
             stmt.setInt(1, BookWorkflow.getId());
 
             stmt.executeUpdate();
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -95,6 +102,9 @@ public class OracleBookWorkflowDAO implements BookWorkflowDAO{
             pstmt.setInt(2, BookWorkflowOld.getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);

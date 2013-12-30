@@ -36,6 +36,8 @@ public class OracleBookStatusDAO implements BookStatusDAO {
                 BookStatus.setStatus(rs.getString(2));
             }
             rs.close();
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -54,6 +56,9 @@ public class OracleBookStatusDAO implements BookStatusDAO {
             pstmt.setString(1, BookStatus.getStatus());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -70,6 +75,9 @@ public class OracleBookStatusDAO implements BookStatusDAO {
             stmt.setInt(1, BookStatus.getId());
 
             stmt.executeUpdate();
+
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -87,6 +95,9 @@ public class OracleBookStatusDAO implements BookStatusDAO {
             pstmt.setInt(2, BookStatusOld.getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);

@@ -31,6 +31,9 @@ public class OracleBookGenreDAO implements BookGenreDAO {
             pstmt.setInt(2, bookGenre.getGenre().getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -57,6 +60,8 @@ public class OracleBookGenreDAO implements BookGenreDAO {
                 bookGenre.setGenre(g.readGenre(rs.getInt(3)));
             }
             rs.close();
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -76,6 +81,9 @@ public class OracleBookGenreDAO implements BookGenreDAO {
             pstmt.setLong(3, bookGenreOld.getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -92,6 +100,9 @@ public class OracleBookGenreDAO implements BookGenreDAO {
             stmt.setLong(1, bookGenre.getId());
 
             stmt.executeUpdate();
+
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
