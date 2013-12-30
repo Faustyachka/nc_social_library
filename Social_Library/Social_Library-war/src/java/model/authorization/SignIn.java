@@ -29,7 +29,10 @@ public class SignIn implements Command {
        if (uList.get(0).getPassword().equals(request.getParameter("password")) && uList.get(0).getConfirmed()==1) {
             HttpSession session=request.getSession(true);
             session.setAttribute("role", (int) uList.get(0).getRole().getId());
-           page = ConfigurationManager.LOCAL_LIB;
+            session.setAttribute("id", uList.get(0).getId());
+
+           page = (ConfigurationManager.LOCAL_LIB);
+           page += "?id="+String.valueOf(uList.get(0).getId())+"&role="+ String.valueOf(uList.get(0).getRole().getId());
        } else {
             page = ConfigurationManager.INDEX_PAGE;
        }
