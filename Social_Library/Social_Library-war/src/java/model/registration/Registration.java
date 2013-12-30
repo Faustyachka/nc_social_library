@@ -4,6 +4,8 @@
  */
 package model.registration;
 
+import ActionsImpl.UsersActionsImpl;
+import ActionsInterfaces.UsersActions;
 import Controller.Command;
 import Controller.ConfigurationManager;
 import OracleDAO.OracleRoleDAO;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import OracleDAO.OracleUsersDAO;
 import TransferObjectInterface.RoleDAO;
+import java.util.List;
 import model.email.EmailSender;
 
 /**
@@ -54,8 +57,10 @@ public class Registration implements Command {
         users.setNotify(status1);
         users.setRole(role);
         dao.createUsers(users);
+        UsersActions uA = new UsersActionsImpl();
+        List<Users> uList = uA.searchUsersByParameter("login", users.getLogin());
         String mailSub = "Registration on Social Library";
-        String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Servlet?users=" + users.getLogin() + "&command=confirmUser'";
+        String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Servlet?users=" + uList.get(0).getId() + "&command=confirmUser'";
         String mail[] = new String[1];
         mail[0] = users.getEmail();
         try {

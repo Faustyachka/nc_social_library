@@ -4,7 +4,12 @@
     Author     : Антон
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8" import="com.soclib.*"%>
+<%--<%@page contentType="text/html" pageEncoding="UTF-8" import="search.*"%>--%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="ActionsInterfaces.*"%>
+<%@page import="ActionsImpl.*"%>
+<%@page import="TransferObject.*"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -14,7 +19,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <jsp:useBean class="com.soclib.BookEntity" id="book" scope="application"/>
+        <jsp:useBean class="ActionsImpl.LibraryActionsImpl" id="book" scope="application"/>
 		<table cellspacing="5"><tr><td><font size="20">Global library</font></td></tr>
                     <tr><td><a href="locallib.jsp"> Local library </a></td></tr></table>
 		<br/>
@@ -24,21 +29,31 @@
 		</form>
 		<table border=1>
                     <%
-                        for(BookEntity bookEntity: BookEntity.books){
+                        long i = 0;
+                        LibraryActions lib = new LibraryActionsImpl();
+                        List<Library> books = lib.getBooksByIdInInterval(10*i, 10*(i+1));
+                        for(Library bookEntity : books){
                     %>
                     <tr>
 			<td>
 			<center>
 			<%=bookEntity.getCover()%>
 			<form name="form2" method="post" action="RateBookServlet"><br />
-                		<input type="text" name="rate" style="width:25px;" value="<%=bookEntity.getRate()%>"><br/>
+                		<input type="text" name="rate" style="width:25px;" value="
+                                       <%
+                                       long sum = 0;
+                                       for(TransferObject.Rating rate : bookEntity.getRatingCollection())
+                                           sum+=rate.getRate();
+                                       sum = sum/bookEntity.getRatingCollection().size();
+                                       %><%=sum%>"><br/>
 				<input type="submit" name="search" value="Change rating"/>
                                 <input type="hidden" name="book_id" value="<%=bookEntity.getId()%>"/>
 			</form>
 			</center>
 			</td>
 			<td>
-			<%=bookEntity.getAuthor()%><br/>
+			<%for(BookAuthor ba : bookEntity.getBookAuthorCollection()){%>
+                            <%= ba.getAuthor()%><%}%><br/>
 			<%=bookEntity.getTitle()%><br/>
 			<%=bookEntity.getDescription()%><br/>
 			<br/>
