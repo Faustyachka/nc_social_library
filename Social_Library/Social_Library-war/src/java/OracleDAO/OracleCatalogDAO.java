@@ -35,6 +35,9 @@ public class OracleCatalogDAO implements CatalogDAO {
             pstmt.setShort(4, catalog.getStatus().getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -63,6 +66,8 @@ public class OracleCatalogDAO implements CatalogDAO {
                 catalog.setStatus(s.readBookStatus(rs.getInt(4)));
             }
             rs.close();
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -83,6 +88,9 @@ public class OracleCatalogDAO implements CatalogDAO {
             pstmt.setLong(4, catalogOld.getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -99,6 +107,9 @@ public class OracleCatalogDAO implements CatalogDAO {
             stmt.setLong(1, catalog.getId());
 
             stmt.executeUpdate();
+
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);

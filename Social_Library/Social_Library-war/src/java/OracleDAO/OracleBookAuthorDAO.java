@@ -31,6 +31,10 @@ public class OracleBookAuthorDAO implements BookAuthorDAO {
             pstmt.setLong(2, bookauthor.getAuthor().getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+            conn.close();
+
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -56,6 +60,8 @@ public class OracleBookAuthorDAO implements BookAuthorDAO {
                 bookauthor.setAuthor(a.readAuthor(rs.getInt(3)));
             }
             rs.close();
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -75,6 +81,9 @@ public class OracleBookAuthorDAO implements BookAuthorDAO {
             pstmt.setLong(3, bookauthorOld.getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -91,6 +100,9 @@ public class OracleBookAuthorDAO implements BookAuthorDAO {
             stmt.setLong(1, bookauthor.getId());
 
             stmt.executeUpdate();
+
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);

@@ -28,6 +28,9 @@ public class OracleGenreDAO implements GenreDAO {
             pstmt.setString(1, genre.getGenre());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -51,6 +54,8 @@ public class OracleGenreDAO implements GenreDAO {
                 genre.setGenre(rs.getString(2));
             }
             rs.close();
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -70,6 +75,9 @@ public class OracleGenreDAO implements GenreDAO {
             pstmt.setInt(2, genreOld.getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -86,6 +94,9 @@ public class OracleGenreDAO implements GenreDAO {
             stmt.setInt(1, genre.getId());
 
             stmt.executeUpdate();
+
+            stmt.close();
+                conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);

@@ -47,6 +47,9 @@ public class OracleLibraryDAO implements LibraryDAO{
             pstmt.setInt(7,library.getWorkflow().getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         }
         catch (SQLException e)
         {
@@ -82,6 +85,8 @@ public class OracleLibraryDAO implements LibraryDAO{
                 library.setWorkflow(w.readBookWorkflow(rs.getInt(8)));
             }
             rs.close();
+            stmt.close();
+                conn.close();
         }
         catch (SQLException e)
         {
@@ -111,6 +116,9 @@ public class OracleLibraryDAO implements LibraryDAO{
             pstmt.setLong(8, libraryOld.getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         }
         catch (SQLException e)
         {
@@ -131,6 +139,9 @@ public class OracleLibraryDAO implements LibraryDAO{
             stmt.setLong(1, library.getId());
 
             stmt.executeUpdate();
+
+            stmt.close();
+                conn.close();
         }
         catch (SQLException e)
         {

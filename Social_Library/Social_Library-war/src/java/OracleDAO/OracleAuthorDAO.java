@@ -21,18 +21,17 @@ public class OracleAuthorDAO implements AuthorDAO {
 
     public void createAuthor(Author author) {
         BasicConfigurator.configure();
-        try {
-
             Connection conn = conn1.getConnection();
             try {
                 PreparedStatement pstmt = conn.prepareStatement(insertAuthorQuery);
                 pstmt.setString(1, author.getAuthor());
                 pstmt.executeUpdate();
-            } finally {
+
                 conn.close();
+                pstmt.close();
             }
 
-        } catch (SQLException e) {
+         catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
             }
@@ -43,7 +42,6 @@ public class OracleAuthorDAO implements AuthorDAO {
     public Author readAuthor(int id) {
         BasicConfigurator.configure();
         Author author = new Author();
-        try {
             Connection conn = conn1.getConnection();
             try {
                 PreparedStatement stmt = conn.prepareStatement(selectQuery);
@@ -56,11 +54,11 @@ public class OracleAuthorDAO implements AuthorDAO {
                     author.setAuthor(rs.getString(2));
                 }
                 rs.close();
-            } finally {
+                stmt.close();
                 conn.close();
             }
 
-        } catch (SQLException e) {
+         catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
             }
@@ -71,7 +69,6 @@ public class OracleAuthorDAO implements AuthorDAO {
 
     public void updateAuthor(Author authorOld, Author authorNew) {
         BasicConfigurator.configure();
-        try {
             Connection conn = conn1.getConnection();
             try {
                 PreparedStatement pstmt = conn.prepareStatement(updateAuthorQuery);
@@ -80,10 +77,11 @@ public class OracleAuthorDAO implements AuthorDAO {
                 pstmt.setLong(2, authorOld.getId());
 
                 pstmt.executeUpdate();
-            } finally {
+
                 conn.close();
+                pstmt.close();
             }
-        } catch (SQLException e) {
+         catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
             }
@@ -92,7 +90,6 @@ public class OracleAuthorDAO implements AuthorDAO {
 
     public void deleteAuthor(Author author) {
         BasicConfigurator.configure();
-        try {
             Connection conn = conn1.getConnection();
             try {
                 PreparedStatement stmt = conn.prepareStatement(deleteQuery);
@@ -100,10 +97,11 @@ public class OracleAuthorDAO implements AuthorDAO {
                 stmt.setLong(1, author.getId());
 
                 stmt.executeUpdate();
-            } finally {
+
+                stmt.close();
                 conn.close();
             }
-        } catch (SQLException e) {
+         catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
             }

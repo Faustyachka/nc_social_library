@@ -52,6 +52,9 @@ public class OracleUsersDAO implements UsersDAO{
             pstmt.setInt(10, users.getRole().getId());
             pstmt.executeUpdate();
 
+            pstmt.close();
+                conn.close();
+
         }
         
         catch (SQLException e)
@@ -90,6 +93,8 @@ public class OracleUsersDAO implements UsersDAO{
                 users.setRole(r.readRole(rs.getInt(12)));
             }
             rs.close();
+            stmt.close();
+                conn.close();
         }
         
         catch (SQLException e)
@@ -123,6 +128,9 @@ public class OracleUsersDAO implements UsersDAO{
             pstmt.setLong(12, usersOld.getId());
 
             pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
         }
        
         catch (SQLException e)
@@ -144,6 +152,9 @@ public class OracleUsersDAO implements UsersDAO{
             stmt.setLong(1, users.getId());
 
             stmt.executeUpdate();
+
+            stmt.close();
+                conn.close();
         }
         
         catch (SQLException e)
