@@ -14,6 +14,24 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <table border="1">
+        <tbody>
+        <tr>
+        <td>ISBN:</td>
+        </tr>
+        <tr>
+        <td>Title:</td>
+        </tr>
+        <tr>
+        <td>Cover:</td>
+        </tr>
+        <tr>
+        <td>Description:</td>
+        </tr>
+        <tr>
+        <td>Pages:</td>
+        </tr>
+        </tbody>
+        </table>
     </body>
 </html>

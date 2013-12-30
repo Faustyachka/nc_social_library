@@ -25,9 +25,8 @@ public class SignIn implements Command {
         response.setContentType("text/html;charset=UTF-8");
         UsersActions uAction = new UsersActionsImpl();
         List<Users> uList = uAction.searchUsersByParameter("login", request.getParameter("login"));
-//        uList.getPassword();
        if (uList.size()!=0){
-       if (uList.get(0).getPassword().equals(request.getParameter("password"))) {
+       if (uList.get(0).getPassword().equals(request.getParameter("password")) && uList.get(0).getConfirmed()==1) {
             HttpSession session=request.getSession(true);
             session.setAttribute("role", (int) uList.get(0).getRole().getId());
            page = ConfigurationManager.LOCAL_LIB;

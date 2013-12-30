@@ -45,6 +45,11 @@ public class LibraryView extends HttpServlet {
          List<Library> uList = uAction.searchLibraryByParameter(library.setWorkflow(bookworkflow.setWorkflow("published")));
         */
            //page = ConfigurationManager.LIBRARY_PAGE;
+<<<<<<< .mine
+
+=======
+           page = ConfigurationManager.LOCAL_LIB;
+>>>>>>> .theirs
       
         return page;
          

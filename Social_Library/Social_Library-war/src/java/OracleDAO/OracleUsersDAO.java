@@ -29,10 +29,8 @@ public class OracleUsersDAO implements UsersDAO{
     private static final String selectQuery="SELECT * FROM users WHERE id=?";
     private static final String deleteQuery="DELETE FROM users WHERE id =?";
     private static final String insertUsersQuery="INSERT INTO users VALUES (users_id.nextval, ?, ?, ?, ?, ?, ?, ?, ?, TO_DATE('11.02.2013','dd.mm.yyyy'), ?,?)";
-    private static final String updateUsersQuery="UPDATE users SET first_name = ?," +
-                        "last_name = ?, email = ?, login = ?, password = ?," +
-                        "gender = ?, confirmed = ?, banned = ?, registration_date = ?," +
-                        "notify = ? role = ? WHERE id = ?";
+    private static final String updateUsersQuery="UPDATE USERS SET FIRST_NAME = ?, LAST_NAME = ?, EMAIL = ?, LOGIN = ?, PASSWORD = ?, GENDER = ?, " +
+            "CONFIRMED = ?, BANNED = ?, REGISTRATION_DATE = TO_DATE(?, 'YYYY-MM-DD'), NOTIFY = ?, ROLE = ? WHERE ID=?";
 
     public void createUsers(Users users) {
     BasicConfigurator.configure();
@@ -53,6 +51,7 @@ public class OracleUsersDAO implements UsersDAO{
             pstmt.setInt(9, users.getNotify());
             pstmt.setInt(10, users.getRole().getId());
             pstmt.executeUpdate();
+
         }
         
         catch (SQLException e)
@@ -62,7 +61,6 @@ public class OracleUsersDAO implements UsersDAO{
                 log.error("SQLException"+e);
             }
         }
-
     }
 
     public Users readUsers(int id) {
@@ -116,13 +114,13 @@ public class OracleUsersDAO implements UsersDAO{
             pstmt.setString(3, usersNew.getEmail());
             pstmt.setString(4, usersNew.getLogin());
             pstmt.setString(5, usersNew.getPassword());
-            pstmt.setInt(6, usersNew.getGender());
+            pstmt.setShort(6, usersNew.getGender());
             pstmt.setInt(7, usersNew.getConfirmed());
             pstmt.setInt(8, usersNew.getBanned());
             pstmt.setDate(9,(Date) usersNew.getRegistrationDate());
-            pstmt.setInt(9, usersNew.getNotify());
-            pstmt.setInt(10, usersNew.getRole().getId());
-            pstmt.setLong(11, usersOld.getId());
+            pstmt.setInt(10, usersNew.getNotify());
+            pstmt.setInt(11, usersNew.getRole().getId());
+            pstmt.setLong(12, usersOld.getId());
 
             pstmt.executeUpdate();
         }
