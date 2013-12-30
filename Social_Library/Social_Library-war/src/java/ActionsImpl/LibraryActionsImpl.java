@@ -23,6 +23,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.BasicConfigurator;
@@ -67,6 +68,36 @@ public class LibraryActionsImpl implements LibraryActions {
 
         return lList;
     }
+    
+    public List<Library> searchBooksByStringMask(String where, String what) {
+        BasicConfigurator.configure();
+        LibraryDAO u = new OracleLibraryDAO();
+        List<Library> lList = new ArrayList<Library>();
+        String selectParametr = "select *  from library where "+where+" like '"+what+"'";
+        try {
+
+            Oracle conn1 = new Oracle();
+            Connection conn = conn1.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(selectParametr);
+//            stmt.setString(1, where);
+//            stmt.setString(2, what);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                library = u.readLibrary(rs.getInt("id"));
+                lList.add(library);
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                log.error("SQLException" + e);
+            }
+        }
+
+        return lList;
+    }
+
 
     public List<Library> getBooksByIdInInterval(long from, long to){
         BasicConfigurator.configure();
@@ -79,7 +110,7 @@ public class LibraryActionsImpl implements LibraryActions {
 
         return lList;
     }
-    
+
     public List<Author> getAuthorsList(long bookId)
     {
         BasicConfigurator.configure();

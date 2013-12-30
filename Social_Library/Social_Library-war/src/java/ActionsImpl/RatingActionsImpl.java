@@ -78,6 +78,7 @@ public class RatingActionsImpl implements RatingActions {
             stmt.setLong(1, bookId);
             stmt.setLong(2, userId);
             ResultSet rs = stmt.executeQuery();
+            //while(rs.next())
             rs.next();
             rating = u.readRating(rs.getInt("id"));
             rs.close();

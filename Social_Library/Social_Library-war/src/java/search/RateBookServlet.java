@@ -34,26 +34,29 @@ public class RateBookServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String redirect = request.getContextPath();
+            //String redirect = request.getContextPath();
+
             long book_id = Long.parseLong(request.getParameter("book_id").toString());
             long user_id = Long.parseLong(request.getParameter("user_id").toString());
             short book_rate = Short.parseShort(request.getParameter("rate").toString());
+            out.print(book_id+ " " + user_id+ " " + book_rate);
             
-            RatingActions ratingActions = new RatingActionsImpl();
-            Rating rating = ratingActions.getRatingsByBookAndUserIds(user_id, book_id);
-            if(rating != null){
-                Rating ratingNew = new Rating();
-                ratingNew.setId(rating.getId());
-                ratingNew.setBook(rating.getBook());
-                ratingNew.setUsers(rating.getUsers());
-                ratingNew.setRate(rating.getRate());
-                new OracleRatingDAO().updateRating(rating, ratingNew);
-            } else {
-                new OracleRatingDAO().createRating(book_id, user_id, book_rate);
-            }
+//            RatingActions ratingActions = new RatingActionsImpl();
+//            Rating rating = ratingActions.getRatingsByBookAndUserIds(user_id, book_id);
+//            out.print(rating.getRate()+ " " + rating.getBook()+ " " +rating.getUsers());
+//            if(rating != null){
+//                Rating ratingNew = new Rating();
+//                ratingNew.setId(rating.getId());
+//                ratingNew.setBook(rating.getBook());
+//                ratingNew.setUsers(rating.getUsers());
+//                ratingNew.setRate(rating.getRate());
+//                new OracleRatingDAO().updateRating(rating, ratingNew);
+//            } else {
+//                new OracleRatingDAO().createRating(book_id, user_id, book_rate);
+//            }
 
             //response.sendRedirect("locallib.jsp");
-            response.sendRedirect(redirect);
+            response.sendRedirect("globallib.jsp");
             /* TODO output your page here
             out.println("<html>");
             out.println("<head>");

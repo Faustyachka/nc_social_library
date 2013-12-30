@@ -28,11 +28,14 @@ public class ControllerServlet extends HttpServlet {
         String page =null;
          try {
 
-//              String comm = request.getParameter("command");
+              String comm = request.getParameter("command");
 //             switch(comm){
 //                 case "signin":  break;
 //                 default: break;
 //             }
+
+              if(comm=="signin"){}
+
              Command command= requesthandler.getCommand(request);
              page = command.execute(request, response);
 

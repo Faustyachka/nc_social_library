@@ -24,10 +24,22 @@
     </head>
     <body>
         <jsp:useBean class="ActionsImpl.LibraryActionsImpl" id="book" scope="application"/>
+
+        <%
+        String text = "tab";
+
+            Library library = new Library();
+            LibraryActions libraryActions = new LibraryActionsImpl();
+
+            String searchResult = "";
+            for (Library be : libraryActions.searchBooksByStringMask("title", "%tab%"))
+                out.print(be.getIsbn());
+
+%>
         <%
         for(int i = 0; i<500; i++){
         Oracle conn1 = new Oracle();
-        Library library = new Library();
+        library = new Library();
        Connection conn=conn1.getConnection();
        UsersDAO u = new OracleUsersDAO();
        BookWorkflowDAO w = new OracleBookWorkflowDAO();

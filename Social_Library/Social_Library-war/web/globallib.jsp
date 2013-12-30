@@ -36,22 +36,24 @@
                     }catch(Exception e){i=0;}
                         LibraryActions lib = new LibraryActionsImpl();
                         List<Library> books = lib.getBooksByIdInInterval(10*i, 10*(i+1));
-                        out.println(books.size());
+                        //out.println(books.size());
 
                         for(Library bookEntity : books){
+                            if(bookEntity.getWorkflow().getId()!=4) continue;
                     %>
                     <tr>
 			<td>
+                            <%=bookEntity.getId()%>
 			<center>
 			<%=bookEntity.getCover()%>
-			<form name="form2" method="post" action="RateBookServlet"><br />
-                		<input type="text" name="rate" style="width:25px;" value="
-                                       <%
-                                       out.print(lib.getAverageRate(bookEntity.getId()));
-                                       %>"><br/>
+			<form name="form2" method="post" action="RateBook"><br />
+                		<input type="text" name="rate" style="width:25px;" 
+                                       value="<%out.print(lib.getAverageRate(bookEntity.getId()));%>">
+                                <br/>
 				<input type="submit" name="search" value="Change rating"/>
-                                <input type="hidden" name="book_id" value="<%=bookEntity.getId()%>"/>
-                                <input type="hidden" name="user_id" value="1"/>
+                                <input type="hidden" name="book_id" value="307"/>
+                                       <%--<%=bookEntity.getId()%>"/>--%>
+                                <input type="hidden" name="user_id" value="89"/>
 			</form>
 			</center>
 			</td>

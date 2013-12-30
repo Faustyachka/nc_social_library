@@ -65,6 +65,7 @@ public class OracleRatingDAO implements RatingDAO {
 
     public Rating readRating(int id) {
         Rating rating = new Rating();
+        int resulSetSize=0;
         BasicConfigurator.configure();
         Connection conn = conn1.getConnection();
         UsersDAO u = new OracleUsersDAO();
@@ -76,6 +77,16 @@ public class OracleRatingDAO implements RatingDAO {
 
             ResultSet rs = stmt.executeQuery();
 
+
+//            if(!rs.first())
+//            {
+//                rs.close();
+//                stmt.close();
+//                conn.close();
+//                return null;
+//            }
+            //rs.beforeFirst();
+
             while (rs.next()) {
                 rating.setId(rs.getLong(1));
                 rating.setRate(rs.getShort(2));
@@ -84,13 +95,12 @@ public class OracleRatingDAO implements RatingDAO {
             }
             rs.close();
             stmt.close();
-                conn.close();
+            conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
             }
         }
-
         return rating;
     }
 
