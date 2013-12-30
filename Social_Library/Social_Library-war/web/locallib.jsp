@@ -1,11 +1,11 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="ActionsImpl.*"%>
+<%@page import="ActionsInterfaces.*"%>
 <%@page import="TransferObject.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page import="OracleDAO.*"%>
-<%@page import="TransferObjectInterface.*"%>
+<%@page import="java.util.Collection"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -16,33 +16,33 @@
     </head>
 	<body>
 	<table cellspacing="5"><tr><td><font size="20">Local library</font></td></tr>
-            <tr><td><a href="globallib.jsp"> Global library </a></td></tr></table>
+            <tr><td><a href="globallib.jsp?id=<%out.print(request.getParameter("id"));%>">Global library </a></td></tr></table>
 	<br />
-        <table border=1>
-        <%
-        LibraryActionsImpl lAct = new LibraryActionsImpl();
-        List<Library> books = lAct.searchBooksByParameter("users", request.getParameter("id"));
-        for(Library bookEntity : books){
-        %>
-                   <tr>
+     		<table border=1>
+                    <%
+                        LibraryActions lib = new LibraryActionsImpl();
+                        List<Library> books = lib.searchBooksByParameter("users", request.getParameter("id"));
+                        out.println(books.size());
+
+                        for(Library bookEntity : books){
+                    %>
+                    <tr>
 			<td>
 			<center>
 			<%=bookEntity.getCover()%>
 			<form name="form2" method="post" action="RateBookServlet"><br />
                 		<input type="text" name="rate" style="width:25px;" value="
                                        <%
-                                       long sum = 0;
-                                       for(TransferObject.Rating rate : bookEntity.getRatingCollection())
-                                           sum+=rate.getRate();
-                                       sum = sum/bookEntity.getRatingCollection().size();
-                                       %><%=sum%>"><br/>
+                                       out.print(lib.getAverageRate(bookEntity.getId()));
+                                       %>"><br/>
 				<input type="submit" name="search" value="Change rating"/>
                                 <input type="hidden" name="book_id" value="<%=bookEntity.getId()%>"/>
+                                <input type="hidden" name="user_id" value="1"/>
 			</form>
 			</center>
 			</td>
 			<td>
-			<%for(BookAuthor ba : bookEntity.getBookAuthorCollection()){%>
+                            <%for(Author ba : lib.getAuthorsList(bookEntity.getId())){%>
                             <%= ba.getAuthor()%><%}%><br/>
 			<%=bookEntity.getTitle()%><br/>
 			<%=bookEntity.getDescription()%><br/>
@@ -56,7 +56,7 @@
                     <%
                         }
                     %>
-        </table>
+		</table>
 	<form name="form1" method="post" action="SearchInLocalLib"><br />
             <input type="text" name="text" width="40"></text>
             <input type="submit" name="search" value="Search"/>
