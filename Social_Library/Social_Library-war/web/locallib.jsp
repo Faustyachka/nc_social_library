@@ -1,10 +1,11 @@
-<%-- 
-    Document   : locallib
-    Created on : 25/12/2013, 11:04:28
-    Author     : Антон
---%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8" import="com.soclib.*"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="ActionsImpl.*"%>
+<%@page import="TransferObject.*"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="OracleDAO.*"%>
+<%@page import="TransferObjectInterface.*"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -14,15 +15,53 @@
         <title>JSP Page</title>
     </head>
 	<body>
-            <jsp:useBean class="com.soclib.BookEntity" id="book" scope="application"/>
 	<table cellspacing="5"><tr><td><font size="20">Local library</font></td></tr>
             <tr><td><a href="globallib.jsp"> Global library </a></td></tr></table>
 	<br />
+        <table border=1>
+        <%
+        LibraryActionsImpl lAct = new LibraryActionsImpl();
+        List<Library> books = lAct.searchBooksByParameter("users", request.getParameter("id"));
+        for(Library bookEntity : books){
+        %>
+                   <tr>
+			<td>
+			<center>
+			<%=bookEntity.getCover()%>
+			<form name="form2" method="post" action="RateBookServlet"><br />
+                		<input type="text" name="rate" style="width:25px;" value="
+                                       <%
+                                       long sum = 0;
+                                       for(TransferObject.Rating rate : bookEntity.getRatingCollection())
+                                           sum+=rate.getRate();
+                                       sum = sum/bookEntity.getRatingCollection().size();
+                                       %><%=sum%>"><br/>
+				<input type="submit" name="search" value="Change rating"/>
+                                <input type="hidden" name="book_id" value="<%=bookEntity.getId()%>"/>
+			</form>
+			</center>
+			</td>
+			<td>
+			<%for(BookAuthor ba : bookEntity.getBookAuthorCollection()){%>
+                            <%= ba.getAuthor()%><%}%><br/>
+			<%=bookEntity.getTitle()%><br/>
+			<%=bookEntity.getDescription()%><br/>
+			<br/>
+			<form name="form3" method="post" action="AddToLocalLibraryServlet"><br />
+				<input type="submit" name="addlocal" value="Add to Local Library"/>
+                                <input type="hidden" name="book_id" value="<%=bookEntity.getId()%>"/>
+			</form>
+			</td>
+                    </tr>
+                    <%
+                        }
+                    %>
+        </table>
 	<form name="form1" method="post" action="SearchInLocalLib"><br />
             <input type="text" name="text" width="40"></text>
             <input type="submit" name="search" value="Search"/>
 	</form>
-	<table border=1>
+<%--	<table border=1>
             <%
                 for(BookEntity bookEntity: BookEntity.books){
                        if(bookEntity.isIsInLocallib()){
@@ -49,6 +88,11 @@
                     }
                 }
                 %>
-	</table>
+	</table>--%>
+        <%
+        out.println("role= "+request.getParameter("role")+"<br>id="+request.getParameter("id"));
+
+
+        %>
 </body>
 </html>
