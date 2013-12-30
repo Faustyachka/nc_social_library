@@ -60,7 +60,7 @@ public class OracleLibraryDAO implements LibraryDAO{
         }
     }
 
-    public Library readLibrary(int id) {
+    public Library readLibrary(long id) {
             BasicConfigurator.configure();
        Library library = new Library();
        Connection conn=conn1.getConnection();
@@ -69,7 +69,7 @@ public class OracleLibraryDAO implements LibraryDAO{
        try
         {
             PreparedStatement stmt = conn.prepareStatement(selectQuery);
-            stmt.setInt(1, id);
+            stmt.setLong(1, id);
 
             ResultSet rs=stmt.executeQuery();
 

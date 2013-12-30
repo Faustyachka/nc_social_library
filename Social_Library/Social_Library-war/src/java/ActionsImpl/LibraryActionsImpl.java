@@ -67,8 +67,6 @@ public class LibraryActionsImpl implements LibraryActions {
         Library lib = new Library();
         List<Library> lList = new ArrayList<Library>();
         for(long i = from; i<to; i++){
-                lib = u.readLibrary((int) i);
-                lList.add(lib);
         }
 
         return lList;
