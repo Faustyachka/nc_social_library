@@ -30,12 +30,12 @@
 		</form>
 		<table border=1>
                     <%
-                    long i=1;
+                    long i=0;
                     try{
                         i = Long.parseLong(request.getParameter("i"));
-                    }catch(Exception e){i=1;}
+                    }catch(Exception e){i=0;}
                         LibraryActions lib = new LibraryActionsImpl();
-                        List<Library> books = lib.getBooksByIdInInterval(10*(i-1), 10*i);
+                        List<Library> books = lib.getBooksByIdInInterval(10*i, 10*(i+1));
                         out.println(books.size());
 
                         for(Library bookEntity : books){
@@ -73,8 +73,8 @@
 		</table>
                 <center>
                 <%
-                long i_k = (i>5)?i-4:i;
-                for(long k = i_k; k<i_k+10; k++){%>
+                //long i_k = (i>5)?i-4:i;
+                for(long k = i; k<i+10; k++){%>
                 <a href="?i=<%=k%>"><%=k%></a>
                 <%}%>
                 </center>

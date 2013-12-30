@@ -71,9 +71,10 @@ public class LibraryActionsImpl implements LibraryActions {
     public List<Library> getBooksByIdInInterval(long from, long to){
         BasicConfigurator.configure();
         LibraryDAO u = new OracleLibraryDAO();
+        Library lib = new Library();
         List<Library> lList = new ArrayList<Library>();
         for(long i = from; i<to; i++){
-                lList.add(u.readLibrary(i));
+            lList.add(u.readLibrary(i));
         }
 
         return lList;
