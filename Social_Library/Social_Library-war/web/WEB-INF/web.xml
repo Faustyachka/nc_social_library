@@ -8,6 +8,10 @@
         <servlet-name>Library</servlet-name>
         <servlet-class>model.view.Library</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>testing</servlet-name>
+        <servlet-class>validate.testing</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Servlet</servlet-name>
         <url-pattern>/Servlet</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>Library</servlet-name>
         <url-pattern>/Library</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>testing</servlet-name>
+        <url-pattern>/testing</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
