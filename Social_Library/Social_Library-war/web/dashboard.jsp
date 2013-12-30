@@ -15,16 +15,16 @@
         <title>JSP Page</title>
     </head>
 	<body>
-	<table cellspacing="5"><tr><td><font size="20">Local library</font></td></tr>
+	<table cellspacing="5"><tr><td><font size="20">Dashboard</font></td></tr>
             <tr><td><a href="globallib.jsp?id=<%=request.getParameter("id")%>">Global library </a></td></tr>
-            <tr><td><a href="dashboard.jsp?id=<%=request.getParameter("id")%>">Dashboard Publish</a></td></tr>
+            <tr><td><a href="localllib.jsp?id=<%=request.getParameter("id")%>">Local library </a></td></tr>
             <tr><td><a href="dashboardApp.jsp?id=<%=request.getParameter("id")%>">Dashboard Approve </a></td></tr>
-        </table>
+       </table>
 	<br />
      		<table border=1>
                     <%
                         LibraryActions lib = new LibraryActionsImpl();
-                        List<Library> books = lib.searchBooksByParameter("users", request.getParameter("id"));
+                        List<Library> books = lib.searchBooksByParameter("workflow", "1");
                         out.println(books.size());
 
                         for(Library bookEntity : books){
@@ -33,15 +33,7 @@
 			<td>
 			<center>
 			<%=bookEntity.getCover()%>
-			<form name="form2" method="post" action="RateBookServlet"><br />
-                		<input type="text" name="rate" style="width:25px;" value="
-                                       <%
-                                       out.print(lib.getAverageRate(bookEntity.getId()));
-                                       %>"><br/>
-				<input type="submit" name="search" value="Change rating"/>
-                                <input type="hidden" name="book_id" value="<%=bookEntity.getId()%>"/>
-                                <input type="hidden" name="user_id" value="<%=request.getParameter("id") %>"/>
-			</form>
+
 			</center>
 			</td>
 			<td>
@@ -51,8 +43,8 @@
 			<%=bookEntity.getDescription()%><br/>
 			<br/>
 			<form name="form3" method="post" command="publish"><br/>
-                            <input type="submit" name="publish" value="Publish">
-                            <input type="hidden" name="user_id" value="<%=request.getParameter("id") %>"/>
+                            <input type="submit" name="publish" value="Publish!">
+                            <input type="submit" name="reject" value="Reject!">
                             <input type="hidden" name="book_id" value="<%=bookEntity.getId() %>"/>
 			</form>
 			</td>
