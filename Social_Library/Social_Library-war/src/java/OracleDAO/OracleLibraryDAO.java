@@ -57,7 +57,7 @@ public class OracleLibraryDAO implements LibraryDAO{
         }
     }
 
-    public Library readLibrary(int id) {
+    public Library readLibrary(long id) {
             BasicConfigurator.configure();
        Library library = new Library();
        Connection conn=conn1.getConnection();
