@@ -66,8 +66,7 @@ public class LibraryActionsImpl implements LibraryActions {
         LibraryDAO u = new OracleLibraryDAO();
         List<Library> lList = new ArrayList<Library>();
         for(long i = from; i<to; i++){
-            Library l = new Library(i);
-            if(l != null) lList.add(l);
+                lList.add(u.readLibrary((int) i));
         }
 
         return lList;
