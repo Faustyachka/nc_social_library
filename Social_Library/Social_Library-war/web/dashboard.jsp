@@ -16,7 +16,10 @@
     </head>
 	<body>
 	<table cellspacing="5"><tr><td><font size="20">Dashboard</font></td></tr>
-            <tr><td><a href="globallib.jsp?id=<%=request.getParameter("id")%>">Global library </a></td></tr></table>
+            <tr><td><a href="globallib.jsp?id=<%=request.getParameter("id")%>">Global library </a></td></tr>
+            <tr><td><a href="localllib.jsp?id=<%=request.getParameter("id")%>">Local library </a></td></tr>
+            <tr><td><a href="dashboardApp.jsp?id=<%=request.getParameter("id")%>">Dashboard Approve </a></td></tr>
+       </table>
 	<br />
      		<table border=1>
                     <%
@@ -40,7 +43,8 @@
 			<%=bookEntity.getDescription()%><br/>
 			<br/>
 			<form name="form3" method="post" command="publish"><br/>
-                            <input type="submit" name="publish" value="Publish">
+                            <input type="submit" name="publish" value="Publish!">
+                            <input type="submit" name="reject" value="Reject!">
                             <input type="hidden" name="book_id" value="<%=bookEntity.getId() %>"/>
 			</form>
 			</td>

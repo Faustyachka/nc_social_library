@@ -17,7 +17,8 @@
 	<body>
 	<table cellspacing="5"><tr><td><font size="20">Local library</font></td></tr>
             <tr><td><a href="globallib.jsp?id=<%=request.getParameter("id")%>">Global library </a></td></tr>
-            <tr><td><a href="dashboard.jsp?id=<%=request.getParameter("id")%>">Dashboard </a></td></tr>
+            <tr><td><a href="dashboard.jsp?id=<%=request.getParameter("id")%>">Dashboard Publish</a></td></tr>
+            <tr><td><a href="dashboardApp.jsp?id=<%=request.getParameter("id")%>">Dashboard Approve </a></td></tr>
         </table>
 	<br />
      		<table border=1>

@@ -22,7 +22,10 @@
     <body>
         <jsp:useBean class="ActionsImpl.LibraryActionsImpl" id="book" scope="application"/>
 		<table cellspacing="5"><tr><td><font size="20">Global library</font></td></tr>
-                    <tr><td><a href="locallib.jsp?id=<%=request.getParameter("id")%>"> Local library </a></td></tr></table>
+                    <tr><td><a href="locallib.jsp?id=<%=request.getParameter("id")%>"> Local library </a></td></tr>
+                    <tr><td><a href="dashboard.jsp?id=<%=request.getParameter("id")%>">Dashboard Publish</a></td></tr>
+                    <tr><td><a href="dashboardApp.jsp?id=<%=request.getParameter("id")%>">Dashboard Approve </a></td></tr>
+                </table>
 		<br/>
 		<form name="form1" method="post" action="SearchInGloballib"><br />
 			<input type="text" name="text" width="40"></text>
