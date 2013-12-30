@@ -35,6 +35,7 @@
 			<input type="text" name="rate" style="width:25px;" value="<%=bookEntity.getRate()%>"><br/>
 			<input type="submit" name="search" value="Change rating"/>
                         <input type="hidden" name="book_id" value="<%=bookEntity.getId()%>"/>
+                        <input type="hidden" name="user_id" value="1"/>
 		</form>
 		</center>
 		</td>

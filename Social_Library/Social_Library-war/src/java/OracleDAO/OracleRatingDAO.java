@@ -18,7 +18,7 @@ public class OracleRatingDAO implements RatingDAO {
     private Oracle conn1 = new Oracle();
     private static final String selectQuery = "SELECT * FROM rating WHERE id=?";
     private static final String deleteQuery = "DELETE FROM rating WHERE id =?";
-    private static final String insertRatingQuery = "INSERT INTO rating VALUES (rating_id.nextval, ?, ?, ?)";
+    private static final String insertRatingQuery = "INSERT INTO rating (ID, Rate, Users, Book) VALUES (rating_id.nextval, ?, ?, ?)";
     private static final String updateRatingQuery = "UPDATE rating SET rate=?, users=?, book=? WHERE id=?";
 
     public void createRating(Rating rating) {
@@ -30,6 +30,27 @@ public class OracleRatingDAO implements RatingDAO {
             pstmt.setInt(1, rating.getRate());
             pstmt.setLong(2, rating.getUsers().getId());
             pstmt.setLong(3, rating.getBook().getId());
+
+            pstmt.executeUpdate();
+
+            pstmt.close();
+                conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                log.error("SQLException" + e);
+            }
+        }
+    }
+
+    public void createRating(long bookId, long userId, short rate) {
+        BasicConfigurator.configure();
+        Connection conn = conn1.getConnection();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(insertRatingQuery);
+
+            pstmt.setShort(1, rate);
+            pstmt.setLong(2, userId);
+            pstmt.setLong(3, bookId);
 
             pstmt.executeUpdate();
 

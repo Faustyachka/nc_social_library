@@ -10,6 +10,7 @@
 <%@page import="TransferObject.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.Collection"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -29,12 +30,12 @@
 		</form>
 		<table border=1>
                     <%
-                    long i=0;
+                    long i=1;
                     try{
                         i = Long.parseLong(request.getParameter("i"));
-                    }catch(Exception e){i=0;}
+                    }catch(Exception e){i=1;}
                         LibraryActions lib = new LibraryActionsImpl();
-                        List<Library> books = lib.getBooksByIdInInterval(10*i, 10*(i+1));
+                        List<Library> books = lib.getBooksByIdInInterval(10*(i-1), 10*i);
                         out.println(books.size());
 
                         for(Library bookEntity : books){
@@ -46,18 +47,16 @@
 			<form name="form2" method="post" action="RateBookServlet"><br />
                 		<input type="text" name="rate" style="width:25px;" value="
                                        <%
-                                       long sum = 0;
-                                       for(TransferObject.Rating rate : bookEntity.getRatingCollection())
-                                           sum+=rate.getRate();
-                                       sum = sum/bookEntity.getRatingCollection().size();
-                                       %><%=sum%>"><br/>
+                                       out.print(lib.getAverageRate(bookEntity.getId()));
+                                       %>"><br/>
 				<input type="submit" name="search" value="Change rating"/>
                                 <input type="hidden" name="book_id" value="<%=bookEntity.getId()%>"/>
+                                <input type="hidden" name="user_id" value="1"/>
 			</form>
 			</center>
 			</td>
 			<td>
-			<%for(BookAuthor ba : bookEntity.getBookAuthorCollection()){%>
+                            <%for(Author ba : lib.getAuthorsList(bookEntity.getId())){%>
                             <%= ba.getAuthor()%><%}%><br/>
 			<%=bookEntity.getTitle()%><br/>
 			<%=bookEntity.getDescription()%><br/>
@@ -73,7 +72,9 @@
                     %>
 		</table>
                 <center>
-                <%for(long k = i; k<i+10; k++){%>
+                <%
+                long i_k = (i>5)?i-4:i;
+                for(long k = i_k; k<i_k+10; k++){%>
                 <a href="?i=<%=k%>"><%=k%></a>
                 <%}%>
                 </center>

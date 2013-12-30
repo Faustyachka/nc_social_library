@@ -4,7 +4,12 @@
     Author     : Антон
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8" import="com.soclib.*"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="ActionsInterfaces.*"%>
+<%@page import="ActionsImpl.*"%>
+<%@page import="TransferObject.*"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Collection"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -14,27 +19,29 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <jsp:useBean class="com.soclib.BookEntity" id="book" scope="application"/>
+        <jsp:useBean class="search.BookEntity" id="book" scope="application"/>
 		<table cellspacing="5"><tr><td><a href="globallib.jsp">Global library</a></td></tr>
                     <tr><td><a href="locallib.jsp"> Local library </a></td></tr></table>
 		<br/>
 		<font size="16">Search results</font>
 		<table border=1>
                     <%
-                        String[] ids = request.getParameter("searchResult").split("_");
-                        boolean global = Boolean.parseBoolean(request.getParameter("global"));
-                        for(String bookId: ids){
-                           BookEntity bookEntity = BookEntity.getBookById(Integer.parseInt(bookId));
-                           if(!global&&!bookEntity.isIsInLocallib()) continue;
+                    String text = request.getParameter("text");
+                    Library library = new Library();
+                    LibraryActionsImpl libraryActionsImpl = new LibraryActionsImpl();
+                    List<Library> bookEntitys = new ArrayList<Library>();
+                    for(Library bookEntity: bookEntitys){
+                        if(bookEntity.getWorkflow().getWorkflow().toLowerCase()!="published") continue;
                     %>
                     <tr>
 			<td>
 			<center>
 			<%=bookEntity.getCover()%>
 			<form name="form2" method="post" action="RateBookServlet"><br />
-                		<input type="text" name="rate" style="width:25px;" value="<%=bookEntity.getRate()%>"><br/>
+                            <input type="text" name="rate" style="width:25px;" value="<%=libraryActionsImpl.getAverageRate(bookEntity.getId())%>"><br/>
 				<input type="submit" name="search" value="Change rating"/>
                                 <input type="hidden" name="book_id" value="<%=bookEntity.getId()%>"/>
+                                <input type="hidden" name="user_id" value="1"/>
 			</form>
 			</center>
 			</td>

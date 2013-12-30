@@ -4,7 +4,9 @@
  */
 
 package ActionsInterfaces;
+import TransferObject.Author;
 import TransferObject.Library;
+import TransferObject.Rating;
 import java.util.List;
 
 /**
@@ -15,5 +17,8 @@ public interface LibraryActions {
 
     public List<Library> searchBooksByParameter(String where, String what);
     public List<Library> getBooksByIdInInterval(long from, long to);
+    public List<Author> getAuthorsList(long bookId);
+    public List<Rating> getRatingsList(long bookId);
+    public int getAverageRate(long bookId);
 
 }

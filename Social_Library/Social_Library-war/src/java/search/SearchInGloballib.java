@@ -5,6 +5,7 @@
 
 package search;
 
+import TransferObject.Library;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -31,6 +32,8 @@ public class SearchInGloballib extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             String text = request.getParameter("text");
+
+            Library library = new Library();
 
             String searchResult = "";
             for (BookEntity be : BookEntity.books)

@@ -5,6 +5,10 @@
 
 package search;
 
+import ActionsImpl.RatingActionsImpl;
+import ActionsInterfaces.RatingActions;
+import OracleDAO.OracleRatingDAO;
+import TransferObject.Rating;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -31,9 +35,23 @@ public class RateBookServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             String redirect = request.getContextPath();
-            int book_id = Integer.parseInt(request.getParameter("book_id").toString());
-            int book_rate = Integer.parseInt(request.getParameter("rate").toString());
-            BookEntity.getBookById(book_id).setRate(book_rate);
+            long book_id = Long.parseLong(request.getParameter("book_id").toString());
+            long user_id = Long.parseLong(request.getParameter("user_id").toString());
+            short book_rate = Short.parseShort(request.getParameter("rate").toString());
+            
+            RatingActions ratingActions = new RatingActionsImpl();
+            Rating rating = ratingActions.getRatingsByBookAndUserIds(user_id, book_id);
+            if(rating != null){
+                Rating ratingNew = new Rating();
+                ratingNew.setId(rating.getId());
+                ratingNew.setBook(rating.getBook());
+                ratingNew.setUsers(rating.getUsers());
+                ratingNew.setRate(rating.getRate());
+                new OracleRatingDAO().updateRating(rating, ratingNew);
+            } else {
+                new OracleRatingDAO().createRating(book_id, user_id, book_rate);
+            }
+
             //response.sendRedirect("locallib.jsp");
             response.sendRedirect(redirect);
             /* TODO output your page here

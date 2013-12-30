@@ -25,7 +25,7 @@
     <body>
         <jsp:useBean class="ActionsImpl.LibraryActionsImpl" id="book" scope="application"/>
         <%
-        for(int i = 0; i<3; i++){
+        for(int i = 0; i<500; i++){
         Oracle conn1 = new Oracle();
         Library library = new Library();
        Connection conn=conn1.getConnection();
@@ -55,6 +55,11 @@
             out.println(library.getIsbn());
             out.println(library.getPages());
             out.println(library.getDescription());
+            out.println(library.getWorkflow().getWorkflow());
+            out.println(library.getUsers().getEmail());
+            out.println(library.getRatingCollection());
+            out.println("<br>");
+
             conn.close();
        }
         %>

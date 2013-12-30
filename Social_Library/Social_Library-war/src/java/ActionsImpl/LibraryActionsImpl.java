@@ -7,10 +7,17 @@ package ActionsImpl;
 
 import ActionsInterfaces.LibraryActions;
 import OracleConnection.Oracle;
+import OracleDAO.OracleAuthorDAO;
 import OracleDAO.OracleLibraryDAO;
+import OracleDAO.OracleRatingDAO;
+import OracleDAO.OracleRatingDAO;
 import OracleDAO.OracleUsersDAO;
+import TransferObject.Author;
 import TransferObject.Library;
+import TransferObject.Rating;
+import TransferObjectInterface.AuthorDAO;
 import TransferObjectInterface.LibraryDAO;
+import TransferObjectInterface.RatingDAO;
 import TransferObjectInterface.UsersDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -70,6 +77,72 @@ public class LibraryActionsImpl implements LibraryActions {
         }
 
         return lList;
+    }
+    
+    public List<Author> getAuthorsList(long bookId)
+    {
+        BasicConfigurator.configure();
+        AuthorDAO u = new OracleAuthorDAO();
+        List<Author> lList = new ArrayList<Author>();
+        String selectParametr = "select * from book_author where book = ?";
+        try {
+
+            Oracle conn1 = new Oracle();
+            Connection conn = conn1.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(selectParametr);
+            stmt.setLong(1, bookId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                lList.add(u.readAuthor(rs.getInt("author")));
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                log.error("SQLException" + e);
+            }
+        }
+
+        return lList;
+    }
+
+    public List<Rating> getRatingsList(long bookId){
+        BasicConfigurator.configure();
+        RatingDAO u = new OracleRatingDAO();
+        List<Rating> lList = new ArrayList<Rating>();
+        String selectParametr = "select *  from rating where book= ?";
+        try {
+
+            Oracle conn1 = new Oracle();
+            Connection conn = conn1.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(selectParametr);
+            stmt.setLong(1, bookId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                lList.add(u.readRating(rs.getInt("id")));
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                log.error("SQLException" + e);
+            }
+        }
+
+        return lList;
+    }
+
+    public int getAverageRate(long bookId){
+        int rate=0;
+        List<Rating> ratings = getRatingsList(bookId);
+        for(Rating rating : ratings)
+            rate+=rating.getRate();
+
+        if(ratings.size()>0)
+            return rate/ratings.size();
+        return 0;
     }
 
 }
