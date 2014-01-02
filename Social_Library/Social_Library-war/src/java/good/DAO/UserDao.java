@@ -36,7 +36,7 @@ public class UserDao {
                 String sqlRequest =
                         "INSERT INTO Users (ID,FIRST_NAME,LAST_NAME,EMAIL,LOGIN,PASSWORD," +
                         "GENDER,CONFIRMED,BANNED,REGISTRATION_DATE,NOTIFY,ROLE) " +
-                        "values(?,'?','?','?','?','?',?, ?, ?, TO_DATE('?','yyyy-mm-dd'), ?, ?)";
+                        "values(?,'?','?','?','?','?',?, ?, ?, TO_DATE('?','yyyy-mm-dd'), ?)";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
             ps.setLong(1, user.getId());
@@ -50,8 +50,9 @@ public class UserDao {
             ps.setBoolean(9, user.isBanned());
             ps.setString(10, user.getRegistrationDate());
             ps.setBoolean(11, user.isNotify());
-            ps.setInt(12, user.getRole().getId());
             ps.executeUpdate();
+            
+            for(Role r : user.getRoles()) new RoleDao().applyRoleToUser(r, user);
 
             connection.commit();
 
@@ -86,7 +87,7 @@ public class UserDao {
                 //user.setRegistrationDate(Date.valueOf(regDate[2]+"-"+regDate[1]+"-"+regDate[0]));
                 user.setRegistrationDate(rs.getString("REGISTRATION_DATE"));
                 user.setNotify(rs.getInt("NOTIFY")==1);
-                user.setRole(new RoleDao().getRoleById(rs.getInt("ROLE")));
+                user.setRoles(new RoleDao().getRolesByUserId(rs.getLong("id")));
                 //user.setRole(new Role(1, "Administrator"));
             }
 
@@ -118,7 +119,7 @@ public class UserDao {
                 user.setBanned(rs.getInt("BANNED")==1);
                 user.setRegistrationDate(rs.getString("REGISTRATION_DATE"));
                 user.setNotify(rs.getInt("NOTIFY")==1);
-                user.setRole(new RoleDao().getRoleById(rs.getInt("ROLE")));
+                user.setRoles(new RoleDao().getRolesByUserId(rs.getLong("id")));
                 users.add(user);
             }
 
@@ -147,14 +148,17 @@ public class UserDao {
         try {
                 String sqlRequest = "UPDATE Users SET FIRST_NAME='?', LAST_NAME='?', " +
                         "EMAIL='?', LOGIN='?', PASSWORD='?', GENDER=?, CONFIRMED=?, " +
-                        "BANNED=?, REGISTRATION_DATE=TO_DATE('?','yyyy-mm-dd'), NOTIFY=?, ROLE=? WHERE ID=?";
+                        "BANNED=?, REGISTRATION_DATE=TO_DATE('?','yyyy-mm-dd'), NOTIFY=? WHERE ID=?";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
             String[] userParams = new String[12];
             userParams = user.toStringList().toArray(userParams);
-            for(int i=1; i < 12; i++)
+            for(int i=1; i < 11; i++)
                 ps.setString(i, userParams[i]);
-            ps.setString(12, userParams[0]);
+
+            new RoleDao().dropAllRolesOfUser(user);
+            for(Role r : user.getRoles()) new RoleDao().applyRoleToUser(r, user);
+            ps.setString(11, userParams[0]);
 
             ps.executeUpdate();
             connection.prepareStatement("commit").executeUpdate();

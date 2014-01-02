@@ -26,12 +26,19 @@ public class User {
     private boolean banned;
     private String registrationDate;
     private boolean notify;
-    private Role role;
+    private List<Role> roles;
+
+    private String getAllRoles(){
+        if(roles.size()<1) return "";
+        String rolesString = "";
+        for (Role r : roles) rolesString+=r.getName()+" & ";
+        return rolesString.substring(0, rolesString.length()-3);
+    }
 
     @Override
     public String toString(){
         return id + " " + firstName + " " + lastName + " " + email + " " + login + " " + password + " " + gender
-                + " " + confirmed + " " + banned + " " + registrationDate + " " + notify + " " + role;
+                + " " + confirmed + " " + banned + " " + registrationDate + " " + notify + " " + getAllRoles();
     }
 
     public List<String> toStringList(){
@@ -47,7 +54,7 @@ public class User {
         result.add(banned?"1":"0");
         result.add(registrationDate);
         result.add(notify?"1":"0");
-        result.add(String.valueOf(role.getId()));
+        result.add(getAllRoles());
 
         return result;
     }
@@ -151,12 +158,12 @@ public class User {
 //        this.registrationDate = registrationDate.substring(0, 10);
 //    }
 
-    public Role getRole() {
-        return role;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     //private

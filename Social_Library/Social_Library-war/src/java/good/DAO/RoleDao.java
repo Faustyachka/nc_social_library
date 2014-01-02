@@ -46,6 +46,44 @@ public class RoleDao {
         return true;
     }
 
+    public boolean applyRoleToUser(Role role, User user) {
+        try {
+                String sqlRequest =
+                        "INSERT INTO USERS_ROLES (ID,USERS,ROLE) values(0, ?, ?)";
+            PreparedStatement ps = connection.prepareStatement(sqlRequest);
+
+            ps.setLong(1, user.getId());
+            ps.setInt(2, role.getId());
+            ps.executeUpdate();
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean dropAllRolesOfUser(User user) {
+        try {
+                String sqlRequest =
+                        "DELETE FROM USERS_ROLES WHERE USERS=?";
+            PreparedStatement ps = connection.prepareStatement(sqlRequest);
+
+            ps.setLong(1, user.getId());
+
+            ps.executeUpdate();
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     public Role getRoleById(int id) {
         Role role = new Role();
         try {
@@ -80,6 +118,30 @@ public class RoleDao {
                 Role role = new Role();
                 role.setId(rs.getInt("id"));
                 role.setName(rs.getString("name"));
+                roles.add(role);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return roles;
+    }
+
+    public List<Role> getRolesByUserId(long id) {
+        List<Role> roles = new ArrayList<Role>();
+        try {
+                String sqlRequest =
+                        "SELECT users_roles.role " +
+                        "FROM users " +
+                        "INNER JOIN users_roles " +
+                        "ON users.id=users_roles.users " +
+                        "WHERE users.id=?";
+            PreparedStatement ps = connection.prepareStatement(sqlRequest);
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Role role = getRoleById(rs.getInt("role"));
                 roles.add(role);
             }
 
