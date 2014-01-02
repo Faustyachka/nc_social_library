@@ -21,12 +21,12 @@
     </head>
     <body>
         <%
-/**/            UserDao userDao = new UserDao();
+/**/         //   UserDao userDao = new UserDao();
 
-            for(int i = 1; i < 11; i++){
-                User user = userDao.getUserById(i);
-                out.println(user.toString()+"<br/>");
-            }
+           // for(int i = 1; i < 11; i++){
+          //      User user = userDao.getUserById(i);
+           //     out.println(user.toString()+"<br/>");
+           // }
 
 /*            java.util.Random r = new java.util.Random();
             r.nextBoolean();

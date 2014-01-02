@@ -21,6 +21,8 @@ import javax.sql.DataSource;
 public class ConnectionProvider {
 
     private static Connection con = null;
+    private static Context ic;
+    private static DataSource dataSource;
 
     private ConnectionProvider(){}
 
@@ -30,15 +32,10 @@ public class ConnectionProvider {
         else {
             try {
                 Locale.setDefault(Locale.ENGLISH);
-                Context ic = new InitialContext();
-                DataSource dataSource = (DataSource) ic.lookup("jdbc/test");
+                ic = new InitialContext();
+                dataSource = (DataSource) ic.lookup("jdbc/test");
                 con = dataSource.getConnection();
-//                String driver = "com.mysql.jdbc.Driver";
-//                String url = "jdbc:mysql://localhost:3306/record";
-//                String user = "root";
-//                String password = "root";
-//                Class.forName(driver);
-//                con = DriverManager.getConnection(url, user, password);
+
             }
             catch(NamingException e)
             {

@@ -10,31 +10,37 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+//import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import good.ConnectionProvider;
-import good.Entities.BookWorkflow;
-import good.Entities.User;
+//import good.Entities.BookWorkflow;
+//import good.Entities.User;
 /**
  *
  * @author Антон
  */
 public class LibraryDao {
 
-        private Connection connection;
+       // private Connection connection;
 
     public LibraryDao() {
-        connection = ConnectionProvider.getConnection();
+        //connection = ConnectionProvider.getConnection();
     }
 
-    public boolean createBook(Library library) {
+    public boolean createBook(Library library)
+            throws SQLException
+    {
+        Connection connection = null;
+        PreparedStatement ps;
         try {
+            connection=ConnectionProvider.getConnection();
+            connection.setAutoCommit(false);
                 String sqlRequest =
                         "INSERT INTO LIBRARY (ID,ISBN,TITLE,COVER,DESCRIPTION,PAGES,USERs,WORKFLOW) " +
                         "values(?,'?','?','?','?', ?, ?, ?)";
 
-            PreparedStatement ps = connection.prepareStatement(sqlRequest);
+            ps = connection.prepareStatement(sqlRequest);
 
             ps.setLong(1, library.getId());
             ps.setString(2, library.getIsbn());
@@ -47,14 +53,19 @@ public class LibraryDao {
             ps.executeUpdate();
 
             connection.commit();
+            ps.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+        } 
+        finally
+        {
+             if (connection != null) connection.close();
+        }//catch (SQLException e) {
+          //  e.printStackTrace();
+          //  return false;
+        //}
         return true;
     }
-
+/*
     public Library getBookById(int id) {
         Library library = new Library();
         try {
@@ -80,15 +91,20 @@ public class LibraryDao {
             e.printStackTrace();
         }
         return library;
-    }
+    }*/
 
-    public List<Library> getAllBooks() {
-        List<Library> librarys = new ArrayList<Library>();
-        PreparedStatement ps;
+    public List<Library> getAllBooks()
+            throws SQLException
+    {
+        List<Library> libraries = new ArrayList<Library>();
+        Connection connection = null;
+        PreparedStatement ps=null;
         ResultSet rs;
-        try {
+       // try {
+            connection=ConnectionProvider.getConnection();
+            connection.setAutoCommit(false);
                 String sqlRequest =
-                        "SELECT * FROM Library";
+                        "SELECT * FROM Library where id=1";
             ps = connection.prepareStatement(sqlRequest);
             rs = ps.executeQuery();
 
@@ -102,20 +118,33 @@ public class LibraryDao {
                 library.setPages(rs.getInt("PAGES"));
                 library.setUser(new UserDao().getUserById(rs.getLong("USERs")));
                 library.setWorkflow(new BookWorkflowDao().getBookWorkflowById(rs.getInt("WORKFLOW")));
-                librarys.add(library);
+                libraries.add(library);
             }
 
             connection.commit();
-            close(connection, ps, rs);
+            ps.close();
+            rs.close();
+            //close(connection, ps, rs);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("Error occurred!", e);
+        //}
+        //finally
+       // {
+        //     if (connection != null) connection.close();
+        //}
+        connection = null;
+        ps=null;
+        rs=null;
+        return libraries;
+
+
+        //catch (SQLException e) {
+            //e.printStackTrace();
+           // throw new IllegalStateException("Error occurred!", e);
         }
 
-        return librarys;
+        
     }
-
+/*
     public boolean removeBook(int id) {
         try {
                 String sqlRequest = "DELETE FROM Library WHERE id=?";
@@ -166,6 +195,5 @@ public class LibraryDao {
     if (connection != null) {
         try { connection.close(); } catch (Exception e) { e.printStackTrace(); }
     }
-}
+}*/
 
-}
