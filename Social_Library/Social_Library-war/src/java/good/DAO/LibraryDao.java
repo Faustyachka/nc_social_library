@@ -100,11 +100,11 @@ public class LibraryDao {
         Connection connection = null;
         PreparedStatement ps=null;
         ResultSet rs;
-       // try {
+        //try {
             connection=ConnectionProvider.getConnection();
             connection.setAutoCommit(false);
                 String sqlRequest =
-                        "SELECT * FROM Library where id=1";
+                        "SELECT * FROM Library";
             ps = connection.prepareStatement(sqlRequest);
             rs = ps.executeQuery();
 
@@ -126,12 +126,13 @@ public class LibraryDao {
             rs.close();
             //close(connection, ps, rs);
 
-        //}
-        //finally
+       // }
+       // finally
        // {
-        //     if (connection != null) connection.close();
-        //}
-        connection = null;
+       //      if (connection != null)
+         //           connection.close();
+       // }
+        //connection = null;
         ps=null;
         rs=null;
         return libraries;
