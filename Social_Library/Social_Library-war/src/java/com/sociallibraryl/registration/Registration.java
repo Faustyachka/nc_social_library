@@ -11,7 +11,7 @@ import com.sociallibrary.controller.ConfigurationManager;
 import OracleDAO.OracleRoleDAO;
 import TransferObject.Role;
 import TransferObject.Users;
-import com.sociallibrary.EntitiesInterfaces.UsersDAO;
+import com.sociallibrary.EntitiesInterfaces.UserDAO;
 import java.io.IOException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -33,7 +33,7 @@ public class Registration implements Command {
 
     private Users users;
     private Role role;
-    private UsersDAO dao = new OracleUsersDAO();
+    private UserDAO dao = new OracleUsersDAO();
     private RoleDAO rDao = new OracleRoleDAO();
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

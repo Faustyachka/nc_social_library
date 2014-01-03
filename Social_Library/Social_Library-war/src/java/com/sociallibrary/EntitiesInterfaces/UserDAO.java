@@ -11,11 +11,11 @@ import com.sociallibrary.Entities.*;
  *
  * @author mazafaka
  */
-public interface UsersDAO {
+public interface UserDAO {
 
-     public void createUsers(User users);
+     public void createUsers(User user);
      public User readUsers(int id);
-     public void updateUsers(User usersOld, User usersNew);
-     public void deleteUsers(User users);
+     public void updateUsers(User user);
+     public void deleteUsers(int id);
 
 }

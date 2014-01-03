@@ -15,7 +15,7 @@ import TransferObject.Library;
 import TransferObject.Rating;
 import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
 import com.sociallibrary.EntitiesInterfaces.RatingDAO;
-import com.sociallibrary.EntitiesInterfaces.UsersDAO;
+import com.sociallibrary.EntitiesInterfaces.UserDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

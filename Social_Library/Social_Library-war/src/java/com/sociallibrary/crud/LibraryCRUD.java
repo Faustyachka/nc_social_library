@@ -71,7 +71,7 @@ public class LibraryCRUD implements LibraryDAO {
                 library.setCover(rs.getString("COVER"));
                 library.setDescription(rs.getString("DESCRIPTION"));
                 library.setPages(rs.getInt("PAGES"));
-                library.setUser(new UserCRUD().getUserById(rs.getLong("USERs")));
+                library.setUser(new UserCRUD().readUsers(rs.getInt("USERs")));
                 library.setWorkflow(new BookWorkflowCRUD().readBookWorkflow(rs.getInt("WORKFLOW")));
             }
 

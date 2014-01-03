@@ -6,7 +6,7 @@ import com.sociallibrary.EntitiesInterfaces.CatalogDAO;
 import TransferObject.Catalog;
 import com.sociallibrary.EntitiesInterfaces.BookStatusDAO;
 import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
-import com.sociallibrary.EntitiesInterfaces.UsersDAO;
+import com.sociallibrary.EntitiesInterfaces.UserDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,7 +50,7 @@ public class CatalogCRUD implements CatalogCRUD {
         BasicConfigurator.configure();
         Catalog catalog = new Catalog();
         Connection conn = conn1.getConnection();
-        UsersDAO u = new OracleUsersDAO();
+        UserDAO u = new OracleUsersDAO();
         LibraryDAO l = new OracleLibraryDAO();
         BookStatusDAO s = new BookStatusDAO();
         try {

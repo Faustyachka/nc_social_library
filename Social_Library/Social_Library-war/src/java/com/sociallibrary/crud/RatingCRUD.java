@@ -1,11 +1,10 @@
 package com.sociallibrary.crud;
 
-import OracleDAO.*;
-import OracleConnection.Oracle;
-import TransferObject.Rating;
+import com.sociallibrary.Entities.Rating;
 import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
 import com.sociallibrary.EntitiesInterfaces.RatingDAO;
-import com.sociallibrary.EntitiesInterfaces.UsersDAO;
+import com.sociallibrary.EntitiesInterfaces.UserDAO;
+import com.sociallibrary.connection.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,18 +12,23 @@ import java.sql.SQLException;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-public class RatingCRUD implements RatingCRUD {
+public class RatingCRUD implements RatingDAO {
 
     public static final Logger log = Logger.getLogger(AuthorCRUD.class);
-    private Oracle conn1 = new Oracle();
     private static final String selectQuery = "SELECT * FROM rating WHERE id=?";
     private static final String deleteQuery = "DELETE FROM rating WHERE id =?";
     private static final String insertRatingQuery = "INSERT INTO rating (ID, Rate, Users, Book) VALUES (rating_id.nextval, ?, ?, ?)";
     private static final String updateRatingQuery = "UPDATE rating SET rate=?, users=?, book=? WHERE id=?";
 
+    private Connection conn;
+
+    public RatingCRUD() {
+        conn = ConnectionProvider.getConnection();
+    }
+
     public void createRating(Rating rating) {
         BasicConfigurator.configure();
-        Connection conn = conn1.getConnection();
+        conn=ConnectionProvider.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(insertRatingQuery);
 
@@ -45,7 +49,7 @@ public class RatingCRUD implements RatingCRUD {
 
     public void createRating(long bookId, long userId, short rate) {
         BasicConfigurator.configure();
-        Connection conn = conn1.getConnection();
+        conn=ConnectionProvider.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(insertRatingQuery);
 
@@ -68,9 +72,9 @@ public class RatingCRUD implements RatingCRUD {
         Rating rating = new Rating();
         int resulSetSize=0;
         BasicConfigurator.configure();
-        Connection conn = conn1.getConnection();
-        UsersDAO u = new OracleUsersDAO();
-        LibraryDAO l = new OracleLibraryDAO();
+        conn=ConnectionProvider.getConnection();
+        UserDAO u = new UserCRUD();
+        LibraryDAO l = new LibraryCRUD();
         try {
             PreparedStatement stmt = conn.prepareStatement(selectQuery);
 
@@ -107,7 +111,7 @@ public class RatingCRUD implements RatingCRUD {
 
     public void updateRating(Rating ratingOld, Rating ratingNew) {
         BasicConfigurator.configure();
-        Connection conn = conn1.getConnection();
+        conn=ConnectionProvider.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(updateRatingQuery);
 
@@ -129,7 +133,7 @@ public class RatingCRUD implements RatingCRUD {
 
     public void deleteRating(Rating rating) {
         BasicConfigurator.configure();
-        Connection conn = conn1.getConnection();
+        conn=ConnectionProvider.getConnection();
         try {
             PreparedStatement stmt = conn.prepareStatement(deleteQuery);
 

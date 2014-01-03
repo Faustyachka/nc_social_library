@@ -51,7 +51,7 @@ public class LibraryActionsImpl //implements LibraryActions
                 library.setCover(rs.getString("COVER"));
                 library.setDescription(rs.getString("DESCRIPTION"));
                 library.setPages(rs.getInt("PAGES"));
-                library.setUser(new UserCRUD().getUserById(rs.getLong("USERS")));
+                library.setUser(new UserCRUD().readUsers(rs.getInt("USERS")));
                 library.setWorkflow(new BookWorkflowCRUD().readBookWorkflow(rs.getInt("WORKFLOW")));
                 libraries.add(library);
             }

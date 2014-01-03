@@ -14,16 +14,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.Entities.Gender;
 import com.sociallibrary.Entities.Role;
 import com.sociallibrary.Entities.User;
-import java.sql.Date;
+import com.sociallibrary.EntitiesInterfaces.UserDAO;
 
-public class UserCRUD {
+public class UserCRUD implements UserDAO
+{
 
     private Connection connection;
 
@@ -31,7 +31,7 @@ public class UserCRUD {
         connection = ConnectionProvider.getConnection();
     }
 
-    public boolean createUser(User user) {
+    public void createUsers(User user) {
         try {
                 String sqlRequest =
                         "INSERT INTO Users (ID,FIRST_NAME,LAST_NAME,EMAIL,LOGIN,PASSWORD," +
@@ -51,19 +51,17 @@ public class UserCRUD {
             ps.setString(10, user.getRegistrationDate());
             ps.setBoolean(11, user.isNotify());
             ps.executeUpdate();
-            
+
             for(Role r : user.getRoles()) new RoleCRUD().applyRoleToUser(r, user);
 
             connection.commit();
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
-    public User getUserById(long id) {
+    public User readUsers(int id) {
         User user = new User();
         try {
                 String sqlRequest =
@@ -87,7 +85,7 @@ public class UserCRUD {
                 //user.setRegistrationDate(Date.valueOf(regDate[2]+"-"+regDate[1]+"-"+regDate[0]));
                 user.setRegistrationDate(rs.getString("REGISTRATION_DATE"));
                 user.setNotify(rs.getInt("NOTIFY")==1);
-                user.setRoles(new RoleCRUD().getRolesByUserId(rs.getLong("id")));
+                //user.setRoles(new RoleCRUD().readRole((int) rs.getInt("id")));
                 //user.setRole(new Role(1, "Administrator"));
             }
 
@@ -97,54 +95,7 @@ public class UserCRUD {
         return user;
     }
 
-    public List<User> getAllUsers() {
-        List<User> users = new ArrayList<User>();
-        try {
-                String sqlRequest =
-                        "SELECT * FROM Users";
-            PreparedStatement ps = connection.prepareStatement(sqlRequest);
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                User user = new User();
-                user.setId(rs.getLong("id"));
-                user.setFirstName(rs.getString("FIRST_NAME"));
-                user.setLastName(rs.getString("LAST_NAME"));
-                user.setEmail(rs.getString("EMAIL"));
-                user.setLogin(rs.getString("LOGIN"));
-                user.setPassword(rs.getString("PASSWORD"));
-                user.setGender(Gender.getGender(rs.getInt("GENDER")));
-                user.setConfirmed(rs.getInt("CONFIRMED")==1);
-                user.setBanned(rs.getInt("BANNED")==1);
-                user.setRegistrationDate(rs.getString("REGISTRATION_DATE"));
-                user.setNotify(rs.getInt("NOTIFY")==1);
-                user.setRoles(new RoleCRUD().getRolesByUserId(rs.getLong("id")));
-                users.add(user);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return users;
-    }
-
-    public boolean removeUser(int id) {
-        try {
-                String sqlRequest = "DELETE FROM users WHERE id=?";
-            PreparedStatement ps = connection.prepareStatement(sqlRequest);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            connection.commit();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-      }
-
-    public boolean  editUser(User user) {
+    public void updateUsers(User user) {
         try {
                 String sqlRequest = "UPDATE Users SET FIRST_NAME='?', LAST_NAME='?', " +
                         "EMAIL='?', LOGIN='?', PASSWORD='?', GENDER=?, CONFIRMED=?, " +
@@ -166,9 +117,20 @@ public class UserCRUD {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
+    }
+
+    public void deleteUsers(int id) {
+        try {
+                String sqlRequest = "DELETE FROM users WHERE id=?";
+            PreparedStatement ps = connection.prepareStatement(sqlRequest);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

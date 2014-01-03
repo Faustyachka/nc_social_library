@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import OracleDAO.OracleUsersDAO;
 import TransferObject.Users;
-import com.sociallibrary.EntitiesInterfaces.UsersDAO;
+import com.sociallibrary.EntitiesInterfaces.UserDAO;
 
 /**
  *
@@ -23,7 +23,7 @@ public class ConfirmUser implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = null;
         response.setContentType("text/html;charset=UTF-8");
-        UsersDAO users = new OracleUsersDAO();
+        UserDAO users = new OracleUsersDAO();
         Users usersOld= users.readUsers(Integer.parseInt(request.getParameter("users")));
         usersOld.setConfirmed((short)1);
         users.updateUsers(usersOld, usersOld);
