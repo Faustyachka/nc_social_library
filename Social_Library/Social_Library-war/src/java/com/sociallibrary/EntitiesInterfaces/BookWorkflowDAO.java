@@ -13,7 +13,7 @@ public interface BookWorkflowDAO {
 
     public void createBookWorkflow(BookWorkflow bookWorkflow);
      public BookWorkflow readBookWorkflow(int id);
-     public void updateBookWorkflow(BookWorkflow bookWorkflowOld, BookWorkflow bookWorkflowNew);
-     public void deleteBookWorkflow(BookWorkflow bookWorkflow);
+     public void updateBookWorkflow(BookWorkflow bookWorkflow);
+     public void deleteBookWorkflow(int id);
 
 }

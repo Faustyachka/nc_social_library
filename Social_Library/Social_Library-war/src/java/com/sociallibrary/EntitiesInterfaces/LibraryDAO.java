@@ -14,8 +14,8 @@ import com.sociallibrary.Entities.*;
 public interface LibraryDAO {
 
      public void createLibrary(Library library);
-     public Library readLibrary(long id);
-     public void updateLibrary(Library libraryOld, Library libraryNew);
-     public void deleteLibrary(Library library);
+     public Library readLibrary(int id);
+     public void updateLibrary(Library library);
+     public void deleteLibrary(int id);
 
 }

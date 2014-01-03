@@ -9,7 +9,7 @@ import ActionsInterfaces.LibraryActions;
 import ActionsInterfaces.RatingActions;
 import OracleConnection.Oracle;
 import OracleDAO.OracleLibraryDAO;
-import OracleDAO.OracleRatingDAO;
+import com.sociallibrary.crud.RatingCRUD;
 import OracleDAO.OracleUsersDAO;
 import TransferObject.Library;
 import TransferObject.Rating;
@@ -40,7 +40,7 @@ public class RatingActionsImpl implements RatingActions {
     
     public List<Rating> getRatingsByBookId(long id){
         BasicConfigurator.configure();
-        RatingDAO u = new OracleRatingDAO();
+        RatingCRUD u = new RatingCRUD();
         List<Rating> lList = new ArrayList<Rating>();
         String selectParametr = "select *  from rating where book= ?";
         try {
@@ -67,7 +67,7 @@ public class RatingActionsImpl implements RatingActions {
 
     public Rating getRatingsByBookAndUserIds(long userId, long bookId){
         BasicConfigurator.configure();
-        RatingDAO u = new OracleRatingDAO();
+        RatingCRUD u = new RatingCRUD();
         Rating rating = null;
         String selectParametr = "select * from rating where book = ? and users = ?";
         try {

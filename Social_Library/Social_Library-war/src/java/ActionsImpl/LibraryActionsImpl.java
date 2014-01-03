@@ -5,35 +5,72 @@
 
 package ActionsImpl;
 
-import ActionsInterfaces.LibraryActions;
-import OracleConnection.Oracle;
-import OracleDAO.OracleAuthorDAO;
-import OracleDAO.OracleLibraryDAO;
-import OracleDAO.OracleRatingDAO;
-import OracleDAO.OracleRatingDAO;
-import OracleDAO.OracleUsersDAO;
-import TransferObject.Author;
-import TransferObject.Library;
-import TransferObject.Rating;
-import com.sociallibrary.EntitiesInterfaces.AuthorDAO;
-import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
-import com.sociallibrary.EntitiesInterfaces.RatingDAO;
-import com.sociallibrary.EntitiesInterfaces.UsersDAO;
+import com.sociallibrary.Entities.Library;
+import com.sociallibrary.connection.ConnectionProvider;
+import com.sociallibrary.crud.BookWorkflowCRUD;
+import com.sociallibrary.crud.UserCRUD;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.AbstractList;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
+import javax.naming.NamingException;
+//import org.apache.log4j.BasicConfigurator;
+//import org.apache.log4j.Logger;
 
 /**
  *
  * @author Антон
  */
-public class LibraryActionsImpl implements LibraryActions {
+public class LibraryActionsImpl //implements LibraryActions
+{
+     private Connection connection;
+
+    public LibraryActionsImpl() {
+        connection = ConnectionProvider.getConnection();
+    }
+
+     public List<Library> getAllBooks()
+            throws SQLException, NamingException
+    {
+        List<Library> libraries = new ArrayList<Library>();
+
+        try {
+            connection=ConnectionProvider.getConnection();
+
+
+            Statement stmt = connection.createStatement ();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Library");
+
+            while (rs.next()) {
+                Library library = new Library();
+                library.setId(rs.getLong("ID"));
+                library.setIsbn(rs.getString("ISBN"));
+                library.setTitle(rs.getString("TITLE"));
+                library.setCover(rs.getString("COVER"));
+                library.setDescription(rs.getString("DESCRIPTION"));
+                library.setPages(rs.getInt("PAGES"));
+                library.setUser(new UserCRUD().getUserById(rs.getLong("USERS")));
+                library.setWorkflow(new BookWorkflowCRUD().readBookWorkflow(rs.getInt("WORKFLOW")));
+                libraries.add(library);
+            }
+
+
+            rs.close();
+            stmt.close();
+    }
+
+
+
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new IllegalStateException("Error occurred!", e);
+        }
+        return libraries;
+
+    }
+    /*
     public static final Logger log = Logger.getLogger(UsersActionsImpl.class);
     private Library library = new Library();
 
@@ -43,7 +80,7 @@ public class LibraryActionsImpl implements LibraryActions {
 
     public List<Library> searchBooksByParameter(String where, String what) {
         BasicConfigurator.configure();
-        LibraryDAO u = new OracleLibraryDAO();
+        LibraryDAO u = new LibraryCRUD();
         List<Library> lList = new ArrayList<Library>();
         String selectParametr = "select id  from library where "+where+" = ?";
         try {
@@ -113,7 +150,7 @@ public class LibraryActionsImpl implements LibraryActions {
     public List<Author> getAuthorsList(long bookId)
     {
         BasicConfigurator.configure();
-        AuthorDAO u = new OracleAuthorDAO();
+        AuthorCRUD u = new AuthorCRUD();
         List<Author> lList = new ArrayList<Author>();
         String selectParametr = "select * from book_author where book = ?";
         try {
@@ -140,7 +177,7 @@ public class LibraryActionsImpl implements LibraryActions {
 
     public List<Rating> getRatingsList(long bookId){
         BasicConfigurator.configure();
-        RatingDAO u = new OracleRatingDAO();
+        RatingCRUD u = new RatingCRUD();
         List<Rating> lList = new ArrayList<Rating>();
         String selectParametr = "select *  from rating where book= ?";
         try {
@@ -175,5 +212,5 @@ public class LibraryActionsImpl implements LibraryActions {
             return rate/ratings.size();
         return 0;
     }
-
+*/
 }
