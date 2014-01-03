@@ -8,9 +8,9 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="java.sql.*"%>
-<%@page import="good.*"%>
-<%@page import="good.Entities.*"%>
-<%@page import="good.DAO.*"%>
+<%@page import="com.sociallibrary.connection.*"%>
+<%@page import="com.sociallibrary.Entities.*"%>
+<%@page import="com.sociallibrary.DAO.*"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
