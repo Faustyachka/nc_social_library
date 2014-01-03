@@ -14,6 +14,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import good.ConnectionProvider;
+import java.io.IOException;
+import java.util.Locale;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 //import good.Entities.BookWorkflow;
 //import good.Entities.User;
 /**
@@ -94,13 +100,15 @@ public class LibraryDao {
     }*/
 
     public List<Library> getAllBooks()
-            throws SQLException
+            throws SQLException,NamingException,IOException
     {
         List<Library> libraries = new ArrayList<Library>();
-        Connection connection = null;
-        PreparedStatement ps=null;
+        Connection connection;
+        PreparedStatement ps;
         ResultSet rs;
         //try {
+
+                
             connection=ConnectionProvider.getConnection();
             connection.setAutoCommit(false);
                 String sqlRequest =
