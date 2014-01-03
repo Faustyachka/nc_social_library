@@ -14,6 +14,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import good.ConnectionProvider;
+import java.sql.Statement;
+import java.util.Locale;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import oracle.jdbc.pool.OracleDataSource;
 //import good.Entities.BookWorkflow;
 //import good.Entities.User;
 /**
@@ -27,7 +34,7 @@ public class LibraryDao {
     public LibraryDao() {
         //connection = ConnectionProvider.getConnection();
     }
-
+/*
     public boolean createBook(Library library)
             throws SQLException
     {
@@ -93,20 +100,34 @@ public class LibraryDao {
         return library;
     }*/
 
+
     public List<Library> getAllBooks()
-            throws SQLException
+            throws SQLException, NamingException
     {
         List<Library> libraries = new ArrayList<Library>();
-        Connection connection = null;
-        PreparedStatement ps=null;
-        ResultSet rs;
+        //Connection con;
+       // PreparedStatement ps;
+        //ResultSet rs;
+
+
+        //Locale.setDefault(Locale.ENGLISH);
+                //Context ic = new InitialContext();
+                //DataSource dataSource = (DataSource) ic.lookup("jdbc/test");
+                //con = dataSource.getConnection();
         //try {
-            connection=ConnectionProvider.getConnection();
-            connection.setAutoCommit(false);
-                String sqlRequest =
-                        "SELECT * FROM Library";
-            ps = connection.prepareStatement(sqlRequest);
-            rs = ps.executeQuery();
+            //connection=ConnectionProvider.getConnection();
+            OracleDataSource ods=new OracleDataSource();
+            String url = "jdbc:oracle:thin:@localhost:1521:xe";
+            ods.setURL(url);
+            ods.setUser("mazafaka");
+            ods.setPassword("mazafaka");
+            Connection con = ods.getConnection();
+            //con.setAutoCommit(false);
+                //String sqlRequest =
+                       // "SELECT * FROM Library";
+            //PreparedStatement ps = con.prepareStatement(sqlRequest);
+            Statement stmt = con.createStatement ();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Library");
 
             while (rs.next()) {
                 Library library = new Library();
@@ -116,14 +137,16 @@ public class LibraryDao {
                 library.setCover(rs.getString("COVER"));
                 library.setDescription(rs.getString("DESCRIPTION"));
                 library.setPages(rs.getInt("PAGES"));
-                library.setUser(new UserDao().getUserById(rs.getLong("USERs")));
-                library.setWorkflow(new BookWorkflowDao().getBookWorkflowById(rs.getInt("WORKFLOW")));
+                //library.setUser(new UserDao().getUserById(rs.getLong("USERs")));
+                //library.setWorkflow(new BookWorkflowDao().getBookWorkflowById(rs.getInt("WORKFLOW")));
                 libraries.add(library);
             }
 
-            connection.commit();
-            ps.close();
+            //con.commit();
+            //ps.close();
             rs.close();
+            stmt.close();
+            con.close();
             //close(connection, ps, rs);
 
        // }
@@ -133,8 +156,8 @@ public class LibraryDao {
          //           connection.close();
        // }
         //connection = null;
-        ps=null;
-        rs=null;
+       // ps=null;
+       // rs=null;
         return libraries;
 
 
