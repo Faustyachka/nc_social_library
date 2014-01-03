@@ -7,10 +7,10 @@ package OracleDAO;
 
 import OracleConnection.Oracle;
 import TransferObject.BookWorkflow;
-import TransferObjectInterface.LibraryDAO;
+import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
 import TransferObject.Library;
-import TransferObjectInterface.BookWorkflowDAO;
-import TransferObjectInterface.UsersDAO;
+import com.sociallibrary.EntitiesInterfaces.BookWorkflowDAO;
+import com.sociallibrary.EntitiesInterfaces.UsersDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

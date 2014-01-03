@@ -2,7 +2,7 @@ package OracleDAO;
 
 import OracleConnection.Oracle;
 import TransferObject.BookStatus;
-import TransferObjectInterface.BookStatusDAO;
+import com.sociallibrary.EntitiesInterfaces.BookStatusDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

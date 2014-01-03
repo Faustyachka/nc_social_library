@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import OracleDAO.OracleUsersDAO;
 import TransferObject.Users;
-import TransferObjectInterface.UsersDAO;
+import com.sociallibrary.EntitiesInterfaces.UsersDAO;
 
 /**
  *

@@ -1,0 +1,21 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package com.sociallibrary.EntitiesInterfaces;
+
+import com.sociallibrary.Entities.*;
+
+/**
+ *
+ * @author mazafaka
+ */
+public interface LibraryDAO {
+
+     public void createLibrary(Library library);
+     public Library readLibrary(long id);
+     public void updateLibrary(Library libraryOld, Library libraryNew);
+     public void deleteLibrary(Library library);
+
+}

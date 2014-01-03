@@ -11,7 +11,7 @@ import Controller.ConfigurationManager;
 import OracleDAO.OracleRoleDAO;
 import TransferObject.Role;
 import TransferObject.Users;
-import TransferObjectInterface.UsersDAO;
+import com.sociallibrary.EntitiesInterfaces.UsersDAO;
 import java.io.IOException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -21,7 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import OracleDAO.OracleUsersDAO;
-import TransferObjectInterface.RoleDAO;
+import com.sociallibrary.EntitiesInterfaces.RoleDAO;
 import java.util.List;
 import model.email.EmailSender;
 

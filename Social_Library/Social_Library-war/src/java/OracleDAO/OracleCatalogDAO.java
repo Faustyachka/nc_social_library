@@ -1,11 +1,11 @@
 package OracleDAO;
 
 import OracleConnection.Oracle;
-import TransferObjectInterface.CatalogDAO;
+import com.sociallibrary.EntitiesInterfaces.CatalogDAO;
 import TransferObject.Catalog;
-import TransferObjectInterface.BookStatusDAO;
-import TransferObjectInterface.LibraryDAO;
-import TransferObjectInterface.UsersDAO;
+import com.sociallibrary.EntitiesInterfaces.BookStatusDAO;
+import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
+import com.sociallibrary.EntitiesInterfaces.UsersDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -2,9 +2,9 @@ package OracleDAO;
 
 import OracleConnection.Oracle;
 import TransferObject.Rating;
-import TransferObjectInterface.LibraryDAO;
-import TransferObjectInterface.RatingDAO;
-import TransferObjectInterface.UsersDAO;
+import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
+import com.sociallibrary.EntitiesInterfaces.RatingDAO;
+import com.sociallibrary.EntitiesInterfaces.UsersDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -2,7 +2,7 @@ package OracleDAO;
 
 import OracleConnection.Oracle;
 import TransferObject.Genre;
-import TransferObjectInterface.GenreDAO;
+import com.sociallibrary.EntitiesInterfaces.GenreDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

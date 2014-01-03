@@ -8,7 +8,7 @@ import ActionsInterfaces.UsersActions;
 import OracleConnection.Oracle;
 import OracleDAO.OracleUsersDAO;
 import TransferObject.Users;
-import TransferObjectInterface.UsersDAO;
+import com.sociallibrary.EntitiesInterfaces.UsersDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

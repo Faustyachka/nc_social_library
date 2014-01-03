@@ -1,7 +1,7 @@
 package OracleDAO;
 
 import OracleConnection.Oracle;
-import TransferObjectInterface.RoleDAO;
+import com.sociallibrary.EntitiesInterfaces.RoleDAO;
 import TransferObject.Role;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -9,7 +9,7 @@ import Controller.ConfigurationManager;
 import OracleDAO.OracleLibraryDAO;
 import TransferObject.BookWorkflow;
 import TransferObject.Library;
-import TransferObjectInterface.LibraryDAO;
+import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;

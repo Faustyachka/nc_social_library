@@ -2,9 +2,9 @@ package OracleDAO;
 
 import OracleConnection.Oracle;
 import TransferObject.BookAuthor;
-import TransferObjectInterface.AuthorDAO;
+import com.sociallibrary.EntitiesInterfaces.AuthorDAO;
 import TransferObjectInterface.BookAuthorDAO;
-import TransferObjectInterface.LibraryDAO;
+import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

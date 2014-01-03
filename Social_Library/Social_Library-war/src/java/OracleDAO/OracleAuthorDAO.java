@@ -2,7 +2,7 @@
 
 import OracleConnection.Oracle;
 import TransferObject.Author;
-import TransferObjectInterface.AuthorDAO;
+import com.sociallibrary.EntitiesInterfaces.AuthorDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
