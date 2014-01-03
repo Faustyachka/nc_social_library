@@ -1,5 +1,7 @@
  package com.sociallibrary.crud;
 
+
+ /*
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.Entities.*;
 import com.sociallibrary.EntitiesInterfaces.AuthorDAO;
@@ -13,7 +15,6 @@ import org.apache.log4j.Logger;
 public class AuthorCRUD implements AuthorDAO {
 
     public static final Logger log = Logger.getLogger(AuthorCRUD.class);
-    private Oracle conn1 = new Oracle();
     private static final String selectQuery = "SELECT * FROM author WHERE id=?";
     private static final String deleteQuery = "DELETE FROM author WHERE id =?";
     private static final String insertAuthorQuery = "INSERT INTO author VALUES ( author_id.nextval , ?)";
@@ -107,4 +108,4 @@ public class AuthorCRUD implements AuthorDAO {
             }
         }
     }
-}
+} */

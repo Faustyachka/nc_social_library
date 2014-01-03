@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package ActionsImpl;
+package com.sociallibrary.ActionsImpl;
 
 import com.sociallibrary.Entities.Library;
 import com.sociallibrary.connection.ConnectionProvider;

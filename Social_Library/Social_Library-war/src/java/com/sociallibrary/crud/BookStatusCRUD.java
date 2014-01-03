@@ -1,8 +1,9 @@
 package com.sociallibrary.crud;
 
-import OracleConnection.Oracle;
-import TransferObject.BookStatus;
+/*
+import com.sociallibrary.Entities.BookStatus;
 import com.sociallibrary.EntitiesInterfaces.BookStatusDAO;
+import com.sociallibrary.connection.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,17 +14,24 @@ import org.apache.log4j.Logger;
 public class BookStatusCRUD implements BookStatusDAO {
 
     public static final Logger log = Logger.getLogger(BookStatusCRUD.class);
-    private Oracle conn1 = new Oracle();
     private static final String selectQuery = "SELECT * FROM Book_Status WHERE id=?";
     private static final String deleteQuery = "DELETE FROM Book_Status WHERE id =?";
     private static final String insertBookStatusQuery = "INSERT INTO Book_Status VALUES(BookStatus_id.nextval, ?)";
     private static final String updateBookStatusQuery = "UPDATE Book_Status SET Status =? where id=?";
 
+
+    private Connection connection;
+
+    public BookStatusCRUD() {
+        connection = ConnectionProvider.getConnection();
+    }
+
+    
     public BookStatus readBookStatus(int id) {
         BasicConfigurator.configure();
         BookStatus BookStatus = new BookStatus();
 
-        Connection conn = conn1.getConnection();
+        connection=ConnectionProvider.getConnection();
         try {
             PreparedStatement stmt = conn.prepareStatement(selectQuery);
 
@@ -104,4 +112,4 @@ public class BookStatusCRUD implements BookStatusDAO {
             }
         }
     }
-}
+}*/

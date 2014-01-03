@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 
 public class RatingCRUD implements RatingDAO {
 
-    public static final Logger log = Logger.getLogger(AuthorCRUD.class);
+    public static final Logger log = Logger.getLogger(RatingCRUD.class);
     private static final String selectQuery = "SELECT * FROM rating WHERE id=?";
     private static final String deleteQuery = "DELETE FROM rating WHERE id =?";
     private static final String insertRatingQuery = "INSERT INTO rating (ID, Rate, Users, Book) VALUES (rating_id.nextval, ?, ?, ?)";
@@ -33,7 +33,7 @@ public class RatingCRUD implements RatingDAO {
             PreparedStatement pstmt = conn.prepareStatement(insertRatingQuery);
 
             pstmt.setInt(1, rating.getRate());
-            pstmt.setLong(2, rating.getUsers().getId());
+            pstmt.setLong(2, rating.getUser().getId());
             pstmt.setLong(3, rating.getBook().getId());
 
             pstmt.executeUpdate();
@@ -95,7 +95,7 @@ public class RatingCRUD implements RatingDAO {
             while (rs.next()) {
                 rating.setId(rs.getLong(1));
                 rating.setRate(rs.getShort(2));
-                rating.setUsers(u.readUsers(rs.getInt(3)));
+                rating.setUser(u.readUsers(rs.getInt(3)));
                 rating.setBook(l.readLibrary(rs.getInt(4)));
             }
             rs.close();
@@ -116,7 +116,7 @@ public class RatingCRUD implements RatingDAO {
             PreparedStatement pstmt = conn.prepareStatement(updateRatingQuery);
 
             pstmt.setInt(1, ratingNew.getRate());
-            pstmt.setLong(3, ratingNew.getUsers().getId());
+            pstmt.setLong(3, ratingNew.getUser().getId());
             pstmt.setLong(2, ratingNew.getBook().getId());
             pstmt.setLong(4, ratingOld.getId());
 

@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ActionsImpl;
+package com.sociallibrary.ActionsImpl;
 
-import ActionsInterfaces.UsersActions;
 import com.sociallibrary.Entities.Gender;
 import com.sociallibrary.Entities.User;
 import com.sociallibrary.connection.ConnectionProvider;
@@ -20,7 +19,7 @@ import java.util.List;
  *
  * @author mazafaka
  */
-public class UsersActionsImpl implements UsersActions {
+public class UsersActionsImpl{
 
      private Connection connection;
 

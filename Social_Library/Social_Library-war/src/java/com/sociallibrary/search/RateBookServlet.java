@@ -5,7 +5,7 @@
 
 package com.sociallibrary.search;
 
-import ActionsImpl.RatingActionsImpl;
+import com.sociallibrary.ActionsImpl.RatingActionsImpl;
 import ActionsInterfaces.RatingActions;
 import com.sociallibrary.crud.RatingCRUD;
 import TransferObject.Rating;

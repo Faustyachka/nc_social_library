@@ -5,7 +5,7 @@
 
 package com.sociallibrary.search;
 
-import ActionsImpl.LibraryActionsImpl;
+import com.sociallibrary.ActionsImpl.LibraryActionsImpl;
 import ActionsInterfaces.LibraryActions;
 import TransferObject.Library;
 import java.io.IOException;

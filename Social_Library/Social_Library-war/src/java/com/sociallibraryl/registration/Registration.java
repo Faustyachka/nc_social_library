@@ -4,7 +4,7 @@
  */
 package com.sociallibraryl.registration;
 
-import ActionsImpl.UsersActionsImpl;
+import com.sociallibrary.ActionsImpl.UsersActionsImpl;
 import ActionsInterfaces.UsersActions;
 import com.sociallibrary.controller.Command;
 import com.sociallibrary.controller.ConfigurationManager;

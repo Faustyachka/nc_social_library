@@ -1,9 +1,7 @@
 package com.sociallibrary.crud;
 
+import com.sociallibrary.Entities.Genre;
 import com.sociallibrary.crud.GenderCRUD;
-import OracleConnection.Oracle;
-import TransferObject.BookGenre;
-import TransferObjectInterface.BookGenreDAO;
 import com.sociallibrary.EntitiesInterfaces.GenreDAO;
 import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
 import java.sql.Connection;
@@ -13,15 +11,14 @@ import java.sql.SQLException;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-public class GenreCRUD implements BookGenreDAO {
+public class GenreCRUD implements GenreDAO {
 
     public static final Logger log = Logger.getLogger(GenreCRUD.class);
-    private Oracle conn1 = new Oracle();
     private static final String selectQuery = "SELECT * FROM book_genre WHERE id=?";
     private static final String deleteQuery = "DELETE FROM book_genre WHERE id =?";
     private static final String insertBookGenreQuery = "INSERT INTO book_genre VALUES (book_genre_id.nextval, ?, ?)";
     private static final String updateBookGenreQuery = "UPDATE book_genre SET book=?, genre=? WHERE id=?";
-
+/*
     public void createBookGenre(BookGenre bookGenre) {
         BasicConfigurator.configure();
         Connection conn = conn1.getConnection();
@@ -109,5 +106,22 @@ public class GenreCRUD implements BookGenreDAO {
                 log.error("SQLException" + e);
             }
         }
+    }
+    */
+
+    public void createGenre(Genre genre) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Genre readGenre(int id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void updateGenre(Genre genreOld, Genre genreNew) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void deleteGenre(Genre genre) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

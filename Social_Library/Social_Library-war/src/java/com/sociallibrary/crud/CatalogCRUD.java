@@ -1,9 +1,7 @@
 package com.sociallibrary.crud;
 
-import OracleDAO.*;
-import OracleConnection.Oracle;
+import com.sociallibrary.Entities.Catalog;
 import com.sociallibrary.EntitiesInterfaces.CatalogDAO;
-import TransferObject.Catalog;
 import com.sociallibrary.EntitiesInterfaces.BookStatusDAO;
 import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
 import com.sociallibrary.EntitiesInterfaces.UserDAO;
@@ -15,15 +13,32 @@ import java.sql.Timestamp;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-public class CatalogCRUD implements CatalogCRUD {
+public class CatalogCRUD implements CatalogDAO {
 
+    public void createCatalog(Catalog catalog) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Catalog readCatalog(int id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void updateCatalog(Catalog catalogOld, Catalog catalogNew) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void deleteCatalog(Catalog catalog) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /*
     public static final Logger log = Logger.getLogger(AuthorCRUD.class);
-    private Oracle conn1 = new Oracle();
     private static final String selectQuery = "SELECT * FROM catalog WHERE id=?";
     private static final String deleteQuery = "DELETE FROM catalog WHERE id =?";
     private static final String insertCatalogQuery = "INSERT INTO catalog VALUES(catalog_id.nextval, ?, ?,?,?)";
     private static final String updateCatalogQuery = "UPDATE catalog SET users=?, book=?, event_time=?, status=?, WHERE id=?";
 
+    
     public void createCatalog(Catalog catalog) {
         BasicConfigurator.configure();
         Connection conn = conn1.getConnection();
@@ -117,5 +132,6 @@ public class CatalogCRUD implements CatalogCRUD {
             }
         }
     }
+     */
 }
 

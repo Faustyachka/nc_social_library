@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package ActionsImpl;
+package com.sociallibrary.ActionsImpl;
 
 import com.sociallibrary.Entities.Role;
 import com.sociallibrary.Entities.User;

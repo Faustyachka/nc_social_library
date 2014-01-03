@@ -3,19 +3,12 @@
  * and open the template in the editor.
  */
 
-package ActionsImpl;
+package com.sociallibrary.ActionsImpl;
 
-import ActionsInterfaces.LibraryActions;
-import ActionsInterfaces.RatingActions;
-import OracleConnection.Oracle;
-import OracleDAO.OracleLibraryDAO;
+import com.sociallibrary.Entities.Library;
+import com.sociallibrary.Entities.Rating;
+import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.crud.RatingCRUD;
-import OracleDAO.OracleUsersDAO;
-import TransferObject.Library;
-import TransferObject.Rating;
-import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
-import com.sociallibrary.EntitiesInterfaces.RatingDAO;
-import com.sociallibrary.EntitiesInterfaces.UserDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,14 +22,17 @@ import org.apache.log4j.Logger;
  *
  * @author Антон
  */
-public class RatingActionsImpl implements RatingActions {
-    
-     public static final Logger log = Logger.getLogger(UsersActionsImpl.class);
-    private Library library = new Library();
+public class RatingActionsImpl{
+
+    private Connection connection;
+    private Library library;
 
     public RatingActionsImpl() {
+        connection = ConnectionProvider.getConnection();
         library = new Library();
     }
+    
+     public static final Logger log = Logger.getLogger(UsersActionsImpl.class);
     
     public List<Rating> getRatingsByBookId(long id){
         BasicConfigurator.configure();
@@ -45,9 +41,8 @@ public class RatingActionsImpl implements RatingActions {
         String selectParametr = "select *  from rating where book= ?";
         try {
 
-            Oracle conn1 = new Oracle();
-            Connection conn = conn1.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectParametr);
+            connection=ConnectionProvider.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -55,7 +50,7 @@ public class RatingActionsImpl implements RatingActions {
             }
             rs.close();
             stmt.close();
-            conn.close();
+            connection.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -72,9 +67,9 @@ public class RatingActionsImpl implements RatingActions {
         String selectParametr = "select * from rating where book = ? and users = ?";
         try {
 
-            Oracle conn1 = new Oracle();
-            Connection conn = conn1.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectParametr);
+            connection=ConnectionProvider.getConnection();
+            
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setLong(1, bookId);
             stmt.setLong(2, userId);
             ResultSet rs = stmt.executeQuery();
@@ -83,7 +78,7 @@ public class RatingActionsImpl implements RatingActions {
             rating = u.readRating(rs.getInt("id"));
             rs.close();
             stmt.close();
-            conn.close();
+            connection.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
