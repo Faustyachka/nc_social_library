@@ -29,10 +29,10 @@ import oracle.jdbc.pool.OracleDataSource;
  */
 public class LibraryDao {
 
-       // private Connection connection;
+        private Connection connection;
 
     public LibraryDao() {
-        //connection = ConnectionProvider.getConnection();
+        connection = ConnectionProvider.getConnection();
     }
 /*
     public boolean createBook(Library library)
@@ -115,18 +115,13 @@ public class LibraryDao {
                 //DataSource dataSource = (DataSource) ic.lookup("jdbc/test");
                 //con = dataSource.getConnection();
         //try {
-            //connection=ConnectionProvider.getConnection();
-            OracleDataSource ods=new OracleDataSource();
-            String url = "jdbc:oracle:thin:@localhost:1521:xe";
-            ods.setURL(url);
-            ods.setUser("mazafaka");
-            ods.setPassword("mazafaka");
-            Connection con = ods.getConnection();
+            connection=ConnectionProvider.getConnection();
+            
             //con.setAutoCommit(false);
                 //String sqlRequest =
                        // "SELECT * FROM Library";
             //PreparedStatement ps = con.prepareStatement(sqlRequest);
-            Statement stmt = con.createStatement ();
+            Statement stmt = connection.createStatement ();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Library");
 
             while (rs.next()) {
@@ -137,7 +132,7 @@ public class LibraryDao {
                 library.setCover(rs.getString("COVER"));
                 library.setDescription(rs.getString("DESCRIPTION"));
                 library.setPages(rs.getInt("PAGES"));
-                //library.setUser(new UserDao().getUserById(rs.getLong("USERs")));
+                //library.setUser(new UserDao().getUserById(rs.getLong("USERS")));
                 //library.setWorkflow(new BookWorkflowDao().getBookWorkflowById(rs.getInt("WORKFLOW")));
                 libraries.add(library);
             }
@@ -146,7 +141,7 @@ public class LibraryDao {
             //ps.close();
             rs.close();
             stmt.close();
-            con.close();
+            //connection.close();
             //close(connection, ps, rs);
 
        // }

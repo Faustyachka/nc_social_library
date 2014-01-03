@@ -28,7 +28,7 @@ public class Library {
     @Override
     public String toString(){
         return id + " " + isbn + " " + title + " " + cover + " " +
-                description + " " + pages;
+                description + " " + pages;// + " "+user+" "+workflow;
     }
 
     public List<String> toStringList(){
@@ -39,7 +39,7 @@ public class Library {
         result.add(cover);
         result.add(description);
         result.add(String.valueOf(pages));
-       // result.add(String.valueOf(user.getId()));
+        //result.add(String.valueOf(user.getId()));
        // result.add(String.valueOf(workflow.getId()));
 
         return result;
