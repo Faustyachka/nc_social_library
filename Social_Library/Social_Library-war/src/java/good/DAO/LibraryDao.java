@@ -108,9 +108,12 @@ public class LibraryDao {
         ResultSet rs;
         //try {
 
-                
+                Locale.setDefault(Locale.ENGLISH);
+                Context ic = new InitialContext();
+                DataSource dataSource = (DataSource) ic.lookup("jdbc/test");
+                connection = dataSource.getConnection();
             connection=ConnectionProvider.getConnection();
-            connection.setAutoCommit(false);
+            //connection.setAutoCommit(false);
                 String sqlRequest =
                         "SELECT * FROM Library";
             ps = connection.prepareStatement(sqlRequest);
@@ -140,7 +143,7 @@ public class LibraryDao {
        //      if (connection != null)
          //           connection.close();
        // }
-        //connection = null;
+        connection = null;
         ps=null;
         rs=null;
         return libraries;
