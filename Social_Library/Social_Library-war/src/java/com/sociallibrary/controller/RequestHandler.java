@@ -3,7 +3,7 @@ package com.sociallibrary.controller;
 
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
-import com.sociallibrary.authorization.SignIn;
+//import com.sociallibrary.authorization.SignIn;
 import com.sociallibrary.registration.ConfirmUser;
 import com.sociallibrary.registration.Registration;
 
@@ -30,7 +30,7 @@ private RequestHandler(){
     commands.put("nocommand", new NoCommand());
     commands.put("registration", new Registration ());
     commands.put("confirmUser", new ConfirmUser () );
-    commands.put("signin", new SignIn());
+    //commands.put("signin", new SignIn());
 }
 
 public Command getCommand(HttpServletRequest request){

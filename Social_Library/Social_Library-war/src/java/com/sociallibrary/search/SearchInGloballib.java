@@ -5,9 +5,6 @@
 
 package com.sociallibrary.search;
 
-import com.sociallibrary.actions.LibraryActions;
-import com.sociallibrary.actionsInterfaces.*;
-import com.sociallibrary.entity.Library;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;

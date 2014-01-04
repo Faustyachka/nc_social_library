@@ -52,10 +52,10 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-                bookWorkflow.setId(rs.getInt("id"));
-                bookWorkflow.setWorkflow(rs.getString("name"));
-            }
+           // if (rs.next()) {
+            //    bookWorkflow.setId(rs.getInt("id"));
+           //     bookWorkflow.setWorkflow(rs.getString("name"));
+            //}
 
             connection.close();
             ps.close();
