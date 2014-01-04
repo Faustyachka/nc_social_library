@@ -65,7 +65,7 @@ public class Registration implements Command {
        }
         user.setRoles(rList);
         userCRUD.createUsers(user);
-        UsersActionsImpl uAct = new UsersActionsImpl();
+        UsersActions uAct = new UsersActions();
         user = uAct.searchUserByLogin(user.getLogin());
         String mailSub = "Registration on Social Library";
         String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Servlet?users=" + user.getId() + "&command=confirmUser'";
