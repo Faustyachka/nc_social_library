@@ -65,6 +65,7 @@ public class UsersActionsImpl{
     public UsersActionsImpl() {
         users = new Users();
     }
+*/
 
     public List<Users> searchUsersByParameter(String where, String what) {
         BasicConfigurator.configure();
@@ -93,6 +94,6 @@ public class UsersActionsImpl{
 
         return uList;
     }
-*/
+
   
 }

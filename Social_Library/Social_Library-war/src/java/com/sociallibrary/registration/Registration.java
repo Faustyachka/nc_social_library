@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sociallibraryl.registration;
+package com.sociallibrary.registration;
 
 import com.sociallibrary.actions.UsersActionsImpl;
 import com.sociallibrary.actionsInterfaces.IUsersActions;
@@ -13,6 +13,8 @@ import com.sociallibrary.entities.Role;
 import com.sociallibrary.entities.User;
 import com.sociallibrary.crudInterfaces.IUserCRUD;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +27,8 @@ import com.sociallibrary.crudInterfaces.IRoleCRUD;
 import java.util.List;
 import com.sociallibrary.email.EmailSender;
 import com.sociallibrary.entities.Gender;
+import com.sociallibrary.constants.Const;
+import com.sociallibrary.registration.Security;
 
 /**
  *
@@ -37,7 +41,7 @@ public class Registration implements Command {
     private UserCRUD userCRUD = new UserCRUD();
     private RoleCRUD roleCRUD = new RoleCRUD();
 
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, UnsupportedEncodingException {
         String page = null;
 
         response.setContentType("text/html;charset=UTF-8");
@@ -50,7 +54,11 @@ public class Registration implements Command {
         user.setLastName(request.getParameter("lastName"));
         user.setEmail(request.getParameter("email"));
         user.setLogin(request.getParameter("login"));
-        user.setPassword(request.getParameter("password"));
+        try {
+            user.setPassword(Security.getMd5(request.getParameter("password")));
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+        }
         user.setGender(Gender.getGender(status1));
         user.setConfirmed(status0==1);
         user.setBanned(status1==1);
@@ -58,7 +66,7 @@ public class Registration implements Command {
         user.setNotify(status1==1);
 //        user.setRole(role);
         userCRUD.createUsers(user);
-        IUsersActions uA = new UsersActionsImpl();
+        UsersActionsImpl uA = new UsersActionsImpl();
         List<User> uList = uA.searchUsersByParameter("login", user.getLogin());
         String mailSub = "Registration on Social Library";
         String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Servlet?users=" + uList.get(0).getId() + "&command=confirmUser'";

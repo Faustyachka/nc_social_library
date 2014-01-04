@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sociallibraryl.registration;
+package com.sociallibrary.registration;
 
 import com.sociallibrary.controller.Command;
 import com.sociallibrary.controller.ConfigurationManager;

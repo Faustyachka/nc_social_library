@@ -3,9 +3,9 @@ package com.sociallibrary.controller;
 
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
-import com.sociallibraryl.authorization.SignIn;
-import com.sociallibraryl.registration.ConfirmUser;
-import com.sociallibraryl.registration.Registration;
+import com.sociallibrary.authorization.SignIn;
+import com.sociallibrary.registration.ConfirmUser;
+import com.sociallibrary.registration.Registration;
 
 
 public class RequestHandler {

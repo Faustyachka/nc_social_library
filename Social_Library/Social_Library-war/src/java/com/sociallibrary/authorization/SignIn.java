@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.sociallibraryl.authorization;
+package com.sociallibrary.authorization;
 import com.sociallibrary.actions.UsersActionsImpl;
 import com.sociallibrary.actionsInterfaces.UsersActions;
 import com.sociallibrary.controller.Command;
