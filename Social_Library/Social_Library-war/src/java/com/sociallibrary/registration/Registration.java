@@ -64,7 +64,7 @@ public class Registration implements Command {
         user.setBanned(status1==1);
         user.setRegistrationDate(new Date().toString());
         user.setNotify(status1==1);
-//        user.setRole(role);
+        user.setRole(role);
         userCRUD.createUsers(user);
         UsersActionsImpl uA = new UsersActionsImpl();
         List<User> uList = uA.searchUsersByParameter("login", user.getLogin());
