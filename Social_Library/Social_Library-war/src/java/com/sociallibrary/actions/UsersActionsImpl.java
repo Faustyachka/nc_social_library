@@ -8,6 +8,7 @@ import com.sociallibrary.entities.Gender;
 import com.sociallibrary.entities.User;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.crud.RoleCRUD;
+import com.sociallibrary.crud.UserCRUD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,19 +20,19 @@ import java.util.List;
  *
  * @author mazafaka
  */
-public class UsersActionsImpl{
+public class UsersActionsImpl {
 
-     private Connection connection;
+    private Connection connection;
 
     public UsersActionsImpl() {
         connection = ConnectionProvider.getConnection();
     }
 
-     public List<User> getAllUsers() {
+    public List<User> getAllUsers() {
         List<User> users = new ArrayList<User>();
         try {
-                String sqlRequest =
-                        "SELECT * FROM Users";
+            String sqlRequest =
+                    "SELECT * FROM Users";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
             ResultSet rs = ps.executeQuery();
@@ -45,10 +46,10 @@ public class UsersActionsImpl{
                 user.setLogin(rs.getString("LOGIN"));
                 user.setPassword(rs.getString("PASSWORD"));
                 user.setGender(Gender.getGender(rs.getInt("GENDER")));
-                user.setConfirmed(rs.getInt("CONFIRMED")==1);
-                user.setBanned(rs.getInt("BANNED")==1);
+                user.setConfirmed(rs.getInt("CONFIRMED") == 1);
+                user.setBanned(rs.getInt("BANNED") == 1);
                 user.setRegistrationDate(rs.getString("REGISTRATION_DATE"));
-                user.setNotify(rs.getInt("NOTIFY")==1);
+                user.setNotify(rs.getInt("NOTIFY") == 1);
                 //user.setRoles(new RoleCRUD().getRolesByUserId(rs.getLong("id")));
                 users.add(user);
             }
@@ -63,37 +64,28 @@ public class UsersActionsImpl{
     private Users users = new Users();
 
     public UsersActionsImpl() {
-        users = new Users();
+    users = new Users();
     }
-*/
+     */
 
-    public List<Users> searchUsersByParameter(String where, String what) {
-        BasicConfigurator.configure();
-        UserDAO u = new OracleUsersDAO();
-        List<Users> uList = new ArrayList<Users>();
-        String selectParametr = "select id  from users where "+where+" = ?";
+    public User searchUserByLogin(String login) {
+        UserCRUD uCRUD = new UserCRUD();
+        User users = new User();
+        String selectParametr = "select id  from users where login = ?";
         try {
-
-            Oracle conn1 = new Oracle();
-            Connection conn = conn1.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectParametr);
-            stmt.setString(1, what);
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setString(1, login);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                users = u.readUsers(rs.getInt("id"));
-                uList.add(users);
+                uCRUD.readUsers(Integer.parseInt(rs.getString(1)));
             }
             rs.close();
             stmt.close();
-            conn.close();
+            connection.close();
         } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+            e.printStackTrace();
         }
 
-        return uList;
+        return users;
     }
-
-  
 }
