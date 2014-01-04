@@ -5,8 +5,10 @@
 
 package com.sociallibrary.actions;
 
-import com.sociallibrary.entity.Role;
-import com.sociallibrary.entity.User;
+import com.sociallibrary.entity.*;
+import com.sociallibrary.crud.*;
+import com.sociallibrary.icrud.*;
+import org.apache.log4j.*;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.iactions.IRolesActions;
 import java.sql.Connection;
@@ -32,8 +34,8 @@ public class RolesActions implements IRolesActions
     public List<Role> getAllRoles()
     {
         List<Role> roles = new ArrayList<Role>();
-        try {
-
+        try
+        {
             String sqlRequest ="SELECT * FROM Role";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
             ResultSet rs = ps.executeQuery();
@@ -57,7 +59,6 @@ public class RolesActions implements IRolesActions
     {
         try 
         {
-
             String sqlRequest ="INSERT INTO USERS_ROLES (ID,USERS,ROLE) values(0, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
@@ -76,8 +77,8 @@ public class RolesActions implements IRolesActions
 
     public void dropAllRolesOfUser(User user)
     {
-        try {
-
+        try
+        {
             String sqlRequest ="DELETE FROM USERS_ROLES WHERE USERS=?";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 

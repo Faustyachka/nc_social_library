@@ -4,20 +4,18 @@
  */
 package com.sociallibrary.actions;
 
-import com.sociallibrary.entity.Gender;
-import com.sociallibrary.entity.User;
+import com.sociallibrary.entity.*;
+import com.sociallibrary.crud.*;
+import com.sociallibrary.icrud.*;
+import org.apache.log4j.*;
 import com.sociallibrary.connection.ConnectionProvider;
-//import com.sociallibrary.crud.RoleCRUD;
-import com.sociallibrary.crud.UserCRUD;
 import com.sociallibrary.iactions.IUsersActions;
-import com.sociallibrary.icrud.IUserCRUD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.log4j.BasicConfigurator;
 
 /**
  *

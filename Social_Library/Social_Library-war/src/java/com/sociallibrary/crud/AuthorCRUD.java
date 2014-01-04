@@ -28,7 +28,6 @@ public class AuthorCRUD implements IAuthorCRUD {
 
     public void createAuthor(Author author) {
         BasicConfigurator.configure();
-            connection=ConnectionProvider.getConnection();
             try {
                 PreparedStatement pstmt = connection.prepareStatement(insertAuthorQuery);
                 pstmt.setString(1, author.getAuthor());
@@ -49,7 +48,6 @@ public class AuthorCRUD implements IAuthorCRUD {
     public Author readAuthor(int id) {
         BasicConfigurator.configure();
         Author author = new Author();
-            connection=ConnectionProvider.getConnection();
             try {
                 PreparedStatement stmt = connection.prepareStatement(selectQuery);
 
@@ -76,7 +74,6 @@ public class AuthorCRUD implements IAuthorCRUD {
 
     public void updateAuthor(Author authorOld, Author authorNew) {
         BasicConfigurator.configure();
-            connection=ConnectionProvider.getConnection();
             try {
                 PreparedStatement pstmt = connection.prepareStatement(updateAuthorQuery);
 
@@ -97,7 +94,6 @@ public class AuthorCRUD implements IAuthorCRUD {
 
     public void deleteAuthor(Author author) {
         BasicConfigurator.configure();
-            connection=ConnectionProvider.getConnection();
             try {
                 PreparedStatement stmt = connection.prepareStatement(deleteQuery);
 

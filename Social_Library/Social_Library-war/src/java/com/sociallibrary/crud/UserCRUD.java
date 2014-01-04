@@ -10,12 +10,11 @@ package com.sociallibrary.crud;
  * @author Антон
  */
 
+import com.sociallibrary.actions.RolesActions;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.entity.Gender;
 import com.sociallibrary.entity.Role;
@@ -52,7 +51,7 @@ public class UserCRUD implements IUserCRUD
             ps.setBoolean(11, user.isNotify());
             ps.executeUpdate();
 
-            for(Role r : user.getRoles()) new RoleCRUD().applyRoleToUser(r, user);
+            for(Role r : user.getRoles()) new RolesActions().applyRoleToUser(r, user);
 
 //            connection.commit();
             connection.close();
@@ -113,8 +112,8 @@ public class UserCRUD implements IUserCRUD
             for(int i=1; i < 11; i++)
                 ps.setString(i, userParams[i]);
 
-            new RoleCRUD().dropAllRolesOfUser(user);
-            for(Role r : user.getRoles()) new RoleCRUD().applyRoleToUser(r, user);
+            new RolesActions().dropAllRolesOfUser(user);
+            for(Role r : user.getRoles()) new RolesActions().applyRoleToUser(r, user);
             ps.setString(11, userParams[0]);
 
             ps.executeUpdate();

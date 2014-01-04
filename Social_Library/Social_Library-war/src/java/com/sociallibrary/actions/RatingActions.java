@@ -5,10 +5,11 @@
 
 package com.sociallibrary.actions;
 
-import com.sociallibrary.entity.Library;
-import com.sociallibrary.entity.Rating;
+import com.sociallibrary.entity.*;
+import com.sociallibrary.crud.*;
+import com.sociallibrary.icrud.*;
+import org.apache.log4j.*;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.crud.RatingCRUD;
 import com.sociallibrary.iactions.IRatingActions;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,8 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
 
 /**
  *
@@ -40,7 +39,6 @@ public class RatingActions implements IRatingActions
         List<Rating> lList = new ArrayList<Rating>();
         String selectParametr = "select *  from rating where book= ?";
         try {
-            connection=ConnectionProvider.getConnection();
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -70,8 +68,6 @@ public class RatingActions implements IRatingActions
         String selectParametr = "select * from rating where book = ? and users = ?";
         try 
         {
-            connection=ConnectionProvider.getConnection();
-            
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setLong(1, bookId);
             stmt.setLong(2, userId);

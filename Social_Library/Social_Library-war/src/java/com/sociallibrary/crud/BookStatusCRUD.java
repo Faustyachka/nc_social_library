@@ -1,39 +1,34 @@
 package com.sociallibrary.crud;
 
-/*
-import com.sociallibrary.Entities.BookStatus;
-import com.sociallibrary.EntitiesInterfaces.BookStatusDAO;
+import com.sociallibrary.entity.*;
+import com.sociallibrary.icrud.*;
+import org.apache.log4j.*;
 import com.sociallibrary.connection.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
 
 public class BookStatusCRUD implements IBookStatusCRUD {
 
-    public static final Logger log = Logger.getLogger(BookStatusCRUD.class);
+    private Connection connection;
     private static final String selectQuery = "SELECT * FROM Book_Status WHERE id=?";
     private static final String deleteQuery = "DELETE FROM Book_Status WHERE id =?";
     private static final String insertBookStatusQuery = "INSERT INTO Book_Status VALUES(BookStatus_id.nextval, ?)";
     private static final String updateBookStatusQuery = "UPDATE Book_Status SET Status =? where id=?";
+    public static final Logger log = Logger.getLogger(BookStatusCRUD.class);
 
-
-    private Connection connection;
-
-    public BookStatusCRUD() {
+    public BookStatusCRUD()
+    {
         connection = ConnectionProvider.getConnection();
     }
 
-    
-    public BookStatus readBookStatus(int id) {
+    public BookStatus readBookStatus(int id)
+    {
         BasicConfigurator.configure();
         BookStatus BookStatus = new BookStatus();
-
-        connection=ConnectionProvider.getConnection();
         try {
-            PreparedStatement stmt = conn.prepareStatement(selectQuery);
+            PreparedStatement stmt = connection.prepareStatement(selectQuery);
 
             stmt.setInt(1, id);
 
@@ -45,7 +40,7 @@ public class BookStatusCRUD implements IBookStatusCRUD {
             }
             rs.close();
             stmt.close();
-                conn.close();
+                connection.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -57,16 +52,15 @@ public class BookStatusCRUD implements IBookStatusCRUD {
 
     public void createBookStatus(BookStatus BookStatus) {
         BasicConfigurator.configure();
-        Connection conn = conn1.getConnection();
         try {
-            PreparedStatement pstmt = conn.prepareStatement(insertBookStatusQuery);
+            PreparedStatement pstmt = connection.prepareStatement(insertBookStatusQuery);
 
             pstmt.setString(1, BookStatus.getStatus());
 
             pstmt.executeUpdate();
 
             pstmt.close();
-                conn.close();
+                connection.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -76,16 +70,15 @@ public class BookStatusCRUD implements IBookStatusCRUD {
 
     public void deleteBookStatus(BookStatus BookStatus) {
         BasicConfigurator.configure();
-        Connection conn = conn1.getConnection();
         try {
-            PreparedStatement stmt = conn.prepareStatement(deleteQuery);
+            PreparedStatement stmt = connection.prepareStatement(deleteQuery);
 
             stmt.setInt(1, BookStatus.getId());
 
             stmt.executeUpdate();
 
             stmt.close();
-                conn.close();
+                connection.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -95,9 +88,8 @@ public class BookStatusCRUD implements IBookStatusCRUD {
 
     public void updateBookStatus(BookStatus BookStatusNew, BookStatus BookStatusOld) {
         BasicConfigurator.configure();
-        Connection conn = conn1.getConnection();
         try {
-            PreparedStatement pstmt = conn.prepareStatement(updateBookStatusQuery);
+            PreparedStatement pstmt = connection.prepareStatement(updateBookStatusQuery);
 
             pstmt.setString(1, BookStatusNew.getStatus());
             pstmt.setInt(2, BookStatusOld.getId());
@@ -105,11 +97,11 @@ public class BookStatusCRUD implements IBookStatusCRUD {
             pstmt.executeUpdate();
 
             pstmt.close();
-                conn.close();
+                connection.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
             }
         }
     }
-}*/
+}

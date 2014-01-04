@@ -47,7 +47,6 @@ public class LibraryActions implements ILibraryActions
 
         try
         {
-            connection=ConnectionProvider.getConnection();
             Statement stmt = connection.createStatement ();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Library");
 
@@ -78,7 +77,6 @@ public class LibraryActions implements ILibraryActions
         List<Library> lList = new ArrayList<Library>();
         String selectParametr = "select id  from library where "+where+" = ?";
         try {
-            connection=ConnectionProvider.getConnection();
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setString(1, what);
             ResultSet rs = stmt.executeQuery();
@@ -103,7 +101,6 @@ public class LibraryActions implements ILibraryActions
         List<Library> lList = new ArrayList<Library>();
         String selectParametr = "select *  from library where "+where+" like '"+what+"'";
         try {
-             connection=ConnectionProvider.getConnection();
              PreparedStatement stmt = connection.prepareStatement(selectParametr);
 //            stmt.setString(1, where);
 //            stmt.setString(2, what);

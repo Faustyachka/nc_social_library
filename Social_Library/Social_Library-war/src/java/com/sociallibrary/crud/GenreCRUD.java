@@ -1,36 +1,41 @@
 package com.sociallibrary.crud;
 
-import com.sociallibrary.entity.Genre;
-import com.sociallibrary.icrud.IGenreCRUD;
-import com.sociallibrary.icrud.ILibraryCRUD;
+import com.sociallibrary.entity.*;
+import com.sociallibrary.icrud.*;
+import org.apache.log4j.*;
+import com.sociallibrary.connection.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
 
 public class GenreCRUD implements IGenreCRUD {
 
+    private Connection connection;
     public static final Logger log = Logger.getLogger(GenreCRUD.class);
     private static final String selectQuery = "SELECT * FROM book_genre WHERE id=?";
     private static final String deleteQuery = "DELETE FROM book_genre WHERE id =?";
     private static final String insertBookGenreQuery = "INSERT INTO book_genre VALUES (book_genre_id.nextval, ?, ?)";
     private static final String updateBookGenreQuery = "UPDATE book_genre SET book=?, genre=? WHERE id=?";
-/*
-    public void createBookGenre(BookGenre bookGenre) {
-        BasicConfigurator.configure();
-        Connection conn = conn1.getConnection();
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(insertBookGenreQuery);
+    private Genre bookGenre;
 
-            pstmt.setLong(1, bookGenre.getBook().getId());
-            pstmt.setInt(2, bookGenre.getGenre().getId());
+     public  GenreCRUD()
+    {
+        connection = ConnectionProvider.getConnection();
+    }
+
+     public void createGenre(Genre genre) {
+         BasicConfigurator.configure();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(insertBookGenreQuery);
+
+           // pstmt.setLong(1, bookGenre.getBook().getId());
+            //pstmt.setInt(2, bookGenre.getGenre().getId());
 
             pstmt.executeUpdate();
 
             pstmt.close();
-                conn.close();
+                connection.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -38,27 +43,26 @@ public class GenreCRUD implements IGenreCRUD {
         }
     }
 
-    public BookGenre readBookGenre(int id) {
+    public Genre readGenre(int id) {
         BasicConfigurator.configure();
-        BookGenre bookGenre = new BookGenre();
-        Connection conn = conn1.getConnection();
-        LibraryDAO l = new OracleLibraryDAO();
-        GenreCRUD g = new GenderCRUD();
+        bookGenre = new Genre();
+        ILibraryCRUD l = new LibraryCRUD();
+        //IGenreCRUD g = new GenderCRUD();
         try {
-            PreparedStatement stmt = conn.prepareStatement(selectQuery);
+            PreparedStatement stmt = connection.prepareStatement(selectQuery);
             stmt.setLong(1, id);
 
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
 
-                bookGenre.setId(rs.getLong(1));
-                bookGenre.setBook(l.readLibrary(rs.getInt(2)));
-                bookGenre.setGenre(g.readGenre(rs.getInt(3)));
+               // bookGenre.setId(rs.getLong(1));
+               // bookGenre.setBook(l.readLibrary(rs.getInt(2)));
+               // bookGenre.setGenre(g.readGenre(rs.getInt(3)));
             }
             rs.close();
             stmt.close();
-                conn.close();
+                connection.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -68,19 +72,18 @@ public class GenreCRUD implements IGenreCRUD {
         return bookGenre;
     }
 
-    public void updateBookGenre(BookGenre bookGenreOld, BookGenre bookGenreNew) {
-        BasicConfigurator.configure();
-        Connection conn = conn1.getConnection();
+    public void updateGenre(Genre genreOld, Genre genreNew) {
+         BasicConfigurator.configure();
         try {
-            PreparedStatement pstmt = conn.prepareStatement(updateBookGenreQuery);
-            pstmt.setLong(1, bookGenreNew.getBook().getId());
-            pstmt.setInt(2, bookGenreNew.getGenre().getId());
-            pstmt.setLong(3, bookGenreOld.getId());
+            PreparedStatement pstmt = connection.prepareStatement(updateBookGenreQuery);
+            //pstmt.setLong(1, genreNew.getBook().getId());
+            //pstmt.setInt(2, genreNew.getGenre().getId());
+            pstmt.setLong(3, genreOld.getId());
 
             pstmt.executeUpdate();
 
             pstmt.close();
-                conn.close();
+                connection.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -88,39 +91,21 @@ public class GenreCRUD implements IGenreCRUD {
         }
     }
 
-    public void deleteBookGenre(BookGenre bookGenre) {
+    public void deleteGenre(Genre genre) {
         BasicConfigurator.configure();
-        Connection conn = conn1.getConnection();
         try {
-            PreparedStatement stmt = conn.prepareStatement(deleteQuery);
+            PreparedStatement stmt = connection.prepareStatement(deleteQuery);
 
             stmt.setLong(1, bookGenre.getId());
 
             stmt.executeUpdate();
 
             stmt.close();
-                conn.close();
+                connection.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
             }
         }
-    }
-    */
-
-    public void createGenre(Genre genre) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public Genre readGenre(int id) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void updateGenre(Genre genreOld, Genre genreNew) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void deleteGenre(Genre genre) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

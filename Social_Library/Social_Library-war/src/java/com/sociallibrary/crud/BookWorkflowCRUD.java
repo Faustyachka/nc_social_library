@@ -24,9 +24,9 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
     }
 
     public void createBookWorkflow(BookWorkflow bookWorkflow) {
-        try {
-                String sqlRequest =
-                        "INSERT INTO Book_Workflow (ID, Name)  values(?, '?')";
+        try 
+        {
+            String sqlRequest ="INSERT INTO Book_Workflow (ID, Name)  values(?, '?')";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
             ps.setInt(1, bookWorkflow.getId());
@@ -44,9 +44,9 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
 
     public BookWorkflow readBookWorkflow(int id) {
         BookWorkflow bookWorkflow = new BookWorkflow();
-        try {
-                String sqlRequest =
-                        "SELECT * FROM Book_Workflow WHERE id=?";
+        try 
+        {
+            String sqlRequest ="SELECT * FROM Book_Workflow WHERE id=?";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
             ps.setInt(1, id);

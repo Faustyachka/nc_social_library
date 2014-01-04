@@ -28,7 +28,6 @@ public class RatingCRUD implements IRatingCRUD {
 
     public void createRating(Rating rating) {
         BasicConfigurator.configure();
-        conn=ConnectionProvider.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(insertRatingQuery);
 
@@ -49,7 +48,6 @@ public class RatingCRUD implements IRatingCRUD {
 
     public void createRating(long bookId, long userId, short rate) {
         BasicConfigurator.configure();
-        conn=ConnectionProvider.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(insertRatingQuery);
 
@@ -72,7 +70,6 @@ public class RatingCRUD implements IRatingCRUD {
         Rating rating = new Rating();
         int resulSetSize=0;
         BasicConfigurator.configure();
-        conn=ConnectionProvider.getConnection();
         IUserCRUD u = new UserCRUD();
         ILibraryCRUD l = new LibraryCRUD();
         try {
@@ -111,7 +108,6 @@ public class RatingCRUD implements IRatingCRUD {
 
     public void updateRating(Rating ratingOld, Rating ratingNew) {
         BasicConfigurator.configure();
-        conn=ConnectionProvider.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(updateRatingQuery);
 
@@ -133,7 +129,6 @@ public class RatingCRUD implements IRatingCRUD {
 
     public void deleteRating(Rating rating) {
         BasicConfigurator.configure();
-        conn=ConnectionProvider.getConnection();
         try {
             PreparedStatement stmt = conn.prepareStatement(deleteQuery);
 

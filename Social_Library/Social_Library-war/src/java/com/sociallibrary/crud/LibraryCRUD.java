@@ -26,11 +26,9 @@ public class LibraryCRUD implements ILibraryCRUD {
     
     public void createLibrary(Library library) {
         PreparedStatement ps;
-        try {
-            connection=ConnectionProvider.getConnection();
-            connection.setAutoCommit(false);
-                String sqlRequest =
-                        "INSERT INTO LIBRARY (ID,ISBN,TITLE,COVER,DESCRIPTION,PAGES,USERs,WORKFLOW) " +
+        try 
+        {
+            String sqlRequest = "INSERT INTO LIBRARY (ID,ISBN,TITLE,COVER,DESCRIPTION,PAGES,USERs,WORKFLOW) " +
                         "values(?,'?','?','?','?', ?, ?, ?)";
 
             ps = connection.prepareStatement(sqlRequest);
