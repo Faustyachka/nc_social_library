@@ -6,9 +6,6 @@
 package com.sociallibrary.actions;
 
 import com.sociallibrary.entity.*;
-import com.sociallibrary.crud.*;
-import com.sociallibrary.icrud.*;
-import org.apache.log4j.*;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.iactions.IRolesActions;
 import java.sql.Connection;
@@ -17,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -25,6 +24,7 @@ import java.util.List;
 public class RolesActions implements IRolesActions
 {
     private Connection connection;
+    public static final Logger log = Logger.getLogger(RolesActions.class);
 
     public RolesActions()
     {
@@ -33,6 +33,7 @@ public class RolesActions implements IRolesActions
 
     public List<Role> getAllRoles()
     {
+        BasicConfigurator.configure();
         List<Role> roles = new ArrayList<Role>();
         try
         {
@@ -48,15 +49,21 @@ public class RolesActions implements IRolesActions
                 roles.add(role);
             }
         } 
-        catch (SQLException e)
+         catch (SQLException e)
         {
-            e.printStackTrace();
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
         return roles;
     }
 
     public void applyRoleToUser(Role role, User user)
     {
+        BasicConfigurator.configure();
         try 
         {
             String sqlRequest ="INSERT INTO USERS_ROLES (ID,USERS,ROLE) values(0, ?, ?)";
@@ -66,17 +73,21 @@ public class RolesActions implements IRolesActions
             ps.setInt(2, role.getId());
             ps.executeUpdate();
 
-            connection.commit();
-
         } 
-        catch (SQLException e)
+         catch (SQLException e)
         {
-            e.printStackTrace();
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
     public void dropAllRolesOfUser(User user)
     {
+        BasicConfigurator.configure();
         try
         {
             String sqlRequest ="DELETE FROM USERS_ROLES WHERE USERS=?";
@@ -85,12 +96,15 @@ public class RolesActions implements IRolesActions
             ps.setLong(1, user.getId());
             ps.executeUpdate();
 
-            connection.commit();
-
         } 
-        catch (SQLException e)
+         catch (SQLException e)
         {
-            e.printStackTrace();
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 }

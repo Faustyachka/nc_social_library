@@ -21,30 +21,23 @@ import java.util.List;
 
 /**
  *
- * @author Антон
+ * @author Nastya Pavlova
  */
 public class LibraryActions implements ILibraryActions
 {
     private Connection connection;
-    private Library library;
-    private ILibraryCRUD u;
-    private IAuthorCRUD u1;
-    private IRatingCRUD u2;
     public static final Logger log = Logger.getLogger(LibraryActions.class);
 
     public LibraryActions()
     {
         connection = ConnectionProvider.getConnection();
-        library = new Library();
-        u = new LibraryCRUD();
-        u1=new AuthorCRUD();
-        u2 = new RatingCRUD();
     }
 
      public List<Library> getAllBooks()
      {
-        List<Library> libraries = new ArrayList<Library>();
-
+         BasicConfigurator.configure();
+         Library library = new Library();
+         List<Library> libraries = new ArrayList<Library>();
         try
         {
             Statement stmt = connection.createStatement ();
@@ -64,44 +57,57 @@ public class LibraryActions implements ILibraryActions
             }
             rs.close();
             stmt.close();
-            connection.close();
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
         return libraries;
     }
 
     
 
-    public List<Library> searchBooksByParameter(String where, String what) {
+    public List<Library> searchBooksByParameter(String where, String what)
+    {
         BasicConfigurator.configure();
-        List<Library> lList = new ArrayList<Library>();
+        Library library = new Library();
+        ILibraryCRUD ilibrary = new LibraryCRUD();
+        List<Library> libraries = new ArrayList<Library>();
         String selectParametr = "select id  from library where "+where+" = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setString(1, what);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                library = u.readLibrary(rs.getInt("id"));
-                lList.add(library);
+                library = ilibrary.readLibrary(rs.getInt("id"));
+                libraries.add(library);
             }
             rs.close();
             stmt.close();
-            connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        } 
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
         }
-
-        return lList;
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return libraries;
     }
     
-    public List<Library> searchBooksByStringMask(String where, String what) {
+    public List<Library> searchBooksByStringMask(String where, String what)
+    {
         BasicConfigurator.configure();
-        List<Library> lList = new ArrayList<Library>();
+        Library library = new Library();
+        ILibraryCRUD ilibrary = new LibraryCRUD();
+        List<Library> libraries = new ArrayList<Library>();
         String selectParametr = "select *  from library where "+where+" like '"+what+"'";
         try {
              PreparedStatement stmt = connection.prepareStatement(selectParametr);
@@ -110,40 +116,42 @@ public class LibraryActions implements ILibraryActions
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
             {
-                library = u.readLibrary(rs.getInt("id"));
-                lList.add(library);
+                library = ilibrary.readLibrary(rs.getInt("id"));
+                libraries.add(library);
             }
             rs.close();
             stmt.close();
-            connection.close();
         } 
         catch (SQLException e)
         {
-            while (e != null)
-            {
-                log.error("SQLException" + e);
-            }
+                e.printStackTrace();
+                log.error("SQLException:" + e);
         }
-        return lList;
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return libraries;
     }
 
     public List<Library> getBooksByIdInInterval(long from, long to)
     {
         BasicConfigurator.configure();
-        List<Library> lList = new ArrayList<Library>();
+        ILibraryCRUD ilibrary = new LibraryCRUD();
+        List<Library> libraries = new ArrayList<Library>();
         for(long i = from; i<to; i++)
         {
-                lList.add(u.readLibrary((int) i));
+                libraries.add(ilibrary.readLibrary((int) i));
         }
 
-        return lList;
+        return libraries;
     }
 
     public List<Author> getAuthorsList(long bookId)
     {
         BasicConfigurator.configure();
-        
-        List<Author> lList = new ArrayList<Author>();
+        IAuthorCRUD iauthor=new AuthorCRUD();
+        List<Author> authors = new ArrayList<Author>();
         String selectParametr = "select * from book_author where book = ?";
         try {
 
@@ -152,27 +160,28 @@ public class LibraryActions implements ILibraryActions
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
             {
-                lList.add(u1.readAuthor(rs.getInt("author")));
+                authors.add(iauthor.readAuthor(rs.getInt("author")));
             }
             rs.close();
             stmt.close();
-            connection.close();
         } 
         catch (SQLException e)
         {
-            while (e != null)
-            {
-                log.error("SQLException" + e);
-            }
+                e.printStackTrace();
+                log.error("SQLException:" + e);
         }
-        return lList;
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return authors;
     }
 
     public List<Rating> getRatingsList(long bookId)
     {
         BasicConfigurator.configure();
-        
-        List<Rating> lList = new ArrayList<Rating>();
+        IRatingCRUD irating = new RatingCRUD();
+        List<Rating> rating = new ArrayList<Rating>();
         String selectParametr = "select *  from rating where book= ?";
         try {
 
@@ -180,26 +189,29 @@ public class LibraryActions implements ILibraryActions
             stmt.setLong(1, bookId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                lList.add(u2.readRating(rs.getInt("id")));
+                rating.add(irating.readRating(rs.getInt("id")));
             }
             rs.close();
             stmt.close();
-            connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        } 
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
         }
-
-        return lList;
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return rating;
     }
 
     public int getAverageRate(long bookId)
     {
         int rate=0;
         List<Rating> ratings = getRatingsList(bookId);
-        for(Rating rating : ratings)
-            rate+=rating.getRate();
+        for(Rating rating1 : ratings)
+            rate+=rating1.getRate();
 
         if(ratings.size()>0)
             return rate/ratings.size();

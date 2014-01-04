@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.entity.*;
 import com.sociallibrary.icrud.ILibraryCRUD;
-import java.sql.Statement;
 import org.apache.log4j.*;
 /**
  *
@@ -48,27 +47,30 @@ public class LibraryCRUD implements ILibraryCRUD {
            // ps.setInt(8, library.getWorkflow().getId());
             ps.executeUpdate();
 
-            connection.close();
             ps.close();
         }
         catch (SQLException e)
         {
-            log.error("SQLException" + e);
+            log.error("SQLException:" + e);
             e.printStackTrace();
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
     public Library readLibrary(int id)
     {
+        BasicConfigurator.configure();
+         ResultSet rs=null;
          Library library = new Library();
          try
          {
-             //connection = ConnectionProvider.getConnection();
-
              PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Library where id= ?");
              stmt.setLong(1, id);
 
-             ResultSet rs = stmt.executeQuery();
+             rs = stmt.executeQuery();
 
              if (rs.next())
              {
@@ -81,21 +83,24 @@ public class LibraryCRUD implements ILibraryCRUD {
                // library.setUser(new UserCRUD().readUsers(rs.getInt("USERS")));
                 //library.setWorkflow(new BookWorkflowCRUD().readBookWorkflow(rs.getInt("WORKFLOW")));
             }
-
-           // connection.close();
-           // stmt.close();
-           // rs.close();
-
+            rs.close();
+            stmt.close();
         } 
          catch (SQLException e)
-         {
-            e.printStackTrace();
-         }
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
         return library;
     }
 
     public void updateLibrary(Library library)
     {
+        BasicConfigurator.configure();
          try 
          {
              String sqlRequest = "UPDATE Library SET ISBN='?',TITLE='?',COVER='?'," +
@@ -111,18 +116,23 @@ public class LibraryCRUD implements ILibraryCRUD {
             ps.executeUpdate();
             connection.prepareStatement("commit").executeUpdate();
 
-            connection.close();
             ps.close();
 
         } 
-         catch (SQLException e)
-         {
-            e.printStackTrace();
-         }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
     }
 
     public void deleteLibrary(int id) 
     {
+        BasicConfigurator.configure();
         try
         {
             String sqlRequest = "DELETE FROM Library WHERE id=?";
@@ -130,12 +140,17 @@ public class LibraryCRUD implements ILibraryCRUD {
             ps.setInt(1, id);
             ps.executeUpdate();
 
-            connection.close();
             ps.close();
 
-        } catch (SQLException e)
+        } 
+        catch (SQLException e)
         {
-            e.printStackTrace();
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 

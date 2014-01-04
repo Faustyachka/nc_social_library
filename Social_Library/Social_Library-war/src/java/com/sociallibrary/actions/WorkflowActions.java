@@ -25,6 +25,7 @@ import java.util.List;
 public class WorkflowActions implements IWorkflowActions
 {
     private Connection connection;
+    public static final Logger log = Logger.getLogger(WorkflowActions.class);
 
     public WorkflowActions()
     {
@@ -33,6 +34,7 @@ public class WorkflowActions implements IWorkflowActions
 
     public List<BookWorkflow> getAllWorkflows()
     {
+        BasicConfigurator.configure();
         List<BookWorkflow> roles = new ArrayList<BookWorkflow>();
         try
         {
@@ -48,10 +50,17 @@ public class WorkflowActions implements IWorkflowActions
                 role.setWorkflow(rs.getString("name"));
                 roles.add(role);
             }
+            rs.close();
+            ps.close();
         } 
         catch (SQLException e)
         {
-            e.printStackTrace();
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
         return roles;
     }

@@ -7,7 +7,6 @@ package com.sociallibrary.actions;
 
 import com.sociallibrary.entity.*;
 import com.sociallibrary.crud.*;
-import com.sociallibrary.icrud.*;
 import org.apache.log4j.*;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.iactions.IRatingActions;
@@ -25,7 +24,7 @@ import java.util.List;
 public class RatingActions implements IRatingActions
 {
     private Connection connection;
-    public static final Logger log = Logger.getLogger(UsersActions.class);
+    public static final Logger log = Logger.getLogger(RatingActions.class);
 
     public RatingActions()
     {
@@ -48,14 +47,15 @@ public class RatingActions implements IRatingActions
             }
             rs.close();
             stmt.close();
-            connection.close();
         } 
-        catch (SQLException e)
+         catch (SQLException e)
         {
-            while (e != null)
-            {
-                log.error("SQLException" + e);
-            }
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
         return lList;
     }
@@ -79,12 +79,14 @@ public class RatingActions implements IRatingActions
             stmt.close();
             connection.close();
         } 
-        catch (SQLException e)
+         catch (SQLException e)
         {
-            while (e != null)
-            {
-                log.error("SQLException" + e);
-            }
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
         return rating;
     }

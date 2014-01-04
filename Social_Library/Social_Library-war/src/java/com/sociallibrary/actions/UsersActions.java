@@ -24,6 +24,7 @@ import java.util.List;
 public class UsersActions implements IUsersActions
 {
     private Connection connection;
+    public static final Logger log = Logger.getLogger(UsersActions.class);
 
     public UsersActions()
     {
@@ -32,6 +33,7 @@ public class UsersActions implements IUsersActions
 
      public List<User> getAllUsers()
      {
+         BasicConfigurator.configure();
         List<User> users = new ArrayList<User>();
         try 
         {
@@ -56,15 +58,25 @@ public class UsersActions implements IUsersActions
                 //user.setRoles(new RoleCRUD().getRolesByUserId(rs.getLong("id")));
                 users.add(user);
             }
+
+            rs.close();
+            ps.close();
         } 
         catch (SQLException e)
         {
-            e.printStackTrace();
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
         return users;
     }
 
-    public User searchUserByLogin(String login) {
+    public User searchUserByLogin(String login) 
+    {
+        BasicConfigurator.configure();
         UserCRUD uCRUD = new UserCRUD();
         User users = new User();
         String selectParametr = "select id  from users where login = ?";
@@ -77,11 +89,17 @@ public class UsersActions implements IUsersActions
             }
             rs.close();
             stmt.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } 
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
         }
-
+        finally
+        {
+            ConnectionProvider.close();
+        }
         return users;
     }
+
 }
