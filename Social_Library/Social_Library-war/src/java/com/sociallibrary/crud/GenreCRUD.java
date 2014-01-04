@@ -1,9 +1,8 @@
 package com.sociallibrary.crud;
 
-import com.sociallibrary.Entities.Genre;
-import com.sociallibrary.crud.GenderCRUD;
-import com.sociallibrary.EntitiesInterfaces.GenreDAO;
-import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
+import com.sociallibrary.entities.Genre;
+import com.sociallibrary.crudInterfaces.IGenreCRUD;
+import com.sociallibrary.crudInterfaces.ILibraryCRUD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +10,7 @@ import java.sql.SQLException;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-public class GenreCRUD implements GenreDAO {
+public class GenreCRUD implements IGenreCRUD {
 
     public static final Logger log = Logger.getLogger(GenreCRUD.class);
     private static final String selectQuery = "SELECT * FROM book_genre WHERE id=?";

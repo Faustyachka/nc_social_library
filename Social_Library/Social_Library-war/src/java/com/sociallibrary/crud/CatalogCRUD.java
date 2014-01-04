@@ -1,19 +1,19 @@
 package com.sociallibrary.crud;
 
-import com.sociallibrary.Entities.Catalog;
-import com.sociallibrary.EntitiesInterfaces.CatalogDAO;
-import com.sociallibrary.EntitiesInterfaces.BookStatusDAO;
-import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
-import com.sociallibrary.EntitiesInterfaces.UserDAO;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
+import com.sociallibrary.entities.Catalog;
+import com.sociallibrary.crudInterfaces.ICatalogCRUD;
+//import com.sociallibrary.CRUDInterfaces.IBookStatusCRUD;
+//import com.sociallibrary.CRUDInterfaces.ILibraryCRUD;
+//import com.sociallibrary.CRUDInterfaces.IUserCRUD;
+//import java.sql.Connection;
+//import java.sql.PreparedStatement;
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
+//import java.sql.Timestamp;
+//import org.apache.log4j.BasicConfigurator;
+//import org.apache.log4j.Logger;
 
-public class CatalogCRUD implements CatalogDAO {
+public class CatalogCRUD implements ICatalogCRUD {
 
     public void createCatalog(Catalog catalog) {
         throw new UnsupportedOperationException("Not supported yet.");

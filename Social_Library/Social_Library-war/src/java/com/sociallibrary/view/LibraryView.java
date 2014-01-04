@@ -6,10 +6,10 @@
 package com.sociallibrary.view;
 
 import com.sociallibrary.controller.ConfigurationManager;
-import OracleDAO.OracleLibraryDAO;
-import TransferObject.BookWorkflow;
-import TransferObject.Library;
-import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
+import com.sociallibrary.crud.*;
+import com.sociallibrary.entities.BookWorkflow;
+import com.sociallibrary.entities.Library;
+import com.sociallibrary.crudInterfaces.ILibraryCRUD;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -29,7 +29,7 @@ public class LibraryView extends HttpServlet {
     private RoleDAO rDao = new OracleRoleDAO();*/
     private Library library;
     private BookWorkflow bookworkflow;
-    private LibraryDAO dao=new OracleLibraryDAO();
+    private ILibraryCRUD dao=new LibraryCRUD();
 
     public String execute(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException

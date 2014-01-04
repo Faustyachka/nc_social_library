@@ -3,10 +3,10 @@
  * and open the template in the editor.
  */
 
-package com.sociallibrary.ActionsImpl;
+package com.sociallibrary.actions;
 
-import com.sociallibrary.Entities.Library;
-import com.sociallibrary.Entities.Rating;
+import com.sociallibrary.entities.Library;
+import com.sociallibrary.entities.Rating;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.crud.RatingCRUD;
 import java.sql.Connection;

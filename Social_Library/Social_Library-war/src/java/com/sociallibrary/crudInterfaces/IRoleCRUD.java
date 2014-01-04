@@ -3,15 +3,15 @@
  * and open the template in the editor.
  */
 
-package com.sociallibrary.EntitiesInterfaces;
+package com.sociallibrary.crudInterfaces;
 
-import com.sociallibrary.Entities.*;
+import com.sociallibrary.entities.*;
 
 /**
  *
  * @author mazafaka
  */
-public interface RoleDAO {
+public interface IRoleCRUD {
 
      public Role readRole(int id);
      public void createRole(Role role);

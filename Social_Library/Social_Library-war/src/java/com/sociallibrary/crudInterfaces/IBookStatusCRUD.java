@@ -3,14 +3,14 @@
  * and open the template in the editor.
  */
 
-package com.sociallibrary.EntitiesInterfaces;
-import com.sociallibrary.Entities.*;
+package com.sociallibrary.crudInterfaces;
+import com.sociallibrary.entities.*;
 
 /**
  *
  * @author Назар
  */
-public interface BookStatusDAO {
+public interface IBookStatusCRUD {
 
     public void createBookStatus(BookStatus BookStatus);
      public BookStatus readBookStatus(int id);

@@ -3,12 +3,12 @@
  * and open the template in the editor.
  */
 
-package com.sociallibrary.search;
+package com.sociallibrary.rating;
 
-import com.sociallibrary.ActionsImpl.RatingActionsImpl;
-import ActionsInterfaces.RatingActions;
+import com.sociallibrary.actions.RatingActionsImpl;
+import com.sociallibrary.actionsInterfaces.*;
 import com.sociallibrary.crud.RatingCRUD;
-import TransferObject.Rating;
+import com.sociallibrary.entities.Rating;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;

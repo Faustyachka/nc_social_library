@@ -4,11 +4,11 @@
  */
 
 package com.sociallibraryl.authorization;
-import com.sociallibrary.ActionsImpl.UsersActionsImpl;
-import ActionsInterfaces.UsersActions;
+import com.sociallibrary.actions.UsersActionsImpl;
+import com.sociallibrary.actionsInterfaces.UsersActions;
 import com.sociallibrary.controller.Command;
 import com.sociallibrary.controller.ConfigurationManager;
-import TransferObject.Users;
+import com.sociallibrary.entities.User;
 import java.io.*;
 import java.util.List;
 import javax.servlet.*;
@@ -24,7 +24,7 @@ public class SignIn implements Command {
         String page = ConfigurationManager.INDEX_PAGE;
         response.setContentType("text/html;charset=UTF-8");
         UsersActions uAction = new UsersActionsImpl();
-        List<Users> uList = uAction.searchUsersByParameter("login", request.getParameter("login"));
+        List<User> uList = uAction.searchUsersByParameter("login", request.getParameter("login"));
        if (uList.size()!=0){
        if (uList.get(0).getPassword().equals(request.getParameter("password")) && uList.get(0).getConfirmed()==1) {
             HttpSession session=request.getSession(true);

@@ -5,9 +5,9 @@
 
 package com.sociallibrary.search;
 
-import com.sociallibrary.ActionsImpl.LibraryActionsImpl;
-import ActionsInterfaces.LibraryActions;
-import TransferObject.Library;
+import com.sociallibrary.actions.LibraryActionsImpl;
+import com.sociallibrary.actionsInterfaces.*;
+import com.sociallibrary.entities.Library;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -35,13 +35,13 @@ public class SearchInGloballib extends HttpServlet {
         try {
             String text = request.getParameter("text");
 
-            Library library = new Library();
-            LibraryActions libraryActions = new LibraryActionsImpl();
-
-            String searchResult = "";
-            for (Library be : libraryActions.searchBooksByStringMask("title", "%"+text+"%"))
-                if(be.getTitle().indexOf(text) > -1) searchResult += be.getId() + "_";
-            response.sendRedirect("search.jsp?searchResult="+searchResult+"&global=true");
+//            Library library = new Library();
+//            LibraryActions libraryActions = new LibraryActionsImpl();
+//
+//            String searchResult = "";
+//            for (Library be : libraryActions.searchBooksByStringMask("title", "%"+text+"%"))
+//                if(be.getTitle().indexOf(text) > -1) searchResult += be.getId() + "_";
+//            response.sendRedirect("search.jsp?searchResult="+searchResult+"&global=true");
             /* TODO output your page here
             out.println("<html>");
             out.println("<head>");

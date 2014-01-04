@@ -10,13 +10,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.Entities.*;
-import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
+import com.sociallibrary.entities.*;
+import com.sociallibrary.crudInterfaces.ILibraryCRUD;
 /**
  *
  * @author Антон
  */
-public class LibraryCRUD implements LibraryDAO {
+public class LibraryCRUD implements ILibraryCRUD {
 
     private Connection connection;
 

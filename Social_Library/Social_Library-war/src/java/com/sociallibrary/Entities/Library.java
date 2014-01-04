@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.sociallibrary.Entities;
+package com.sociallibrary.entities;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,9 @@
 package com.sociallibrary.crud;
 
-import com.sociallibrary.Entities.Rating;
-import com.sociallibrary.EntitiesInterfaces.LibraryDAO;
-import com.sociallibrary.EntitiesInterfaces.RatingDAO;
-import com.sociallibrary.EntitiesInterfaces.UserDAO;
+import com.sociallibrary.entities.Rating;
+import com.sociallibrary.crudInterfaces.ILibraryCRUD;
+import com.sociallibrary.crudInterfaces.IRatingCRUD;
+import com.sociallibrary.crudInterfaces.IUserCRUD;
 import com.sociallibrary.connection.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-public class RatingCRUD implements RatingDAO {
+public class RatingCRUD implements IRatingCRUD {
 
     public static final Logger log = Logger.getLogger(RatingCRUD.class);
     private static final String selectQuery = "SELECT * FROM rating WHERE id=?";
@@ -73,8 +73,8 @@ public class RatingCRUD implements RatingDAO {
         int resulSetSize=0;
         BasicConfigurator.configure();
         conn=ConnectionProvider.getConnection();
-        UserDAO u = new UserCRUD();
-        LibraryDAO l = new LibraryCRUD();
+        IUserCRUD u = new UserCRUD();
+        ILibraryCRUD l = new LibraryCRUD();
         try {
             PreparedStatement stmt = conn.prepareStatement(selectQuery);
 

@@ -17,12 +17,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.Entities.Gender;
-import com.sociallibrary.Entities.Role;
-import com.sociallibrary.Entities.User;
-import com.sociallibrary.EntitiesInterfaces.UserDAO;
+import com.sociallibrary.entities.Gender;
+import com.sociallibrary.entities.Role;
+import com.sociallibrary.entities.User;
+import com.sociallibrary.crudInterfaces.IUserCRUD;
 
-public class UserCRUD implements UserDAO
+public class UserCRUD implements IUserCRUD
 {
 
     private Connection connection;

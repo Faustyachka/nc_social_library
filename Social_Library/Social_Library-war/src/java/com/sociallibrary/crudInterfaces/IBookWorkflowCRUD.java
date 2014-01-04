@@ -3,13 +3,13 @@
  * and open the template in the editor.
  */
 
-package com.sociallibrary.EntitiesInterfaces;
-import com.sociallibrary.Entities.*;
+package com.sociallibrary.crudInterfaces;
+import com.sociallibrary.entities.*;
 /**
  *
  * @author Назар
  */
-public interface BookWorkflowDAO {
+public interface IBookWorkflowCRUD {
 
     public void createBookWorkflow(BookWorkflow bookWorkflow);
      public BookWorkflow readBookWorkflow(int id);

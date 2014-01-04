@@ -9,13 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.Entities.*;
-import com.sociallibrary.EntitiesInterfaces.BookWorkflowDAO;
+import com.sociallibrary.entities.*;
+import com.sociallibrary.crudInterfaces.IBookWorkflowCRUD;
 /**
  *
  * @author Антон
  */
-public class BookWorkflowCRUD implements BookWorkflowDAO{
+public class BookWorkflowCRUD implements IBookWorkflowCRUD{
     
     private Connection connection;
 

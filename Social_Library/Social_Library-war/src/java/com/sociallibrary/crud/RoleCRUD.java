@@ -12,14 +12,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.Entities.Role;
-import com.sociallibrary.Entities.User;
-import com.sociallibrary.EntitiesInterfaces.RoleDAO;
+import com.sociallibrary.entities.Role;
+import com.sociallibrary.entities.User;
+import com.sociallibrary.crudInterfaces.IRoleCRUD;
 /**
  *
  * @author Антон
  */
-public class RoleCRUD implements RoleDAO
+public class RoleCRUD implements IRoleCRUD
 {
 
     private Connection connection;

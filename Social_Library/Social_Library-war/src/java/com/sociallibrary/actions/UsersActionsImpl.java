@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sociallibrary.ActionsImpl;
+package com.sociallibrary.actions;
 
-import com.sociallibrary.Entities.Gender;
-import com.sociallibrary.Entities.User;
+import com.sociallibrary.entities.Gender;
+import com.sociallibrary.entities.User;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.crud.RoleCRUD;
 import java.sql.Connection;

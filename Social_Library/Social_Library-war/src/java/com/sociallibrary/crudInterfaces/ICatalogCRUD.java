@@ -3,15 +3,15 @@
  * and open the template in the editor.
  */
 
-package com.sociallibrary.EntitiesInterfaces;
+package com.sociallibrary.crudInterfaces;
 
-import com.sociallibrary.Entities.*;
+import com.sociallibrary.entities.*;
 
 /**
  *
  * @author mazafaka
  */
-public interface CatalogDAO {
+public interface ICatalogCRUD {
 
      public void createCatalog(Catalog catalog);
      public Catalog readCatalog(int id);

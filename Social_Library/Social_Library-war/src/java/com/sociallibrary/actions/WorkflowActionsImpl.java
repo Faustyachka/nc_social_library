@@ -3,9 +3,9 @@
  * and open the template in the editor.
  */
 
-package com.sociallibrary.ActionsImpl;
+package com.sociallibrary.actions;
 
-import com.sociallibrary.Entities.BookWorkflow;
+import com.sociallibrary.entities.BookWorkflow;
 import com.sociallibrary.connection.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

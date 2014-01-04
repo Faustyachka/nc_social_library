@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-public class AuthorCRUD implements AuthorDAO {
+public class AuthorCRUD implements IAuthorCRUD {
 
     public static final Logger log = Logger.getLogger(AuthorCRUD.class);
     private static final String selectQuery = "SELECT * FROM author WHERE id=?";

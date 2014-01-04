@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-public class BookStatusCRUD implements BookStatusDAO {
+public class BookStatusCRUD implements IBookStatusCRUD {
 
     public static final Logger log = Logger.getLogger(BookStatusCRUD.class);
     private static final String selectQuery = "SELECT * FROM Book_Status WHERE id=?";
