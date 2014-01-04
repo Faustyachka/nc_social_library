@@ -22,7 +22,7 @@ public class SignIn implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, UnsupportedEncodingException {
         String page = ConfigurationManager.INDEX_PAGE;
         response.setContentType("text/html;charset=UTF-8");
-        UsersActionsImpl uAction = new UsersActionsImpl();
+        UsersActions uAction = new UsersActions();
         User uList = uAction.searchUserByLogin(request.getParameter("login"));
         try {
             if (uList.getPassword().equals(Security.getMd5(request.getParameter("password"))) && uList.isConfirmed() && !uList.isBanned()) {

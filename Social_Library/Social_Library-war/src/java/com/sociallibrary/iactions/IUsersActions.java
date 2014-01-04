@@ -15,6 +15,6 @@ import java.util.List;
 public interface IUsersActions {
 
     public List<User> getAllUsers();
-    public List<User> searchUsersByParameter(String where, String what);
+    public User searchUserByLogin(String login);
 
 }
