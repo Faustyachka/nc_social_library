@@ -33,6 +33,9 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
             ps.setString(2, bookWorkflow.getWorkflow());
             ps.executeUpdate();
 
+            connection.close();
+            ps.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,7 +43,7 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
     }
 
     public BookWorkflow readBookWorkflow(int id) {
-        BookWorkflow role = new BookWorkflow();
+        BookWorkflow bookWorkflow = new BookWorkflow();
         try {
                 String sqlRequest =
                         "SELECT * FROM Book_Workflow WHERE id=?";
@@ -50,14 +53,18 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                role.setId(rs.getInt("id"));
-                role.setWorkflow(rs.getString("name"));
+                bookWorkflow.setId(rs.getInt("id"));
+                bookWorkflow.setWorkflow(rs.getString("name"));
             }
+
+            connection.close();
+            ps.close();
+            rs.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return role;
+        return bookWorkflow;
     }
 
     public void updateBookWorkflow(BookWorkflow bookWorkflow) {
@@ -72,6 +79,9 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
 
             ps.executeUpdate();
 
+            connection.close();
+            ps.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -83,6 +93,9 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
             ps.setInt(1, id);
             ps.executeUpdate();
+
+            connection.close();
+            ps.close();
 
         } catch (SQLException e) {
             e.printStackTrace();

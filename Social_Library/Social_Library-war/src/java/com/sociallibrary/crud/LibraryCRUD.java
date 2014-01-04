@@ -45,7 +45,8 @@ public class LibraryCRUD implements ILibraryCRUD {
             ps.setInt(8, library.getWorkflow().getId());
             ps.executeUpdate();
 
-            connection.commit();
+            //connection.commit();
+            connection.close();
             ps.close();
 
         }
@@ -75,6 +76,10 @@ public class LibraryCRUD implements ILibraryCRUD {
                 library.setWorkflow(new BookWorkflowCRUD().readBookWorkflow(rs.getInt("WORKFLOW")));
             }
 
+            connection.close();
+            ps.close();
+            rs.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -97,7 +102,9 @@ public class LibraryCRUD implements ILibraryCRUD {
             ps.executeUpdate();
             connection.prepareStatement("commit").executeUpdate();
 
-            connection.commit();
+            //connection.commit();
+            connection.close();
+            ps.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -113,7 +120,9 @@ public class LibraryCRUD implements ILibraryCRUD {
             ps.setInt(1, id);
             ps.executeUpdate();
 
-            connection.commit();
+//            connection.commit();
+            connection.close();
+            ps.close();
 
         } catch (SQLException e) {
             e.printStackTrace();

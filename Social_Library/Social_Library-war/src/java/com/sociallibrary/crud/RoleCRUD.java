@@ -43,6 +43,10 @@ public class RoleCRUD implements IRoleCRUD
                 role.setName(rs.getString("name"));
             }
 
+            connection.close();
+            ps.close();
+            rs.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -59,7 +63,9 @@ public class RoleCRUD implements IRoleCRUD
             ps.setString(2, role.getName());
             ps.executeUpdate();
 
-            connection.commit();
+//            connection.commit();
+            connection.close();
+            ps.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,7 +79,9 @@ public class RoleCRUD implements IRoleCRUD
             ps.setInt(1, id);
             ps.executeUpdate();
 
-            connection.commit();
+//            connection.commit();
+            connection.close();
+            ps.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -92,7 +100,9 @@ public class RoleCRUD implements IRoleCRUD
 
             ps.executeUpdate();
 
-            connection.commit();
+//            connection.commit();
+            connection.close();
+            ps.close();
 
         } catch (SQLException e) {
             e.printStackTrace();

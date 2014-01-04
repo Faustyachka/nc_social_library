@@ -54,7 +54,9 @@ public class UserCRUD implements IUserCRUD
 
             for(Role r : user.getRoles()) new RoleCRUD().applyRoleToUser(r, user);
 
-            connection.commit();
+//            connection.commit();
+            connection.close();
+            ps.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,6 +91,10 @@ public class UserCRUD implements IUserCRUD
                 //user.setRole(new Role(1, "Administrator"));
             }
 
+            connection.close();
+            ps.close();
+            rs.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -113,7 +119,10 @@ public class UserCRUD implements IUserCRUD
 
             ps.executeUpdate();
             connection.prepareStatement("commit").executeUpdate();
-            connection.commit();
+//            connection.commit();
+
+            connection.close();
+            ps.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,7 +135,10 @@ public class UserCRUD implements IUserCRUD
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
             ps.setInt(1, id);
             ps.executeUpdate();
-            connection.commit();
+//            connection.commit();
+
+            connection.close();
+            ps.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
