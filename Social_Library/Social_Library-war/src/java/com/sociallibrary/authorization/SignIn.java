@@ -4,16 +4,15 @@
  */
 
 package com.sociallibrary.authorization;
-import com.sociallibrary.actions.UsersActionsImpl;
-import com.sociallibrary.actionsInterfaces.UsersActions;
+import com.sociallibrary.actions.UsersActions;
 import com.sociallibrary.controller.Command;
 import com.sociallibrary.controller.ConfigurationManager;
-import com.sociallibrary.entities.User;
+import com.sociallibrary.entity.User;
 import java.io.*;
 import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 /**
  *
  * @author Костя
@@ -23,7 +22,7 @@ public class SignIn implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = ConfigurationManager.INDEX_PAGE;
         response.setContentType("text/html;charset=UTF-8");
-        UsersActions uAction = new UsersActionsImpl();
+        UsersActions uAction = new UsersActions();
         List<User> uList = uAction.searchUsersByParameter("login", request.getParameter("login"));
        if (uList.size()!=0){
        if (uList.get(0).getPassword().equals(request.getParameter("password")) && uList.get(0).getConfirmed()==1) {

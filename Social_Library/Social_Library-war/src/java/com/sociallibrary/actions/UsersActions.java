@@ -4,39 +4,45 @@
  */
 package com.sociallibrary.actions;
 
-import com.sociallibrary.entities.Gender;
-import com.sociallibrary.entities.User;
+import com.sociallibrary.entity.Gender;
+import com.sociallibrary.entity.User;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.crud.RoleCRUD;
+//import com.sociallibrary.crud.RoleCRUD;
+import com.sociallibrary.crud.UserCRUD;
+import com.sociallibrary.iactions.IUsersActions;
+import com.sociallibrary.icrud.IUserCRUD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.BasicConfigurator;
 
 /**
  *
- * @author mazafaka
+ * @author Nastya Pavlova
  */
-public class UsersActionsImpl{
+public class UsersActions implements IUsersActions
+{
+    private Connection connection;
 
-     private Connection connection;
-
-    public UsersActionsImpl() {
+    public UsersActions()
+    {
         connection = ConnectionProvider.getConnection();
     }
 
-     public List<User> getAllUsers() {
+     public List<User> getAllUsers()
+     {
         List<User> users = new ArrayList<User>();
-        try {
-                String sqlRequest =
-                        "SELECT * FROM Users";
+        try 
+        {
+            String sqlRequest ="SELECT * FROM Users";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
-
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
+            while (rs.next())
+            {
                 User user = new User();
                 user.setId(rs.getLong("id"));
                 user.setFirstName(rs.getString("FIRST_NAME"));
@@ -52,48 +58,42 @@ public class UsersActionsImpl{
                 //user.setRoles(new RoleCRUD().getRolesByUserId(rs.getLong("id")));
                 users.add(user);
             }
-
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
         return users;
     }
-    /*
-    public static final Logger log = Logger.getLogger(UsersActionsImpl.class);
-    private Users users = new Users();
 
-    public UsersActionsImpl() {
-        users = new Users();
-    }
-*/
-
-    public List<Users> searchUsersByParameter(String where, String what) {
+    public List<User> searchUsersByParameter(String where, String what)
+    {
         BasicConfigurator.configure();
-        UserDAO u = new OracleUsersDAO();
-        List<Users> uList = new ArrayList<Users>();
+        IUserCRUD u = new UserCRUD();
+        List<User> uList = new ArrayList<User>();
         String selectParametr = "select id  from users where "+where+" = ?";
-        try {
-
-            Oracle conn1 = new Oracle();
-            Connection conn = conn1.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectParametr);
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setString(1, what);
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                users = u.readUsers(rs.getInt("id"));
-                uList.add(users);
+            while (rs.next())
+            {
+                User user = new User();
+                user = u.readUsers(rs.getInt("id"));
+                uList.add(user);
             }
             rs.close();
             stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
+            connection.close();
+        } 
+        catch (SQLException e)
+        {
+            while (e != null)
+            {
+                //log.error("SQLException" + e);
             }
         }
-
         return uList;
     }
-
-  
 }

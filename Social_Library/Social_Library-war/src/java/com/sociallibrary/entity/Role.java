@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.sociallibrary.entities;
+package com.sociallibrary.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,24 +12,33 @@ import java.util.List;
  *
  * @author Антон
  */
-public class BookWorkflow {
-
+public class Role {
     private int id;
-    private String workflow;
+    private String name;
 
-    public BookWorkflow() {
+    @Override
+    public String toString(){
+        return id + " " + name;
     }
 
     public List<String> toStringList(){
         List<String> result = new ArrayList<String>();
         result.add(String.valueOf(id));
-        result.add(workflow);
+        result.add(name);
 
         return result;
     }
 
-    public BookWorkflow(int id) {
+    public Role() {
+    }
+
+    public Role(int id) {
         this.id = id;
+    }
+
+    public Role(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public int getId() {
@@ -40,13 +49,12 @@ public class BookWorkflow {
         this.id = id;
     }
 
-    public String getWorkflow() {
-        return workflow;
+    public String getName() {
+        return name;
     }
 
-    public void setWorkflow(String workflow) {
-        this.workflow = workflow;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    
 }

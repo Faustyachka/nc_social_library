@@ -11,8 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.sociallibrary.crud.UserCRUD;
-import com.sociallibrary.entities.User;
-import com.sociallibrary.crudInterfaces.IUserCRUD;
+import com.sociallibrary.entity.User;
+import com.sociallibrary.icrud.IUserCRUD;
 
 /**
  *

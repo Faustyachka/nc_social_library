@@ -17,10 +17,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.entities.Gender;
-import com.sociallibrary.entities.Role;
-import com.sociallibrary.entities.User;
-import com.sociallibrary.crudInterfaces.IUserCRUD;
+import com.sociallibrary.entity.Gender;
+import com.sociallibrary.entity.Role;
+import com.sociallibrary.entity.User;
+import com.sociallibrary.icrud.IUserCRUD;
 
 public class UserCRUD implements IUserCRUD
 {

@@ -5,46 +5,54 @@
 
 package com.sociallibrary.actions;
 
-import com.sociallibrary.entities.Library;
+import com.sociallibrary.entity.*;
+import com.sociallibrary.crud.*;
+import com.sociallibrary.icrud.*;
+import org.apache.log4j.*;
+import com.sociallibrary.iactions.ILibraryActions;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.crud.BookWorkflowCRUD;
-import com.sociallibrary.crud.UserCRUD;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.naming.NamingException;
-//import org.apache.log4j.BasicConfigurator;
-//import org.apache.log4j.Logger;
 
 /**
  *
  * @author Антон
  */
-public class LibraryActionsImpl //implements LibraryActions
+public class LibraryActions implements ILibraryActions
 {
-     private Connection connection;
+    private Connection connection;
+    private Library library;
+    private ILibraryCRUD u;
+    private IAuthorCRUD u1;
+    private IRatingCRUD u2;
+    public static final Logger log = Logger.getLogger(LibraryActions.class);
 
-    public LibraryActionsImpl() {
+    public LibraryActions()
+    {
         connection = ConnectionProvider.getConnection();
+        library = new Library();
+        u = new LibraryCRUD();
+        u1=new AuthorCRUD();
+        u2 = new RatingCRUD();
     }
 
      public List<Library> getAllBooks()
-            throws SQLException, NamingException
-    {
+     {
         List<Library> libraries = new ArrayList<Library>();
 
-        try {
+        try
+        {
             connection=ConnectionProvider.getConnection();
-
-
             Statement stmt = connection.createStatement ();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Library");
 
-            while (rs.next()) {
-                Library library = new Library();
+            while (rs.next())
+            {
                 library.setId(rs.getLong("ID"));
                 library.setIsbn(rs.getString("ISBN"));
                 library.setTitle(rs.getString("TITLE"));
@@ -55,39 +63,23 @@ public class LibraryActionsImpl //implements LibraryActions
                 library.setWorkflow(new BookWorkflowCRUD().readBookWorkflow(rs.getInt("WORKFLOW")));
                 libraries.add(library);
             }
-
-
             rs.close();
             stmt.close();
-    }
-
-
-
-        catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
-            throw new IllegalStateException("Error occurred!", e);
         }
         return libraries;
-
-    }
-    /*
-    public static final Logger log = Logger.getLogger(UsersActionsImpl.class);
-    private Library library = new Library();
-
-    public LibraryActionsImpl() {
-        library = new Library();
     }
 
     public List<Library> searchBooksByParameter(String where, String what) {
         BasicConfigurator.configure();
-        LibraryDAO u = new LibraryCRUD();
         List<Library> lList = new ArrayList<Library>();
         String selectParametr = "select id  from library where "+where+" = ?";
         try {
-
-            Oracle conn1 = new Oracle();
-            Connection conn = conn1.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectParametr);
+            connection=ConnectionProvider.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setString(1, what);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -96,7 +88,7 @@ public class LibraryActionsImpl //implements LibraryActions
             }
             rs.close();
             stmt.close();
-            conn.close();
+            connection.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -108,41 +100,41 @@ public class LibraryActionsImpl //implements LibraryActions
     
     public List<Library> searchBooksByStringMask(String where, String what) {
         BasicConfigurator.configure();
-        LibraryDAO u = new OracleLibraryDAO();
         List<Library> lList = new ArrayList<Library>();
         String selectParametr = "select *  from library where "+where+" like '"+what+"'";
         try {
-
-            Oracle conn1 = new Oracle();
-            Connection conn = conn1.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectParametr);
+             connection=ConnectionProvider.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(selectParametr);
 //            stmt.setString(1, where);
 //            stmt.setString(2, what);
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
+            while (rs.next())
+            {
                 library = u.readLibrary(rs.getInt("id"));
                 lList.add(library);
             }
             rs.close();
             stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            while (e != null) {
+            connection.close();
+        } 
+        catch (SQLException e)
+        {
+            while (e != null)
+            {
                 log.error("SQLException" + e);
             }
         }
-
         return lList;
     }
 
-
-    public List<Library> getBooksByIdInInterval(long from, long to){
+    public List<Library> getBooksByIdInInterval(long from, long to)
+    {
         BasicConfigurator.configure();
-        LibraryDAO u = new OracleLibraryDAO();
-        Library lib = new Library();
         List<Library> lList = new ArrayList<Library>();
-        for(long i = from; i<to; i++){
-                lList.add(u.readLibrary(i));        }
+        for(long i = from; i<to; i++)
+        {
+                lList.add(u.readLibrary((int) i));
+        }
 
         return lList;
     }
@@ -150,49 +142,49 @@ public class LibraryActionsImpl //implements LibraryActions
     public List<Author> getAuthorsList(long bookId)
     {
         BasicConfigurator.configure();
-        AuthorCRUD u = new AuthorCRUD();
+        
         List<Author> lList = new ArrayList<Author>();
         String selectParametr = "select * from book_author where book = ?";
         try {
 
-            Oracle conn1 = new Oracle();
-            Connection conn = conn1.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectParametr);
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setLong(1, bookId);
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                lList.add(u.readAuthor(rs.getInt("author")));
+            while (rs.next())
+            {
+                lList.add(u1.readAuthor(rs.getInt("author")));
             }
             rs.close();
             stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            while (e != null) {
+            connection.close();
+        } 
+        catch (SQLException e)
+        {
+            while (e != null)
+            {
                 log.error("SQLException" + e);
             }
         }
-
         return lList;
     }
 
-    public List<Rating> getRatingsList(long bookId){
+    public List<Rating> getRatingsList(long bookId)
+    {
         BasicConfigurator.configure();
-        RatingCRUD u = new RatingCRUD();
+        
         List<Rating> lList = new ArrayList<Rating>();
         String selectParametr = "select *  from rating where book= ?";
         try {
 
-            Oracle conn1 = new Oracle();
-            Connection conn = conn1.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(selectParametr);
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setLong(1, bookId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                lList.add(u.readRating(rs.getInt("id")));
+                lList.add(u2.readRating(rs.getInt("id")));
             }
             rs.close();
             stmt.close();
-            conn.close();
+            connection.close();
         } catch (SQLException e) {
             while (e != null) {
                 log.error("SQLException" + e);
@@ -202,7 +194,8 @@ public class LibraryActionsImpl //implements LibraryActions
         return lList;
     }
 
-    public int getAverageRate(long bookId){
+    public int getAverageRate(long bookId)
+    {
         int rate=0;
         List<Rating> ratings = getRatingsList(bookId);
         for(Rating rating : ratings)
@@ -212,5 +205,4 @@ public class LibraryActionsImpl //implements LibraryActions
             return rate/ratings.size();
         return 0;
     }
-*/
 }

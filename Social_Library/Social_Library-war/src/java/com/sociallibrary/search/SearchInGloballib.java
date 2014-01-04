@@ -5,9 +5,9 @@
 
 package com.sociallibrary.search;
 
-import com.sociallibrary.actions.LibraryActionsImpl;
+import com.sociallibrary.actions.LibraryActions;
 import com.sociallibrary.actionsInterfaces.*;
-import com.sociallibrary.entities.Library;
+import com.sociallibrary.entity.Library;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -36,7 +36,7 @@ public class SearchInGloballib extends HttpServlet {
             String text = request.getParameter("text");
 
 //            Library library = new Library();
-//            LibraryActions libraryActions = new LibraryActionsImpl();
+//            LibraryActions libraryActions = new LibraryActions();
 //
 //            String searchResult = "";
 //            for (Library be : libraryActions.searchBooksByStringMask("title", "%"+text+"%"))

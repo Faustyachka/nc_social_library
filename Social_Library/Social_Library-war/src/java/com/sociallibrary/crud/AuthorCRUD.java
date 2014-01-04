@@ -1,34 +1,40 @@
  package com.sociallibrary.crud;
 
-
- /*
+import com.sociallibrary.entity.*;
+import com.sociallibrary.icrud.*;
+import org.apache.log4j.*;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.Entities.*;
-import com.sociallibrary.EntitiesInterfaces.AuthorDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-
+/**
+ *
+ * @author Nastya Pavlova
+ */
 public class AuthorCRUD implements IAuthorCRUD {
 
+    private Connection connection;
     public static final Logger log = Logger.getLogger(AuthorCRUD.class);
     private static final String selectQuery = "SELECT * FROM author WHERE id=?";
     private static final String deleteQuery = "DELETE FROM author WHERE id =?";
     private static final String insertAuthorQuery = "INSERT INTO author VALUES ( author_id.nextval , ?)";
     private static final String updateAuthorQuery = "UPDATE author SET author=? WHERE id=?";
 
+    public  AuthorCRUD()
+    {
+        connection = ConnectionProvider.getConnection();
+    }
+
     public void createAuthor(Author author) {
         BasicConfigurator.configure();
-            Connection conn = conn1.getConnection();
+            connection=ConnectionProvider.getConnection();
             try {
-                PreparedStatement pstmt = conn.prepareStatement(insertAuthorQuery);
+                PreparedStatement pstmt = connection.prepareStatement(insertAuthorQuery);
                 pstmt.setString(1, author.getAuthor());
                 pstmt.executeUpdate();
 
-                conn.close();
+                connection.close();
                 pstmt.close();
             }
 
@@ -43,9 +49,9 @@ public class AuthorCRUD implements IAuthorCRUD {
     public Author readAuthor(int id) {
         BasicConfigurator.configure();
         Author author = new Author();
-            Connection conn = conn1.getConnection();
+            connection=ConnectionProvider.getConnection();
             try {
-                PreparedStatement stmt = conn.prepareStatement(selectQuery);
+                PreparedStatement stmt = connection.prepareStatement(selectQuery);
 
                 stmt.setLong(1, id);
                 ResultSet rs = stmt.executeQuery();
@@ -56,7 +62,7 @@ public class AuthorCRUD implements IAuthorCRUD {
                 }
                 rs.close();
                 stmt.close();
-                conn.close();
+                connection.close();
             }
 
          catch (SQLException e) {
@@ -70,16 +76,16 @@ public class AuthorCRUD implements IAuthorCRUD {
 
     public void updateAuthor(Author authorOld, Author authorNew) {
         BasicConfigurator.configure();
-            Connection conn = conn1.getConnection();
+            connection=ConnectionProvider.getConnection();
             try {
-                PreparedStatement pstmt = conn.prepareStatement(updateAuthorQuery);
+                PreparedStatement pstmt = connection.prepareStatement(updateAuthorQuery);
 
                 pstmt.setString(1, authorNew.getAuthor());
                 pstmt.setLong(2, authorOld.getId());
 
                 pstmt.executeUpdate();
 
-                conn.close();
+                connection.close();
                 pstmt.close();
             }
          catch (SQLException e) {
@@ -91,16 +97,16 @@ public class AuthorCRUD implements IAuthorCRUD {
 
     public void deleteAuthor(Author author) {
         BasicConfigurator.configure();
-            Connection conn = conn1.getConnection();
+            connection=ConnectionProvider.getConnection();
             try {
-                PreparedStatement stmt = conn.prepareStatement(deleteQuery);
+                PreparedStatement stmt = connection.prepareStatement(deleteQuery);
 
                 stmt.setLong(1, author.getId());
 
                 stmt.executeUpdate();
 
                 stmt.close();
-                conn.close();
+                connection.close();
             }
          catch (SQLException e) {
             while (e != null) {
@@ -108,4 +114,4 @@ public class AuthorCRUD implements IAuthorCRUD {
             }
         }
     }
-} */
+} 

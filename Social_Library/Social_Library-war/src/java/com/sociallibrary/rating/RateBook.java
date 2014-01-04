@@ -5,7 +5,7 @@
 
 package com.sociallibrary.rating;
 
-import com.sociallibrary.actions.RatingActionsImpl;
+import com.sociallibrary.actions.RatingActions;
 import com.sociallibrary.actionsInterfaces.*;
 import com.sociallibrary.crud.RatingCRUD;
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class RateBook extends HttpServlet {
             long user_id = Long.parseLong(request.getParameter("user_id").toString());
             short book_rate = Short.parseShort(request.getParameter("rate").toString());
 
-//            RatingActions ratingActions = new RatingActionsImpl();
+//            RatingActions ratingActions = new RatingActions();
 //            Rating rating = ratingActions.getRatingsByBookAndUserIds(user_id, book_id);
             out.print(rating.getRate()+ " " + rating.getBook()+ " " +rating.getUsers());
 //            if(rating != null){

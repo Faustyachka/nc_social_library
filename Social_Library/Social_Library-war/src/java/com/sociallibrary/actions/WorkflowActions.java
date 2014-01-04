@@ -5,8 +5,9 @@
 
 package com.sociallibrary.actions;
 
-import com.sociallibrary.entities.BookWorkflow;
+import com.sociallibrary.entity.BookWorkflow;
 import com.sociallibrary.connection.ConnectionProvider;
+import com.sociallibrary.iactions.IWorkflowActions;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,13 +17,14 @@ import java.util.List;
 
 /**
  *
- * @author mazafaka
+ * @author Nastya Pavlova
  */
-public class WorkflowActionsImpl
+public class WorkflowActions implements IWorkflowActions
 {
     private Connection connection;
 
-    public WorkflowActionsImpl() {
+    public WorkflowActions()
+    {
         connection = ConnectionProvider.getConnection();
     }
 
@@ -30,23 +32,24 @@ public class WorkflowActionsImpl
     {
         List<BookWorkflow> roles = new ArrayList<BookWorkflow>();
         try {
-                String sqlRequest =
-                        "SELECT * FROM Book_Workflow";
+
+            String sqlRequest ="SELECT * FROM Book_Workflow";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
+            while (rs.next())
+            {
                 BookWorkflow role = new BookWorkflow();
                 role.setId(rs.getInt("id"));
                 role.setWorkflow(rs.getString("name"));
                 roles.add(role);
             }
-
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
         return roles;
     }
-
 }

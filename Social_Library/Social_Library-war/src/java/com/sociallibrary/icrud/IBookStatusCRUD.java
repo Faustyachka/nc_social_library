@@ -3,8 +3,8 @@
  * and open the template in the editor.
  */
 
-package com.sociallibrary.crudInterfaces;
-import com.sociallibrary.entities.*;
+package com.sociallibrary.icrud;
+import com.sociallibrary.entity.*;
 
 /**
  *

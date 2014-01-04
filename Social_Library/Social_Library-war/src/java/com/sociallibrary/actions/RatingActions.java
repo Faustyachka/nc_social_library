@@ -5,10 +5,11 @@
 
 package com.sociallibrary.actions;
 
-import com.sociallibrary.entities.Library;
-import com.sociallibrary.entities.Rating;
+import com.sociallibrary.entity.Library;
+import com.sociallibrary.entity.Rating;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.crud.RatingCRUD;
+import com.sociallibrary.iactions.IRatingActions;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,51 +23,53 @@ import org.apache.log4j.Logger;
  *
  * @author Антон
  */
-public class RatingActionsImpl{
-
+public class RatingActions implements IRatingActions
+{
     private Connection connection;
-    private Library library;
+    public static final Logger log = Logger.getLogger(UsersActions.class);
 
-    public RatingActionsImpl() {
+    public RatingActions()
+    {
         connection = ConnectionProvider.getConnection();
-        library = new Library();
     }
     
-     public static final Logger log = Logger.getLogger(UsersActionsImpl.class);
-    
-    public List<Rating> getRatingsByBookId(long id){
+    public List<Rating> getRatingsByBookId(long id)
+    {
         BasicConfigurator.configure();
         RatingCRUD u = new RatingCRUD();
         List<Rating> lList = new ArrayList<Rating>();
         String selectParametr = "select *  from rating where book= ?";
         try {
-
             connection=ConnectionProvider.getConnection();
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
+            while (rs.next())
+            {
                 lList.add(u.readRating(rs.getInt("id")));
             }
             rs.close();
             stmt.close();
             connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
+        } 
+        catch (SQLException e)
+        {
+            while (e != null)
+            {
                 log.error("SQLException" + e);
             }
         }
-
         return lList;
     }
 
-    public Rating getRatingsByBookAndUserIds(long userId, long bookId){
+    public Rating getRatingsByBookAndUserIds(long userId, long bookId)
+    {
         BasicConfigurator.configure();
         RatingCRUD u = new RatingCRUD();
         Rating rating = null;
         String selectParametr = "select * from rating where book = ? and users = ?";
-        try {
-
+        try 
+        {
             connection=ConnectionProvider.getConnection();
             
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
@@ -79,13 +82,14 @@ public class RatingActionsImpl{
             rs.close();
             stmt.close();
             connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
+        } 
+        catch (SQLException e)
+        {
+            while (e != null)
+            {
                 log.error("SQLException" + e);
             }
         }
-
         return rating;
     }
-
 }

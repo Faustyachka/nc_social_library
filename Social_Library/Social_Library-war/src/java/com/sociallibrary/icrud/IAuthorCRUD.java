@@ -3,13 +3,13 @@
  * and open the template in the editor.
  */
 
-package com.sociallibrary.crudInterfaces;
+package com.sociallibrary.icrud;
 
-import com.sociallibrary.entities.*;
+import com.sociallibrary.entity.*;
 
 /**
  *
- * @author mazafaka
+ * @author Nastya Pavlova
  */
 public interface IAuthorCRUD {
 

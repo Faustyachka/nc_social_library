@@ -4,14 +4,14 @@
  */
 package com.sociallibrary.registration;
 
-import com.sociallibrary.actions.UsersActionsImpl;
+import com.sociallibrary.actions.UsersActions;
 import com.sociallibrary.actionsInterfaces.IUsersActions;
 import com.sociallibrary.controller.Command;
 import com.sociallibrary.controller.ConfigurationManager;
 import com.sociallibrary.crud.RoleCRUD;
-import com.sociallibrary.entities.Role;
-import com.sociallibrary.entities.User;
-import com.sociallibrary.crudInterfaces.IUserCRUD;
+import com.sociallibrary.entity.Role;
+import com.sociallibrary.entity.User;
+import com.sociallibrary.icrud.IUserCRUD;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -23,10 +23,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.sociallibrary.crud.UserCRUD;
-import com.sociallibrary.crudInterfaces.IRoleCRUD;
+import com.sociallibrary.icrud.IRoleCRUD;
 import java.util.List;
 import com.sociallibrary.email.EmailSender;
-import com.sociallibrary.entities.Gender;
+import com.sociallibrary.entity.Gender;
 import com.sociallibrary.constants.Const;
 import com.sociallibrary.registration.Security;
 
@@ -66,7 +66,7 @@ public class Registration implements Command {
         user.setNotify(status1==1);
 //        user.setRole(role);
         userCRUD.createUsers(user);
-        UsersActionsImpl uA = new UsersActionsImpl();
+        UsersActions uA = new UsersActions();
         List<User> uList = uA.searchUsersByParameter("login", user.getLogin());
         String mailSub = "Registration on Social Library";
         String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Servlet?users=" + uList.get(0).getId() + "&command=confirmUser'";

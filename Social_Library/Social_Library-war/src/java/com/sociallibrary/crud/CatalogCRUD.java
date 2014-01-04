@@ -1,7 +1,7 @@
 package com.sociallibrary.crud;
 
-import com.sociallibrary.entities.Catalog;
-import com.sociallibrary.crudInterfaces.ICatalogCRUD;
+import com.sociallibrary.entity.Catalog;
+import com.sociallibrary.icrud.ICatalogCRUD;
 //import com.sociallibrary.CRUDInterfaces.IBookStatusCRUD;
 //import com.sociallibrary.CRUDInterfaces.ILibraryCRUD;
 //import com.sociallibrary.CRUDInterfaces.IUserCRUD;

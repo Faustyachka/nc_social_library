@@ -1,9 +1,9 @@
 package com.sociallibrary.crud;
 
-import com.sociallibrary.entities.Rating;
-import com.sociallibrary.crudInterfaces.ILibraryCRUD;
-import com.sociallibrary.crudInterfaces.IRatingCRUD;
-import com.sociallibrary.crudInterfaces.IUserCRUD;
+import com.sociallibrary.entity.Rating;
+import com.sociallibrary.icrud.ILibraryCRUD;
+import com.sociallibrary.icrud.IRatingCRUD;
+import com.sociallibrary.icrud.IUserCRUD;
 import com.sociallibrary.connection.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

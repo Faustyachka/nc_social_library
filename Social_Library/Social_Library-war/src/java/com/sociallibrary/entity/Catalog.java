@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.sociallibrary.entities;
+package com.sociallibrary.entity;
 
 import java.sql.Time;
 

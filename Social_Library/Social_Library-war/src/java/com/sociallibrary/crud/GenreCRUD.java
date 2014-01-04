@@ -1,8 +1,8 @@
 package com.sociallibrary.crud;
 
-import com.sociallibrary.entities.Genre;
-import com.sociallibrary.crudInterfaces.IGenreCRUD;
-import com.sociallibrary.crudInterfaces.ILibraryCRUD;
+import com.sociallibrary.entity.Genre;
+import com.sociallibrary.icrud.IGenreCRUD;
+import com.sociallibrary.icrud.ILibraryCRUD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

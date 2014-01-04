@@ -9,8 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.entities.*;
-import com.sociallibrary.crudInterfaces.IBookWorkflowCRUD;
+import com.sociallibrary.entity.*;
+import com.sociallibrary.icrud.IBookWorkflowCRUD;
 /**
  *
  * @author Антон

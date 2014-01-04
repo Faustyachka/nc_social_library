@@ -12,9 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.entities.Role;
-import com.sociallibrary.entities.User;
-import com.sociallibrary.crudInterfaces.IRoleCRUD;
+import com.sociallibrary.entity.Role;
+import com.sociallibrary.entity.User;
+import com.sociallibrary.icrud.IRoleCRUD;
 /**
  *
  * @author Антон

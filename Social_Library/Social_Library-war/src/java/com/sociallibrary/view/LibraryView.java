@@ -7,9 +7,9 @@ package com.sociallibrary.view;
 
 import com.sociallibrary.controller.ConfigurationManager;
 import com.sociallibrary.crud.*;
-import com.sociallibrary.entities.BookWorkflow;
-import com.sociallibrary.entities.Library;
-import com.sociallibrary.crudInterfaces.ILibraryCRUD;
+import com.sociallibrary.entity.BookWorkflow;
+import com.sociallibrary.entity.Library;
+import com.sociallibrary.icrud.ILibraryCRUD;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
