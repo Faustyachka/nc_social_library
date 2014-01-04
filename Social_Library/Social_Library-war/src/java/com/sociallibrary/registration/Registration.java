@@ -5,13 +5,11 @@
 package com.sociallibrary.registration;
 
 import com.sociallibrary.actions.UsersActions;
-import com.sociallibrary.actionsInterfaces.IUsersActions;
 import com.sociallibrary.controller.Command;
 import com.sociallibrary.controller.ConfigurationManager;
 import com.sociallibrary.crud.RoleCRUD;
 import com.sociallibrary.entity.Role;
 import com.sociallibrary.entity.User;
-import com.sociallibrary.icrud.IUserCRUD;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -23,12 +21,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.sociallibrary.crud.UserCRUD;
-import com.sociallibrary.icrud.IRoleCRUD;
 import java.util.List;
 import com.sociallibrary.email.EmailSender;
 import com.sociallibrary.entity.Gender;
-import com.sociallibrary.constants.Const;
-import com.sociallibrary.registration.Security;
 
 /**
  *

@@ -58,12 +58,13 @@ public class LibraryActions implements ILibraryActions
                 library.setCover(rs.getString("COVER"));
                 library.setDescription(rs.getString("DESCRIPTION"));
                 library.setPages(rs.getInt("PAGES"));
-                library.setUser(new UserCRUD().readUsers(rs.getInt("USERS")));
-                library.setWorkflow(new BookWorkflowCRUD().readBookWorkflow(rs.getInt("WORKFLOW")));
+                //library.setUser(new UserCRUD().readUsers(rs.getInt("USERS")));
+                //library.setWorkflow(new BookWorkflowCRUD().readBookWorkflow(rs.getInt("WORKFLOW")));
                 libraries.add(library);
             }
             rs.close();
             stmt.close();
+            connection.close();
         }
         catch (SQLException e)
         {
@@ -71,6 +72,8 @@ public class LibraryActions implements ILibraryActions
         }
         return libraries;
     }
+
+    
 
     public List<Library> searchBooksByParameter(String where, String what) {
         BasicConfigurator.configure();
@@ -202,4 +205,6 @@ public class LibraryActions implements ILibraryActions
             return rate/ratings.size();
         return 0;
     }
+
+     
 }

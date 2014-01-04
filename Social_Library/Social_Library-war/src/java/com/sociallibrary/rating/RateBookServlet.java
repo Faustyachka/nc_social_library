@@ -5,10 +5,6 @@
 
 package com.sociallibrary.rating;
 
-import com.sociallibrary.actions.RatingActions;
-import com.sociallibrary.actionsInterfaces.*;
-import com.sociallibrary.crud.RatingCRUD;
-import com.sociallibrary.entity.Rating;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;

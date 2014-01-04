@@ -5,9 +5,6 @@
 
 package com.sociallibrary.rating;
 
-import com.sociallibrary.actions.RatingActions;
-import com.sociallibrary.actionsInterfaces.*;
-import com.sociallibrary.crud.RatingCRUD;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -39,7 +36,7 @@ public class RateBook extends HttpServlet {
 
 //            RatingActions ratingActions = new RatingActions();
 //            Rating rating = ratingActions.getRatingsByBookAndUserIds(user_id, book_id);
-            out.print(rating.getRate()+ " " + rating.getBook()+ " " +rating.getUsers());
+            //out.print(rating.getRate()+ " " + rating.getBook()+ " " +rating.getUsers());
 //            if(rating != null){
 //                Rating ratingNew = new Rating();
 //                ratingNew.setId(rating.getId());
