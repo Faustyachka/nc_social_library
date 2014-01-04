@@ -64,34 +64,24 @@ public class UsersActions implements IUsersActions
         return users;
     }
 
-    public List<User> searchUsersByParameter(String where, String what)
-    {
-        BasicConfigurator.configure();
-        IUserCRUD u = new UserCRUD();
-        List<User> uList = new ArrayList<User>();
-        String selectParametr = "select id  from users where "+where+" = ?";
-        try
-        {
+    public User searchUserByLogin(String login) {
+        UserCRUD uCRUD = new UserCRUD();
+        User users = new User();
+        String selectParametr = "select id  from users where login = ?";
+        try {
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
-            stmt.setString(1, what);
+            stmt.setString(1, login);
             ResultSet rs = stmt.executeQuery();
-            while (rs.next())
-            {
-                User user = new User();
-                user = u.readUsers(rs.getInt("id"));
-                uList.add(user);
+            while (rs.next()) {
+                uCRUD.readUsers(Integer.parseInt(rs.getString(1)));
             }
             rs.close();
             stmt.close();
             connection.close();
-        } 
-        catch (SQLException e)
-        {
-            while (e != null)
-            {
-                //log.error("SQLException" + e);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return uList;
+
+        return users;
     }
 }

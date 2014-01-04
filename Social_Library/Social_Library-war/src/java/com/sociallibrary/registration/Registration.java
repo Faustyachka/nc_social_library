@@ -10,6 +10,7 @@ import com.sociallibrary.controller.ConfigurationManager;
 import com.sociallibrary.crud.RoleCRUD;
 import com.sociallibrary.entity.Role;
 import com.sociallibrary.entity.User;
+import com.sociallibrary.icrud.IUserCRUD;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -21,9 +22,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.sociallibrary.crud.UserCRUD;
+import com.sociallibrary.icrud.IRoleCRUD;
 import java.util.List;
 import com.sociallibrary.email.EmailSender;
 import com.sociallibrary.entity.Gender;
+import java.util.ArrayList;
 
 /**
  *
@@ -32,7 +35,6 @@ import com.sociallibrary.entity.Gender;
 public class Registration implements Command {
 
     private User user;
-    private Role role;
     private UserCRUD userCRUD = new UserCRUD();
     private RoleCRUD roleCRUD = new RoleCRUD();
 
@@ -41,10 +43,8 @@ public class Registration implements Command {
 
         response.setContentType("text/html;charset=UTF-8");
         user = new User();
-        role = new Role();
-        Short status0 = 0;
-        Short status1 = 1;
-        role = roleCRUD.readRole(3);
+        List<Role> rList = new ArrayList<Role>();
+        rList.set(0, roleCRUD.readRole(3));
         user.setFirstName(request.getParameter("firstName"));
         user.setLastName(request.getParameter("lastName"));
         user.setEmail(request.getParameter("email"));
@@ -54,17 +54,21 @@ public class Registration implements Command {
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }
-        user.setGender(Gender.getGender(status1));
-        user.setConfirmed(status0==1);
-        user.setBanned(status1==1);
+        user.setGender(Gender.getGender(Integer.parseInt(request.getParameter("gender"))));
+        user.setConfirmed(false);
+        user.setBanned(false);
         user.setRegistrationDate(new Date().toString());
-        user.setNotify(status1==1);
-//        user.setRole(role);
+       if (Integer.parseInt(request.getParameter("notify"))==1){
+           user.setNotify(true);
+       }    else{
+                user.setNotify(false);
+       }
+        user.setRoles(rList);
         userCRUD.createUsers(user);
-        UsersActions uA = new UsersActions();
-        List<User> uList = uA.searchUsersByParameter("login", user.getLogin());
+        UsersActionsImpl uAct = new UsersActionsImpl();
+        user = uAct.searchUserByLogin(user.getLogin());
         String mailSub = "Registration on Social Library";
-        String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Servlet?users=" + uList.get(0).getId() + "&command=confirmUser'";
+        String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Servlet?users=" + user.getId() + "&command=confirmUser'";
         String mail[] = new String[1];
         mail[0] = user.getEmail();
         try {
