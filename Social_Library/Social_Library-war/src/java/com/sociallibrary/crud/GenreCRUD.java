@@ -35,15 +35,20 @@ public class GenreCRUD implements IGenreCRUD {
             pstmt.executeUpdate();
 
             pstmt.close();
-                connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
-    public Genre readGenre(int id) {
+    public Genre readGenre(int id)
+    {
         BasicConfigurator.configure();
         bookGenre = new Genre();
         ILibraryCRUD l = new LibraryCRUD();
@@ -62,13 +67,16 @@ public class GenreCRUD implements IGenreCRUD {
             }
             rs.close();
             stmt.close();
-                connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
         }
-
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
         return bookGenre;
     }
 
@@ -83,11 +91,15 @@ public class GenreCRUD implements IGenreCRUD {
             pstmt.executeUpdate();
 
             pstmt.close();
-                connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
@@ -101,11 +113,15 @@ public class GenreCRUD implements IGenreCRUD {
             stmt.executeUpdate();
 
             stmt.close();
-                connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 }

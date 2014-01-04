@@ -38,11 +38,15 @@ public class RatingCRUD implements IRatingCRUD {
             pstmt.executeUpdate();
 
             pstmt.close();
-                conn.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
@@ -58,11 +62,15 @@ public class RatingCRUD implements IRatingCRUD {
             pstmt.executeUpdate();
 
             pstmt.close();
-                conn.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
@@ -97,11 +105,15 @@ public class RatingCRUD implements IRatingCRUD {
             }
             rs.close();
             stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
         return rating;
     }
@@ -119,11 +131,15 @@ public class RatingCRUD implements IRatingCRUD {
             pstmt.executeUpdate();
 
             pstmt.close();
-                conn.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
@@ -137,12 +153,15 @@ public class RatingCRUD implements IRatingCRUD {
             stmt.executeUpdate();
 
             stmt.close();
-                conn.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
         }
-
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
     }
 }

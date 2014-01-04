@@ -33,16 +33,17 @@ public class AuthorCRUD implements IAuthorCRUD {
                 pstmt.setString(1, author.getAuthor());
                 pstmt.executeUpdate();
 
-                connection.close();
                 pstmt.close();
             }
 
-         catch (SQLException e)
-         {
-            while (e != null)
-            {
-                log.error("SQLException" + e);
-            }
+          catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
 
     }
@@ -65,18 +66,17 @@ public class AuthorCRUD implements IAuthorCRUD {
                 }
                 rs.close();
                 stmt.close();
-                connection.close();
             }
-
             catch (SQLException e)
             {
-                while (e != null)
-                {
-                log.error("SQLException" + e);
-                }
+                e.printStackTrace();
+                log.error("SQLException:" + e);
             }
-
-            return author;
+            finally
+            {
+                ConnectionProvider.close();
+            }
+        return author;
     }
 
     public void updateAuthor(Author authorOld, Author authorNew)
@@ -91,15 +91,16 @@ public class AuthorCRUD implements IAuthorCRUD {
 
                 pstmt.executeUpdate();
 
-                connection.close();
                 pstmt.close();
             }
-            catch (SQLException e)
+             catch (SQLException e)
             {
-                while (e != null)
-                {
-                log.error("SQLException" + e);
-                }
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+            }
+            finally
+            {
+                ConnectionProvider.close();
             }
     }
 
@@ -115,14 +116,15 @@ public class AuthorCRUD implements IAuthorCRUD {
                 stmt.executeUpdate();
 
                 stmt.close();
-                connection.close();
             }
-            catch (SQLException e)
+             catch (SQLException e)
             {
-                while (e != null)
-                {
-                    log.error("SQLException" + e);
-                }
-        }
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+            }
+            finally
+            {
+            ConnectionProvider.close();
+            }
     }
 } 

@@ -40,11 +40,15 @@ public class BookStatusCRUD implements IBookStatusCRUD {
             }
             rs.close();
             stmt.close();
-                connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        }
+         catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
 
         return BookStatus;
@@ -60,11 +64,16 @@ public class BookStatusCRUD implements IBookStatusCRUD {
             pstmt.executeUpdate();
 
             pstmt.close();
-                connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+
+        }
+         catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
@@ -78,11 +87,15 @@ public class BookStatusCRUD implements IBookStatusCRUD {
             stmt.executeUpdate();
 
             stmt.close();
-                connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        }
+         catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
@@ -97,11 +110,15 @@ public class BookStatusCRUD implements IBookStatusCRUD {
             pstmt.executeUpdate();
 
             pstmt.close();
-                connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        }
+         catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 }

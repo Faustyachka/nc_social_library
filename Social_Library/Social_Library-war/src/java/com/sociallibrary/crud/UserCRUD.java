@@ -20,17 +20,21 @@ import com.sociallibrary.entity.Gender;
 import com.sociallibrary.entity.Role;
 import com.sociallibrary.entity.User;
 import com.sociallibrary.icrud.IUserCRUD;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 public class UserCRUD implements IUserCRUD
 {
 
     private Connection connection;
+    public static final Logger log = Logger.getLogger(UserCRUD.class);
 
     public UserCRUD() {
         connection = ConnectionProvider.getConnection();
     }
 
     public void createUsers(User user) {
+        BasicConfigurator.configure();
         try {
                 String sqlRequest =
                         "INSERT INTO Users (ID,FIRST_NAME,LAST_NAME,EMAIL,LOGIN,PASSWORD," +
@@ -53,16 +57,22 @@ public class UserCRUD implements IUserCRUD
 
             for(Role r : user.getRoles()) new RolesActions().applyRoleToUser(r, user);
 
-//            connection.commit();
-            connection.close();
             ps.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
     public User readUsers(int id) {
+        BasicConfigurator.configure();
         User user = new User();
         try {
                 String sqlRequest =
@@ -90,17 +100,24 @@ public class UserCRUD implements IUserCRUD
                 //user.setRole(new Role(1, "Administrator"));
             }
 
-            connection.close();
-            ps.close();
             rs.close();
+            ps.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
         return user;
     }
 
     public void updateUsers(User user) {
+        BasicConfigurator.configure();
         try {
                 String sqlRequest = "UPDATE Users SET FIRST_NAME='?', LAST_NAME='?', " +
                         "EMAIL='?', LOGIN='?', PASSWORD='?', GENDER=?, CONFIRMED=?, " +
@@ -118,29 +135,40 @@ public class UserCRUD implements IUserCRUD
 
             ps.executeUpdate();
             connection.prepareStatement("commit").executeUpdate();
-//            connection.commit();
 
-            connection.close();
             ps.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
     public void deleteUsers(int id) {
+        BasicConfigurator.configure();
         try {
                 String sqlRequest = "DELETE FROM users WHERE id=?";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
             ps.setInt(1, id);
             ps.executeUpdate();
-//            connection.commit();
 
-            connection.close();
             ps.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 

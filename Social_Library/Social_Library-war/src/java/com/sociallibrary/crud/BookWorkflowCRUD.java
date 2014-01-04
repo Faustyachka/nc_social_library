@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.entity.*;
 import com.sociallibrary.icrud.IBookWorkflowCRUD;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 /**
  *
  * @author Антон
@@ -18,12 +20,15 @@ import com.sociallibrary.icrud.IBookWorkflowCRUD;
 public class BookWorkflowCRUD implements IBookWorkflowCRUD{
     
     private Connection connection;
+    public static final Logger log = Logger.getLogger(BookWorkflowCRUD.class);
 
     public BookWorkflowCRUD() {
         connection = ConnectionProvider.getConnection();
     }
 
-    public void createBookWorkflow(BookWorkflow bookWorkflow) {
+    public void createBookWorkflow(BookWorkflow bookWorkflow) 
+    {
+        BasicConfigurator.configure();
         try 
         {
             String sqlRequest ="INSERT INTO Book_Workflow (ID, Name)  values(?, '?')";
@@ -33,16 +38,23 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
             ps.setString(2, bookWorkflow.getWorkflow());
             ps.executeUpdate();
 
-            connection.close();
             ps.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-
+         catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
     }
 
-    public BookWorkflow readBookWorkflow(int id) {
+    public BookWorkflow readBookWorkflow(int id) 
+    {
+        BasicConfigurator.configure();
         BookWorkflow bookWorkflow = new BookWorkflow();
         try 
         {
@@ -56,18 +68,24 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
             //    bookWorkflow.setId(rs.getInt("id"));
            //     bookWorkflow.setWorkflow(rs.getString("name"));
             //}
-
-            connection.close();
-            ps.close();
             rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            ps.close();
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
         return bookWorkflow;
     }
 
-    public void updateBookWorkflow(BookWorkflow bookWorkflow) {
+    public void updateBookWorkflow(BookWorkflow bookWorkflow) 
+    {
+        BasicConfigurator.configure();
         try {
             String sqlRequest = "UPDATE Book_Workflow SET WORKFLOW='?' WHERE ID=?";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
@@ -79,26 +97,39 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
 
             ps.executeUpdate();
 
-            connection.close();
             ps.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }  catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
-    public void deleteBookWorkflow(int id) {
+    public void deleteBookWorkflow(int id) 
+    {
+        BasicConfigurator.configure();
         try {
             String sqlRequest = "DELETE FROM Book_Workflow WHERE id=?";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
             ps.setInt(1, id);
             ps.executeUpdate();
 
-            connection.close();
             ps.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+         catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 

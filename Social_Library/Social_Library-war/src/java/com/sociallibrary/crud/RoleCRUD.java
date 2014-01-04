@@ -9,12 +9,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.entity.Role;
-import com.sociallibrary.entity.User;
 import com.sociallibrary.icrud.IRoleCRUD;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 /**
  *
  * @author Антон
@@ -23,13 +22,16 @@ public class RoleCRUD implements IRoleCRUD
 {
 
     private Connection connection;
+    public static final Logger log = Logger.getLogger(RoleCRUD.class);
 
     public RoleCRUD() {
         connection = ConnectionProvider.getConnection();
     }
 
-    public Role readRole(int id) {
-          Role role = new Role();
+    public Role readRole(int id)
+    {
+        BasicConfigurator.configure();
+        Role role = new Role();
         try {
                 String sqlRequest =
                         "SELECT * FROM Role WHERE id=?";
@@ -42,19 +44,27 @@ public class RoleCRUD implements IRoleCRUD
                 role.setId(rs.getInt("id"));
                 role.setName(rs.getString("name"));
             }
-
-            connection.close();
-            ps.close();
+           
             rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            ps.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
         return role;
     }
 
-    public void createRole(Role role) {
-        try {
+    public void createRole(Role role) 
+    {
+        BasicConfigurator.configure();
+        try
+        {
                 String sqlRequest =
                         "INSERT INTO ROLE (ID, Name)  values(?, '?')";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
@@ -63,33 +73,49 @@ public class RoleCRUD implements IRoleCRUD
             ps.setString(2, role.getName());
             ps.executeUpdate();
 
-//            connection.commit();
-            connection.close();
             ps.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
-    public void deleteRole(int id) {
-        try {
+    public void deleteRole(int id) 
+    {
+        BasicConfigurator.configure();
+        try
+        {
                 String sqlRequest = "DELETE FROM Role WHERE id=?";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
             ps.setInt(1, id);
             ps.executeUpdate();
 
-//            connection.commit();
-            connection.close();
             ps.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
-    public void updateRole(Role role) {
-        try {
+    public void updateRole(Role role) 
+    {
+        BasicConfigurator.configure();
+        try
+        {
                 String sqlRequest = "UPDATE Role SET NAME='?' WHERE ID=?";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
@@ -100,12 +126,17 @@ public class RoleCRUD implements IRoleCRUD
 
             ps.executeUpdate();
 
-//            connection.commit();
-            connection.close();
             ps.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 

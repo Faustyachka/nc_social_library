@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class CatalogCRUD implements ICatalogCRUD {
 
     private Connection connection;
-    public static final Logger log = Logger.getLogger(AuthorCRUD.class);
+    public static final Logger log = Logger.getLogger(CatalogCRUD.class);
     private static final String selectQuery = "SELECT * FROM catalog WHERE id=?";
     private static final String deleteQuery = "DELETE FROM catalog WHERE id =?";
     private static final String insertCatalogQuery = "INSERT INTO catalog VALUES(catalog_id.nextval, ?, ?,?,?)";
@@ -39,11 +39,15 @@ public class CatalogCRUD implements ICatalogCRUD {
             pstmt.executeUpdate();
 
             pstmt.close();
-                connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        }
+         catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
@@ -68,13 +72,17 @@ public class CatalogCRUD implements ICatalogCRUD {
             }
             rs.close();
             stmt.close();
-                connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
-        }
 
+        }
+         catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
         return catalog;
     }
 
@@ -90,11 +98,15 @@ public class CatalogCRUD implements ICatalogCRUD {
             pstmt.executeUpdate();
 
             pstmt.close();
-                connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        }
+         catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 
@@ -108,11 +120,15 @@ public class CatalogCRUD implements ICatalogCRUD {
             stmt.executeUpdate();
 
             stmt.close();
-                connection.close();
-        } catch (SQLException e) {
-            while (e != null) {
-                log.error("SQLException" + e);
-            }
+        }
+         catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
         }
     }
 }
