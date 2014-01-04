@@ -17,7 +17,7 @@ import javax.servlet.http.*;
  *
  * @author Костя
  */
-/*public class SignIn implements Command {
+public class SignIn implements Command {
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, UnsupportedEncodingException {
         String page = ConfigurationManager.INDEX_PAGE;
@@ -37,4 +37,4 @@ import javax.servlet.http.*;
         }
         return page;
     }
-}*/
+}
