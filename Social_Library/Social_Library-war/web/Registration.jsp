@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/ourstyle.css">
-        <script src="/js/validation.js"/>
+        <script src="/javascripts/validator.js"/>
         <title>Registration</title>
     </head>
     <body>
@@ -41,7 +41,7 @@
             </div>
 
             <div id="center">
-                <form method="POST" action="Servlet">
+                <form method="POST" action="Servlet" name="registration">
                     <input type="hidden" value="registration" name="command" />
                     <table border="0">
 
@@ -77,7 +77,7 @@
                                 </td>
                                 <td>
                                     <select name="gender">
-                                        <option value="1">Male</option>
+                                        <option selected="selected" value="1">Male</option>
                                         <option value="0">Female</option>
                                     </select>
                                 </td>
@@ -88,7 +88,7 @@
                                 </td>
                                 <td>
                                     <select name="notify">
-                                        <option value="1">Yes</option>
+                                        <option selected="selected" value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
                                 </td>
