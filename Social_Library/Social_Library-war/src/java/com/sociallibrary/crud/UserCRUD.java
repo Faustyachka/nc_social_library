@@ -37,7 +37,7 @@ public class UserCRUD implements IUserCRUD
         BasicConfigurator.configure();
         try {
                 String sqlRequest =
-                        "INSERT INTO Users (ID,FIRST_NAME,LAST_NAME,EMAIL,LOGIN,PASSWORD," +
+                        "INSERT INTO User (ID,FIRST_NAME,LAST_NAME,EMAIL,LOGIN,PASSWORD," +
                         "GENDER,CONFIRMED,BANNED,REGISTRATION_DATE,NOTIFY,ROLE) " +
                         "values(?,'?','?','?','?','?',?, ?, ?, TO_DATE('?','yyyy-mm-dd'), ?)";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);

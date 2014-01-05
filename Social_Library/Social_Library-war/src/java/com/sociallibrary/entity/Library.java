@@ -20,7 +20,7 @@ public class Library {
     private String description;
     private int pages;
     private User user;
-    //private BookWorkflow workflow;
+    private BookWorkflow workflow;
 
     public Library() {
     }
@@ -28,7 +28,7 @@ public class Library {
     @Override
     public String toString(){
         return id + " " + isbn + " " + title + " " + cover + " " +
-                description + " " + pages + " "+user;//+" "+workflow;
+                description + " " + pages;// + " "+user;//+" "+workflow;
     }
 
     public List<String> toStringList(){
@@ -39,7 +39,7 @@ public class Library {
         result.add(cover);
         result.add(description);
         result.add(String.valueOf(pages));
-        result.add(String.valueOf(user.getId()));
+        //result.add(String.valueOf(user.getId()));
        // result.add(String.valueOf(workflow.getId()));
 
         return result;
@@ -105,13 +105,13 @@ public class Library {
         this.user = user;
     }
 
-   // public BookWorkflow getWorkflow() {
-   //     return workflow;
-  //  }
+    public BookWorkflow getWorkflow() {
+        return workflow;
+    }
 
-   // public void setWorkflow(BookWorkflow workflow) {
-   //     this.workflow = workflow;
-  //  }
+    public void setWorkflow(BookWorkflow workflow) {
+        this.workflow = workflow;
+    }
 
     
 

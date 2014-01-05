@@ -15,7 +15,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ import java.util.List;
  */
 public class LibraryActions implements ILibraryActions
 {
-    private Connection connection;
+    private static Connection connection;
     public static final Logger log = Logger.getLogger(LibraryActions.class);
 
     public LibraryActions()
@@ -33,44 +32,18 @@ public class LibraryActions implements ILibraryActions
         connection = ConnectionProvider.getConnection();
     }
 
-     public List<Library> getAllBooks()
+     public List<Library> getAllBooks(int from, int to)
      {
-         BasicConfigurator.configure();
-         Library library = new Library();
          List<Library> libraries = new ArrayList<Library>();
-        try
-        {
-            Statement stmt = connection.createStatement ();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Library");
-
-            while (rs.next())
-            {
-                library.setId(rs.getLong("ID"));
-                library.setIsbn(rs.getString("ISBN"));
-                library.setTitle(rs.getString("TITLE"));
-                library.setCover(rs.getString("COVER"));
-                library.setDescription(rs.getString("DESCRIPTION"));
-                library.setPages(rs.getInt("PAGES"));
-                //library.setUser(new UserCRUD().readUsers(rs.getInt("USERS")));
-                //library.setWorkflow(new BookWorkflowCRUD().readBookWorkflow(rs.getInt("WORKFLOW")));
-                libraries.add(library);
-            }
-            rs.close();
-            stmt.close();
-        }
-        catch (SQLException e)
-        {
-                e.printStackTrace();
-                log.error("SQLException:" + e);
-        }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+         for(int i = from; i<to; i++)
+         {
+            LibraryCRUD library=new LibraryCRUD();
+            libraries.add(library.readLibrary(i));
+            library=null;
+         }
         return libraries;
     }
 
-    
 
     public List<Library> searchBooksByParameter(String where, String what)
     {
@@ -131,19 +104,6 @@ public class LibraryActions implements ILibraryActions
         {
             ConnectionProvider.close();
         }
-        return libraries;
-    }
-
-    public List<Library> getBooksByIdInInterval(long from, long to)
-    {
-        BasicConfigurator.configure();
-        ILibraryCRUD ilibrary = new LibraryCRUD();
-        List<Library> libraries = new ArrayList<Library>();
-        for(long i = from; i<to; i++)
-        {
-                libraries.add(ilibrary.readLibrary((int) i));
-        }
-
         return libraries;
     }
 

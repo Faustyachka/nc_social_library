@@ -16,10 +16,9 @@ import java.util.List;
  */
 public interface ILibraryActions {
 
-    public List<Library> getAllBooks();
+    public List<Library> getAllBooks(int from, int to);
     public List<Library> searchBooksByParameter(String where, String what);
     public List<Library> searchBooksByStringMask(String where, String what);
-    public List<Library> getBooksByIdInInterval(long from, long to);
     public List<Author> getAuthorsList(long bookId);
     public List<Rating> getRatingsList(long bookId);
     public int getAverageRate(long bookId);
