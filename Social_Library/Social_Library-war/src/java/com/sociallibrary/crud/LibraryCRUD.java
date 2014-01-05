@@ -93,7 +93,7 @@ public class LibraryCRUD implements ILibraryCRUD {
         }
         finally
         {
-            ConnectionProvider.close();
+            //ConnectionProvider.close();
         }
         return library;
     }
