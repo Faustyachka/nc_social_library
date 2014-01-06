@@ -16,7 +16,12 @@
         <servlet-name>testing</servlet-name>
         <servlet-class>validate.testing</servlet-class>
     </servlet>
-    <servlet><servlet-name>RateBook</servlet-name><servlet-class>com.sociallibrary.rating.RateBook</servlet-class></servlet><servlet-mapping>
+    <servlet><servlet-name>RateBook</servlet-name><servlet-class>com.sociallibrary.rating.RateBook</servlet-class></servlet>
+    <servlet>
+        <servlet-name>SignIn</servlet-name>
+        <servlet-class>com.sociallibrary.controller.SignIn</servlet-class>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>Servlet</servlet-name>
         <url-pattern>/Servlet</url-pattern>
     </servlet-mapping>
@@ -35,6 +40,10 @@
     <servlet-mapping>
         <servlet-name>RateBook</servlet-name>
         <url-pattern>/RateBook</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SignIn</servlet-name>
+        <url-pattern>/SignIn</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

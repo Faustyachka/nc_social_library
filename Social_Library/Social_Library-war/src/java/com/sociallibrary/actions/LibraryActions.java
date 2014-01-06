@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +43,26 @@ public class LibraryActions implements ILibraryActions
             library=null;
          }
         return libraries;
+    }
+
+     public boolean addBookToLocal(long book_id, long user_id)
+     {
+
+        Library book = new LibraryCRUD().readLibrary(book_id);
+        User user = new UserCRUD().readUsers(user_id);
+        if(book!=null)
+            if(user!=null){
+                Catalog catalog = new Catalog();
+                catalog.setBook(book);
+                catalog.setUser(user);
+                catalog.setStatus(new BookStatusCRUD().readBookStatus(0));
+                catalog.setEventTime(new Time(System.currentTimeMillis()));
+                new CatalogCRUD().createCatalog(catalog);
+
+                return true;
+            }
+
+        return false;
     }
 
      public List<Library> getAllBooksByWorkflow(int workflow)

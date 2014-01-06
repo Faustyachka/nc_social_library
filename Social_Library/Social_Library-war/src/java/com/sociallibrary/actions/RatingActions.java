@@ -60,6 +60,26 @@ public class RatingActions implements IRatingActions
         return lList;
     }
 
+         public boolean addRating(long book_id, long user_id, int rate)
+     {
+
+        Library book = new LibraryCRUD().readLibrary(book_id);
+        User user = new UserCRUD().readUsers(user_id);
+        if(book!=null)
+            if(user!=null){
+                Rating rating = new Rating();
+                rating.setBook(book);
+                rating.setUser(user);
+                rating.setRate(rate);
+
+                new RatingCRUD().createRating(rating);
+
+                return true;
+            }
+
+        return false;
+    }
+
     public Rating getRatingsByBookAndUserIds(long userId, long bookId)
     {
         BasicConfigurator.configure();

@@ -30,13 +30,14 @@ private RequestHandler(){
     commands.put("nocommand", new NoCommand());
     commands.put("registration", new Registration ());
     commands.put("confirmUser", new ConfirmUser () );
-    //commands.put("signin", new SignIn());
+    commands.put("signin", new SignIn());
+    commands.put("addtolocal", new AddToLocal());
 }
 
 public Command getCommand(HttpServletRequest request){
      String action = request.getParameter("command");
 
-     Command command = commands.get(action);
+     Command command = commands.get(action.toLowerCase());
       if(command==null){
 
           command =new NoCommand();

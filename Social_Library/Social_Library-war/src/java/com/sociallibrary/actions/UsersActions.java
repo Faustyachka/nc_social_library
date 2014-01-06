@@ -74,6 +74,36 @@ public class UsersActions implements IUsersActions
         return users;
     }
 
+     public User getUser(String login, String password)
+     {
+        BasicConfigurator.configure();
+        User user = null;
+        try
+        {
+            String sqlRequest ="SELECT id FROM Users WHERE login='?' AND password='?';";
+            PreparedStatement ps = connection.prepareStatement(sqlRequest);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next())
+            {
+                user = new UserCRUD().readUsers(rs.getLong("id"));
+            }
+
+            rs.close();
+            ps.close();
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return user;
+    }
+
     public User searchUserByLogin(String login) 
     {
         BasicConfigurator.configure();

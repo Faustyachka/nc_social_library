@@ -60,7 +60,7 @@ public class LibraryCRUD implements ILibraryCRUD {
         }
     }
 
-    public Library readLibrary(int id)
+    public Library readLibrary(long id)
     {
         BasicConfigurator.configure();
          ResultSet rs=null;

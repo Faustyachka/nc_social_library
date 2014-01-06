@@ -2,39 +2,30 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.sociallibrary.controller;
 
-import com.sociallibrary.actions.RatingActions;
+import com.sociallibrary.actions.LibraryActions;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author П
+ * @author Антон
  */
-class ScoreCommand implements Command {
-
-
-
-    public ScoreCommand () {
-    }
-
-
+public class AddToLocal implements Command {
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page=null;
-       
-                HttpSession session=request.getSession(true);
-                session.setAttribute("name", "Pavel!!!");
-         page= ConfigurationManager.SCORE_PAGE;
         long user_id = Long.parseLong(request.getParameter("user_id"));
         long book_id = Long.parseLong(request.getParameter("book_id"));
-        int rate = Integer.parseInt(request.getParameter("rate"));
-         new RatingActions().addRating(book_id, user_id, rate);
-        return page;
+        try {
+            new LibraryActions().addBookToLocal(book_id, user_id);
+        } finally {
+
+        }
+        return ConfigurationManager.LOCAL_LIB;
     }
 
 }
