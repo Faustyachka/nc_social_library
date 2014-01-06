@@ -44,6 +44,34 @@ public class LibraryActions implements ILibraryActions
         return libraries;
     }
 
+     public List<Library> getAllBooksByWorkflow(int workflow)
+     {
+        BasicConfigurator.configure();
+        Library library = new Library();
+        List<Library> libraries = new ArrayList<Library>();
+        String selectParametr = "select id from library where workflow = ? order by id";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setInt(1, workflow);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                library = new LibraryCRUD().readLibrary(rs.getInt("id"));
+                libraries.add(library);
+            }
+            rs.close();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return libraries;
+    }
 
     public List<Library> searchBooksByParameter(String where, String what)
     {
@@ -73,6 +101,35 @@ public class LibraryActions implements ILibraryActions
             ConnectionProvider.close();
         }
         return libraries;
+    }
+
+    public int countBooksByParameter(String where, String what)
+    {
+        BasicConfigurator.configure();
+        int result = 0;
+        String selectParametr = "select count(id) PARAM from library where "+where+" = "+what;
+        //String selectParametr = "select count(id) \"param\" from library where ? = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+//            stmt.setString(1, where);
+//            stmt.setInt(2, what);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                result = rs.getInt("PARAM");
+            }
+            rs.close();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return result;
     }
     
     public List<Library> searchBooksByStringMask(String where, String what)

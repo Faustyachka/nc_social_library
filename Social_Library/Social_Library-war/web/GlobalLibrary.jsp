@@ -56,10 +56,11 @@
             e.printStackTrace();
             }
         LibraryActions ob=new LibraryActions();
-        List<Library> libraries =ob.getAllBooks(10*i, 10*(i+1));
+        List<Library> libraries = ob.getAllBooksByWorkflow(4).subList((i-1)*10, i*10);
         //List<Library> libraries = ob.getBooksByIdInInterval(10*i, 10*(i+1));
         for(Library book:libraries)
         {
+           //if(book.getWorkflow().getId()!=4) continue;
         %>
         <tr>
         <td><%=book.getId()%></td>
@@ -77,10 +78,17 @@
 </p>
         <center>
         <%
-        for(int k = i; k<i+10; k++)
+        int min_page = i-4;
+        min_page = min_page>0?min_page:1;
+        int max_page = i+4;
+        int count_of_pages = new LibraryActions().countBooksByParameter("WORKFLOW", "4")/10+1;
+        max_page = max_page<count_of_pages?max_page:count_of_pages;
+        for(int k = min_page; k<max_page; k++)
         {
+            String linkStyle="";
+            if(k==i) linkStyle="text-decoration:none; color:#007700;";
         %>
-        <a href="?i=<%=k%>"><%=k%></a>
+        <a style="<%=linkStyle%>" href="?i=<%=k%>"><b><%=k%></b></a>
         <%
         }
         %>

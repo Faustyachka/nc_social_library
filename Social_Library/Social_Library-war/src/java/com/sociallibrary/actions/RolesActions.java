@@ -61,6 +61,38 @@ public class RolesActions implements IRolesActions
         return roles;
     }
 
+    public List<Integer> getRolesIdBuUserId(long id)
+    {
+        BasicConfigurator.configure();
+        List<Integer> roles = new ArrayList<Integer>();
+        try
+        {
+            String sqlRequest ="SELECT users_roles.role " +
+                                "FROM users " +
+                                "INNER JOIN users_roles " +
+                                "ON users.id=users_roles.users " +
+                                "WHERE users.id=?";
+            PreparedStatement ps = connection.prepareStatement(sqlRequest);
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next())
+            {
+                roles.add(rs.getInt("ROLE"));
+            }
+        }
+         catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return roles;
+    }
+
     public void applyRoleToUser(Role role, User user)
     {
         BasicConfigurator.configure();

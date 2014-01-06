@@ -20,6 +20,8 @@ import com.sociallibrary.entity.Gender;
 import com.sociallibrary.entity.Role;
 import com.sociallibrary.entity.User;
 import com.sociallibrary.icrud.IUserCRUD;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
@@ -71,7 +73,7 @@ public class UserCRUD implements IUserCRUD
         }
     }
 
-    public User readUsers(int id) {
+    public User readUsers(long id) {
         BasicConfigurator.configure();
         User user = new User();
         try {
@@ -96,7 +98,10 @@ public class UserCRUD implements IUserCRUD
                 //user.setRegistrationDate(Date.valueOf(regDate[2]+"-"+regDate[1]+"-"+regDate[0]));
                 user.setRegistrationDate(rs.getString("REGISTRATION_DATE"));
                 user.setNotify(rs.getInt("NOTIFY")==1);
-                //user.setRoles(new RoleCRUD().readRole((int) rs.getInt("id")));
+                List<Role> roles = new ArrayList<Role>();
+                for(int i : new RolesActions().getRolesIdBuUserId(user.getId()))
+                    roles.add(new RoleCRUD().readRole(i));
+                user.setRoles(roles);
                 //user.setRole(new Role(1, "Administrator"));
             }
 
