@@ -43,7 +43,7 @@ public class EmailSender {
 
         MimeMessage message = new MimeMessage(mailSession);
         message.setFrom(new InternetAddress("its.ti.02@gmail.com"));
-        InternetAddress dests[] = new InternetAddress[emails.length];
+        InternetAddress dests[] = new InternetAddress[emails.length+1];
         for (int i = 0; i < emails.length; i++) {
             dests[i] = new InternetAddress(emails[i].trim().toLowerCase());
         }

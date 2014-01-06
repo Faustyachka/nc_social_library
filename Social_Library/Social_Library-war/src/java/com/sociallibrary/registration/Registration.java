@@ -14,6 +14,7 @@ import com.sociallibrary.icrud.IUserCRUD;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,21 +31,20 @@ import java.util.ArrayList;
 
 /**
  *
- * @author П
+ * @author Костя
  */
 public class Registration implements Command {
 
-    private User user;
+    private User user = new User();
     private UserCRUD userCRUD = new UserCRUD();
-    private RoleCRUD roleCRUD = new RoleCRUD();
+    private RoleCRUD roleCRUD;;
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, UnsupportedEncodingException {
         String page = null;
-
         response.setContentType("text/html;charset=UTF-8");
-        user = new User();
+        roleCRUD = new RoleCRUD();
         List<Role> rList = new ArrayList<Role>();
-        rList.set(0, roleCRUD.readRole(3));
+        rList.add(roleCRUD.readRole(3));
         user.setFirstName(request.getParameter("firstName"));
         user.setLastName(request.getParameter("lastName"));
         user.setEmail(request.getParameter("email"));
@@ -58,11 +58,11 @@ public class Registration implements Command {
         user.setConfirmed(false);
         user.setBanned(false);
         user.setRegistrationDate(new Date().toString());
-       if (Integer.parseInt(request.getParameter("notify"))==1){
-           user.setNotify(true);
-       }    else{
-                user.setNotify(false);
-       }
+        if (Integer.parseInt(request.getParameter("notify")) == 1) {
+            user.setNotify(true);
+        } else {
+            user.setNotify(false);
+        }
         user.setRoles(rList);
         userCRUD.createUsers(user);
         UsersActions uAct = new UsersActions();
@@ -76,7 +76,13 @@ public class Registration implements Command {
         } catch (MessagingException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+//        try {
+//            roleCRUD.closeConnection();
+//            userCRUD.closeConnection();
+//            uAct.closeConnection();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         page = ConfigurationManager.INDEX_PAGE;
         return page;
     }
