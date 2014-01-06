@@ -34,16 +34,15 @@ public class RatingActions implements IRatingActions
     public List<Rating> getRatingsByBookId(long id)
     {
         BasicConfigurator.configure();
-        RatingCRUD u = new RatingCRUD();
         List<Rating> lList = new ArrayList<Rating>();
-        String selectParametr = "select *  from rating where book= ?";
+        String selectParametr = "select id from rating where book=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
             {
-                lList.add(u.readRating(rs.getInt("id")));
+                lList.add(new RatingCRUD().readRating(rs.getInt("id")));
             }
             rs.close();
             stmt.close();
@@ -60,45 +59,33 @@ public class RatingActions implements IRatingActions
         return lList;
     }
 
-         public boolean addRating(long book_id, long user_id, int rate)
-     {
+    public float getAverageRatingByBookId(long book_id){
+        float result = 0;
+        List<Rating> ratings = new RatingActions().getRatingsByBookId(book_id);
+        for(Rating r : ratings)
+            result += r.getRate();
+        if(ratings.size() > 0) return result/ratings.size();
 
-        Library book = new LibraryCRUD().readLibrary(book_id);
-        User user = new UserCRUD().readUsers(user_id);
-        if(book!=null)
-            if(user!=null){
-                Rating rating = new Rating();
-                rating.setBook(book);
-                rating.setUser(user);
-                rating.setRate(rate);
-
-                new RatingCRUD().createRating(rating);
-
-                return true;
-            }
-
-        return false;
+        return 0;
     }
 
-    public Rating getRatingsByBookAndUserIds(long userId, long bookId)
+    public Rating getRatingByBookAndUserId(long book_id, long user_id)
     {
         BasicConfigurator.configure();
-        RatingCRUD u = new RatingCRUD();
-        Rating rating = null;
-        String selectParametr = "select * from rating where book = ? and users = ?";
-        try 
-        {
+        Rating rating = new Rating();
+        String selectParametr = "select id from rating where book=? AND users=?";
+        try {
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
-            stmt.setLong(1, bookId);
-            stmt.setLong(2, userId);
+            stmt.setLong(1, book_id);
+            stmt.setLong(2, user_id);
             ResultSet rs = stmt.executeQuery();
-            //while(rs.next())
-            rs.next();
-            rating = u.readRating(rs.getInt("id"));
+            while (rs.next())
+            {
+                rating = new RatingCRUD().readRating(rs.getInt("id"));
+            }
             rs.close();
             stmt.close();
-            connection.close();
-        } 
+        }
          catch (SQLException e)
         {
                 e.printStackTrace();
@@ -110,4 +97,92 @@ public class RatingActions implements IRatingActions
         }
         return rating;
     }
+
+    public int countRatingsByBookAndUserId(long book_id, long user_id)
+    {
+        BasicConfigurator.configure();
+        int rating = 0;
+        String selectParametr = "select count(id) from rating where book=? AND users=?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setLong(1, book_id);
+            stmt.setLong(2, user_id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+            {
+                rating = rs.getInt(1);
+            }
+            rs.close();
+            stmt.close();
+        }
+         catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return rating;
+    }
+
+     public boolean addRating(long book_id, long user_id, int rate)
+     {
+
+        Library book = new LibraryCRUD().readLibrary(book_id);
+        User user = new UserCRUD().readUsers(user_id);
+        if(book!=null)
+            if(user!=null){
+                Rating rating = new Rating();
+                rating.setBook(book);
+                rating.setUser(user);
+                rating.setRate(rate);
+
+                //System.out.print("%^$"+countRatingsByBookAndUserId(book_id, user_id));
+                if(new RatingActions().countRatingsByBookAndUserId(book_id, user_id) == 0)
+                    new RatingCRUD().createRating(rating);
+                else {
+                    Rating oldRating = new RatingActions().getRatingByBookAndUserId(book_id, user_id);
+                    Rating newRating = new RatingActions().getRatingByBookAndUserId(book_id, user_id);
+                    newRating.setRate(rate);
+                    new RatingCRUD().updateRating(oldRating, newRating);
+                }
+
+                return true;
+            }
+
+        return false;
+    }
+
+//    public Rating getRatingsByBookAndUserIds(long userId, long bookId)
+//    {
+//        BasicConfigurator.configure();
+//        RatingCRUD u = new RatingCRUD();
+//        Rating rating = null;
+//        String selectParametr = "select * from rating where book = ? and users = ?";
+//        try
+//        {
+//            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+//            stmt.setLong(1, bookId);
+//            stmt.setLong(2, userId);
+//            ResultSet rs = stmt.executeQuery();
+//            //while(rs.next())
+//            rs.next();
+//            rating = u.readRating(rs.getInt("id"));
+//            rs.close();
+//            stmt.close();
+//            connection.close();
+//        }
+//         catch (SQLException e)
+//        {
+//                e.printStackTrace();
+//                log.error("SQLException:" + e);
+//        }
+//        finally
+//        {
+//            ConnectionProvider.close();
+//        }
+//        return rating;
+//    }
 }

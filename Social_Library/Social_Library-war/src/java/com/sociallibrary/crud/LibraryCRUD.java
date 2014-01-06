@@ -62,7 +62,7 @@ public class LibraryCRUD implements ILibraryCRUD {
 
     public Library readLibrary(long id)
     {
-        BasicConfigurator.configure();
+         BasicConfigurator.configure();
          ResultSet rs=null;
          Library library = new Library();
          try
@@ -93,7 +93,7 @@ public class LibraryCRUD implements ILibraryCRUD {
         }
         finally
         {
-            //ConnectionProvider.close();
+            ConnectionProvider.close();
         }
         return library;
     }

@@ -15,6 +15,6 @@ import java.util.List;
 public interface IRatingActions {
 
     public List<Rating> getRatingsByBookId(long id);
-    public Rating getRatingsByBookAndUserIds(long userId, long bookId);
+    public Rating getRatingByBookAndUserId(long userId, long bookId);
 
 }

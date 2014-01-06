@@ -18,16 +18,24 @@ import javax.servlet.http.HttpSession;
  */
 public class SignIn implements Command {
 
+//    public static void main(String[] args){
+//        User user = new UsersActions().getUser("Quaecte", "Ie5Eequaemai");
+//        System.out.println(user.getEmail());
+//    }
+
      public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+        
+        System.out.println("#@!^&*U");
+        System.out.println(login);
+        System.out.println(password);
 
-        try {
-            User user = new UsersActions().getUser(login, password);
-            request.getSession().setAttribute("user", user);
-        } finally {
+        User user = new UsersActions().searchUserByLogin(login);
+        if(user.getPassword().equals(password))
+            request.getSession(true).setAttribute("user", user);
+        else return ConfigurationManager.ERROR_PAGE;
 
-        }
         return ConfigurationManager.LOCAL_LIB;
     }
 

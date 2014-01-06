@@ -12,10 +12,12 @@ import org.apache.log4j.*;
 import com.sociallibrary.iactions.ILibraryActions;
 import com.sociallibrary.connection.ConnectionProvider;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,13 +58,44 @@ public class LibraryActions implements ILibraryActions
                 catalog.setBook(book);
                 catalog.setUser(user);
                 catalog.setStatus(new BookStatusCRUD().readBookStatus(0));
-                catalog.setEventTime(new Time(System.currentTimeMillis()));
+                catalog.setEventTime(new Timestamp(new java.util.Date().getTime()));
                 new CatalogCRUD().createCatalog(catalog);
 
                 return true;
             }
 
         return false;
+    }
+
+     public boolean removeBookFromLocal(long book_id, long user_id)
+     {
+        boolean result = true;
+        BasicConfigurator.configure();
+        String selectParametr = "SELECT id FROM Catalog WHERE users=? AND book=?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setLong(1, user_id);
+            stmt.setLong(2, book_id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Catalog catalog = new CatalogCRUD().readCatalog(rs.getInt("id"));
+                new CatalogCRUD().deleteCatalog(catalog);
+            }
+            rs.close();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+                result = false;
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+
+        return result;
     }
 
      public List<Library> getAllBooksByWorkflow(int workflow)
@@ -94,11 +127,40 @@ public class LibraryActions implements ILibraryActions
         return libraries;
     }
 
+     public List<Library> getAllLocalBooksByUser(long user_id)
+     {
+        BasicConfigurator.configure();
+        Library library = new Library();
+        List<Library> libraries = new ArrayList<Library>();
+        String selectParametr = "SELECT Book FROM Catalog WHERE users=?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setLong(1, user_id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                //System.out.println("!@# "+rs.getLong("id"));
+                library = new LibraryCRUD().readLibrary(rs.getInt("book"));
+                libraries.add(library);
+            }
+            rs.close();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return libraries;
+    }
+
     public List<Library> searchBooksByParameter(String where, String what)
     {
         BasicConfigurator.configure();
         Library library = new Library();
-        ILibraryCRUD ilibrary = new LibraryCRUD();
         List<Library> libraries = new ArrayList<Library>();
         String selectParametr = "select id  from library where "+where+" = ?";
         try {
@@ -106,7 +168,7 @@ public class LibraryActions implements ILibraryActions
             stmt.setString(1, what);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                library = ilibrary.readLibrary(rs.getInt("id"));
+                library = new LibraryCRUD().readLibrary(rs.getInt("id"));
                 libraries.add(library);
             }
             rs.close();
@@ -157,7 +219,6 @@ public class LibraryActions implements ILibraryActions
     {
         BasicConfigurator.configure();
         Library library = new Library();
-        ILibraryCRUD ilibrary = new LibraryCRUD();
         List<Library> libraries = new ArrayList<Library>();
         String selectParametr = "select *  from library where "+where+" like '"+what+"'";
         try {
@@ -167,7 +228,7 @@ public class LibraryActions implements ILibraryActions
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
             {
-                library = ilibrary.readLibrary(rs.getInt("id"));
+                library = new LibraryCRUD().readLibrary(rs.getInt("id"));
                 libraries.add(library);
             }
             rs.close();
@@ -188,7 +249,6 @@ public class LibraryActions implements ILibraryActions
     public List<Author> getAuthorsList(long bookId)
     {
         BasicConfigurator.configure();
-        IAuthorCRUD iauthor=new AuthorCRUD();
         List<Author> authors = new ArrayList<Author>();
         String selectParametr = "select * from book_author where book = ?";
         try {
@@ -198,7 +258,7 @@ public class LibraryActions implements ILibraryActions
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
             {
-                authors.add(iauthor.readAuthor(rs.getInt("author")));
+                authors.add(new AuthorCRUD().readAuthor(rs.getInt("author")));
             }
             rs.close();
             stmt.close();
@@ -218,7 +278,6 @@ public class LibraryActions implements ILibraryActions
     public List<Rating> getRatingsList(long bookId)
     {
         BasicConfigurator.configure();
-        IRatingCRUD irating = new RatingCRUD();
         List<Rating> rating = new ArrayList<Rating>();
         String selectParametr = "select *  from rating where book= ?";
         try {
@@ -227,7 +286,7 @@ public class LibraryActions implements ILibraryActions
             stmt.setLong(1, bookId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                rating.add(irating.readRating(rs.getInt("id")));
+                rating.add(new RatingCRUD().readRating(rs.getInt("id")));
             }
             rs.close();
             stmt.close();

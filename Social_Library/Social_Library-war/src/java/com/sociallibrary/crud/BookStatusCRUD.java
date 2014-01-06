@@ -26,7 +26,7 @@ public class BookStatusCRUD implements IBookStatusCRUD {
     public BookStatus readBookStatus(int id)
     {
         BasicConfigurator.configure();
-        BookStatus BookStatus = new BookStatus();
+        BookStatus bookStatus = new BookStatus();
         try {
             PreparedStatement stmt = connection.prepareStatement(selectQuery);
 
@@ -35,8 +35,8 @@ public class BookStatusCRUD implements IBookStatusCRUD {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                BookStatus.setId(rs.getShort(1));
-                BookStatus.setStatus(rs.getString(2));
+                bookStatus.setId(rs.getShort(1));
+                bookStatus.setStatus(rs.getString(2));
             }
             rs.close();
             stmt.close();
@@ -51,7 +51,7 @@ public class BookStatusCRUD implements IBookStatusCRUD {
             ConnectionProvider.close();
         }
 
-        return BookStatus;
+        return bookStatus;
     }
 
     public void createBookStatus(BookStatus BookStatus) {

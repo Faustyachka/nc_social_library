@@ -32,6 +32,7 @@ private RequestHandler(){
     commands.put("confirmUser", new ConfirmUser () );
     commands.put("signin", new SignIn());
     commands.put("addtolocal", new AddToLocal());
+    commands.put("removefromlocal", new RemoveBookFromCatalog());
 }
 
 public Command getCommand(HttpServletRequest request){

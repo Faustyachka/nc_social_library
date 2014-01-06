@@ -51,8 +51,6 @@ public class GenreCRUD implements IGenreCRUD {
     {
         BasicConfigurator.configure();
         bookGenre = new Genre();
-        ILibraryCRUD l = new LibraryCRUD();
-        //IGenreCRUD g = new GenderCRUD();
         try {
             PreparedStatement stmt = connection.prepareStatement(selectQuery);
             stmt.setLong(1, id);
@@ -60,7 +58,6 @@ public class GenreCRUD implements IGenreCRUD {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-
                // bookGenre.setId(rs.getLong(1));
                // bookGenre.setBook(l.readLibrary(rs.getInt(2)));
                // bookGenre.setGenre(g.readGenre(rs.getInt(3)));

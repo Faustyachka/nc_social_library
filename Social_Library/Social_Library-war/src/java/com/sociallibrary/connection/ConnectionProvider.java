@@ -50,7 +50,28 @@ public class ConnectionProvider {
         }
 
         return con;
+    }
+
+    public /*synchronized*/static Connection getDebugConnection() {
+        try {
+            OracleDataSource ods = new OracleDataSource();
+            String url = "jdbc:oracle:thin:@localhost:1521:xe";
+            ods.setURL(url);
+            ods.setUser("Anton");
+            ods.setPassword("01021993");
+            con = ods.getConnection();
         }
+//        catch(NamingException e)
+//        {
+//            System.out.println("Cannot retrieve jdbc/test"+e.getMessage());
+//        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return con;
+    }
    
 
     public static void close()

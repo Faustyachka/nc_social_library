@@ -74,17 +74,32 @@ public class UsersActions implements IUsersActions
         return users;
     }
 
+//    public UsersActions(boolean debug)
+//    {
+//        connection = ConnectionProvider.getDebugConnection();
+//    }
+//
+//    public static void main(String[] args){
+//        System.out.println(000);
+//        User user = new UsersActions(true).getUser("Quaecte", "Ie5Eequaemai");
+//        System.out.println("000");
+//        System.out.println(user.getEmail());
+//        System.out.println(7);
+//    }
+
      public User getUser(String login, String password)
      {
         BasicConfigurator.configure();
         User user = null;
         try
         {
-            String sqlRequest ="SELECT id FROM Users WHERE login='?' AND password='?';";
+            String sqlRequest ="SELECT id FROM Users WHERE login='?' AND password='?'";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
+            ps.setString(1, login);
+            ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next())
+            if (rs.next())
             {
                 user = new UserCRUD().readUsers(rs.getLong("id"));
             }
@@ -107,15 +122,14 @@ public class UsersActions implements IUsersActions
     public User searchUserByLogin(String login) 
     {
         BasicConfigurator.configure();
-        UserCRUD uCRUD = new UserCRUD();
-        User users = new User();
+        User user = null;
         String selectParametr = "select id  from users where login = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setString(1, login);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                uCRUD.readUsers(Integer.parseInt(rs.getString(1)));
+                user = new UserCRUD().readUsers(Integer.parseInt(rs.getString(1)));
             }
             rs.close();
             stmt.close();
@@ -129,7 +143,7 @@ public class UsersActions implements IUsersActions
         {
             ConnectionProvider.close();
         }
-        return users;
+        return user;
     }
 
 }
