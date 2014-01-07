@@ -35,6 +35,7 @@ private RequestHandler(){
     commands.put("removefromlocal", new RemoveBookFromCatalog());
     commands.put("searchinglobal", new SearchInGlobalLib());
     commands.put("searchinlocal", new SearchInLocalLib());
+    commands.put("dashboard", new DashboardCommand ());
 }
 
 public Command getCommand(HttpServletRequest request){

@@ -1,49 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <servlet>
-        <servlet-name>Servlet</servlet-name>
+        <servlet-name>Controller</servlet-name>
         <servlet-class>com.sociallibrary.controller.ControllerServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>Library</servlet-name>
-        <servlet-class>model.view.Library</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SearchInGloballib</servlet-name>
-        <servlet-class>com.sociallibrary.search.SearchInGloballib</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>testing</servlet-name>
-        <servlet-class>validate.testing</servlet-class>
-    </servlet>
-    <servlet><servlet-name>RateBook</servlet-name><servlet-class>com.sociallibrary.rating.RateBook</servlet-class></servlet>
-    <servlet>
-        <servlet-name>SignIn</servlet-name>
-        <servlet-class>com.sociallibrary.controller.SignIn</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Servlet</servlet-name>
-        <url-pattern>/Servlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Library</servlet-name>
-        <url-pattern>/Library</url-pattern>
-    </servlet-mapping>
-        <servlet-mapping>
-        <servlet-name>SearchInGloballib</servlet-name>
-        <url-pattern>/SearchInGloballib</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>testing</servlet-name>
-        <url-pattern>/testing</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>RateBook</servlet-name>
-        <url-pattern>/RateBook</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SignIn</servlet-name>
-        <url-pattern>/SignIn</url-pattern>
+     <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/Controller</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -51,6 +14,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>template.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

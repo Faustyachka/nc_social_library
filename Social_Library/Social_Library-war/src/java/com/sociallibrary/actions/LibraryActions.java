@@ -26,7 +26,12 @@ import java.util.List;
  * @author Nastya Pavlova
  */
 public class LibraryActions implements ILibraryActions
+
+
 {
+
+      public static String workflow = "workflow";
+    public static String workflowInprogres="1";
     private static Connection connection;
     public static final Logger log = Logger.getLogger(LibraryActions.class);
 
@@ -380,7 +385,8 @@ public class LibraryActions implements ILibraryActions
             stmt.setString(1, what);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                library = new LibraryCRUD().readLibrary(rs.getInt("id"));
+                 ILibraryCRUD ilibrary = new LibraryCRUD();
+                library = ilibrary.readLibrary(rs.getInt("id"));
                 libraries.add(library);
             }
             rs.close();

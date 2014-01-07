@@ -1,94 +1,91 @@
+<%-- 
+    Document   : template
+    Created on : 03.01.2014, 22:59:34
+    Author     : Pavel 
+--%>
+<%@page import="java.util.List"%>
+<%@page import="com.sociallibrary.entity.*"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="ActionsImpl.*"%>
-<%@page import="ActionsInterfaces.*"%>
-<%@page import="TransferObject.*"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.Collection"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link rel="stylesheet" type="text/css" href="css/ourstyle.css">
+        <title>TEMPLATE Page</title>
     </head>
-	<body>
-	<table cellspacing="5"><tr><td><font size="20">Dashboard</font></td></tr>
-            <tr><td><a href="globallib.jsp?id=<%=request.getParameter("id")%>">Global library </a></td></tr>
-            <tr><td><a href="localllib.jsp?id=<%=request.getParameter("id")%>">Local library </a></td></tr>
-            <tr><td><a href="dashboardApp.jsp?id=<%=request.getParameter("id")%>">Dashboard Approve </a></td></tr>
-       </table>
-	<br />
-     		<table border=1>
-                    <%
-                        LibraryActions lib = new LibraryActionsImpl();
-                        List<Library> books = lib.searchBooksByParameter("workflow", "1");
-                        out.println(books.size());
+    <body>
 
-                        for(Library bookEntity : books){
-                    %>
-                    <tr>
-			<td>
-			<center>
-			<%=bookEntity.getCover()%>
+        <div id="main">
+            <div id="header">
 
-			</center>
-			</td>
-			<td>
-                            <%for(Author ba : lib.getAuthorsList(bookEntity.getId())){%>
-                            <%= ba.getAuthor()%><%}%><br/>
-			<%=bookEntity.getTitle()%><br/>
-			<%=bookEntity.getDescription()%><br/>
-			<br/>
-			<form name="form3" method="post" command="publish"><br/>
-                            <input type="submit" name="publish" value="Publish!">
-                            <input type="submit" name="reject" value="Reject!">
-                            <input type="hidden" name="book_id" value="<%=bookEntity.getId() %>"/>
-			</form>
-			</td>
-                    </tr>
-                    <%
-                        }
-                    %>
-		</table>
-	<form name="form1" method="post" action="SearchInLocalLib"><br />
-            <input type="text" name="text" width="40"></text>
-            <input type="submit" name="search" value="Search"/>
-	</form>
-<%--	<table border=1>
-            <%
-                for(BookEntity bookEntity: BookEntity.books){
-                       if(bookEntity.isIsInLocallib()){
-            %>
-        	<tr>
-		<td>
-		<center>
-		<%=bookEntity.getCover()%>
-		<form name="form2" method="post" action="RateBookServlet"><br />
-			<input type="text" name="rate" style="width:25px;" value="<%=bookEntity.getRate()%>"><br/>
-			<input type="submit" name="search" value="Change rating"/>
-                        <input type="hidden" name="book_id" value="<%=bookEntity.getId()%>"/>
-                        <input type="hidden" name="user_id" value="1"/>
-		</form>
-		</center>
-		</td>
-		<td>
-		<%=bookEntity.getAuthor()%><br/>
-                <%=bookEntity.getTitle()%><br/>
-		<%=bookEntity.getDescription()%><br/>
-                </td>
-		</tr>
-                <%
-                    }
-                }
-                %>
-	</table>--%>
-        <%
-        out.println("role= "+request.getParameter("role")+"<br>id="+request.getParameter("id"));
+                <div id="menu">
+                    <ul>
+                        <li><a href="Controller?command=dashboard" >
+                                <span class="refLabelText">Dashboard</span>
+                            </a></li>
+                        <li><a href="Controller?command=nocommand">
+                                <span class="refLabelText">Add</span>
+                            </a></li>
+                        <li><a href="Controller?command=nocommand">
+                                <span class="refLabelText">Search</span>
+                            </a></li>
+                        <li><a href="Controller?command=nocommand" >
+                                <span class="refLabelText">My library</span>
+                            </a></li>
+                            <li><a href="Controller?command=nocommand" >
+                                <span class="refLabelText">Sign out</span>
+                            </a></li>
+                    </ul>
+
+                </div>
 
 
-        %>
-</body>
+
+            </div>
+
+            <div id="center">
+                <form name="form" action="Controller" method="POST">
+                    <input type="hidden" name="command" value="rejectapprove" />
+                    <input type="submit" value="Change Status" />
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ISBN</th>
+                                <th>TITLE</th>
+                                <th>DISCRIPTION</th>
+                                <th>PAGES</th>
+                                <th>Reject</th>
+                                <th>Approve</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% List<Library> lib = (List<Library>) request.getAttribute("inprogress");
+                        int i = 0;
+                        for (Library temp : lib) {
+
+                            %>
+                            <tr>
+                                <td><%out.print(temp.getId());%></td>
+                                <td><%out.print(temp.getIsbn());%></td>
+                                <td><%out.print(temp.getTitle());%></td>
+                                <td><%out.print(temp.getDescription());%></td>
+                                <td><%out.print(temp.getPages());%></td>
+                                <td><input type="radio" name="<% out.print(i);%>" value="<% out.print(temp.getId());%>" /></td>
+                                <td><input type="radio" name="<% out.print(i++);%>" value="<% out.print(temp.getId());%>" /></td>
+                            </tr>
+                            <%}%>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+            <div id="footer">
+                <hr>
+                <p id="footerText">[ footer text ]</p>
+            </div>
+        </div>
+
+    </body>
 </html>
