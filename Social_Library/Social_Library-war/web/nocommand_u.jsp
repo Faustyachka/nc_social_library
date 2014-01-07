@@ -1,7 +1,7 @@
 <%-- 
-    Document   : template
-    Created on : 03.01.2014, 22:59:34
-    Author     : Pavel 
+    Document   : nocommand
+    Created on : 07.01.2014, 0:27:40
+    Author     : Pavel
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -19,19 +19,19 @@
 
                 <div id="menu">
                     <ul>
-                        
+                        <li><a href="index.jsp" >
+                                <span class="refLabelText">Sign In </span>
+                            </a></li>
+                        <li><a href="Registration.jsp">
+                                <span class="refLabelText">Registration</span>
+                            </a></li>
                         <li><a href="Controller?command=nocommand">
                                 <span class="refLabelText">Add</span>
                             </a></li>
-                        <li><a href="Controller?command=nocommand">
+                        <li><a href="Controller?command=nocommand" >
                                 <span class="refLabelText">Search</span>
                             </a></li>
-                        <li><a href="Controller?command=nocommand" >
-                                <span class="refLabelText">My library</span>
-                            </a></li>
-                        <li><a href="index.jsp" >
-                                <span class="refLabelText">Sign out</span>
-                            </a></li>
+                        
                     </ul>
 
                 </div>
@@ -41,7 +41,8 @@
             </div>
 
             <div id="center">
-                [Center]
+                
+                <p1>No COMMANND YET!!!</p1>
             </div>
 
             <div id="footer">
