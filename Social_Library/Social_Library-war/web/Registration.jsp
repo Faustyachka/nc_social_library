@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/ourstyle.css">
-        <script src="javascripts/validator.js" type="text/javascript">
+        <script src="javascripts/validator.js">
 
         </script>
         <title>Registration</title>
@@ -51,6 +51,7 @@
                                 <td>            First Name:
                                 </td>
                                 <td><input name="firstName"></td>
+                                <td><label id="lengthErr" style="visibility:hidden" >User Id should not be empty / length be between 5 to 12</label> </td>
                             </tr>
                             <tr>
                                 <td>            Last Name:

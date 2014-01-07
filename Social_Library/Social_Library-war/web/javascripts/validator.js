@@ -1,5 +1,6 @@
 function formValidation()
 {
+    document.getElementById("lengthErr").style.visibility = hidden;
     var uid = document.registration.login;
     var passid = document.registration.password;
     var uname = document.registration.firstName;
@@ -31,6 +32,7 @@ function userid_validation(uid,mx,my)
     if (uid_len == 0 || uid_len >= my || uid_len < mx)
     {
         alert("User Id should not be empty / length be between "+mx+" to "+my);
+        document.getElementById("lengthErr").style.visibility = visible;
         uid.focus();
         return false;
     }
