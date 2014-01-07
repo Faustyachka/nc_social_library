@@ -145,5 +145,30 @@ public class UsersActions implements IUsersActions
         }
         return user;
     }
-
+    public User searchUserByEmail(String login)
+    {
+        BasicConfigurator.configure();
+        User user = null;
+        String selectParametr = "select id  from users where email = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setString(1, login);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                user = new UserCRUD().readUsers(Integer.parseInt(rs.getString(1)));
+            }
+            rs.close();
+            stmt.close();
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return user;
+    }
 }

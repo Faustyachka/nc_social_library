@@ -51,7 +51,6 @@
                                 <td>            First Name:
                                 </td>
                                 <td><input name="firstName"></td>
-                                <td><label id="lengthErr" style="visibility:hidden" >User Id should not be empty / length be between 5 to 12</label> </td>
                             </tr>
                             <tr>
                                 <td>            Last Name:
@@ -67,6 +66,8 @@
                                 <td>            Login:
                                 </td>
                                 <td>  <input name="login"></td>
+
+
                             </tr>
                             <tr>
                                 <td>            Password:

@@ -1,6 +1,5 @@
 function formValidation()
 {
-    document.getElementById("lengthErr").style.visibility = hidden;
     var uid = document.registration.login;
     var passid = document.registration.password;
     var uname = document.registration.firstName;
@@ -14,10 +13,10 @@ function formValidation()
             {
                 if(allLetter(ulname))
                 {
-
                     if(ValidateEmail(uemail))
                     {
-                }
+
+                    }
                 }
             }
         }
@@ -32,7 +31,6 @@ function userid_validation(uid,mx,my)
     if (uid_len == 0 || uid_len >= my || uid_len < mx)
     {
         alert("User Id should not be empty / length be between "+mx+" to "+my);
-        document.getElementById("lengthErr").style.visibility = visible;
         uid.focus();
         return false;
     }
@@ -69,7 +67,7 @@ function ValidateEmail(uemail)
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if(uemail.value.match(mailformat))
     {
-        alert('Registration complete, check your email to confirm account!');
+    	alert('Registration complete, check your email to confirm account!');
         document.registration.submit();
         return true;
     }
@@ -79,4 +77,5 @@ function ValidateEmail(uemail)
         uemail.focus();
         return false;
     }
-} 
+}
+
