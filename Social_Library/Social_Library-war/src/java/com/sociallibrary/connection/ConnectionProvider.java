@@ -85,5 +85,11 @@ public class ConnectionProvider {
             e.printStackTrace();
         }
     }
-        
+    public static void close(Connection conn) throws SQLException {
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     }

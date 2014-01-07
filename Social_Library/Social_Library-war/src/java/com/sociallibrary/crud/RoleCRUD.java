@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.entity.Role;
 import com.sociallibrary.icrud.IRoleCRUD;
+import java.util.logging.Level;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 /**
@@ -55,7 +56,11 @@ public class RoleCRUD implements IRoleCRUD
         }
         finally
         {
-            ConnectionProvider.close();
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                java.util.logging.Logger.getLogger(RoleCRUD.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return role;
     }
