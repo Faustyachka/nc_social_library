@@ -27,9 +27,9 @@ public class SignIn implements Command {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         
-        System.out.println("#@!^&*U");
-        System.out.println(login);
-        System.out.println(password);
+//        System.out.println("#@!^&*U");
+//        System.out.println(login);
+//        System.out.println(password);
 
         User user = new UsersActions().searchUserByLogin(login);
         if(user.getPassword().equals(password))

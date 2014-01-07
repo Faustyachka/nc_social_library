@@ -99,7 +99,7 @@ public class UserCRUD implements IUserCRUD
                 user.setRegistrationDate(rs.getString("REGISTRATION_DATE"));
                 user.setNotify(rs.getInt("NOTIFY")==1);
                 List<Role> roles = new ArrayList<Role>();
-                for(int i : new RolesActions().getRolesIdBuUserId(user.getId()))
+                for(int i : new RolesActions().getRolesIdByUserId(user.getId()))
                     roles.add(new RoleCRUD().readRole(i));
                 user.setRoles(roles);
                 //user.setRole(new Role(1, "Administrator"));

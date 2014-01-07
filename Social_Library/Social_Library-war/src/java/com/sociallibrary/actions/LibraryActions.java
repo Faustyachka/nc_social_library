@@ -47,6 +47,36 @@ public class LibraryActions implements ILibraryActions
         return libraries;
     }
 
+     public List<Author> getAuthorsOfBook(long book_id)
+     {
+         List<Author> authors = new ArrayList<Author>();
+         BasicConfigurator.configure();
+        String selectParametr = "select id from author where id in " +
+                                    "(select author from book_author where book in " +
+                                        "(select id from library where id=?))";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setLong(1, book_id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Author author = new AuthorCRUD().readAuthor(rs.getInt("id"));
+                authors.add(author);
+            }
+            rs.close();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return authors;
+    }
+
      public boolean addBookToLocal(long book_id, long user_id)
      {
 
@@ -98,6 +128,68 @@ public class LibraryActions implements ILibraryActions
         return result;
     }
 
+     public boolean isBookInLocalLibraryOfUser(long book_id, long user_id)
+     {
+        boolean result = false;
+        BasicConfigurator.configure();
+        String selectParametr = "SELECT count(id) FROM Catalog WHERE users=? AND book=?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setLong(1, user_id);
+            stmt.setLong(2, book_id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                result = rs.getInt(1) > 0;
+            }
+            rs.close();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+                result = false;
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+
+        return result;
+    }
+
+     public String getBookAuthors(long book_id)
+     {
+        BasicConfigurator.configure();
+        List<Author> authors = new ArrayList<Author>();
+        String selectParametr = "select id from author where id in " +
+                                    "(select author from book_author where book in " +
+                                        "(select id from library where id=?))";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setLong(1, book_id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Author author = new AuthorCRUD().readAuthor(rs.getInt("id"));
+                authors.add(author);
+            }
+            rs.close();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        String result = "";
+        for(Author a : authors) result+=a.getAuthor();
+        return result;
+    }
+
      public List<Library> getAllBooksByWorkflow(int workflow)
      {
         BasicConfigurator.configure();
@@ -110,6 +202,126 @@ public class LibraryActions implements ILibraryActions
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 library = new LibraryCRUD().readLibrary(rs.getInt("id"));
+                libraries.add(library);
+            }
+            rs.close();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return libraries;
+    }
+
+     public List<Library> searchBooksByAuthor(String author_name)
+     {
+        BasicConfigurator.configure();
+        Library library = new Library();
+        List<Library> libraries = new ArrayList<Library>();
+        String selectParametr = "select id from library where id in" +
+                                    "(select book from book_author where book_author.author in" +
+                                        "(select id from author where upper(author) like upper(?)))";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setString(1, "%"+author_name+"%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                library = new LibraryCRUD().readLibrary(rs.getLong("id"));
+                libraries.add(library);
+            }
+            rs.close();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return libraries;
+    }
+
+     public List<Library> searchBooksByGenre(String genre)
+     {
+        BasicConfigurator.configure();
+        Library library = new Library();
+        List<Library> libraries = new ArrayList<Library>();
+        String selectParametr = "select id from library where id in " +
+                                    "(select book from book_genre where book_genre.genre in " +
+                                        "(select id from genre where upper(genre) like upper(?)));";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setString(1, "%"+genre+"%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                library = new LibraryCRUD().readLibrary(rs.getLong("id"));
+                libraries.add(library);
+            }
+            rs.close();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return libraries;
+    }
+
+     public List<Library> searchBooksByTitle(String title)
+     {
+        BasicConfigurator.configure();
+        Library library = new Library();
+        List<Library> libraries = new ArrayList<Library>();
+        String selectParametr = "select id from library where upper(title) like upper(?)";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setString(1, "%"+title+"%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                library = new LibraryCRUD().readLibrary(rs.getLong("id"));
+                libraries.add(library);
+            }
+            rs.close();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return libraries;
+    }
+
+     public List<Library> searchBooksByDescription(String description)
+     {
+        BasicConfigurator.configure();
+        //Library library = new Library();
+        List<Library> libraries = new ArrayList<Library>();
+        String selectParametr = "select id from library where upper(description) like upper(?)";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setString(1, "%"+description+"%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Library library = new LibraryCRUD().readLibrary(rs.getLong("id"));
                 libraries.add(library);
             }
             rs.close();

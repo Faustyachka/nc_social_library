@@ -49,7 +49,7 @@
         long user_id = current_user.getId();
 /*        User current_user = new UserCRUD().readUsers(5);
         long user_id = 5;
-*/        int count_of_pages = new LibraryActions().countBooksByParameter("WORKFLOW", "4")/10+1;
+*/        int count_of_pages = 0;//new LibraryActions().countBooksByParameter("WORKFLOW", "4")/10+1;
         List<Library> all_required_books = new LibraryActions().getAllBooksByWorkflow(4);
         count_of_pages = all_required_books.size()/10+1;
         int i=0;
@@ -78,7 +78,7 @@
                     <td><%=book.getTitle()%>&nbsp;&nbsp;&nbsp;<%=book.getPages()%>&nbsp;pages</td>
                 </tr>
                 <tr>
-                    <td>Authors</td>
+                    <td><%=new LibraryActions().getBookAuthors(book.getId())%></td>
                 </tr>
             </table>
         </td></tr>
@@ -123,7 +123,7 @@
                             </div>
                             <div style="background-color:green; height:20px; position:relative; z-index:0; width:<%=Math.round((120/5)*average_rate)%>px;">&nbsp;</div>
                             <input name="float_value" value="<%=/*Math.round(*/average_rate/**100)/100.0*/%>" type="text" readonly style="border:0px; width:50px;" />
-                            <input align="middle" type="submit" value="      Ok      " />
+                            <input align="right" type="submit" value="   Ok   " />
                         </form>
                     </td>
                     <td width="50%">
@@ -165,20 +165,39 @@
 
 <div id="leftblock">
     <br>
-    <a href="locallib.jsp?id=<%=request.getParameter("id")%>"> Local library </a>
-    <br><a href="dashboard.jsp?id=<%=request.getParameter("id")%>">Dashboard Publish</a>
-    <br><a href="dashboardApp.jsp?id=<%=request.getParameter("id")%>">Dashboard Approve </a>
+    <a href="locallib.jsp"> Local library </a><br/><br/>
+    <%
+        boolean isModerator = false;
+        boolean isAdvanced = false;
+        for(Role r : current_user.getRoles())
+            if(r.getId()==1) isModerator = true;
+            else if(r.getId()==2) isAdvanced = true;
+    %>
+
+    <%
+        if(isAdvanced||isModerator){
+    %>
+    <a href="dashboard.jsp">Dashboard Publish</a><br/><br/>
+    <%
+        }
+        if(isModerator){
+    %>
+    <a href="dashboardApp.jsp">Dashboard Approve </a>
+    <%
+        }
+    %>
 
 
 </div>
 
 <div id="rightblock">
-    <p><form name="form1" method="post" action="SearchInGloballib">
-        <input type="text" name="text">
-	<input name="search" type="button" value="Search">
-        </form>
-   </p>
-
+    <p>
+       <form name="form1" method="post" action="Servlet">
+        <input type="text" name="search_request" value="">
+        <input type="hidden" name="command" value="searchinglobal"/>
+        <input type="submit" value="Search">
+       </form>
+    </p>
 </div>
 
 <div id="footer"><p>Blue One</p></div>

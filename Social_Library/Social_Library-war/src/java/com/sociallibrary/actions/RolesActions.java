@@ -48,6 +48,8 @@ public class RolesActions implements IRolesActions
                 role.setName(rs.getString("name"));
                 roles.add(role);
             }
+            ps.close();
+            rs.close();
         } 
          catch (SQLException e)
         {
@@ -61,7 +63,7 @@ public class RolesActions implements IRolesActions
         return roles;
     }
 
-    public List<Integer> getRolesIdBuUserId(long id)
+    public List<Integer> getRolesIdByUserId(long id)
     {
         BasicConfigurator.configure();
         List<Integer> roles = new ArrayList<Integer>();
@@ -80,6 +82,8 @@ public class RolesActions implements IRolesActions
             {
                 roles.add(rs.getInt("ROLE"));
             }
+            ps.close();
+            rs.close();
         }
          catch (SQLException e)
         {
@@ -105,6 +109,8 @@ public class RolesActions implements IRolesActions
             ps.setInt(2, role.getId());
             ps.executeUpdate();
 
+            ps.close();
+
         } 
          catch (SQLException e)
         {
@@ -127,6 +133,8 @@ public class RolesActions implements IRolesActions
 
             ps.setLong(1, user.getId());
             ps.executeUpdate();
+
+            ps.close();
 
         } 
          catch (SQLException e)

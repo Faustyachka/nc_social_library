@@ -78,7 +78,7 @@
                     <td><%=book.getTitle()%>&nbsp;&nbsp;&nbsp;<%=book.getPages()%>&nbsp;pages</td>
                 </tr>
                 <tr>
-                    <td>Authors</td>
+                    <td><%=new LibraryActions().getBookAuthors(book.getId())%></td>
                 </tr>
             </table>
         </td></tr>
@@ -166,20 +166,39 @@
 
 <div id="leftblock">
     <br>
-    <a href="globallib.jsp">Global library</a>
-    <br><a href="dashboard.jsp">Dashboard Publish</a>
-    <br><a href="dashboardApp.jsp">Dashboard Approve</a>
+    <a href="globallib.jsp">Global library</a><br/><br/>
+    <%
+        boolean isModerator = false;
+        boolean isAdvanced = false;
+        for(Role r : current_user.getRoles())
+            if(r.getId()==1) isModerator = true;
+            else if(r.getId()==2) isAdvanced = true;
+    %>
+
+    <%
+        if(isAdvanced||isModerator){
+    %>
+    <a href="dashboard.jsp">Dashboard Publish</a><br/><br/>
+    <%
+        }
+        if(isModerator){
+    %>
+    <a href="dashboardApp.jsp">Dashboard Approve</a>
+    <%
+        }
+    %>
 
 
 </div>
 
 <div id="rightblock">
-    <p><form name="form1" method="post" action="SearchInGloballib">
-        <input type="text" name="text">
-	<input name="search" type="button" value="Search">
-        </form>
-   </p>
-
+        <p>
+       <form name="form1" method="post" action="Servlet">
+        <input type="text" name="search_request" value="">
+        <input type="hidden" name="command" value="searchinlocal"/>
+        <input name="search" type="submit" value="Search">
+       </form>
+    </p>
 </div>
 
 <div id="footer"><p>Blue One</p></div>

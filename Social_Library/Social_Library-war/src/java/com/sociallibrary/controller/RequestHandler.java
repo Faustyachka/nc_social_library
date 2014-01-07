@@ -33,6 +33,8 @@ private RequestHandler(){
     commands.put("signin", new SignIn());
     commands.put("addtolocal", new AddToLocal());
     commands.put("removefromlocal", new RemoveBookFromCatalog());
+    commands.put("searchinglobal", new SearchInGlobalLib());
+    commands.put("searchinlocal", new SearchInLocalLib());
 }
 
 public Command getCommand(HttpServletRequest request){
