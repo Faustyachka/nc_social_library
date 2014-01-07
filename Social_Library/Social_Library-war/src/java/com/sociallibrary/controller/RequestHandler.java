@@ -1,6 +1,9 @@
 
 package com.sociallibrary.controller;
 
+import com.sociallibrary.commands.ScoreCommand;
+import com.sociallibrary.commands.NoCommand;
+import com.sociallibrary.commands.DashboardCommand;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 //import com.sociallibrary.authorization.SignIn;
@@ -29,10 +32,11 @@ private RequestHandler(){
     commands.put("rating", new ScoreCommand());
     commands.put("nocommand", new NoCommand());
     commands.put("registration", new Registration ());
-    commands.put("confirmUser", new ConfirmUser () );
+    commands.put("confirmUser", new ConfirmUser ());
     commands.put("signin", new SignIn());
     commands.put("addtolocal", new AddToLocal());
     commands.put("removefromlocal", new RemoveBookFromCatalog());
+    commands.put("dashboard", new DashboardCommand ());
 }
 
 public Command getCommand(HttpServletRequest request){

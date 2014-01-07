@@ -1,7 +1,7 @@
 <%-- 
-    Document   : template
-    Created on : 03.01.2014, 22:59:34
-    Author     : Pavel 
+    Document   : nocommand
+    Created on : 07.01.2014, 0:27:40
+    Author     : Pavel
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -43,7 +43,8 @@
             </div>
 
             <div id="center">
-                [Center]
+                
+                <p1>No COMMANND YET!!!</p1>
             </div>
 
             <div id="footer">

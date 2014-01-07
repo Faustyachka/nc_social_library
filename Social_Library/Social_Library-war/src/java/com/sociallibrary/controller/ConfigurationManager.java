@@ -22,6 +22,8 @@ public class ConfigurationManager {
     public static final String INDEX_PAGE="/index.jsp";
     public static final String LOCAL_LIB="locallib.jsp";
     public static String last_page = "";
+    public static final String Dashboard_PAGE="/dashboard.jsp";
+    public static final String NOCOMMAND_PAGE="/nocommand.jsp";
 
 //
 //    public static ConfigurationManager getInstance(){
