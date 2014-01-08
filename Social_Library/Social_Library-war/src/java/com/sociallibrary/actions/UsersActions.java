@@ -122,14 +122,15 @@ public class UsersActions implements IUsersActions
     public User searchUserByLogin(String login) 
     {
         BasicConfigurator.configure();
-        User user = null;
+        User user = new User();
         String selectParametr = "select id  from users where login = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setString(1, login);
+            UserCRUD uCRUD = new UserCRUD();
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                user = new UserCRUD().readUsers(Integer.parseInt(rs.getString(1)));
+                user = uCRUD.readUsers(Integer.parseInt(rs.getString(1)));
             }
             rs.close();
             stmt.close();
@@ -145,17 +146,18 @@ public class UsersActions implements IUsersActions
         }
         return user;
     }
-    public User searchUserByEmail(String login)
+   public User searchUserByEmail(String email)
     {
         BasicConfigurator.configure();
-        User user = null;
+        User user = new User();
         String selectParametr = "select id  from users where email = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
-            stmt.setString(1, login);
+            stmt.setString(1, email);
+            UserCRUD uCRUD = new UserCRUD();
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                user = new UserCRUD().readUsers(Integer.parseInt(rs.getString(1)));
+                user = uCRUD.readUsers(Integer.parseInt(rs.getString(1)));
             }
             rs.close();
             stmt.close();

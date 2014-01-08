@@ -35,7 +35,6 @@ import java.util.ArrayList;
 public class Registration implements Command {
 
     private User user;
-    private UserCRUD userCRUD = new UserCRUD();
     private RoleCRUD roleCRUD = new RoleCRUD();
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, UnsupportedEncodingException {
@@ -44,7 +43,7 @@ public class Registration implements Command {
         response.setContentType("text/html;charset=UTF-8");
         user = new User();
         List<Role> rList = new ArrayList<Role>();
-        rList.set(0, roleCRUD.readRole(3));
+        rList.add( roleCRUD.readRole(3));
         user.setFirstName(request.getParameter("firstName"));
         user.setLastName(request.getParameter("lastName"));
         user.setEmail(request.getParameter("email"));
@@ -64,11 +63,12 @@ public class Registration implements Command {
                 user.setNotify(false);
        }
         user.setRoles(rList);
+        UserCRUD userCRUD = new UserCRUD();
         userCRUD.createUsers(user);
         UsersActions uAct = new UsersActions();
-        user = uAct.searchUserByLogin(user.getLogin());
+        User users = uAct.searchUserByLogin(user.getLogin());
         String mailSub = "Registration on Social Library";
-        String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Servlet?users=" + user.getId() + "&command=confirmUser'";
+        String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Servlet?users=" + users.getId() + "&command=confirmUser'";
         String mail[] = new String[1];
         mail[0] = user.getEmail();
         try {
