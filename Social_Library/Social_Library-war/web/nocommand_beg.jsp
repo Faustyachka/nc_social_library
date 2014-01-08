@@ -41,7 +41,7 @@
             </div>
 
             <div id="center">
-                [Center]
+                No Command Beginner!!!
             </div>
 
             <div id="footer">

@@ -41,7 +41,7 @@
             </div>
 
             <div id="center">
-                [Center]
+               Main Menu Beginner!!!
             </div>
 
             <div id="footer">
