@@ -21,7 +21,7 @@ import com.sociallibrary.icrud.IUserCRUD;
 public class ConfirmUser implements Command {
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = null;
+        String page = ConfigurationManager.REGISTR_PAGE;
         response.setContentType("text/html;charset=UTF-8");
         UserCRUD userCRUD = new UserCRUD();
         User user= userCRUD.readUsers(Integer.parseInt(request.getParameter("users")));

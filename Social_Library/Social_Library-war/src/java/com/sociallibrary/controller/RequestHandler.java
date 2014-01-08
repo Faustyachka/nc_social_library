@@ -4,7 +4,7 @@ package com.sociallibrary.controller;
 import com.sociallibrary.commands.DashboardCommand;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
-//import com.sociallibrary.authorization.SignIn;
+import com.sociallibrary.authorization.SignIn_;
 import com.sociallibrary.registration.ConfirmUser;
 import com.sociallibrary.registration.Registration;
 
@@ -31,7 +31,7 @@ private RequestHandler(){
     commands.put("nocommand", new NoCommand());
     commands.put("registration", new Registration ());
     commands.put("confirmUser", new ConfirmUser () );
-    commands.put("signin", new SignIn());
+    commands.put("signin", new SignIn_());
     commands.put("addtolocal", new AddToLocal());
     commands.put("removefromlocal", new RemoveBookFromCatalog());
     commands.put("searchinglobal", new SearchInGlobalLib());

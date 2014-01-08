@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author Костя
  */
-public class Security {
+public class SecurityHash {
 
     public static String getMd5(String toMd5) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         String sbStr = "";
@@ -29,7 +29,7 @@ public class Security {
             }
 
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Security.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SecurityHash.class.getName()).log(Level.SEVERE, null, ex);
         }
         return sbStr;
     }

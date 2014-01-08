@@ -26,6 +26,7 @@ import com.sociallibrary.icrud.IRoleCRUD;
 import java.util.List;
 import com.sociallibrary.email.EmailSender;
 import com.sociallibrary.entity.Gender;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -49,14 +50,15 @@ public class Registration implements Command {
         user.setEmail(request.getParameter("email"));
         user.setLogin(request.getParameter("login"));
         try {
-            user.setPassword(Security.getMd5(request.getParameter("password")));
+            user.setPassword(SecurityHash.getMd5(request.getParameter("password")));
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }
         user.setGender(Gender.getGender(Integer.parseInt(request.getParameter("gender"))));
         user.setConfirmed(false);
         user.setBanned(false);
-        user.setRegistrationDate(new Date().toString());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        user.setRegistrationDate(dateFormat.format(new Date()).toString());
        if (Integer.parseInt(request.getParameter("notify"))==1){
            user.setNotify(true);
        }    else{
@@ -68,7 +70,7 @@ public class Registration implements Command {
         UsersActions uAct = new UsersActions();
         User users = uAct.searchUserByLogin(user.getLogin());
         String mailSub = "Registration on Social Library";
-        String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Servlet?users=" + users.getId() + "&command=confirmUser'";
+        String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Controller?users=" + users.getId() + "&command=confirmUser'";
         String mail[] = new String[1];
         mail[0] = user.getEmail();
         try {

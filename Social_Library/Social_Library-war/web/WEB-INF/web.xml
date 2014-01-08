@@ -4,9 +4,25 @@
         <servlet-name>Controller</servlet-name>
         <servlet-class>com.sociallibrary.controller.ControllerServlet</servlet-class>
     </servlet>
-     <servlet-mapping>
+    <servlet>
+        <servlet-name>test</servlet-name>
+        <servlet-class>com.sociallibrary.registration.test</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ololo</servlet-name>
+        <servlet-class>com.sociallibrary.registration.ololo</servlet-class>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>test</servlet-name>
+        <url-pattern>/test</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ololo</servlet-name>
+        <url-pattern>/ololo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -14,6 +30,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>template.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

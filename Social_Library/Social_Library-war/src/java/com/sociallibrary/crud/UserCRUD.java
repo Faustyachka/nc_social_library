@@ -41,7 +41,7 @@ public class UserCRUD implements IUserCRUD
                 String sqlRequest =
                         "INSERT INTO Users (ID,FIRST_NAME,LAST_NAME,EMAIL,LOGIN,PASSWORD," +
                         "GENDER,CONFIRMED,BANNED,REGISTRATION_DATE,NOTIFY) " +
-                        "values(USERS_ID.nextval,'?','?','?','?','?',?, ?, ?, TO_DATE('?','yyyy-mm-dd'), ?)";
+                        "values(USERS_ID.nextval,?,?,?,?,?,?, ?, ?, TO_DATE(?,'yyyy-mm-dd'), ?)";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
 
@@ -51,10 +51,10 @@ public class UserCRUD implements IUserCRUD
             ps.setString(4, user.getLogin());
             ps.setString(5, user.getPassword());
             ps.setInt(6, user.getGender().toInt());
-            ps.setBoolean(7, user.isConfirmed());
-            ps.setBoolean(8, user.isBanned());
+            ps.setInt(7, (user.isConfirmed())?1:0);
+            ps.setInt(8, (user.isBanned())?1:0);
             ps.setString(9, user.getRegistrationDate());
-            ps.setBoolean(10, user.isNotify());
+            ps.setInt(10, (user.isNotify())?1:0);
             ps.executeUpdate();
 
             for(Role r : user.getRoles()) new RolesActions().applyRoleToUser(r, user);
