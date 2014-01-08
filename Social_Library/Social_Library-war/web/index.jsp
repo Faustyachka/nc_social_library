@@ -16,7 +16,7 @@
     <body>
         <h1>Social Library v0.1 pre alpha</h1>
         <h2>Sign in</h2>
-        <form name="SignIn" action="Servlet" method="POST">
+        <form name="SignIn" action="Controller" method="POST">
             <input type="hidden" name="command" value="signin"/>
             <table border="0">
                 <tbody>

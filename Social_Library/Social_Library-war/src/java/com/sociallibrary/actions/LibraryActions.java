@@ -31,7 +31,8 @@ public class LibraryActions implements ILibraryActions
 {
 
       public static String workflow = "workflow";
-    public static String workflowInprogres="1";
+    public static String workflowInprogres = "1";
+    public static String workflowPublished = "4";
     private static Connection connection;
     public static final Logger log = Logger.getLogger(LibraryActions.class);
 

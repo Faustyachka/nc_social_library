@@ -14,7 +14,7 @@
     <body>
         <h1>Rating Page</h1>
          
-        <form name="forma" action="Servlet" method="POST">
+        <form name="forma" action="Controller" method="POST">
            
             <select name="mark">
                 <option value="1">1</option>

@@ -41,7 +41,7 @@
             </div>
 
             <div id="center">
-                <form method="POST" action="Servlet" name="registration">
+                <form method="POST" action="Controller" name="registration">
                     <input type="hidden" value="registration" name="command" />
                     <table border="0">
 

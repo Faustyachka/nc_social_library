@@ -18,10 +18,9 @@ public class Dashboard {
 
     public List<Library> getInProgress(){
 
-         LibraryActions lib =new LibraryActions();
-
-        List<Library> libs= lib.searchBooksByParameter(LibraryActions.workflow, LibraryActions.workflowInprogres);
-
+        List<Library> libs = 
+                new LibraryActions().searchBooksByParameter(LibraryActions.workflow,
+                                                                LibraryActions.workflowPublished);
 
         return libs ;
 

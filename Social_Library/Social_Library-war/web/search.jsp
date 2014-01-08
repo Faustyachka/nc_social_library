@@ -95,7 +95,7 @@
             <table cellpadding="0" cellspacing="0" border="0" align="left">
                 <tr>
                     <td width="50%">
-                        <form name="rateBook" method="post" action="Servlet">
+                        <form name="rateBook" method="post" action="Controller">
                             <input type="hidden" name="book_id" value="<%=book.getId()%>"/>
                             <input type="hidden" name="user_id" value="<%=user_id%>"/>
                             <input type="hidden" id="rate_value_<%=book.getId()%>" name="rate" value=""/>
@@ -128,7 +128,7 @@
                         </form>
                     </td>
                     <td width="50%">
-                        <form name="addToLocal" method="post" action="Servlet">
+                        <form name="addToLocal" method="post" action="Controller">
                             <input type="hidden" name="book_id" value="<%=book.getId()%>"/>
                             <input type="hidden" name="user_id" value="<%=user_id%>"/>
                             <input type="hidden" name="command" value="addtolocal"/>
