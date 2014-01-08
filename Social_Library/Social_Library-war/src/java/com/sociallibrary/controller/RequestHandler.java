@@ -32,17 +32,14 @@ private RequestHandler(){
     commands.put("registration", new Registration ());
     commands.put("confirmUser", new ConfirmUser () );
     commands.put("signin", new SignIn_());
-    commands.put("addtolocal", new AddToLocal());
-    commands.put("removefromlocal", new RemoveBookFromCatalog());
-    commands.put("searchinglobal", new SearchInGlobalLib());
-    commands.put("searchinlocal", new SearchInLocalLib());
     commands.put("dashboard", new DashboardCommand ());
+    //commands.put("signin", new SignIn());
 }
 
 public Command getCommand(HttpServletRequest request){
      String action = request.getParameter("command");
 
-     Command command = commands.get(action.toLowerCase());
+     Command command = commands.get(action);
       if(command==null){
 
           command =new NoCommand();

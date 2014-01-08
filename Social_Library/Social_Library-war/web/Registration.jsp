@@ -10,8 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/ourstyle.css">
-        <script src="javascripts/validator.js">
-
+       <script src="javascripts/validator.js">
         </script>
         <title>Registration</title>
     </head>
@@ -22,18 +21,19 @@
 
                 <div id="menu">
                     <ul>
-                        <li><a href="#" id="nowopen">
+                        <li><a href="index.jsp" >
                                 <span class="refLabelText">Sign In</span>
                             </a></li>
-                        <li><a href="#">
+                        <li><a href="Registration.jsp">
+                                <span class="refLabelText">Registration</span>
+                            </a></li>
+                        <li><a href="Controller?command=nocommand">
+                                <span class="refLabelText">Add</span>
+                            </a></li>
+                        <li><a href="Controller?command=nocammand" >
                                 <span class="refLabelText">Search</span>
                             </a></li>
-                        <li><a href="#">
-                                <span class="refLabelText">Add book</span>
-                            </a></li>
-                        <li><a href="" >
-                                <span class="refLabelText">Regiastration</span>
-                            </a></li>
+                            </ul>
 
                 </div>
 

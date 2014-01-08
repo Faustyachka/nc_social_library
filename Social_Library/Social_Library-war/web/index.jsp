@@ -1,8 +1,13 @@
 <%-- 
     Document   : index
     Created on : 24.12.2013, 19:46:47
-    Author     : РљРѕСЃС‚СЏ
+    Author     : Костя
 --%>
+
+<%@page contentType="text/html" session="true" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -10,10 +15,20 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
         <link rel="stylesheet" type="text/css" href="css/ourstyle.css">
         <title>TEMPLATE Page</title>
     </head>
     <body>
+        <h1>Social Library v0.1 pre alpha</h1>
+        <h2>Sign in</h2>
+        <form name="SignIn" action="Servlet" method="POST">
+            <input type="hidden" name="command" value="signin"/>
+            <table border="0">
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="login" style="color: #777;"
+                                   value="Login" onfocus="if (this.value == 'Login')
 
         <div id="main">
             <div id="header">
@@ -70,6 +85,13 @@
             </table>
             <input type="Submit" value="Sign In!"/>
         </form>
+        <a href="Registration.jsp">Registration</a>
+        <br>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="Submit" value="Sign In!"/>
+        </form>
             </div>
 
             <div id="footer">
@@ -77,6 +99,9 @@
                 <p id="footerText">[ footer text ]</p>
             </div>
         </div>
+
+
+
 
     </body>
 </html>

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author П
+ * @author Pavel
  */
 class NoCommand implements Command {
 
@@ -22,7 +22,8 @@ class NoCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String page=null;
-        page=ConfigurationManager.SCORE_PAGE;
+        Page pag =ConfigurationManager.getPageForRole(3);
+        page=pag.get_NOCOMMAND_PAGE();
 
         return page;
     }

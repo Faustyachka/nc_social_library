@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author П
+ * @author Pavel
  */
 
 ///This servlet called for any action in app using parapetr "command"
@@ -26,16 +26,10 @@ public class ControllerServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String page =null;
-        ConfigurationManager.last_page=request.getParameter("redirect");
          try {
 
-              String comm = request.getParameter("command");
-//             switch(comm){
-//                 case "signin":  break;
-//                 default: break;
-//             }
-
-              //if(comm=="signin"){}
+                  
+            
 
              Command command= requesthandler.getCommand(request);
              page = command.execute(request, response);
@@ -51,10 +45,8 @@ public class ControllerServlet extends HttpServlet {
              page=ConfigurationManager.ERROR_PAGE;
          }
 
-        response.sendRedirect(page);
-
-//         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-//         dispatcher.forward(request, response);
+         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+         dispatcher.forward(request, response);
 
 
 
