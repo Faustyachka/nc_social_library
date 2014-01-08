@@ -26,6 +26,7 @@ public class ControllerServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String page =null;
+        ConfigurationManager.LAST_PAGE = "/"+request.getParameter("redirect");
          try {
 
                   

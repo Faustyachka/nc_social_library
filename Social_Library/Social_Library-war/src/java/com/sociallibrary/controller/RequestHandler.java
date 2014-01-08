@@ -31,7 +31,14 @@ private RequestHandler(){
     commands.put("nocommand", new NoCommand());
     commands.put("registration", new Registration ());
     commands.put("confirmUser", new ConfirmUser () );
+    commands.put("addtolocal", new AddToLocal());
+    commands.put("removefromlocal", new RemoveBookFromCatalog());
+    commands.put("searchinglobal", new SearchInGlobalLib());
+    commands.put("searchinlocal", new SearchInLocalLib());
     commands.put("dashboard", new DashboardCommand ());
+    commands.put("signin", new SignIn());
+    commands.put("assignrole", new AssignRole());
+    commands.put("searchusers", new SearchUsers());
     //commands.put("signin", new SignIn());
 }
 

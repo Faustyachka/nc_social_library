@@ -16,6 +16,7 @@
 <%@page import="com.sociallibrary.crud.*"%>
 <%@page import="com.sociallibrary.iactions.*" %>
 <%@page import="com.sociallibrary.actions.*" %>
+<%@page import="com.sociallibrary.model.*" %>
 
 <html>
     <head>
@@ -24,12 +25,12 @@
        
         <title>Global Library</title>
         <script language="javascript">
-            function radio_click(n){
+            function radio_click(n, book_id){
                 for(var i = 1; i<6; i++){
-                    if(i<=n) document.getElementById("radio_rate_"+i).checked=true;//setAttribute("checked", "");
-                    else document.getElementById("radio_rate_"+i).checked=false; //document.getElementById('radio_rate_'+i).attributes.removeAttribute("checked");
+                    if(i<=n) document.getElementById("radio_rate_"+i+"_"+book_id).checked=true;//setAttribute("checked", "");
+                    else document.getElementById("radio_rate_"+i+"_"+book_id).checked=false; //document.getElementById('radio_rate_'+i).attributes.removeAttribute("checked");
                 }
-                document.getElementById("rate_value").setAttribute("value", n);
+                document.getElementById("rate_value"+"_"+book_id).setAttribute("value", n);
             }
         </script>
     </head>
@@ -47,18 +48,26 @@
         <%
         User current_user = (User) request.getSession().getAttribute("user");
         long user_id = current_user.getId();
+/*        User current_user = new UserCRUD().readUsers(5);
+        long user_id = 5;
+*/        int count_of_pages = 0;//new LibraryActions().countBooksByParameter("WORKFLOW", "4")/10+1;
+        List<Library> all_required_books = new LibraryActions().getAllBooksByWorkflow(4);
+        count_of_pages = all_required_books.size()/10+1;
         int i=0;
-        try
-                {
-        i = Integer.parseInt(request.getParameter("i"));
+        try {
+            i = Integer.parseInt(request.getParameter("i"));
         }
-        catch(NumberFormatException e)
-                {
+        catch(NumberFormatException e) {
             e.printStackTrace();
-            }
-        LibraryActions ob=new LibraryActions();
-        List<Library> libraries = ob.getAllBooksByWorkflow(4).subList((i-1)*10, i*10);
+        }
+        i=i<1?1:i>count_of_pages?count_of_pages-1:i;
+
+        int from = (i-1)*10;
+        int to = i*10;
+        to=to<all_required_books.size()?to:all_required_books.size();
+        List<Library> libraries = all_required_books.subList(from, to);
         //List<Library> libraries = ob.getBooksByIdInInterval(10*i, 10*(i+1));
+        out.println("Hello, "+current_user.getFirstName()+"!");
         for(Library book:libraries)
         {
            //if(book.getWorkflow().getId()!=4) continue;
@@ -70,7 +79,7 @@
                     <td><%=book.getTitle()%>&nbsp;&nbsp;&nbsp;<%=book.getPages()%>&nbsp;pages</td>
                 </tr>
                 <tr>
-                    <td>Authors</td>
+                    <td><%=new LibraryActions().getBookAuthors(book.getId())%></td>
                 </tr>
             </table>
         </td></tr>
@@ -86,21 +95,40 @@
             <table cellpadding="0" cellspacing="0" border="0" align="left">
                 <tr>
                     <td width="50%">
-                        <form name="rateBook" method="post" action="Servlet">
+                        <form name="rateBook" method="post" action="Controller">
                             <input type="hidden" name="book_id" value="<%=book.getId()%>"/>
                             <input type="hidden" name="user_id" value="<%=user_id%>"/>
-                            <input type="hidden" id="rate_value" name="rate" value=""/>
+                            <input type="hidden" id="rate_value_<%=book.getId()%>" name="rate" value=""/>
+                            <input type="hidden" name="redirect" value="globallib.jsp"/>
                             <input type="hidden" name="command" value="rating"/>
-                            <input onclick="radio_click(1)" id="radio_rate_1" name="radio_rate_1" type="radio" value="1" checked />
+                            <div style="z-index:1; width:125px; position:absolute;">
+                            <%
+                            float average_rate = new RatingActions().getAverageRatingByBookId(book.getId());
+                            int my_rating = new RatingActions().getRatingByBookAndUserId(book.getId(), user_id).getRate();
+                            String checked = "";
+                                for(int r = 1; r<6; r++){
+                                    if(r < my_rating+1) checked = "checked";
+                                 //   out.println("<input onclick=\"radio_click("+r+")\" id=\"radio_rate_"+r+"\" name=\"radio_rate_"+
+                                   //     r+"\" type=\"radio\" value=\""+r+"\"" +checked+ "/>");
+                            %>
+                            <input onclick="radio_click(<%=r%>,<%=book.getId()%>)" id="radio_rate_<%=r%>_<%=book.getId()%>" name="radio_rate_<%=r%>_<%=book.getId()%>" type="radio" value="<%=r%>" <%=checked%> />
+                     <%--       <input onclick="radio_click(1)" id="radio_rate_1" name="radio_rate_1" type="radio" value="1" checked />
                             <input onclick="radio_click(2)" id="radio_rate_2" name="radio_rate_2" type="radio" value="2" />
                             <input onclick="radio_click(3)" id="radio_rate_3" name="radio_rate_3" type="radio" value="3" />
                             <input onclick="radio_click(4)" id="radio_rate_4" name="radio_rate_4" type="radio" value="4" />
                             <input onclick="radio_click(5)" id="radio_rate_5" name="radio_rate_5" type="radio" value="5" />
-                            <input align="middle" type="submit" value="      Ok      " />
+                     --%>   <%
+                                    checked = "";
+                                }
+                            %>
+                            </div>
+                            <div style="background-color:green; height:20px; position:relative; z-index:0; width:<%=Math.round((120/5)*average_rate)%>px;">&nbsp;</div>
+                            <input name="float_value" value="<%=/*Math.round(*/average_rate/**100)/100.0*/%>" type="text" readonly style="border:0px; width:50px;" />
+                            <input align="right" type="submit" value="   Ok   " />
                         </form>
                     </td>
                     <td width="50%">
-                        <form name="addToLocal" method="post" action="Servlet">
+                        <form name="addToLocal" method="post" action="Controller">
                             <input type="hidden" name="book_id" value="<%=book.getId()%>"/>
                             <input type="hidden" name="user_id" value="<%=user_id%>"/>
                             <input type="hidden" name="command" value="addtolocal"/>
@@ -120,7 +148,6 @@
         int min_page = i-4;
         min_page = min_page>0?min_page:1;
         int max_page = i+4;
-        int count_of_pages = new LibraryActions().countBooksByParameter("WORKFLOW", "4")/10+1;
         max_page = max_page<count_of_pages?max_page:count_of_pages;
         for(int k = min_page; k<max_page; k++)
         {
@@ -139,20 +166,46 @@
 
 <div id="leftblock">
     <br>
-    <a href="locallib.jsp?id=<%=request.getParameter("id")%>"> Local library </a>
-    <br><a href="dashboard.jsp?id=<%=request.getParameter("id")%>">Dashboard Publish</a>
-    <br><a href="dashboardApp.jsp?id=<%=request.getParameter("id")%>">Dashboard Approve </a>
+    <a href="locallib.jsp"> Local library </a><br/><br/>
+    <%
+        boolean isModerator = false;
+        boolean isAdvanced = false;
+        for(Role r : current_user.getRoles())
+            if(r.getId()==1) isModerator = true;
+            else if(r.getId()==2) isAdvanced = true;
+    %>
+
+    <%
+        if(isAdvanced||isModerator){
+    %>
+    <a href="dashboard.jsp">Dashboard Publish</a><br/><br/>
+    <%
+        }
+        if(isModerator){
+    %>
+    <a href="dashboardApp.jsp">Dashboard Approve </a>
+    <%
+        }
+    %>
+    <%
+        if(new AdminPage().isAdmin(current_user)){
+    %>
+    <br/><br/><a href="adminpage.jsp">Admin page</a>
+    <%
+        }
+    %>
 
 
 </div>
 
 <div id="rightblock">
-    <p><form name="form1" method="post" action="SearchInGloballib">
-        <input type="text" name="text">
-	<input name="search" type="button" value="Search">
-        </form>
-   </p>
-
+    <p>
+       <form name="form1" method="post" action="Controller">
+        <input type="text" name="search_request" value="">
+        <input type="hidden" name="command" value="searchinglobal"/>
+        <input type="submit" value="Search">
+       </form>
+    </p>
 </div>
 
 <div id="footer"><p>Blue One</p></div>

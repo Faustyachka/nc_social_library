@@ -99,7 +99,8 @@ public class UserCRUD implements IUserCRUD
                 user.setRegistrationDate(rs.getString("REGISTRATION_DATE"));
                 user.setNotify(rs.getInt("NOTIFY")==1);
                 List<Role> roles = new ArrayList<Role>();
-                for(int i : new RolesActions().getRolesIdByUserId(user.getId()))
+                List<Integer> integers = new RolesActions().getRolesIdByUserId(user.getId());
+                for(int i : integers)
                     roles.add(new RoleCRUD().readRole(i));
                 user.setRoles(roles);
                 //user.setRole(new Role(1, "Administrator"));
@@ -124,22 +125,28 @@ public class UserCRUD implements IUserCRUD
     public void updateUsers(User user) {
         BasicConfigurator.configure();
         try {
-                String sqlRequest = "UPDATE Users SET FIRST_NAME='?', LAST_NAME='?', " +
-                        "EMAIL='?', LOGIN='?', PASSWORD='?', GENDER=?, CONFIRMED=?, " +
-                        "BANNED=?, REGISTRATION_DATE=TO_DATE('?','yyyy-mm-dd'), NOTIFY=? WHERE ID=?";
+                String sqlRequest = "UPDATE Users SET FIRST_NAME=?, LAST_NAME=?, " +
+                        "EMAIL=?, LOGIN=?, PASSWORD=?, GENDER=?, CONFIRMED=?, " +
+                        "BANNED=?, REGISTRATION_DATE=TO_DATE(?,'yyyy-mm-dd'), NOTIFY=? WHERE ID=?";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
-            String[] userParams = new String[12];
-            userParams = user.toStringList().toArray(userParams);
-            for(int i=1; i < 11; i++)
-                ps.setString(i, userParams[i]);
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getLogin());
+            ps.setString(5, user.getPassword());
+            ps.setInt(6, user.getGender().toInt());
+            ps.setInt(7, user.isConfirmed()?1:0);
+            ps.setInt(8, user.isBanned()?1:0);
+            ps.setString(9, user.getRegistrationDate());
+            ps.setInt(10, user.isNotify()?1:0);
+            ps.setLong(11, user.getId());
 
             new RolesActions().dropAllRolesOfUser(user);
             for(Role r : user.getRoles()) new RolesActions().applyRoleToUser(r, user);
-            ps.setString(11, userParams[0]);
 
             ps.executeUpdate();
-            connection.prepareStatement("commit").executeUpdate();
+            //connection.prepareStatement("commit").executeUpdate();
 
             ps.close();
 
