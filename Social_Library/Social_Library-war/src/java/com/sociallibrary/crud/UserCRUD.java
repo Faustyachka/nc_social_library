@@ -39,22 +39,22 @@ public class UserCRUD implements IUserCRUD
         BasicConfigurator.configure();
         try {
                 String sqlRequest =
-                        "INSERT INTO User (ID,FIRST_NAME,LAST_NAME,EMAIL,LOGIN,PASSWORD," +
-                        "GENDER,CONFIRMED,BANNED,REGISTRATION_DATE,NOTIFY,ROLE) " +
-                        "values(?,'?','?','?','?','?',?, ?, ?, TO_DATE('?','yyyy-mm-dd'), ?)";
+                        "INSERT INTO Users (ID,FIRST_NAME,LAST_NAME,EMAIL,LOGIN,PASSWORD," +
+                        "GENDER,CONFIRMED,BANNED,REGISTRATION_DATE,NOTIFY) " +
+                        "values(USERS_ID.nextval,?,?,?,?,?,?, ?, ?, TO_DATE(?,'yyyy-mm-dd'), ?)";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
-            ps.setLong(1, user.getId());
-            ps.setString(2, user.getFirstName());
-            ps.setString(3, user.getLastName());
-            ps.setString(4, user.getEmail());
-            ps.setString(5, user.getLogin());
-            ps.setString(6, user.getPassword());
-            ps.setInt(7, user.getGender().toInt());
-            ps.setBoolean(8, user.isConfirmed());
-            ps.setBoolean(9, user.isBanned());
-            ps.setString(10, user.getRegistrationDate());
-            ps.setBoolean(11, user.isNotify());
+
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getLogin());
+            ps.setString(5, user.getPassword());
+            ps.setInt(6, user.getGender().toInt());
+            ps.setInt(7, (user.isConfirmed())?1:0);
+            ps.setInt(8, (user.isBanned())?1:0);
+            ps.setString(9, user.getRegistrationDate());
+            ps.setInt(10, (user.isNotify())?1:0);
             ps.executeUpdate();
 
             for(Role r : user.getRoles()) new RolesActions().applyRoleToUser(r, user);
@@ -136,7 +136,7 @@ public class UserCRUD implements IUserCRUD
             ps.setString(4, user.getLogin());
             ps.setString(5, user.getPassword());
             ps.setInt(6, user.getGender().toInt());
-            ps.setInt(7, user.isConfirmed()?1:0);
+            ps.setInt(7, user.isConfirmed()?0:1);
             ps.setInt(8, user.isBanned()?1:0);
             ps.setString(9, user.getRegistrationDate());
             ps.setInt(10, user.isNotify()?1:0);

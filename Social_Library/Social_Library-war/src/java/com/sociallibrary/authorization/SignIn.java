@@ -4,7 +4,7 @@ import com.sociallibrary.actions.UsersActions;
 import com.sociallibrary.controller.Command;
 import com.sociallibrary.controller.ConfigurationManager;
 import com.sociallibrary.entity.User;
-import com.sociallibrary.registration.Security;
+import com.sociallibrary.registration.SecurityHash;
 import java.io.*;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -25,7 +25,7 @@ public class SignIn implements Command {
         UsersActions uAction = new UsersActions();
         User uList = uAction.searchUserByLogin(request.getParameter("login"));
         try {
-            if (uList.getPassword().equals(Security.getMd5(request.getParameter("password"))) && uList.isConfirmed() && !uList.isBanned()) {
+            if (uList.getPassword().equals(SecurityHash.getMd5(request.getParameter("password"))) && uList.isConfirmed() && !uList.isBanned()) {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("id", uList.getId());
                 page = (ConfigurationManager.LOCAL_LIB);
