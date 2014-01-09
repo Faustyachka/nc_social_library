@@ -5,18 +5,16 @@
 package com.sociallibrary.controller;
 
 import java.io.IOException;
-import javax.jms.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Pavel
  */
 class NoCommand implements Command {
-    int role=0;
+    int role=2;
 
     public NoCommand() {
     }

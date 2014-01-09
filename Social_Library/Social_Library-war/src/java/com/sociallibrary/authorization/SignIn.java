@@ -7,7 +7,6 @@ import com.sociallibrary.entity.User;
 import com.sociallibrary.registration.SecurityHash;
 import java.io.*;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.*;
@@ -23,11 +22,10 @@ public class SignIn implements Command {
         String page = ConfigurationManager.INDEX_PAGE;
         response.setContentType("text/html;charset=UTF-8");
         UsersActions uAction = new UsersActions();
-        User uList = uAction.searchUserByLogin(request.getParameter("login"));
+        User user = uAction.searchUserByLogin(request.getParameter("login"));
         try {
-            if (uList.getPassword().equals(SecurityHash.getMd5(request.getParameter("password"))) && uList.isConfirmed() && !uList.isBanned()) {
-                HttpSession session = request.getSession(true);
-                session.setAttribute("id", uList.getId());
+            if (user.getPassword().equals(SecurityHash.getMd5(request.getParameter("password"))) && user.isConfirmed() && !user.isBanned()) {
+            request.getSession(true).setAttribute("user", user);
                 page = (ConfigurationManager.LOCAL_LIB);
             } else {
                 page = ConfigurationManager.INDEX_PAGE;
