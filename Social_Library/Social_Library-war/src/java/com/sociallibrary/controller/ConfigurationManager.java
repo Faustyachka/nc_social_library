@@ -20,11 +20,6 @@ public class ConfigurationManager {
     public static final String LOCAL_LIB = "/locallib.jsp";
     public static final String Dashboard_PAGE = "/dashboard.jsp";
     public static final String NOCOMMAND_PAGE = "/nocommand.jsp";
-    public static final String SEARCH_PAGE = "/search.jsp";
-    public static final String ADMIN_PAGE = "/adminpage.jsp";
-    public static final String ADMIN_SEARCH_PAGE = "/adminpage.jsp?search=true";
-    public static String LAST_PAGE = "";
-
 
     static public Page getPageForRole(int role) {
         switch (role) {

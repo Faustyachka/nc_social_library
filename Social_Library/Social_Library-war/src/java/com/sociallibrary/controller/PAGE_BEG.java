@@ -11,6 +11,8 @@ package com.sociallibrary.controller;
  */
 class PAGE_BEG extends Page{
 
+     private  static final  String NOCOMMAND_PAGE ="/beg_nocommand.jsp";
+
     public PAGE_BEG() {
     }
 
@@ -21,7 +23,7 @@ class PAGE_BEG extends Page{
 
     @Override
     public String get_NOCOMMAND_PAGE() {
-        return "/nocommand_beg.jsp";
+        return PAGE_BEG.NOCOMMAND_PAGE;
     }
 
     @Override

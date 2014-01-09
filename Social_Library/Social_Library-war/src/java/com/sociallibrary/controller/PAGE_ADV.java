@@ -11,6 +11,8 @@ package com.sociallibrary.controller;
  */
 class PAGE_ADV extends Page{
 
+     private  static final  String NOCOMMAND_PAGE ="/adv_nocommand.jsp";
+
     public PAGE_ADV() {
     }
 
@@ -21,7 +23,7 @@ class PAGE_ADV extends Page{
 
     @Override
     public String get_NOCOMMAND_PAGE() {
-        throw new UnsupportedOperationException("Not supported yet.");
+       return PAGE_ADV.NOCOMMAND_PAGE;
     }
 
     @Override

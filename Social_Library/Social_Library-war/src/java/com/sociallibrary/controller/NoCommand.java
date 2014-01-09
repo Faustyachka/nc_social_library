@@ -5,15 +5,18 @@
 package com.sociallibrary.controller;
 
 import java.io.IOException;
+import javax.jms.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Pavel
  */
 class NoCommand implements Command {
+    int role=0;
 
     public NoCommand() {
     }
@@ -22,7 +25,9 @@ class NoCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String page=null;
-        Page pag =ConfigurationManager.getPageForRole(3);
+//       HttpSession session= request.getSession();
+//       role=(Integer)session.getAttribute("role");
+        Page pag =ConfigurationManager.getPageForRole(role);
         page=pag.get_NOCOMMAND_PAGE();
 
         return page;

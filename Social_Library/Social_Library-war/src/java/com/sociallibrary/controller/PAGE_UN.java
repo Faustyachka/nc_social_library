@@ -11,10 +11,11 @@ package com.sociallibrary.controller;
  */
 public class PAGE_UN  extends Page{
 
-    private static final  String SEARCH_PAGE ="";
-    private static final  String ADD_PAGE ="";
-    private  static final String ERROR_PAGE="/error_page";
-    private  static final  String NOCOMMAND_PAGE ="/nocommand_u.jsp";
+    private static final  String SEARCH_PAGE ="/unr_search.jap";
+    private static final  String ADD_PAGE ="/unr_add.jsp";
+    private  static final String ERROR_PAGE="/unr_error_page.jsp";
+    private  static final  String NOCOMMAND_PAGE ="/unr_nocommand.jsp";
+     private  static final  String VIEW_PAGE ="/unr_view.jsp";
 
     @Override
     public String get_ERROR_PAGE() {
