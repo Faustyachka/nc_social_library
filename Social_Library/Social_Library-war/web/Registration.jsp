@@ -10,7 +10,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/ourstyle.css">
-       <script src="javascripts/validator.js">
+        <script src="javascripts/validator.js">
+        </script>
+        <script src="javascripts/facebook.js">
         </script>
         <title>Registration</title>
     </head>
@@ -33,7 +35,7 @@
                         <li><a href="Controller?command=nocammand" >
                                 <span class="refLabelText">Search</span>
                             </a></li>
-                            </ul>
+                    </ul>
 
                 </div>
 
@@ -96,11 +98,14 @@
                                     </select>
                                 </td>
                             </tr>
+
+
                         </tbody>
                     </table>
                     <br>
                     <input type="Submit">
                 </form>
+                <fb:registration redirect_uri=http://localhost:8080/Social_Library-war/Registration.jsp fields="name,first_name,last_name,email,gender" />
             </div>
 
             <div id="footer">

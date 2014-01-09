@@ -117,7 +117,7 @@ public class UserCRUD implements IUserCRUD
         }
         finally
         {
-//            ConnectionProvider.close();
+            ConnectionProvider.close();
         }
         return user;
     }

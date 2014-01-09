@@ -5,6 +5,7 @@
 package com.sociallibrary.registration;
 
 import com.sociallibrary.actions.UsersActions;
+import com.sociallibrary.constants.Const;
 import com.sociallibrary.controller.Command;
 import com.sociallibrary.controller.ConfigurationManager;
 import com.sociallibrary.crud.RoleCRUD;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author П
+ * @author Костя
  */
 public class Registration implements Command {
 
@@ -37,8 +38,6 @@ public class Registration implements Command {
     private RoleCRUD roleCRUD = new RoleCRUD();
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, UnsupportedEncodingException {
-        String page = null;
-
         response.setContentType("text/html;charset=UTF-8");
         user = new User();
         List<Role> rList = new ArrayList<Role>();
@@ -68,7 +67,7 @@ public class Registration implements Command {
         UsersActions uAct = new UsersActions();
         User users = uAct.searchUserByLogin(user.getLogin());
         String mailSub = "Registration on Social Library";
-        String mailText = "Please copy and use link: 'http://localhost:8080/Social_Library-war/Controller?users=" + users.getId() + "&command=confirmUser'";
+        String mailText = "Please copy and use link: '"+Const.HOST+"Social_Library-war/Controller?users=" + users.getId() + "&command=confirmUser'";
         String mail[] = new String[1];
         mail[0] = user.getEmail();
         try {
@@ -76,8 +75,6 @@ public class Registration implements Command {
         } catch (MessagingException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        page = ConfigurationManager.INDEX_PAGE;
-        return page;
+        return ConfigurationManager.INDEX_PAGE;
     }
 }

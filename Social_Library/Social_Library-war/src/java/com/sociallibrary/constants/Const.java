@@ -9,6 +9,6 @@ package com.sociallibrary.constants;
  * @author Костя
  */
 public final class Const {
-    public static final short flagTrue = 1;
+    public static final String HOST = "http://localhost:8080/";
     public static final short flagFalse = 0;
 }
