@@ -11,6 +11,7 @@ package com.sociallibrary.controller;
  */
 class PAGE_MOD extends Page {
      private  static final  String NOCOMMAND_PAGE ="/mod_nocommand.jsp";
+     private  static final  String Mylibrary_PAGE ="/mod_mylibrary.jsp";
 
     public PAGE_MOD() {
     }
@@ -42,7 +43,7 @@ class PAGE_MOD extends Page {
 
     @Override
     public String get_MY_LIBRARY_PAGE() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return PAGE_MOD.Mylibrary_PAGE;
     }
 
 }
