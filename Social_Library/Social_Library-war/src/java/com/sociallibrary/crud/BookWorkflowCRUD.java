@@ -31,7 +31,7 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
         BasicConfigurator.configure();
         try 
         {
-            String sqlRequest ="INSERT INTO Book_Workflow (ID, Name)  values(?, '?')";
+            String sqlRequest ="INSERT INTO Book_Workflow (ID, workflow)  values(?, '?')";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
             ps.setInt(1, bookWorkflow.getId());
@@ -64,10 +64,10 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
-           // if (rs.next()) {
-            //    bookWorkflow.setId(rs.getInt("id"));
-           //     bookWorkflow.setWorkflow(rs.getString("name"));
-            //}
+            if (rs.next()) {
+                bookWorkflow.setId(rs.getInt("id"));
+                bookWorkflow.setWorkflow(rs.getString("workflow"));
+            }
             rs.close();
             ps.close();
         }

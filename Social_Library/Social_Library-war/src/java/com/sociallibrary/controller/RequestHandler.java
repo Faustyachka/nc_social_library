@@ -1,11 +1,13 @@
 
 package com.sociallibrary.controller;
 
+
+import com.sociallibrary.commands.DashboardCommand;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
-//import com.sociallibrary.authorization.SignIn;
 import com.sociallibrary.registration.ConfirmUser;
 import com.sociallibrary.registration.Registration;
+import com.sociallibrary.authorization.SignIn;
 
 
 public class RequestHandler {
@@ -30,7 +32,8 @@ private RequestHandler(){
     commands.put("nocommand", new NoCommand());
     commands.put("registration", new Registration ());
     commands.put("confirmUser", new ConfirmUser () );
-    //commands.put("signin", new SignIn());
+    commands.put("dashboard", new DashboardCommand ());
+    commands.put("signin", new SignIn());
 }
 
 public Command getCommand(HttpServletRequest request){

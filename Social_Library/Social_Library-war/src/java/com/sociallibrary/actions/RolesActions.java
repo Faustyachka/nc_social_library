@@ -48,7 +48,43 @@ public class RolesActions implements IRolesActions
                 role.setName(rs.getString("name"));
                 roles.add(role);
             }
+            ps.close();
+            rs.close();
         } 
+         catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+        finally
+        {
+            ConnectionProvider.close();
+        }
+        return roles;
+    }
+
+    public List<Integer> getRolesIdByUserId(long id)
+    {
+        BasicConfigurator.configure();
+        List<Integer> roles = new ArrayList<Integer>();
+        try
+        {
+            String sqlRequest ="SELECT users_roles.role " +
+                                "FROM users " +
+                                "INNER JOIN users_roles " +
+                                "ON users.id=users_roles.users " +
+                                "WHERE users.id=?";
+            PreparedStatement ps = connection.prepareStatement(sqlRequest);
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next())
+            {
+                roles.add(rs.getInt("ROLE"));
+            }
+            ps.close();
+            rs.close();
+        }
          catch (SQLException e)
         {
                 e.printStackTrace();
@@ -73,6 +109,8 @@ public class RolesActions implements IRolesActions
             ps.setInt(2, role.getId());
             ps.executeUpdate();
 
+            ps.close();
+
         } 
          catch (SQLException e)
         {
@@ -95,6 +133,8 @@ public class RolesActions implements IRolesActions
 
             ps.setLong(1, user.getId());
             ps.executeUpdate();
+
+            ps.close();
 
         } 
          catch (SQLException e)

@@ -26,30 +26,53 @@ public class ConnectionProvider {
 
     public /*synchronized*/static Connection getConnection() {
         try {
-            OracleDataSource ods = new OracleDataSource();
+          /*  OracleDataSource ods = new OracleDataSource();
             String url = "jdbc:oracle:thin:@localhost:1521:xe";
             ods.setURL(url);
             ods.setUser("mazafaka");
             ods.setPassword("mazafaka");
-            con = ods.getConnection();
-          /*  if ((con == null)||(con.isClosed())) {
+            con = ods.getConnection();*/
+            if ((con == null)||(con.isClosed())) {
                 Locale.setDefault(Locale.ENGLISH);
                 Context ic = new InitialContext();
                 DataSource dataSource = (DataSource) ic.lookup("jdbc/test");
-                con = dataSource.getConnection();*/
+                con = dataSource.getConnection();
                 con.setAutoCommit(true);
             }
+        }
+        catch(NamingException e)
+        {
+            System.out.println("Cannot retrieve jdbc/test"+e.getMessage());
+        }
         catch(SQLException e)
         {
             e.printStackTrace();
         }
 
         return con;
+    }
+
+    public /*synchronized*/static Connection getDebugConnection() {
+        try {
+            OracleDataSource ods = new OracleDataSource();
+            String url = "jdbc:oracle:thin:@localhost:1521:xe";
+            ods.setURL(url);
+            ods.setUser("Anton");
+            ods.setPassword("01021993");
+            con = ods.getConnection();
         }
-       // catch(NamingException e)
-       // {
-      //      System.out.println("Cannot retrieve jdbc/test"+e.getMessage());
-      //  }
+//        catch(NamingException e)
+//        {
+//            System.out.println("Cannot retrieve jdbc/test"+e.getMessage());
+//        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return con;
+    }
+   
 
     public static void close()
     {

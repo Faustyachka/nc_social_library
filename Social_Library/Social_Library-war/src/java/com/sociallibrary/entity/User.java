@@ -166,6 +166,10 @@ public class User {
         this.roles = roles;
     }
 
+    public void freeRoles() {
+        this.roles = new ArrayList<Role>();
+    }
+
     //private
 //    public static String applyMaskToDate(String mask, String date){
 //        int y = 0, m = 0, d = 0;

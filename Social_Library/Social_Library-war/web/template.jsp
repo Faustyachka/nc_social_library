@@ -19,34 +19,36 @@
 
                 <div id="menu">
                     <ul>
-                        <li><a href="#" id="nowopen"> 
-                                <span class="refLabelText">Sign In</span>
+                        
+                        <li><a href="Controller?command=nocommand">
+                                <span class="refLabelText">Add</span>
                             </a></li>
-                        <li><a href="#"> 
+                        <li><a href="Controller?command=nocommand">
                                 <span class="refLabelText">Search</span>
                             </a></li>
-                        <li><a href="#"> 
-                                <span class="refLabelText">Add book</span>
+                        <li><a href="Controller?command=nocommand" >
+                                <span class="refLabelText">My library</span>
                             </a></li>
-                        <li><a href="#" > 
-                                <span class="refLabelText">Regiastration</span>
+                        <li><a href="index.jsp" >
+                                <span class="refLabelText">Sign out</span>
                             </a></li>
-                        
-                        </div>                
- 
+                    </ul>
 
-
-                        </div>
-
-                        <div id="center">
-                            [Center]
-                        </div>
- 
-                        <div id="footer">
-                           <hr>
-                            <p id="footerText">[ footer text ]</p>
-                        </div>
                 </div>
 
-                </body>
-                </html>
+
+
+            </div>
+
+            <div id="center">
+                [Center]
+            </div>
+
+            <div id="footer">
+                <hr>
+                <p id="footerText">[ footer text ]</p>
+            </div>
+        </div>
+
+    </body>
+</html>

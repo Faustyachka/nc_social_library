@@ -13,15 +13,15 @@ function formValidation()
             {
                 if(allLetter(ulname))
                 {
-
                     if(ValidateEmail(uemail))
                     {
-                }
+
+                    }
                 }
             }
         }
     }
-    
+
     return false;
 
 }
@@ -48,7 +48,7 @@ function passid_validation(passid,mx,my)
     return true;
 }
 function allLetter(uname)
-{ 
+{
     var letters = /^[A-Za-z]+$/;
     if(uname.value.match(letters))
     {
@@ -67,8 +67,8 @@ function ValidateEmail(uemail)
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if(uemail.value.match(mailformat))
     {
-    	alert('Form Succesfully Submitted');
-        window.location.reload()
+        alert('Registration complete, check your email to confirm account!');
+        document.registration.submit();
         return true;
     }
     else
@@ -77,4 +77,4 @@ function ValidateEmail(uemail)
         uemail.focus();
         return false;
     }
-} 
+}

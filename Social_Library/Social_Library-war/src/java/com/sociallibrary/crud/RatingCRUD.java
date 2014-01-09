@@ -5,6 +5,7 @@ import com.sociallibrary.icrud.ILibraryCRUD;
 import com.sociallibrary.icrud.IRatingCRUD;
 import com.sociallibrary.icrud.IUserCRUD;
 import com.sociallibrary.connection.ConnectionProvider;
+import com.sociallibrary.entity.Library;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -78,8 +79,6 @@ public class RatingCRUD implements IRatingCRUD {
         Rating rating = new Rating();
         int resulSetSize=0;
         BasicConfigurator.configure();
-        IUserCRUD u = new UserCRUD();
-        ILibraryCRUD l = new LibraryCRUD();
         try {
             PreparedStatement stmt = conn.prepareStatement(selectQuery);
 
@@ -97,11 +96,11 @@ public class RatingCRUD implements IRatingCRUD {
 //            }
             //rs.beforeFirst();
 
-            while (rs.next()) {
+            if (rs.next()) {
                 rating.setId(rs.getLong(1));
-                rating.setRate(rs.getShort(2));
-                rating.setUser(u.readUsers(rs.getInt(3)));
-                rating.setBook(l.readLibrary(rs.getInt(4)));
+                rating.setRate(rs.getInt(2));
+                rating.setUser(new UserCRUD().readUser(rs.getInt(3)));
+                rating.setBook(new LibraryCRUD().readLibrary(rs.getInt(4)));
             }
             rs.close();
             stmt.close();
@@ -124,8 +123,8 @@ public class RatingCRUD implements IRatingCRUD {
             PreparedStatement pstmt = conn.prepareStatement(updateRatingQuery);
 
             pstmt.setInt(1, ratingNew.getRate());
-            pstmt.setLong(3, ratingNew.getUser().getId());
-            pstmt.setLong(2, ratingNew.getBook().getId());
+            pstmt.setLong(2, ratingNew.getUser().getId());
+            pstmt.setLong(3, ratingNew.getBook().getId());
             pstmt.setLong(4, ratingOld.getId());
 
             pstmt.executeUpdate();

@@ -17,7 +17,7 @@ public class CatalogCRUD implements ICatalogCRUD {
     public static final Logger log = Logger.getLogger(CatalogCRUD.class);
     private static final String selectQuery = "SELECT * FROM catalog WHERE id=?";
     private static final String deleteQuery = "DELETE FROM catalog WHERE id =?";
-    private static final String insertCatalogQuery = "INSERT INTO catalog VALUES(catalog_id.nextval, ?, ?,?,?)";
+    private static final String insertCatalogQuery = "INSERT INTO catalog VALUES(catalog_id.nextval, ?,?,?,?)";
     private static final String updateCatalogQuery = "UPDATE catalog SET users=?, book=?, event_time=?, status=?, WHERE id=?";
 
      public  CatalogCRUD()
@@ -33,8 +33,8 @@ public class CatalogCRUD implements ICatalogCRUD {
 
             pstmt.setLong(1, catalog.getUser().getId());
             pstmt.setLong(2, catalog.getBook().getId());
-            //pstmt.setTimestamp(3, (Time) catalog.getEventTime());
-           // pstmt.setShort(4, catalog.getStatus().getId());
+            pstmt.setTimestamp(3, catalog.getEventTime());
+            pstmt.setInt(4, catalog.getStatus().getId());
 
             pstmt.executeUpdate();
 
@@ -54,9 +54,6 @@ public class CatalogCRUD implements ICatalogCRUD {
     public Catalog readCatalog(int id) {
         BasicConfigurator.configure();
         Catalog catalog = new Catalog();
-        IUserCRUD u = new UserCRUD();
-        ILibraryCRUD l = new LibraryCRUD();
-        IBookStatusCRUD s = new BookStatusCRUD();
         try {
             PreparedStatement stmt = connection.prepareStatement(selectQuery);
 
@@ -66,9 +63,10 @@ public class CatalogCRUD implements ICatalogCRUD {
 
             while (rs.next()) {
                 catalog.setId(rs.getLong(1));
-                catalog.setUser(u.readUsers(rs.getInt(2)));
-                catalog.setBook(l.readLibrary(rs.getInt(3)));
-                catalog.setStatus(s.readBookStatus(rs.getInt(4)));
+                catalog.setUser(new UserCRUD().readUser(rs.getInt(2)));
+                catalog.setBook(new LibraryCRUD().readLibrary(rs.getInt(3)));
+                catalog.setEventTime(rs.getTimestamp(4));
+                catalog.setStatus(new BookStatusCRUD().readBookStatus(rs.getInt(5)));
             }
             rs.close();
             stmt.close();

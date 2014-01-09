@@ -5,7 +5,9 @@
 
 package com.sociallibrary.entity;
 
+import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 
 /**
  *
@@ -15,7 +17,7 @@ public class Catalog {
     private long id;
     private User user;
     private Library book;
-    private Time eventTime;
+    private Timestamp eventTime;
     private BookStatus status;
 
     public Catalog() {
@@ -33,11 +35,11 @@ public class Catalog {
         this.book = book;
     }
 
-    public Time getEventTime() {
+    public Timestamp getEventTime() {
         return eventTime;
     }
 
-    public void setEventTime(Time eventTime) {
+    public void setEventTime(Timestamp eventTime) {
         this.eventTime = eventTime;
     }
 

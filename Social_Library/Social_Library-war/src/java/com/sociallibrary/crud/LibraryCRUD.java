@@ -60,9 +60,9 @@ public class LibraryCRUD implements ILibraryCRUD {
         }
     }
 
-    public Library readLibrary(int id)
+    public Library readLibrary(long id)
     {
-        BasicConfigurator.configure();
+         BasicConfigurator.configure();
          ResultSet rs=null;
          Library library = new Library();
          try
@@ -80,8 +80,8 @@ public class LibraryCRUD implements ILibraryCRUD {
                 library.setCover(rs.getString("COVER"));
                 library.setDescription(rs.getString("DESCRIPTION"));
                 library.setPages(rs.getInt("PAGES"));
-                //library.setUser(new UserCRUD().readUsers(rs.getInt("USERS")));
-                //library.setWorkflow(new BookWorkflowCRUD().readBookWorkflow(rs.getInt("WORKFLOW")));
+                library.setUser(new UserCRUD().readUser(rs.getLong("USERS")));
+                library.setWorkflow(new BookWorkflowCRUD().readBookWorkflow(rs.getInt("WORKFLOW")));
             }
             rs.close();
             stmt.close();
@@ -93,7 +93,7 @@ public class LibraryCRUD implements ILibraryCRUD {
         }
         finally
         {
-            //ConnectionProvider.close();
+            ConnectionProvider.close();
         }
         return library;
     }

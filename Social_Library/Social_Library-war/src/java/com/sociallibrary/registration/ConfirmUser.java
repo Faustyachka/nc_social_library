@@ -23,10 +23,9 @@ public class ConfirmUser implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = null;
         response.setContentType("text/html;charset=UTF-8");
-        UserCRUD userCRUD = new UserCRUD();
-        User user= userCRUD.readUsers(Integer.parseInt(request.getParameter("users")));
+        User user = new UserCRUD().readUser(Integer.parseInt(request.getParameter("users")));
         user.setConfirmed(true);
-        userCRUD.updateUsers(user);
+        new UserCRUD().updateUser(user);
         page = ConfigurationManager.INDEX_PAGE;
         return page;
     }

@@ -5,13 +5,13 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/ourstyle.css">
-        <script src="/javascripts/validator.js"/>
+       <script src="javascripts/validator.js">
+        </script>
         <title>Registration</title>
     </head>
     <body>
@@ -21,18 +21,19 @@
 
                 <div id="menu">
                     <ul>
-                        <li><a href="#" id="nowopen">
+                        <li><a href="index.jsp" >
                                 <span class="refLabelText">Sign In</span>
                             </a></li>
-                        <li><a href="#">
+                        <li><a href="Registration.jsp">
+                                <span class="refLabelText">Registration</span>
+                            </a></li>
+                        <li><a href="Controller?command=nocommand">
+                                <span class="refLabelText">Add</span>
+                            </a></li>
+                        <li><a href="Controller?command=nocammand" >
                                 <span class="refLabelText">Search</span>
                             </a></li>
-                        <li><a href="#">
-                                <span class="refLabelText">Add book</span>
-                            </a></li>
-                        <li><a href="" >
-                                <span class="refLabelText">Regiastration</span>
-                            </a></li>
+                            </ul>
 
                 </div>
 
@@ -41,7 +42,7 @@
             </div>
 
             <div id="center">
-                <form method="POST" action="Servlet" name="registration">
+                <form method="POST" action="Controller" name="registration" onSubmit="return formValidation();">
                     <input type="hidden" value="registration" name="command" />
                     <table border="0">
 
@@ -65,6 +66,8 @@
                                 <td>            Login:
                                 </td>
                                 <td>  <input name="login"></td>
+
+
                             </tr>
                             <tr>
                                 <td>            Password:
