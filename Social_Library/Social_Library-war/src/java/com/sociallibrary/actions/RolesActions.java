@@ -73,7 +73,7 @@ public class RolesActions implements IRolesActions
                                 "FROM users " +
                                 "INNER JOIN users_roles " +
                                 "ON users.id=users_roles.users " +
-                                "WHERE users.id=?";
+                                "WHERE users.id=? order by users_roles.role ";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();

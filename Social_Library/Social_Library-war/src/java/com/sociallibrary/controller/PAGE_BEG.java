@@ -12,6 +12,7 @@ package com.sociallibrary.controller;
 class PAGE_BEG extends Page{
 
      private  static final  String NOCOMMAND_PAGE ="/beg_nocommand.jsp";
+     private  static final  String Mylibary_PAGE ="/beg_mylibrary.jsp";
 
     public PAGE_BEG() {
     }
@@ -43,7 +44,7 @@ class PAGE_BEG extends Page{
 
     @Override
     public String get_MY_LIBRARY_PAGE() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return PAGE_BEG.Mylibary_PAGE;
     }
 
 }
