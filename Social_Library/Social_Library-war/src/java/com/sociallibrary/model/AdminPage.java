@@ -22,13 +22,13 @@ public class AdminPage {
     private static List<User> last_search_users_result = null;
 
     public void assignRolesToUser(long user_id, List<Integer> role_ids){
-        User user = new UserCRUD().readUsers(user_id);
+        User user = new UserCRUD().readUser(user_id);
         user.freeRoles();
         for(int role_id : role_ids){
             Role role = new RoleCRUD().readRole(role_id);
             if(!user.getRoles().contains(role)) user.getRoles().add(role);
         }
-        new UserCRUD().updateUsers(user);
+        new UserCRUD().updateUser(user);
     }
 
     public void searchUsers(String search_request){

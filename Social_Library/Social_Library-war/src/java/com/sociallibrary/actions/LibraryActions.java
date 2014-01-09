@@ -87,7 +87,7 @@ public class LibraryActions implements ILibraryActions
      {
 
         Library book = new LibraryCRUD().readLibrary(book_id);
-        User user = new UserCRUD().readUsers(user_id);
+        User user = new UserCRUD().readUser(user_id);
         if(book!=null)
             if(user!=null){
                 Catalog catalog = new Catalog();

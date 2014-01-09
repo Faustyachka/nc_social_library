@@ -99,7 +99,7 @@ public class RatingCRUD implements IRatingCRUD {
             if (rs.next()) {
                 rating.setId(rs.getLong(1));
                 rating.setRate(rs.getInt(2));
-                rating.setUser(new UserCRUD().readUsers(rs.getInt(3)));
+                rating.setUser(new UserCRUD().readUser(rs.getInt(3)));
                 rating.setBook(new LibraryCRUD().readLibrary(rs.getInt(4)));
             }
             rs.close();

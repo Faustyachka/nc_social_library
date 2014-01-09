@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import com.sociallibrary.registration.ConfirmUser;
 import com.sociallibrary.registration.Registration;
+import com.sociallibrary.authorization.SignIn;
 
 
 public class RequestHandler {

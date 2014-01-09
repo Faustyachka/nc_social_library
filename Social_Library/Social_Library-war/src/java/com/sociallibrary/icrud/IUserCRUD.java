@@ -13,9 +13,9 @@ import com.sociallibrary.entity.*;
  */
 public interface IUserCRUD {
 
-     public void createUsers(User user);
-     public User readUsers(long id);
-     public void updateUsers(User user);
-     public void deleteUsers(int id);
+     public void createUser(User user);
+     public User readUser(long id);
+     public void updateUser(User user);
+     public void deleteUser(int id);
 
 }

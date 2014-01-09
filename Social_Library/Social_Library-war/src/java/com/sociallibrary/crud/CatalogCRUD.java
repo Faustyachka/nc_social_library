@@ -63,7 +63,7 @@ public class CatalogCRUD implements ICatalogCRUD {
 
             while (rs.next()) {
                 catalog.setId(rs.getLong(1));
-                catalog.setUser(new UserCRUD().readUsers(rs.getInt(2)));
+                catalog.setUser(new UserCRUD().readUser(rs.getInt(2)));
                 catalog.setBook(new LibraryCRUD().readLibrary(rs.getInt(3)));
                 catalog.setEventTime(rs.getTimestamp(4));
                 catalog.setStatus(new BookStatusCRUD().readBookStatus(rs.getInt(5)));

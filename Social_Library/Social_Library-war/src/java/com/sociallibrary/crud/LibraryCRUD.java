@@ -80,7 +80,7 @@ public class LibraryCRUD implements ILibraryCRUD {
                 library.setCover(rs.getString("COVER"));
                 library.setDescription(rs.getString("DESCRIPTION"));
                 library.setPages(rs.getInt("PAGES"));
-                library.setUser(new UserCRUD().readUsers(rs.getLong("USERS")));
+                library.setUser(new UserCRUD().readUser(rs.getLong("USERS")));
                 library.setWorkflow(new BookWorkflowCRUD().readBookWorkflow(rs.getInt("WORKFLOW")));
             }
             rs.close();

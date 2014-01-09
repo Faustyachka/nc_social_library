@@ -21,8 +21,7 @@ public class SignIn implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, UnsupportedEncodingException {
         String page = ConfigurationManager.INDEX_PAGE;
         response.setContentType("text/html;charset=UTF-8");
-        UsersActions uAction = new UsersActions();
-        User user = uAction.searchUserByLogin(request.getParameter("login"));
+        User user = new UsersActions().searchUserByLogin(request.getParameter("login"));
         try {
             if (user.getPassword().equals(SecurityHash.getMd5(request.getParameter("password"))) && user.isConfirmed() && !user.isBanned()) {
             request.getSession(true).setAttribute("user", user);

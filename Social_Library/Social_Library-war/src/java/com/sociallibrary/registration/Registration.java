@@ -64,7 +64,7 @@ public class Registration implements Command {
        }
         user.setRoles(rList);
         UserCRUD userCRUD = new UserCRUD();
-        userCRUD.createUsers(user);
+        userCRUD.createUser(user);
         UsersActions uAct = new UsersActions();
         User users = uAct.searchUserByLogin(user.getLogin());
         String mailSub = "Registration on Social Library";

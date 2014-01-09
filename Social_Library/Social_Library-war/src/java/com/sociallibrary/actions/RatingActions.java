@@ -131,7 +131,7 @@ public class RatingActions implements IRatingActions
      {
 
         Library book = new LibraryCRUD().readLibrary(book_id);
-        User user = new UserCRUD().readUsers(user_id);
+        User user = new UserCRUD().readUser(user_id);
         if(book!=null)
             if(user!=null){
                 Rating rating = new Rating();

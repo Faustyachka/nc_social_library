@@ -33,7 +33,7 @@ public class UsersActions implements IUsersActions
 
     public boolean  assignRole(long user_id, int role_id){
         Role role = new RoleCRUD().readRole(role_id);
-        User user = new UserCRUD().readUsers(user_id);
+        User user = new UserCRUD().readUser(user_id);
         if(role==null) return false;
         if(user==null) return false;
 
@@ -54,7 +54,7 @@ public class UsersActions implements IUsersActions
 
             while (rs.next())
             {
-                User user = new UserCRUD().readUsers(rs.getLong(1));
+                User user = new UserCRUD().readUser(rs.getLong(1));
                 users.add(user);
             }
 
@@ -191,7 +191,7 @@ public class UsersActions implements IUsersActions
 
             if (rs.next())
             {
-                user = new UserCRUD().readUsers(rs.getLong("id"));
+                user = new UserCRUD().readUser(rs.getLong("id"));
             }
 
             rs.close();
@@ -219,7 +219,7 @@ public class UsersActions implements IUsersActions
             stmt.setString(1, login);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                user = new UserCRUD().readUsers(Integer.parseInt(rs.getString(1)));
+                user = new UserCRUD().readUser(Integer.parseInt(rs.getString(1)));
             }
             rs.close();
             stmt.close();

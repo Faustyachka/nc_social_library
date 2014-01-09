@@ -35,7 +35,7 @@ public class UserCRUD implements IUserCRUD
         connection = ConnectionProvider.getConnection();
     }
 
-    public void createUsers(User user) {
+    public void createUser(User user) {
         BasicConfigurator.configure();
         try {
                 String sqlRequest =
@@ -73,7 +73,7 @@ public class UserCRUD implements IUserCRUD
         }
     }
 
-    public User readUsers(long id) {
+    public User readUser(long id) {
         BasicConfigurator.configure();
         User user = new User();
         try {
@@ -117,12 +117,12 @@ public class UserCRUD implements IUserCRUD
         }
         finally
         {
-            ConnectionProvider.close();
+//            ConnectionProvider.close();
         }
         return user;
     }
 
-    public void updateUsers(User user) {
+    public void updateUser(User user) {
         BasicConfigurator.configure();
         try {
                 String sqlRequest = "UPDATE Users SET FIRST_NAME=?, LAST_NAME=?, " +
@@ -136,7 +136,7 @@ public class UserCRUD implements IUserCRUD
             ps.setString(4, user.getLogin());
             ps.setString(5, user.getPassword());
             ps.setInt(6, user.getGender().toInt());
-            ps.setInt(7, user.isConfirmed()?0:1);
+            ps.setInt(7, user.isConfirmed()?1:0);
             ps.setInt(8, user.isBanned()?1:0);
             ps.setString(9, user.getRegistrationDate());
             ps.setInt(10, user.isNotify()?1:0);
@@ -162,7 +162,7 @@ public class UserCRUD implements IUserCRUD
         }
     }
 
-    public void deleteUsers(int id) {
+    public void deleteUser(int id) {
         BasicConfigurator.configure();
         try {
                 String sqlRequest = "DELETE FROM users WHERE id=?";
