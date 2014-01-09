@@ -46,7 +46,8 @@ public class AssignRole implements Command {
         long user_id = Long.valueOf(request.getParameter("user_id"));
         new AdminPage().assignRolesToUser(user_id, role_ids);
 
-        return ConfigurationManager.ADMIN_PAGE;
+//        return ConfigurationManager.ADMIN_PAGE;
+        return null;
     }
 
 }

@@ -60,7 +60,8 @@ public class SearchInGlobalLib implements Command {
 
         request.getSession().setAttribute("founded_books", founded_books);
 
-        return ConfigurationManager.SEARCH_PAGE;
+//       return ConfigurationManager.SEARCH_PAGE;
+        return null;
     }
 
 }

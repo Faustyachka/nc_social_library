@@ -30,7 +30,7 @@ class ScoreCommand implements Command {
        
 //                HttpSession session=request.getSession(true);
 //                session.setAttribute("name", "Pavel!!!");
-         page= ConfigurationManager.LAST_PAGE;
+//         page= ConfigurationManager.LAST_PAGE;
         long user_id = Long.parseLong(request.getParameter("user_id"));
         long book_id = Long.parseLong(request.getParameter("book_id"));
         int rate = Integer.parseInt(request.getParameter("rate"));
