@@ -3,7 +3,6 @@ package com.sociallibrary.authorization;
 import com.sociallibrary.actions.UsersActions;
 import com.sociallibrary.controller.Command;
 import com.sociallibrary.controller.ConfigurationManager;
-import com.sociallibrary.controller.Page;
 import com.sociallibrary.entity.Role;
 import com.sociallibrary.entity.User;
 import com.sociallibrary.registration.SecurityHash;

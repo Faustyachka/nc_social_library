@@ -5,9 +5,10 @@
 package com.sociallibrary.authorization;
 
 import com.sociallibrary.constants.Const;
-//import java.util.logging.Level;
-//import java.util.logging.Logger;
-import com.google.gson.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+//import com.google.gson.JsonObject;
+import org.json.JSONObject;
 
 //import net.sf.json.JSONException;
 //import org.json.JSONObject
@@ -87,7 +88,13 @@ public class facebookLogin extends HttpServlet {
             }
             out.print(code);
             out.print("<br>"+graph);
-            JsonObject j = new JsonObject();
+            try {
+                JSONObject j = new JSONObject(graph);
+                firstName = j.getString("id");
+            } catch (org.json.JSONException ex) {
+                Logger.getLogger(facebookLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
 
 
 

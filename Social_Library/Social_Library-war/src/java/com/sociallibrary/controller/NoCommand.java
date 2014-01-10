@@ -16,27 +16,19 @@ import javax.servlet.http.HttpSession;
  */
 class NoCommand implements Command {
 
-    private Integer role = null;
-    private String page = null;
-
     public NoCommand() {
     }
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
+
+        Integer role = null;
+        String page = null;
+
         HttpSession session = request.getSession();
-
-
-
-        if (session.getAttribute("role") != null) {
-            role = (Integer) session.getAttribute("role");
-        } else {
-            role = 4;
-        }
-        Page pag = ConfigurationManager.getPageForRole(role);
-        page = pag.get_NOCOMMAND_PAGE();
-
+        role = (Integer) session.getAttribute("role");
+        page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.NOCOMMAND_PAGE + role);
         return page;
     }
 }

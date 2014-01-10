@@ -14,7 +14,6 @@ public class ConfigurationManager {
 
     private static ConfigurationManager instance;
     private ResourceBundle resourcebundle;
-
     public static final String SCORE_PAGE = "/rating.jsp";
     public static final String ERROR_PAGE = "/error_page.jsp";
     public static final String USER_PAGE = "/user.jsp";
@@ -25,7 +24,6 @@ public class ConfigurationManager {
     public static final String NOCOMMAND_PAGE = "nocommand";
     public static final String DASHBOARD_PAGE = "dashboard";
     public static final String MAIN_PAGE = "mainpage";
-
 
     public static synchronized ConfigurationManager getInstance() {
         if (instance == null) {
@@ -39,23 +37,5 @@ public class ConfigurationManager {
 
         return (String) resourcebundle.getObject(key);
     }
-
-    static  public Page getPageForRole(int role) {
-        switch (role) {
-            case 0:
-                return new PAGE_ADM();
-            case 1:
-                return new PAGE_MOD();
-            case 2:
-                return new PAGE_ADV();
-            case 3:
-                return new PAGE_BEG();
-            case 4:
-                return new PAGE_UN();
-            default:
-                return new PAGE_UN();
-        }
-
-
-    }
 }
+
