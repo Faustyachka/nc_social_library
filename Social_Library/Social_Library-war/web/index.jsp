@@ -15,6 +15,9 @@
         <title>TEMPLATE Page</title>
     </head>
     <body>
+        <%
+        session.setAttribute("role",4);
+        %>
 
         <div id="main">
             <div id="header">
