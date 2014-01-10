@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sociallibrary.commands;
 
 import com.sociallibrary.controller.Command;
@@ -14,25 +13,35 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Pavel
  */
-public class DashboardCommand implements  Command {
+public class DashboardCommand implements Command {
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String page =null;
-        Dashboard dashboard =new Dashboard();
-        List<Library> lib=dashboard.getInProgress();
+        Integer role = null;
+        String page = null;
+        Dashboard dashboard = new Dashboard();
+        List<Library> lib = dashboard.getInProgress();
         request.setAttribute("inprogress", lib);
 
-        page=ConfigurationManager.Dashboard_PAGE;
+
+        HttpSession session = request.getSession();
+
+
+
+        if (session.getAttribute("role") != null) {
+            role = (Integer) session.getAttribute("role");
+        } else {
+            role = 2;
+        }
+        page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.DASHBOARD_PAGE+role);
 
 
 
         return page;
     }
-
 }

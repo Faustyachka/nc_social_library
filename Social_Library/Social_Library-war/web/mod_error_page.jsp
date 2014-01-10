@@ -22,7 +22,7 @@
                             <li><a href="Controller?command=nocommand" >
                                 <span class="refLabelText">Dashboard for approving</span>
                             </a></li>
-                        <li><a href="Controller?command=nocommand" >
+                        <li><a href="Controller?command=dashboard" >
                                 <span class="refLabelText">Dashboard for publishing </span>
                             </a></li>
                         <li><a href="Controller?command=nocommand">

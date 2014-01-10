@@ -3,6 +3,8 @@
     Created on : 07.01.2014, 0:27:40
     Author     : Pavel
 --%>
+<%@page import="java.util.List"%>
+<%@page import="com.sociallibrary.entity.*"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,7 +21,7 @@
 
                 <div id="menu">
                     <ul>
-                        <li><a href="Controller?command=nocommand" >
+                        <li><a href="Controller?command=dashboard" >
                                 <span class="refLabelText">Dashboard</span>
                             </a></li>
                         <li><a href="Controller?command=nocommand">
@@ -45,6 +47,48 @@
             <div id="center">
 
                 <p1>DASHBOARD!!!</p1>
+
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>ISBN</th>
+                            <th>TITLE</th>
+                            <th>DISCRIPTION</th>
+                            <th>PAGES</th>
+                            <th>Reject</th>
+                            <th>Publish</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% List<Library> lib = (List<Library>) request.getAttribute("inprogress");
+            int i = 0;
+            for (Library temp : lib) {
+
+                        %>
+                        <tr>
+                            <td><%out.print(temp.getId());%></td>
+                            <td><%out.print(temp.getIsbn());%></td>
+                            <td><%out.print(temp.getTitle());%></td>
+                            <td><%out.print(temp.getDescription());%></td>
+                            <td><%out.print(temp.getPages());%></td>
+
+                            <td> <form name="form" action="Controller" method="POST">
+                                    <input type="hidden" name="command" value="reject" />
+                                    <input type="hidden" name="reject" value="<% out.print(temp.getId());%>" />
+                                    <input type="submit" value="Reject!" />
+                                </form></td>
+                            <td> <form name="form" action="Controller" method="POST">
+                                    <input type="hidden" name="command" value="publish" />
+                                    <input type="hidden" name="publish" value="<% out.print(temp.getId());%>" />
+                                    <input type="submit" value="Publish!" />
+                                </form></td>
+
+
+                        </tr>
+                        <%}%>
+                    </tbody>
+                </table>
             </div>
 
             <div id="footer">
