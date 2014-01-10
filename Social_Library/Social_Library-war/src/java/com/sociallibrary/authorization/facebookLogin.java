@@ -88,13 +88,13 @@ public class facebookLogin extends HttpServlet {
             }
             out.print(code);
             out.print("<br>"+graph);
-            try {
-                JSONObject j = new JSONObject(graph);
-                firstName = j.getString("id");
-            } catch (org.json.JSONException ex) {
-                Logger.getLogger(facebookLogin.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+//            try {
+//                JSONObject j = new JSONObject(graph);
+//                firstName = j.getString("id");
+//            } catch (org.json.JSONException ex) {
+//                Logger.getLogger(facebookLogin.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
 
 
 
