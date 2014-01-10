@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="com.sociallibrary.constants.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -105,7 +106,8 @@
                     <br>
                     <input type="Submit">
                 </form>
-                <fb:registration redirect_uri=http://localhost:8080/Social_Library-war/Registration.jsp fields="name,first_name,last_name,email,gender" />
+                <%--<fb:registration redirect_uri=<%=Const.HOST%>Registration.jsp fields="name,first_name,last_name,email,gender,password" />--%>
+                <a href="https://www.facebook.com/dialog/oauth?client_id=<%=Const.APP_ID%>&redirect_uri=<%=Const.HOST%>facebookLogin&response_type=code">FB</a>
             </div>
 
             <div id="footer">
