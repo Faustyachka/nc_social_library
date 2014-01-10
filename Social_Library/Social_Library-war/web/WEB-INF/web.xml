@@ -4,9 +4,41 @@
         <servlet-name>Controller</servlet-name>
         <servlet-class>com.sociallibrary.controller.ControllerServlet</servlet-class>
     </servlet>
-     <servlet-mapping>
+    <servlet>
+        <servlet-name>facebookLogin</servlet-name>
+        <servlet-class>com.sociallibrary.authorization.facebookLogin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>vkLogin</servlet-name>
+        <servlet-class>com.sociallibrary.authorization.vkLogin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>googleLogin</servlet-name>
+        <servlet-class>com.sociallibrary.authorization.googleLogin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>twitterLogin</servlet-name>
+        <servlet-class>com.sociallibrary.authorization.twitterLogin</servlet-class>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>facebookLogin</servlet-name>
+        <url-pattern>/facebookLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>vkLogin</servlet-name>
+        <url-pattern>/vkLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>googleLogin</servlet-name>
+        <url-pattern>/googleLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>twitterLogin</servlet-name>
+        <url-pattern>/twitterLogin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
