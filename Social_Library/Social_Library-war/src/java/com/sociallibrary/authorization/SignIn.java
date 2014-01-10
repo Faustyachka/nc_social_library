@@ -20,10 +20,11 @@ import javax.servlet.http.*;
  * @author Костя
  */
 public class SignIn implements Command {
-    Integer role =null;
+   
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, UnsupportedEncodingException {
-        String page = ConfigurationManager.INDEX_PAGE;
+        String page =null;
+         Integer role =null;
         response.setContentType("text/html;charset=UTF-8");
         User user = new UsersActions().searchUserByLogin(request.getParameter("login"));
 
@@ -35,8 +36,8 @@ public class SignIn implements Command {
                 List<Role> roles = user.getRoles();
                 session.setAttribute("role", roles.get(0).getId());
                 role= (Integer)session.getAttribute("role");
-                Page pag=ConfigurationManager.getPageForRole(role);
-                page =pag.get_MY_LIBRARY_PAGE();
+                page=ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE+role);
+                
 
 
                
