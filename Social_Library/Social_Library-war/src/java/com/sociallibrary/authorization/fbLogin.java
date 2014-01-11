@@ -38,7 +38,7 @@ import org.json.JSONObject;
 
 /**
  *
- * @author Назар
+ * @author Костя
  */
 public class fbLogin implements Command {
 
@@ -57,7 +57,7 @@ public class fbLogin implements Command {
             //token
             String token = null;
             try {
-                String g = "https://graph.facebook.com/oauth/access_token?client_id=" + Const.APP_ID + "&redirect_uri=" + URLEncoder.encode(Const.HOST + "Controller?command=fbLogin", "UTF-8") + "&client_secret=" + Const.APP_SECRET + "&code=" + code;
+                String g = "https://graph.facebook.com/oauth/access_token?client_id=" + Const.FB_APP_ID + "&redirect_uri=" + URLEncoder.encode(Const.HOST + "Controller?command=fbLogin", "UTF-8") + "&client_secret=" + Const.FB_APP_SECRET + "&code=" + code;
                 URL u = new URL(g);
                 URLConnection c = u.openConnection();
                 BufferedReader in = new BufferedReader(new InputStreamReader(c.getInputStream()));
