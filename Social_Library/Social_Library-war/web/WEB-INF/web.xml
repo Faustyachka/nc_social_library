@@ -20,6 +20,10 @@
         <servlet-name>twitterLogin</servlet-name>
         <servlet-class>com.sociallibrary.authorization.twitterLogin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>tester</servlet-name>
+        <servlet-class>com.sociallibrary.authorization.tester</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>twitterLogin</servlet-name>
         <url-pattern>/twitterLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>tester</servlet-name>
+        <url-pattern>/tester</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

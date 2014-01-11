@@ -41,7 +41,7 @@ public class Registration implements Command {
         response.setContentType("text/html;charset=UTF-8");
         user = new User();
         List<Role> rList = new ArrayList<Role>();
-        rList.add( roleCRUD.readRole(3));
+        rList.add(roleCRUD.readRole(3));
         user.setFirstName(request.getParameter("firstName"));
         user.setLastName(request.getParameter("lastName"));
         user.setEmail(request.getParameter("email"));
@@ -56,18 +56,18 @@ public class Registration implements Command {
         user.setBanned(false);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         user.setRegistrationDate(dateFormat.format(new Date()).toString());
-       if (Integer.parseInt(request.getParameter("notify"))==1){
-           user.setNotify(true);
-       }    else{
-                user.setNotify(false);
-       }
+        if (Integer.parseInt(request.getParameter("notify")) == 1) {
+            user.setNotify(true);
+        } else {
+            user.setNotify(false);
+        }
         user.setRoles(rList);
         UserCRUD userCRUD = new UserCRUD();
         userCRUD.createUser(user);
         UsersActions uAct = new UsersActions();
         User users = uAct.searchUserByLogin(user.getLogin());
         String mailSub = "Registration on Social Library";
-        String mailText = "Please copy and use link: '"+Const.HOST+"Social_Library-war/Controller?users=" + users.getId() + "&command=confirmUser'";
+        String mailText = "Please copy and use link: '" + Const.HOST + "Controller?users=" + users.getId() + "&command=confirmUser'";
         String mail[] = new String[1];
         mail[0] = user.getEmail();
         try {

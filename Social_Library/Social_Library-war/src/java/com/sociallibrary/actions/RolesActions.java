@@ -102,7 +102,7 @@ public class RolesActions implements IRolesActions
         BasicConfigurator.configure();
         try 
         {
-            String sqlRequest ="INSERT INTO USERS_ROLES (ID,USERS,ROLE) values(0, ?, ?)";
+            String sqlRequest ="INSERT INTO USERS_ROLES (ID,USERS,ROLE) values(USERS_ROLES_ID.nextval, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
             ps.setLong(1, user.getId());

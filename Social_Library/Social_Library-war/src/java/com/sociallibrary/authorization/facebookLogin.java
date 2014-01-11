@@ -4,11 +4,20 @@
  */
 package com.sociallibrary.authorization;
 
+import com.sociallibrary.actions.UsersActions;
 import com.sociallibrary.constants.Const;
+import com.sociallibrary.controller.Command;
+import com.sociallibrary.crud.RoleCRUD;
+import com.sociallibrary.crud.UserCRUD;
+import com.sociallibrary.entity.Gender;
+import com.sociallibrary.entity.Role;
+import com.sociallibrary.entity.User;
+import com.sociallibrary.registration.SecurityHash;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 //import com.google.gson.JsonObject;
-//import org.json.JSONObject;
+import org.json.JSONObject;
 
 //import net.sf.json.JSONException;
 //import org.json.JSONObject
@@ -22,6 +31,11 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,9 +47,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class facebookLogin extends HttpServlet {
 
-    private static final String App_ID = "580908538651637";
     private String code;
     private String firstName;
+    private String lastName;
+    private String email;
+    private String gender;
+    private String fb_id;
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -45,14 +62,15 @@ public class facebookLogin extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, NoSuchAlgorithmException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
             code = request.getParameter("code");
+            //token
             String token = null;
             try {
-                String g = "https://graph.facebook.com/oauth/access_token?client_id="+Const.APP_ID+"&redirect_uri=" + URLEncoder.encode(Const.HOST+"facebookLogin", "UTF-8") + "&client_secret="+Const.APP_SECRET+"&code=" + code;
+                String g = "https://graph.facebook.com/oauth/access_token?client_id=" + Const.APP_ID + "&redirect_uri=" + URLEncoder.encode(Const.HOST + "facebookLogin", "UTF-8") + "&client_secret=" + Const.APP_SECRET + "&code=" + code;
                 URL u = new URL(g);
                 URLConnection c = u.openConnection();
                 BufferedReader in = new BufferedReader(new InputStreamReader(c.getInputStream()));
@@ -69,7 +87,7 @@ public class facebookLogin extends HttpServlet {
             } catch (Exception e) {
                 // an error occurred, handle this
             }
-
+            //Graph API
             String graph = null;
             try {
                 String g = "https://graph.facebook.com/me?" + token;
@@ -83,18 +101,54 @@ public class facebookLogin extends HttpServlet {
                 }
                 in.close();
                 graph = b.toString();
+
             } catch (Exception e) {
                 // an error occurred, handle this
             }
-            out.print(code);
-            out.print("<br>"+graph);
-//            try {
-//                JSONObject j = new JSONObject(graph);
-//                firstName = j.getString("id");
-//            } catch (org.json.JSONException ex) {
-//                Logger.getLogger(facebookLogin.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
+            //Take data from FB for user
+            try {
+                JSONObject j = new JSONObject(graph);
+                fb_id = j.getString("id");
+                firstName = j.getString("first_name");
+                lastName = j.getString("last_name");
+                email = j.getString("email");
+                gender = j.getString("gender");
+                if (email.equals("")) {
+                    email = "noEmail";
+                }
+                if (gender.equals("")) {
+                    gender = "male";
+                }
+            } catch (org.json.JSONException ex) {
+                Logger.getLogger(facebookLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //create user
+            User user = new User();
+            user = new UsersActions().searchUserByLogin(fb_id);
+            if (user == null) {
+                user = new User();
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setEmail(email);
+                if (gender.equals("male")) {
+                    user.setGender(Gender.getGender(1));
+                } else {
+                    user.setGender(Gender.getGender(0));
+                }
+                user.setLogin(fb_id);
+                user.setNotify(false);
+                user.setBanned(false);
+                String pass = SecurityHash.getPass(8, 12);
+                user.setPassword(SecurityHash.getMd5(pass));
+                user.setConfirmed(true);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                user.setRegistrationDate(dateFormat.format(new Date()).toString());
+                List<Role> rList = new ArrayList<Role>();
+                rList.add(new RoleCRUD().readRole(3));
+                user.setRoles(rList);
+                new UserCRUD().createUser(user);
+            } else {
+            }
 
 
 
@@ -114,7 +168,11 @@ public class facebookLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
             processRequest(request, response);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(facebookLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -128,7 +186,11 @@ public class facebookLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
             processRequest(request, response);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(facebookLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /** 
