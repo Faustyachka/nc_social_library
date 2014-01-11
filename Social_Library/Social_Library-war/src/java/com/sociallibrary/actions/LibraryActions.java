@@ -51,7 +51,7 @@ public class LibraryActions implements ILibraryActions
             library=null;
          }
         return libraries;
-     }
+    }
 
      public List<Author> getAuthorsOfBook(long book_id)
      {

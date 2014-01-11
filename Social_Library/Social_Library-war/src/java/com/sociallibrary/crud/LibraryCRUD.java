@@ -16,7 +16,7 @@ import com.sociallibrary.icrud.ILibraryCRUD;
 import org.apache.log4j.*;
 /**
  *
- * @author РђРЅС‚РѕРЅ
+ * @author Антон
  */
 public class LibraryCRUD implements ILibraryCRUD {
 

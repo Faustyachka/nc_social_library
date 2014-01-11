@@ -26,14 +26,14 @@
     </head>
     <body>
 
-    <div id="container">
+        <div id="container">
 
-    <div id="header" align="center"><h1>Global Library</h1></div>
+            <div id="header" align="center"><h1>Global Library</h1></div>
 
-    <div id="wrapper">
 
-    <div id="content">
+<div id="wrapper">
 
+<div id="content">
     <p>
     <table border="1" align="center">
         <tbody>
@@ -75,8 +75,7 @@
         %>
         </tbody>
         </table>
-
-        </p>
+</p>
         <center>
         <%
         int min_page = i-4;
@@ -104,20 +103,23 @@
     <a href="locallib.jsp?id=<%=request.getParameter("id")%>"> Local library </a>
     <br><a href="dashboard.jsp?id=<%=request.getParameter("id")%>">Dashboard Publish</a>
     <br><a href="dashboardApp.jsp?id=<%=request.getParameter("id")%>">Dashboard Approve </a>
+    
+
 </div>
 
 <div id="rightblock">
-    <p>
-    <form name="form1" method="post" action="SearchInGloballib">
+    <p><form name="form1" method="post" action="SearchInGloballib">
         <input type="text" name="text">
 	<input name="search" type="button" value="Search">
-    </form>
-    </p>
+        </form>
+   </p>
+
 </div>
 
 <div id="footer"><p>Blue One</p></div>
 
 </div>
        
-</body>
+        
+    </body>
 </html>
