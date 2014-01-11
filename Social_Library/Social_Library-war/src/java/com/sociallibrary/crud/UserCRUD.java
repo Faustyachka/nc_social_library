@@ -57,7 +57,8 @@ public class UserCRUD implements IUserCRUD
             ps.setString(9, user.getRegistrationDate());
             ps.setInt(10, (user.isNotify())?1:0);
             ps.executeUpdate();
-            user = new UsersActions().searchUserByLogin(user.getLogin());
+            User u= new UsersActions().searchUserByLogin(user.getLogin());
+            
 
             for(Role r : user.getRoles()) new RolesActions().applyRoleToUser(r, user);
 
