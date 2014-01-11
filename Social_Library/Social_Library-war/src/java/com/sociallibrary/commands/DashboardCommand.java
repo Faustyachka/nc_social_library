@@ -36,9 +36,9 @@ public class DashboardCommand implements Command {
         if (session.getAttribute("role") != null) {
             role = (Integer) session.getAttribute("role");
         } else {
-            role = 2;
+            role = 4;
         }
-        page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.DASHBOARD_PAGE+role);
+        page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.DASHBOARD_PAGE + role);
 
 
 

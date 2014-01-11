@@ -44,7 +44,7 @@
 
             </div>
 
-            <div id="center">
+            <div>
 
                  <jsp:include page="dashboard.jsp" />
 

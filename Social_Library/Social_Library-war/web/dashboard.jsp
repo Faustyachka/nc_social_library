@@ -2,10 +2,10 @@
 <%@page import="com.sociallibrary.entity.*"%>
 
 
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 
 
-
-                <table border="1">
+                <table   class="table table-hover">
                     <thead>
                         <tr>
                             <th>ID</th>
