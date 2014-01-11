@@ -60,7 +60,7 @@ public class UserCRUD implements IUserCRUD
             User u= new UsersActions().searchUserByLogin(user.getLogin());
             
 
-            for(Role r : user.getRoles()) new RolesActions().applyRoleToUser(r, user);
+            for(Role r : u.getRoles()) new RolesActions().applyRoleToUser(r, u);
 
             ps.close();
 
