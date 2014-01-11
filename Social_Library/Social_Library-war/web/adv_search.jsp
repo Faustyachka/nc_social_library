@@ -19,7 +19,7 @@
 
                 <div id="menu">
                     <ul>
-                        <li><a href="Controller?command=nocommand" >
+                        <li><a href="Controller?command=dashboard" >
                                 <span class="refLabelText">Dashboard</span>
                             </a></li>
                         <li><a href="Controller?command=nocommand">

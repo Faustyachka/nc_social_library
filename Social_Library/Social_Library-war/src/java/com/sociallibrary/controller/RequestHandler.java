@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.sociallibrary.registration.ConfirmUser;
 import com.sociallibrary.registration.Registration;
 import com.sociallibrary.authorization.SignIn;
+import com.sociallibrary.authorization.fbLogin;
 
 
 public class RequestHandler {
@@ -34,6 +35,7 @@ private RequestHandler(){
     commands.put("confirmUser", new ConfirmUser () );
     commands.put("dashboard", new DashboardCommand ());
     commands.put("signin", new SignIn());
+    commands.put("fbLogin", new fbLogin());
 }
 
 public Command getCommand(HttpServletRequest request){

@@ -3,6 +3,8 @@
     Created on : 07.01.2014, 0:27:40
     Author     : Pavel
 --%>
+<%@page import="java.util.List"%>
+<%@page import="com.sociallibrary.entity.*"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,7 +21,7 @@
 
                 <div id="menu">
                     <ul>
-                        <li><a href="Controller?command=nocommand" >
+                        <li><a href="Controller?command=dashboard" >
                                 <span class="refLabelText">Dashboard</span>
                             </a></li>
                         <li><a href="Controller?command=nocommand">
@@ -42,9 +44,11 @@
 
             </div>
 
-            <div id="center">
+            <div>
 
-                <p1>DASHBOARD!!!</p1>
+                 <jsp:include page="dashboard.jsp" />
+
+               
             </div>
 
             <div id="footer">

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.sociallibrary.crud.UserCRUD;
 import com.sociallibrary.entity.User;
-import com.sociallibrary.icrud.IUserCRUD;
 
 /**
  *
@@ -21,12 +20,10 @@ import com.sociallibrary.icrud.IUserCRUD;
 public class ConfirmUser implements Command {
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = null;
         response.setContentType("text/html;charset=UTF-8");
         User user = new UserCRUD().readUser(Integer.parseInt(request.getParameter("users")));
         user.setConfirmed(true);
         new UserCRUD().updateUser(user);
-        page = ConfigurationManager.INDEX_PAGE;
-        return page;
+        return ConfigurationManager.INDEX_PAGE;
     }
 }

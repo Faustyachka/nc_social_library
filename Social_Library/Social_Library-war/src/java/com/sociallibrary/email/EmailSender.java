@@ -37,12 +37,12 @@ public class EmailSender {
         Session mailSession = Session.getInstance(mailProps, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return (new PasswordAuthentication("its.ti.02", "starosta"));
+                return (new PasswordAuthentication("nc.social.library", "soclib2014"));
             }
         });
 
         MimeMessage message = new MimeMessage(mailSession);
-        message.setFrom(new InternetAddress("its.ti.02@gmail.com"));
+        message.setFrom(new InternetAddress("nc.social.library@gmail.com"));
         InternetAddress dests[] = new InternetAddress[emails.length];
         for (int i = 0; i < emails.length; i++) {
             dests[i] = new InternetAddress(emails[i].trim().toLowerCase());

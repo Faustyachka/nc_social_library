@@ -73,7 +73,7 @@ public class RolesActions implements IRolesActions
                                 "FROM users " +
                                 "INNER JOIN users_roles " +
                                 "ON users.id=users_roles.users " +
-                                "WHERE users.id=?";
+                                "WHERE users.id=? order by users_roles.role ";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
@@ -102,7 +102,7 @@ public class RolesActions implements IRolesActions
         BasicConfigurator.configure();
         try 
         {
-            String sqlRequest ="INSERT INTO USERS_ROLES (ID,USERS,ROLE) values(0, ?, ?)";
+            String sqlRequest ="INSERT INTO USERS_ROLES (ID,USERS,ROLE) values(USERS_ROLES_ID.nextval, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
             ps.setLong(1, user.getId());

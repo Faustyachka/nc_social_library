@@ -8,27 +8,27 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Pavel
  */
 class NoCommand implements Command {
-    int role=2;
 
     public NoCommand() {
     }
 
-
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String page=null;
-//       HttpSession session= request.getSession();
-//       role=(Integer)session.getAttribute("role");
-        Page pag =ConfigurationManager.getPageForRole(role);
-        page=pag.get_NOCOMMAND_PAGE();
 
+
+        Integer role = null;
+        String page = null;
+
+        HttpSession session = request.getSession();
+        role = (Integer) session.getAttribute("role");
+        page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.NOCOMMAND_PAGE + role);
         return page;
     }
-
 }

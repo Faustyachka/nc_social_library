@@ -11,6 +11,7 @@ package com.sociallibrary.crud;
  */
 
 import com.sociallibrary.actions.RolesActions;
+import com.sociallibrary.actions.UsersActions;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -56,6 +57,8 @@ public class UserCRUD implements IUserCRUD
             ps.setString(9, user.getRegistrationDate());
             ps.setInt(10, (user.isNotify())?1:0);
             ps.executeUpdate();
+            User u= new UsersActions().searchUserByLogin(user.getLogin());
+            
 
             for(Role r : user.getRoles()) new RolesActions().applyRoleToUser(r, user);
 
@@ -117,7 +120,7 @@ public class UserCRUD implements IUserCRUD
         }
         finally
         {
-//            ConnectionProvider.close();
+            ConnectionProvider.close();
         }
         return user;
     }

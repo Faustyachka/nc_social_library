@@ -10,11 +10,15 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/ourstyle.css">
         <title>TEMPLATE Page</title>
     </head>
     <body>
+        <%
+        session.setAttribute("role",4);
+        %>
 
         <div id="main">
             <div id="header">
