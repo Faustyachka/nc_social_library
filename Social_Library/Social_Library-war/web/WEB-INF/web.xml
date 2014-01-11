@@ -6,7 +6,7 @@
     </servlet>
     <servlet>
         <servlet-name>facebookLogin</servlet-name>
-        <servlet-class>com.sociallibrary.authorization.facebookLogin</servlet-class>
+        <servlet-class>com.sociallibrary.authorization.fbLogin</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>vkLogin</servlet-name>

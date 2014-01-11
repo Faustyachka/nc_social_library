@@ -58,7 +58,8 @@ public class Registration implements Command {
         user.setRegistrationDate(dateFormat.format(new Date()).toString());
         if (Integer.parseInt(request.getParameter("notify")) == 1) {
             user.setNotify(true);
-        } else {
+        }
+        else {
             user.setNotify(false);
         }
         user.setRoles(rList);

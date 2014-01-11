@@ -107,7 +107,7 @@
                     <input type="Submit">
                 </form>
                 <%--<fb:registration redirect_uri=<%=Const.HOST%>Registration.jsp fields="name,first_name,last_name,email,gender,password" />--%>
-                <a href="https://www.facebook.com/dialog/oauth?client_id=<%=Const.APP_ID%>&redirect_uri=<%=Const.HOST%>facebookLogin&response_type=code">FB</a>
+                <a href="https://www.facebook.com/dialog/oauth?client_id=<%=Const.APP_ID%>&redirect_uri=<%=Const.HOST%>Controller?command=fbLogin&response_type=code">FB</a>
             </div>
 
             <div id="footer">
