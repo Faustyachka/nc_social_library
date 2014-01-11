@@ -8,7 +8,7 @@
                 <table   class="table table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            
                             <th>ISBN</th>
                             <th>TITLE</th>
                             <th>DISCRIPTION</th>
@@ -24,7 +24,7 @@
 
                         %>
                         <tr>
-                            <td><%out.print(temp.getId());%></td>
+                            
                             <td><%out.print(temp.getIsbn());%></td>
                             <td><%out.print(temp.getTitle());%></td>
                             <td><%out.print(temp.getDescription());%></td>

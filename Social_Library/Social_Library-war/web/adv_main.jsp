@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : menu_advanced
     Created on : 11.01.2014, 22:16:20
     Author     : П
@@ -16,28 +16,37 @@
     </head>
     <body>
 
-    <nav class="navbar navbar-default" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
+
+        <div class="container">
+
+            <br>
+            
+      <!-- Static navbar -->
+      <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
 
-            <a class="navbar-brand" href="#">Brand</a>
+          <a class="navbar-brand" >Social Libary</a>
         </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="Controller?command=dashboard">Dashboard</a></li>
+            <li><a href="Controller?command=nocommand">Add</a></li>
+            <li><a href="Controller?command=nocommand">My library</a></li>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link</a></li>
-                <li><a href="#">Link</a></li>
-            </ul>
-
-            <form class="navbar-form navbar-left" role="search">
+          </ul>
+          <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search">
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
-        </div><!-- /.navbar-collapse -->
-    </nav>
 
+            <ul class="nav navbar-nav navbar-right">
+            <li ><a href= "index.jsp">Sign out</a></li>
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+</div>
 </body>
 </html>
