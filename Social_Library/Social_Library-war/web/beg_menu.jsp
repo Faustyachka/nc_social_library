@@ -1,6 +1,6 @@
 <%--
-    Document   : menu_advanced
-    Created on : 11.01.2014, 22:16:20
+    Document   : beg_main
+    Created on : 12.01.2014, 2:26:20
     Author     : Pavel
 --%>
 
@@ -30,21 +30,23 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="index.jsp">Sign In</a></li>
-                        <li><a href="Registration.jsp">Registration</a></li>
+
                         <li><a href="Controller?command=nocommand">Add</a></li>
+                        <li><a href="Controller?command=nocommand">My library</a></li>
 
                     </ul>
+
+
                     <ul class="nav navbar-nav navbar-right">
-                        <li >  <form class="navbar-form navbar-left" role="search">
+                        <li> <form class="navbar-form navbar-left" role="search">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Search">
                                 </div>
                                 <button type="submit"  class="btn btn-primary" class="btn btn-default">Search</button>
                             </form></li>
-                    </ul>
+                        <li ><a href= "index.jsp">Sign out</a></li>
 
+                    </ul>
                 </div><!--/.nav-collapse -->
             </div>
-
-
+     

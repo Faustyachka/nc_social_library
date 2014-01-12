@@ -4,6 +4,7 @@
     Author     : Pavel
 --%>
 <jsp:include page="adv_menu.jsp" />
+<h1>No Command, Advanced user!!!</h1>
 
 </div>
 </body>
