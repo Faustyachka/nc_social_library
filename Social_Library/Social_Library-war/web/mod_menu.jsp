@@ -26,10 +26,11 @@
             <div class="navbar navbar-default" role="navigation">
                 <div class="navbar-header">
 
-                    <a class="navbar-brand" >Social Libary</a>
+                    <a class="navbar-brand" >Social Library</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
+                         <li><a href="Controller?command=nocommand">Pending to approve</a></li>
                         <li><a href="Controller?command=dashboard">Dashboard</a></li>
                         <li><a href="Controller?command=nocommand">Add</a></li>
                         <li><a href="Controller?command=nocommand">My library</a></li>
@@ -49,6 +50,4 @@
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
-        </div>
-    </body>
-</html>
+        
