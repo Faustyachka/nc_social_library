@@ -28,7 +28,8 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="Controller?command=dashboard">Registration</a></li>
+                        <li><a href="index.jsp">Sign In</a></li>
+                        <li><a href="Controller?command=nocommand">Registration</a></li>
                         <li><a href="Controller?command=nocommand">Add</a></li>
 
 
@@ -38,7 +39,7 @@
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Search">
                                 </div>
-                                <button type="submit" class="btn btn-default">Submit</button>
+                                <button type="submit" class="btn btn-primary" class="btn btn-default">Search</button>
                             </form></li>
                     </ul>
 
@@ -54,7 +55,7 @@
                 <form class="form-signin" role="form"  action="Controller" method="POST" style="margin-top: 200px;">
 
                     <input type="hidden" name="command" value="signin"/>
-                    <input type="text" name="login" class="form-control" placeholder="Email address" required autofocus>
+                    <input type="text" name="login" class="form-control" placeholder="Login" required autofocus>
                     <input type="password"  name="password" class="form-control" placeholder="Password" required>
 
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>

@@ -20,7 +20,7 @@
 
         <div class="container">
 
-            <br>
+
 
             <!-- Static navbar -->
             <div class="navbar navbar-default" role="navigation">
@@ -30,7 +30,7 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-
+                        <li><a href="index.jsp">Sign In</a></li>
                         <li><a href="Controller?command=nocommand">Registration</a></li>
                         <li><a href="Controller?command=nocommand">Add</a></li>
 
@@ -40,7 +40,7 @@
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Search">
                                 </div>
-                                <button type="submit" class="btn btn-default">Submit</button>
+                                <button type="submit"  class="btn btn-primary" class="btn btn-default">Search</button>
                             </form></li>
                     </ul>
 
