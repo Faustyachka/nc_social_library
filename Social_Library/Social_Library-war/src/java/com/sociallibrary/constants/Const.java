@@ -19,4 +19,5 @@ public final class Const {
     public static final String VK_APP_SECRET = "IBt4qdHwu3dn61jMjj5m";
     public static final String TW_APP_ID = "";
     public static final String TW_APP_SECRET = "";
+    public static final String API_KEY ="AIzaSyCZsI9e4CfhOOOKQrBXaYB3OkXdu_Qq-3Q";
 }
