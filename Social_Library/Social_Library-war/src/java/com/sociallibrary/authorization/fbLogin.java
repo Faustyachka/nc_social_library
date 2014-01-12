@@ -57,7 +57,7 @@ public class fbLogin implements Command {
             //token
             String token = null;
             try {
-                String g = "https://graph.facebook.com/oauth/access_token?client_id=" + Const.FB_APP_ID + 
+                String g = "https://graph.facebook.com/oauth/access_token?client_id=" + Const.FB_APP_ID +
                         "&redirect_uri=" + URLEncoder.encode(Const.HOST + "Controller?command=fbLogin",
                         "UTF-8") + "&client_secret=" + Const.FB_APP_SECRET + "&code=" + code;
                 URL u = new URL(g);
@@ -82,7 +82,7 @@ public class fbLogin implements Command {
                 String g = "https://graph.facebook.com/me?" + token;
                 URL u = new URL(g);
                 URLConnection c = u.openConnection();
-                BufferedReader in = new BufferedReader(new InputStreamReader(c.getInputStream()));
+                BufferedReader in = new BufferedReader(new InputStreamReader(c.getInputStream(), "UTF-8"));
                 String inputLine;
                 StringBuffer b = new StringBuffer();
                 while ((inputLine = in.readLine()) != null) {
@@ -103,7 +103,7 @@ public class fbLogin implements Command {
                 email = j.getString("email");
                 gender = j.getString("gender");
                 if (email.equals("")) {
-                    email = "noEmail";
+                    email = "noEmail" + fb_id;
                 }
                 if (gender.equals("")) {
                     gender = "male";
@@ -130,11 +130,30 @@ public class fbLogin implements Command {
                 user.setNotify(false);
                 user.setBanned(false);
                 String pass = SecurityHash.getPass(8, 12);
-                try {
-                    user.setPassword(SecurityHash.getMd5(pass));
-                } catch (NoSuchAlgorithmException ex) {
-                    Logger.getLogger(fbLogin.class.getName()).log(Level.SEVERE, null, ex);
+                if (email.equals("noEmail"+fb_id)) {
+                    user.setPassword(pass);
+                } else {
+                    try {
+                        user.setPassword(SecurityHash.getMd5(pass));
+                    } catch (NoSuchAlgorithmException ex) {
+                        Logger.getLogger(fbLogin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    String mailSub = "Registration on Social Library via Facebook";
+                    String mailText = "Welcom to '" + Const.HOST + "'!\n" +
+                            "You have register now using Facebok.\n" +
+                            "You can login in our site using this data without connection to Facebook:\n" +
+                            "Login: " + user.getLogin() + " \n" +
+                            "Password: " + pass + " \n";
+                    String mail[] = new String[1];
+                    mail[0] = user.getEmail();
+                    try {
+                        EmailSender.sendEmail(mail, mailSub, mailText);
+                    } catch (MessagingException ex) {
+                        Logger.getLogger(fbLogin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
+
+
                 user.setConfirmed(true);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 user.setRegistrationDate(dateFormat.format(new Date()).toString());
@@ -143,19 +162,7 @@ public class fbLogin implements Command {
                 user.setRoles(rList);
                 new UserCRUD().createUser(user);
                 user = new UsersActions().searchUserByLogin(user.getLogin());
-                String mailSub = "Registration on Social Library via Facebook";
-                String mailText = "Welcom to '" + Const.HOST + "'!\n" +
-                        "You have register now using Facebok.\n" +
-                        "You can login in our site using this data without connection to Facebook:\n" +
-                        "Login: " + user.getLogin() + " \n" +
-                        "Password: " + pass + " \n";
-                String mail[] = new String[1];
-                mail[0] = user.getEmail();
-                try {
-                    EmailSender.sendEmail(mail, mailSub, mailText);
-                } catch (MessagingException ex) {
-                    Logger.getLogger(fbLogin.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
                 session.setAttribute("user", user);
                 int role = rList.get(0).getId();
                 session.setAttribute("role", role);

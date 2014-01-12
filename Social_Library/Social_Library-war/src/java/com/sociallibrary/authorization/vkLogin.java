@@ -85,7 +85,7 @@ public class vkLogin implements Command {
                     vk_id + "&fields=first_name,last_name,sex&v=5.5&access_token=" + access_token;
             URL u = new URL(gg);
             URLConnection c = u.openConnection();
-            BufferedReader in = new BufferedReader(new InputStreamReader(c.getInputStream()));
+            BufferedReader in = new BufferedReader(new InputStreamReader(c.getInputStream(),"UTF-8"));
             String inputLine;
             StringBuffer b = new StringBuffer();
             while ((inputLine = in.readLine()) != null) {
@@ -104,13 +104,14 @@ public class vkLogin implements Command {
             firstName = j.getString("first_name");
             lastName = j.getString("last_name");
             gender = j.getInt("sex");
+            //TODO bad bad bad
             if (gender == 0) {
                 gender = 2;
             }
-            if (gender == 1) {
-                gender = 2;
-            } else {
+            if (gender == 2) {
                 gender = 1;
+            } else {
+                gender = 0;
             }
         } catch (org.json.JSONException ex) {
             Logger.getLogger(fbLogin.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,7 +125,7 @@ public class vkLogin implements Command {
             user = new User();
             user.setFirstName(firstName);
             user.setLastName(lastName);
-            user.setEmail("noEmail");
+            user.setEmail("noEmail" + vk_id.toString());
             user.setGender(Gender.getGender(gender));
             user.setLogin(vk_id.toString());
             user.setNotify(false);
