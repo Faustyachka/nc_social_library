@@ -9,6 +9,7 @@ import com.sociallibrary.registration.ConfirmUser;
 import com.sociallibrary.registration.Registration;
 import com.sociallibrary.authorization.SignIn;
 import com.sociallibrary.authorization.fbLogin;
+import com.sociallibrary.authorization.vkLogin;
 
 
 public class RequestHandler {
@@ -36,6 +37,7 @@ private RequestHandler(){
     commands.put("dashboard", new DashboardCommand ());
     commands.put("signin", new SignIn());
     commands.put("fbLogin", new fbLogin());
+    commands.put("vkLogin", new vkLogin());
 }
 
 public Command getCommand(HttpServletRequest request){
