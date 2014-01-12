@@ -16,8 +16,6 @@ import com.google.api.services.books.model.Volume;
 import com.google.api.services.books.model.Volumes;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.text.NumberFormat;
 
 /**
  *
@@ -26,11 +24,10 @@ import java.text.NumberFormat;
 public class AddLibrary //implements Command
 {
     private static final String APPLICATION_NAME = "Social_Library";
-    private static final NumberFormat CURRENCY_FORMATTER = NumberFormat.getCurrencyInstance();
-    private static final NumberFormat PERCENT_FORMATTER = NumberFormat.getPercentInstance();
     public static final String API_KEY ="AIzaSyCZsI9e4CfhOOOKQrBXaYB3OkXdu_Qq-3Q";
 
-    public static void execute(JsonFactory jsonFactory, String query) throws Exception
+    public static void execute(JsonFactory jsonFactory, String query)
+            throws Exception
     {
         // Set up Books client.
         final Books books = new Books.Builder(GoogleNetHttpTransport.newTrustedTransport(), jsonFactory, null)
@@ -38,8 +35,6 @@ public class AddLibrary //implements Command
         .setGoogleClientRequestInitializer(new BooksRequestInitializer(API_KEY))
         .build();
 
-        // Set query string and filter only Google eBooks.
-        System.out.println("Query: [" + query + "]");
         List volumesList = books.volumes().list(query);
         volumesList.setFilter("ebooks");
 
@@ -54,11 +49,11 @@ public class AddLibrary //implements Command
         for (Volume volume : volumes.getItems())
         {
             Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
-            Volume.SaleInfo saleInfo = volume.getSaleInfo();
             System.out.println("==========");
-            // Title.
             System.out.println("Title: " + volumeInfo.getTitle());
-            // Author(s).
+            System.out.println("Pages: " + volumeInfo.getPageCount());
+            System.out.println("Genre: " + volumeInfo.getCategories());
+
             java.util.List<String> authors = volumeInfo.getAuthors();
             if (authors != null && !authors.isEmpty())
             {
@@ -73,12 +68,11 @@ public class AddLibrary //implements Command
                 }
             System.out.println();
             }
-            // Description (if any).
             if (volumeInfo.getDescription() != null && volumeInfo.getDescription().length() > 0)
             {
                 System.out.println("Description: " + volumeInfo.getDescription());
             }
-            // Ratings (if any).
+            
             if (volumeInfo.getRatingsCount() != null && volumeInfo.getRatingsCount() > 0)
             {
                 int fullRating = (int) Math.round(volumeInfo.getAverageRating().doubleValue());
@@ -89,91 +83,47 @@ public class AddLibrary //implements Command
                 }
                 System.out.println(" (" + volumeInfo.getRatingsCount() + " rating(s))");
             }
-            // Price (if any).
-            if (saleInfo != null && "FOR_SALE".equals(saleInfo.getSaleability()))
-            {
-                double save = saleInfo.getListPrice().getAmount() - saleInfo.getRetailPrice().getAmount();
-                if (save > 0.0)
-                {
-                    System.out.print("List: " + CURRENCY_FORMATTER.format(saleInfo.getListPrice().getAmount())
-                    + "  ");
-                }
-                System.out.print("Google eBooks Price: "
-                 + CURRENCY_FORMATTER.format(saleInfo.getRetailPrice().getAmount()));
-                if (save > 0.0)
-                {
-                    System.out.print("  You Save: " + CURRENCY_FORMATTER.format(save) + " ("
-                    + PERCENT_FORMATTER.format(save / saleInfo.getListPrice().getAmount()) + ")");
-                }
-                System.out.println();
-            }
-            // Access status.
-            String accessViewStatus = volume.getAccessInfo().getAccessViewStatus();
-            String message = "Additional information about this book is available from Google eBooks at:";
-            if ("FULL_PUBLIC_DOMAIN".equals(accessViewStatus))
-            {
-                message = "This public domain book is available for free from Google eBooks at:";
-            }
-            else if ("SAMPLE".equals(accessViewStatus))
-            {
-                message = "A preview of this book is available from Google eBooks at:";
-            }
-            System.out.println(message);
-            // Link to Google eBooks.
-            System.out.println(volumeInfo.getInfoLink());
+            
         }
-        System.out.println("==========");
-        System.out.println(
-        volumes.getTotalItems() + " total results at http://books.google.com/ebooks?q="
-        + URLEncoder.encode(query, "UTF-8"));
     }
 
-    public static void main(String[] args) //throws Exception
+    public static void main(String[] args)
     {
-        System.out.println("111");
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-        args=new String[1];
-        //args[0]="Moby";
-    //try {
-       //Verify command line parameters.
-     // if (args.length == 0) {
-      //  System.err.println("Usage: BooksSample [--author|--isbn|--title] \"<query>\"");
-      //  System.exit(1);
-      //}
-      // Parse command line parameters into a query.
-      // Query format: "[<author|isbn|intitle>:]<query>"
-      String prefix = null;
-      String query = "--title Moby";
-      //String query1 = "Moby";
-      //for (String arg : args) {
-        //if ("--author".equals(arg)) {
-         // prefix = "inauthor:";
-       // } else if ("--isbn".equals(arg)) {
-       //   prefix = "isbn:";
-       // } else 
-      if ("--title".equals(query)) {
+        
+        String prefix = null;
+        String query = " Moby Dick";
+        if ("--author".equals(query)) {
+          prefix = "inauthor:";
+        } 
+        else if ("--isbn".equals(query))
+        {
+          prefix = "isbn:";
+        } 
+        else if ("--title".equals(query))
+        {
           prefix = "intitle:";
-        } else if (query.startsWith("--")) {
+        } 
+        else if (query.startsWith("--"))
+        {
           System.err.println("Unknown argument: " + query);
-      //    System.exit(1);
-        } else {
-          query = " Moby";
-        }
-      //}
-      if (prefix != null) {
+        } 
+        if (prefix != null)
+        {
         query = prefix + query;
-      }
-      try {
+        }
+        try
+        {
         execute(jsonFactory, query);
-        // Success!
         return;
-      } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
         System.err.println(e.getMessage());
-      }
-   // }
-    catch (Throwable t) {
-      t.printStackTrace();
-    }
-    System.exit(0);
+        }
+        catch (Throwable t)
+        {
+            t.printStackTrace();
+        }
     }
 }
