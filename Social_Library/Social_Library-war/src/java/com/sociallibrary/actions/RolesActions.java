@@ -56,10 +56,7 @@ public class RolesActions implements IRolesActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return roles;
     }
 
@@ -90,10 +87,7 @@ public class RolesActions implements IRolesActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return roles;
     }
 
@@ -117,10 +111,7 @@ public class RolesActions implements IRolesActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public void dropAllRolesOfUser(User user)
@@ -142,9 +133,6 @@ public class RolesActions implements IRolesActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 }

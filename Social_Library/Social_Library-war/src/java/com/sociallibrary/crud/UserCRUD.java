@@ -70,10 +70,7 @@ public class UserCRUD implements IUserCRUD
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public User readUser(long id) {
@@ -118,10 +115,7 @@ public class UserCRUD implements IUserCRUD
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return user;
     }
 
@@ -159,10 +153,7 @@ public class UserCRUD implements IUserCRUD
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public void deleteUser(int id) {
@@ -181,10 +172,7 @@ public class UserCRUD implements IUserCRUD
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
 }

@@ -5,7 +5,6 @@
 
 package com.sociallibrary.crud;
 
-import com.sociallibrary.actions.LibraryActions;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,10 +53,7 @@ public class LibraryCRUD implements ILibraryCRUD {
             log.error("SQLException:" + e);
             e.printStackTrace();
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public Library readLibrary(long id)
@@ -91,10 +87,7 @@ public class LibraryCRUD implements ILibraryCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return library;
     }
 
@@ -124,10 +117,7 @@ public class LibraryCRUD implements ILibraryCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public void deleteLibrary(int id) 
@@ -148,10 +138,7 @@ public class LibraryCRUD implements ILibraryCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
    

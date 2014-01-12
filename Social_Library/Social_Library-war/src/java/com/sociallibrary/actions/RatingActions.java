@@ -43,6 +43,7 @@ public class RatingActions implements IRatingActions
             while (rs.next())
             {
                 lList.add(new RatingCRUD().readRating(rs.getInt("id")));
+               
             }
             rs.close();
             stmt.close();
@@ -52,10 +53,7 @@ public class RatingActions implements IRatingActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return lList;
     }
 
@@ -91,10 +89,7 @@ public class RatingActions implements IRatingActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return rating;
     }
 
@@ -120,10 +115,7 @@ public class RatingActions implements IRatingActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return rating;
     }
 
@@ -155,34 +147,4 @@ public class RatingActions implements IRatingActions
         return false;
     }
 
-//    public Rating getRatingsByBookAndUserIds(long userId, long bookId)
-//    {
-//        BasicConfigurator.configure();
-//        RatingCRUD u = new RatingCRUD();
-//        Rating rating = null;
-//        String selectParametr = "select * from rating where book = ? and users = ?";
-//        try
-//        {
-//            PreparedStatement stmt = connection.prepareStatement(selectParametr);
-//            stmt.setLong(1, bookId);
-//            stmt.setLong(2, userId);
-//            ResultSet rs = stmt.executeQuery();
-//            //while(rs.next())
-//            rs.next();
-//            rating = u.readRating(rs.getInt("id"));
-//            rs.close();
-//            stmt.close();
-//            connection.close();
-//        }
-//         catch (SQLException e)
-//        {
-//                e.printStackTrace();
-//                log.error("SQLException:" + e);
-//        }
-//        finally
-//        {
-//            ConnectionProvider.close();
-//        }
-//        return rating;
-//    }
 }

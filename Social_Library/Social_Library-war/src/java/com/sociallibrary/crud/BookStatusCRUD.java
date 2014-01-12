@@ -46,11 +46,7 @@ public class BookStatusCRUD implements IBookStatusCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
-
+        
         return bookStatus;
     }
 
@@ -71,10 +67,7 @@ public class BookStatusCRUD implements IBookStatusCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public void deleteBookStatus(BookStatus BookStatus) {
@@ -93,10 +86,7 @@ public class BookStatusCRUD implements IBookStatusCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public void updateBookStatus(BookStatus BookStatusNew, BookStatus BookStatusOld) {
@@ -116,9 +106,6 @@ public class BookStatusCRUD implements IBookStatusCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 }

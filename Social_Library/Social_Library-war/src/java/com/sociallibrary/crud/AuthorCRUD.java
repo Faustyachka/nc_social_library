@@ -41,11 +41,7 @@ public class AuthorCRUD implements IAuthorCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
-
+        
     }
 
     public Author readAuthor(int id)
@@ -72,10 +68,7 @@ public class AuthorCRUD implements IAuthorCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
             }
-            finally
-            {
-                ConnectionProvider.close();
-            }
+            
         return author;
     }
 
@@ -98,10 +91,7 @@ public class AuthorCRUD implements IAuthorCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
             }
-            finally
-            {
-                ConnectionProvider.close();
-            }
+            
     }
 
     public void deleteAuthor(Author author)
@@ -122,9 +112,6 @@ public class AuthorCRUD implements IAuthorCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
             }
-            finally
-            {
-            ConnectionProvider.close();
-            }
+            
     }
 } 

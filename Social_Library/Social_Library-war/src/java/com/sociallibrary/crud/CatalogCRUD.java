@@ -45,10 +45,7 @@ public class CatalogCRUD implements ICatalogCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public Catalog readCatalog(int id) {
@@ -77,10 +74,7 @@ public class CatalogCRUD implements ICatalogCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return catalog;
     }
 
@@ -102,10 +96,7 @@ public class CatalogCRUD implements ICatalogCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public void deleteCatalog(Catalog catalog) {
@@ -124,10 +115,7 @@ public class CatalogCRUD implements ICatalogCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 }
 

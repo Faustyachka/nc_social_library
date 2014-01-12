@@ -53,10 +53,7 @@ public class RoleCRUD implements IRoleCRUD
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return role;
     }
 
@@ -81,10 +78,7 @@ public class RoleCRUD implements IRoleCRUD
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public void deleteRole(int id) 
@@ -105,10 +99,7 @@ public class RoleCRUD implements IRoleCRUD
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public void updateRole(Role role) 
@@ -134,10 +125,7 @@ public class RoleCRUD implements IRoleCRUD
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
 }

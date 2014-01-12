@@ -46,10 +46,7 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public BookWorkflow readBookWorkflow(int id) 
@@ -76,10 +73,7 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return bookWorkflow;
     }
 
@@ -104,10 +98,7 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public void deleteBookWorkflow(int id) 
@@ -127,10 +118,7 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
 }

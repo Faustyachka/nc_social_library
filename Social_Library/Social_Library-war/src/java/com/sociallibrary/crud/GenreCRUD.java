@@ -41,10 +41,7 @@ public class GenreCRUD implements IGenreCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public Genre readGenre(int id)
@@ -70,10 +67,7 @@ public class GenreCRUD implements IGenreCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return bookGenre;
     }
 
@@ -94,10 +88,7 @@ public class GenreCRUD implements IGenreCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public void deleteGenre(Genre genre) {
@@ -116,9 +107,6 @@ public class GenreCRUD implements IGenreCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 }

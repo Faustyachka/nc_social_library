@@ -1,11 +1,8 @@
 package com.sociallibrary.crud;
 
 import com.sociallibrary.entity.Rating;
-import com.sociallibrary.icrud.ILibraryCRUD;
 import com.sociallibrary.icrud.IRatingCRUD;
-import com.sociallibrary.icrud.IUserCRUD;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.entity.Library;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,10 +42,7 @@ public class RatingCRUD implements IRatingCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public void createRating(long bookId, long userId, short rate) {
@@ -69,10 +63,7 @@ public class RatingCRUD implements IRatingCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public Rating readRating(int id) {
@@ -110,10 +101,7 @@ public class RatingCRUD implements IRatingCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return rating;
     }
 
@@ -136,10 +124,7 @@ public class RatingCRUD implements IRatingCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 
     public void deleteRating(Rating rating) {
@@ -158,9 +143,6 @@ public class RatingCRUD implements IRatingCRUD {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
     }
 }

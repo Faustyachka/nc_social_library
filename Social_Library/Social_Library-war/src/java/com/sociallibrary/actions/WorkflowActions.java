@@ -6,8 +6,6 @@
 package com.sociallibrary.actions;
 
 import com.sociallibrary.entity.*;
-import com.sociallibrary.crud.*;
-import com.sociallibrary.icrud.*;
 import org.apache.log4j.*;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.iactions.IWorkflowActions;
@@ -58,10 +56,7 @@ public class WorkflowActions implements IWorkflowActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return roles;
     }
 }

@@ -1,7 +1,7 @@
 <%-- 
-    Document   : newjsp
+    Document   : GlobalLibary
     Created on : 5 січ 2014, 0:39:48
-    Author     : mazafaka
+    Author     : Pavlova Nastya
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -23,6 +23,15 @@
         <link href="style.css" type="text/css" rel="stylesheet" />
        
         <title>Global Library</title>
+        <script language="javascript">
+            function radio_click(n, book_id){
+                for(var i = 1; i<6; i++){
+                    if(i<=n) document.getElementById("radio_rate_"+i+"_"+book_id).checked=true;//setAttribute("checked", "");
+                    else document.getElementById("radio_rate_"+i+"_"+book_id).checked=false; //document.getElementById('radio_rate_'+i).attributes.removeAttribute("checked");
+                }
+                document.getElementById("rate_value"+"_"+book_id).setAttribute("value", n);
+            }
+        </script>
     </head>
     <body>
 
@@ -38,32 +47,30 @@
     <table border="1" align="center">
         <tbody>
         <tr>
-        <th>Id:</th>
         <th>ISBN:</th>
         <th>Title:</th>
         <th>Cover:</th>
         <th>Description:</th>
         <th>Pages:</th>
+        <th>Rating:</th>
         </tr>
         <%
-        int i=0;
+        int i=1;
         try
-                {
+        {
         i = Integer.parseInt(request.getParameter("i"));
         }
         catch(NumberFormatException e)
-                {
-            e.printStackTrace();
-            }
+        {
+           e.printStackTrace();
+        }
         LibraryActions ob=new LibraryActions();
-        List<Library> libraries = ob.getAllBooksByWorkflow(4).subList((i-1)*10, i*10);
-        //List<Library> libraries = ob.getBooksByIdInInterval(10*i, 10*(i+1));
+        List<Library> libraries = ob.getAllBooksByWorkflow(4).subList(i*10, (i+1)*10);
+
         for(Library book:libraries)
         {
-           //if(book.getWorkflow().getId()!=4) continue;
         %>
         <tr>
-        <td><%=book.getId()%></td>
         <td><%=book.getIsbn()%></td>
         <td><%=book.getTitle()%></td>
         <td><%=book.getCover()%></td>
@@ -75,7 +82,7 @@
         %>
         </tbody>
         </table>
-</p>
+        </p>
         <center>
         <%
         int min_page = i-4;

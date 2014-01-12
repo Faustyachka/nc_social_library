@@ -12,11 +12,9 @@ import org.apache.log4j.*;
 import com.sociallibrary.iactions.ILibraryActions;
 import com.sociallibrary.connection.ConnectionProvider;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,10 +74,7 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return authors;
     }
 
@@ -126,11 +121,7 @@ public class LibraryActions implements ILibraryActions
                 log.error("SQLException:" + e);
                 result = false;
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
-
+        
         return result;
     }
 
@@ -156,11 +147,7 @@ public class LibraryActions implements ILibraryActions
                 log.error("SQLException:" + e);
                 result = false;
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
-
+        
         return result;
     }
 
@@ -187,10 +174,7 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         String result = "";
         for(Author a : authors) result+=a.getAuthor();
         return result;
@@ -218,10 +202,7 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return libraries;
     }
 
@@ -249,10 +230,7 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+       
         return libraries;
     }
 
@@ -280,10 +258,7 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return libraries;
     }
 
@@ -309,10 +284,7 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return libraries;
     }
 
@@ -338,10 +310,7 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return libraries;
     }
 
@@ -368,10 +337,7 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return libraries;
     }
 
@@ -398,10 +364,7 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return libraries;
     }
 
@@ -427,10 +390,7 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return result;
     }
     
@@ -458,10 +418,7 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+       
         return libraries;
     }
 
@@ -487,10 +444,7 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+        
         return authors;
     }
 
@@ -515,10 +469,7 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        finally
-        {
-            ConnectionProvider.close();
-        }
+       
         return rating;
     }
 
