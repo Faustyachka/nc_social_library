@@ -6,7 +6,7 @@
 
 
 
-<jsp:include page="adv_main_1.jsp" />
+<jsp:include page="adv_menu.jsp" />
 
 <jsp:include page="dashboard.jsp" />
 </div>
