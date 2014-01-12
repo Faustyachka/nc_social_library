@@ -109,7 +109,7 @@
                 <%--<fb:registration redirect_uri=<%=Const.HOST%>Registration.jsp fields="name,first_name,last_name,email,gender,password" />--%>
                 <a href="https://www.facebook.com/dialog/oauth?client_id=<%=Const.FB_APP_ID%>&redirect_uri=<%=Const.HOST%>Controller?command=fbLogin&response_type=code">FB</a>
                 <a href="https://accounts.google.com/o/oauth2/auth?redirect_uri=<%=Const.HOST%>Controller?command=googleLogin&response_type=code&client_id=<%=Const.G_APP_ID%>&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile">GOOGLE</a>
-                <a href="http://oauth.vk.com/authorize?client_id=4114473&redirect_uri=<%=Const.HOST%>Controller?command=vkLogin&response_type=code" title="vk">VK</a>
+                <a href="http://oauth.vk.com/authorize?client_id=4114473&redirect_uri=<%=Const.HOST%>tester&response_type=code" title="vk">VK</a>
             </div>
 
             <div id="footer">

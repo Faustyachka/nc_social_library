@@ -43,7 +43,7 @@ public class vkLogin implements Command {
     private String token;
     private String code;
     private String access_token;
-    private String vk_id;
+    private Integer vk_id;
     private int gender;
     private String firstName;
     private String lastName;
@@ -75,7 +75,7 @@ public class vkLogin implements Command {
         try {
             JSONObject json = new JSONObject(token);
             access_token = json.getString("access_token");
-            vk_id = json.getString("user_id");
+            vk_id = json.getInt("user_id");
 
         } catch (JSONException e) {
         }
@@ -93,17 +93,23 @@ public class vkLogin implements Command {
             }
             in.close();
             graph = b.toString();
-
+            graph = graph.substring(13);
 
         } catch (Exception e) {
             // an error occurred, handle this
             }
+
         try {
             JSONObject j = new JSONObject(graph);
             firstName = j.getString("first_name");
             lastName = j.getString("last_name");
             gender = j.getInt("sex");
             if (gender == 0) {
+                gender = 2;
+            }
+            if (gender == 1) {
+                gender = 2;
+            } else {
                 gender = 1;
             }
         } catch (org.json.JSONException ex) {
@@ -113,14 +119,14 @@ public class vkLogin implements Command {
         //create user
         HttpSession session = request.getSession(true);
         User user = new User();
-        user = new UsersActions().searchUserByLogin(vk_id);
+        user = new UsersActions().searchUserByLogin(vk_id.toString());
         if (user == null) {
             user = new User();
-            user.setFirstName("firstName");
-            user.setLastName("lastName");
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
             user.setEmail("noEmail");
             user.setGender(Gender.getGender(gender));
-            user.setLogin(vk_id);
+            user.setLogin(vk_id.toString());
             user.setNotify(false);
             user.setBanned(false);
             user.setPassword(SecurityHash.getPass(8, 12));
