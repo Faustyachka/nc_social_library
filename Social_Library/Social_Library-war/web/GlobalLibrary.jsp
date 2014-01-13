@@ -65,7 +65,7 @@
            e.printStackTrace();
         }
         LibraryActions ob=new LibraryActions();
-        List<Library> libraries = ob.getAllBooksByWorkflow(4).subList(i*10, (i+1)*10);
+        List<Library> libraries = ob.BooksList(i*10, (i+1)*10,4);
 
         for(Library book:libraries)
         {
