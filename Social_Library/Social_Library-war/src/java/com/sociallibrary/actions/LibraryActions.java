@@ -92,7 +92,7 @@ public class LibraryActions implements ILibraryActions
         
     }
 
-     public boolean isBookInLocalLibraryOfUser(long book_id, long user_id)
+     public boolean CheckLocal(long book_id, long user_id)
      {
         boolean result = false;
         BasicConfigurator.configure();
@@ -123,9 +123,9 @@ public class LibraryActions implements ILibraryActions
         BasicConfigurator.configure();
         Library library = new Library();
         List<Library> libraries = new ArrayList<Library>();
-        String selectParametr = "select id from library where id in" +
-                                    "(select book from book_author where book_author.author in" +
-                                        "(select id from author where upper(author) like upper(?)))";
+        String selectParametr = "select library.id from library " +
+                "inner join book_author on library.id=book_author.author" +
+                "inner join author on book_author.author=author.id";
         try {
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setString(1, "%"+author_name+"%");
@@ -151,9 +151,9 @@ public class LibraryActions implements ILibraryActions
         BasicConfigurator.configure();
         Library library = new Library();
         List<Library> libraries = new ArrayList<Library>();
-        String selectParametr = "select id from library where id in " +
-                                    "(select book from book_genre where book_genre.genre in " +
-                                        "(select id from genre where upper(genre) like upper(?)));";
+        String selectParametr="select library.id from library" +
+                "inner join book_genre on library.id=book_genre.genre" +
+                "inner join genre on book_genre.genre=genre.id";
         try {
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setString(1, "%"+genre+"%");
@@ -212,33 +212,6 @@ public class LibraryActions implements ILibraryActions
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Library library = new LibraryCRUD().readLibrary(rs.getLong("id"));
-                libraries.add(library);
-            }
-            rs.close();
-            stmt.close();
-        }
-       catch (SQLException e)
-        {
-                e.printStackTrace();
-                log.error("SQLException:" + e);
-        }
-        
-        return libraries;
-    }
-
-     public List<Library> getAllLocalBooksByUser(long user_id)
-     {
-        BasicConfigurator.configure();
-        Library library = new Library();
-        List<Library> libraries = new ArrayList<Library>();
-        String selectParametr = "SELECT Book FROM Catalog WHERE users=?";
-        try {
-            PreparedStatement stmt = connection.prepareStatement(selectParametr);
-            stmt.setLong(1, user_id);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                //System.out.println("!@# "+rs.getLong("id"));
-                library = new LibraryCRUD().readLibrary(rs.getInt("book"));
                 libraries.add(library);
             }
             rs.close();
@@ -315,6 +288,5 @@ public class LibraryActions implements ILibraryActions
             return rate/ratings.size();
         return 0;
     }
-
      
 }
