@@ -2,20 +2,24 @@ function formValidation()
 {
     var uid = document.registration.login;
     var passid = document.registration.password;
+    var cpassid = document.registration.cpassword;
     var uname = document.registration.firstName;
     var ulname = document.registration.lastName;
     var uemail = document.registration.email;
     if(userid_validation(uid,5,12))
     {
-        if(passid_validation(passid,7,12))
+        if (passeq(passid,cpassid))
         {
-            if(allLetter(uname))
+            if(passid_validation(passid,7,12))
             {
-                if(allLetter(ulname))
+                if(allLetter(uname))
                 {
-                    if(ValidateEmail(uemail))
+                    if(allLetter(ulname))
                     {
+                        if(ValidateEmail(uemail))
+                        {
 
+                    }
                     }
                 }
             }
@@ -25,6 +29,17 @@ function formValidation()
     return false;
 
 }
+function passeq(p,cp)
+{
+    if (p==cp){
+            return true;
+        }
+        else {
+            alert("Password do not equals!")
+            return false;
+        }
+}
+
 function userid_validation(uid,mx,my)
 {
     var uid_len = uid.value.length;

@@ -81,6 +81,12 @@
                             </tr>
                             <tr>
                                 <td>
+                                    Confirm password
+                                </td>
+                                <td><input name="cpassword" type="password"></td>
+                            </tr>
+                            <tr>
+                                <td>
                                     Gender:
                                 </td>
                                 <td>

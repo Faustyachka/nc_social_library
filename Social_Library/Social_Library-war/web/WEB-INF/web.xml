@@ -14,7 +14,7 @@
     </servlet>
     <servlet>
         <servlet-name>googleLogin</servlet-name>
-        <servlet-class>com.sociallibrary.authorization.googleLogin</servlet-class>
+        <servlet-class>com.sociallibrary.authorization.gLogin</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>twitterLogin</servlet-name>

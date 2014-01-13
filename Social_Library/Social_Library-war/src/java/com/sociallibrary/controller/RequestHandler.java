@@ -9,7 +9,7 @@ import com.sociallibrary.registration.ConfirmUser;
 import com.sociallibrary.registration.Registration;
 import com.sociallibrary.authorization.SignIn;
 import com.sociallibrary.authorization.fbLogin;
-import com.sociallibrary.authorization.googleLogin;
+import com.sociallibrary.authorization.gLogin;
 import com.sociallibrary.authorization.twitterLogin;
 import com.sociallibrary.authorization.vkLogin;
 
@@ -40,7 +40,7 @@ private RequestHandler(){
     commands.put("signin", new SignIn());
     commands.put("fbLogin", new fbLogin());
     commands.put("vkLogin", new vkLogin());
-    commands.put("googleLogin", new googleLogin());
+    commands.put("gLogin", new gLogin());
     commands.put("twitterLogin", new twitterLogin());
 }
 

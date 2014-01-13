@@ -152,8 +152,6 @@ public class fbLogin implements Command {
                         Logger.getLogger(fbLogin.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-
-
                 user.setConfirmed(true);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 user.setRegistrationDate(dateFormat.format(new Date()).toString());
