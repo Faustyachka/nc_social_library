@@ -7,7 +7,7 @@ package com.sociallibrary.connection;
 
 /**
  *
- * @author Антон
+ * @author пїЅпїЅпїЅпїЅпїЅ
  */
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -37,34 +37,20 @@ public class ConnectionProvider {
     public /*synchronized*/static Connection getConnection()
     {
         try {
-            OracleDataSource ods = new OracleDataSource();
-            String url = "jdbc:oracle:thin:@localhost:1521:xe";
-            ods.setURL(url);
-            ods.setUser("mazafaka");
-            ods.setPassword("mazafaka");
-            con = ods.getConnection();
-            /*
-            if ((con == null)||(con.isClosed())) {
-        try {
 //            OracleDataSource ods = new OracleDataSource();
 //            String url = "jdbc:oracle:thin:@localhost:1521:xe";
 //            ods.setURL(url);
 //            ods.setUser("mazafaka");
 //            ods.setPassword("mazafaka");
 //            con = ods.getConnection();
-            
+           
+           
             if ((con == null)||(con.isClosed())) {
                 Locale.setDefault(Locale.ENGLISH);
                 Context ic = new InitialContext();
                 DataSource dataSource = (DataSource) ic.lookup("jdbc/test");
                 con = dataSource.getConnection();
-                con.setAutoCommit(true);*/
-            }
-      //  }
-       // catch(NamingException e)
-        //{
-        //    System.out.println("Cannot retrieve jdbc/test"+e.getMessage());
-       // }
+                con.setAutoCommit(true);
                 con = dataSource.getConnection();
                 con.setAutoCommit(true);
             }

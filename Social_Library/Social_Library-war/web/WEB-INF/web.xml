@@ -24,7 +24,7 @@
         <servlet-name>tester</servlet-name>
         <servlet-class>com.sociallibrary.authorization.tester</servlet-class>
     </servlet>
-    <servlet-mapping>
+    <servlet><servlet-name>loginCheck</servlet-name><servlet-class>com.sociallibrary.registration.loginCheck</servlet-class></servlet><servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
     </servlet-mapping>
@@ -47,6 +47,10 @@
     <servlet-mapping>
         <servlet-name>tester</servlet-name>
         <url-pattern>/tester</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loginCheck</servlet-name>
+        <url-pattern>/loginCheck</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

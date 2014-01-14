@@ -288,5 +288,21 @@ public class LibraryActions implements ILibraryActions
             return rate/ratings.size();
         return 0;
     }
+
+    public List<Library> searchBooksByParameter(String workflow, String workflowInprogres) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public void addBookToLocal(long book_id, long user_id) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public void removeBookFromLocal(long book_id, long user_id) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public boolean isBookInLocalLibraryOfUser(long id, long user_id) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
      
 }
