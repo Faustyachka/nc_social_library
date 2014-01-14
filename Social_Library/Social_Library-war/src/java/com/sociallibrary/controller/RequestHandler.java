@@ -42,6 +42,10 @@ private RequestHandler(){
     commands.put("vkLogin", new vkLogin());
     commands.put("googleLogin", new googleLogin());
     commands.put("twitterLogin", new twitterLogin());
+    commands.put("globallib", new GlobalLibCommand());
+    commands.put("locallib", new LocalLibCommand());
+    commands.put("adminpage", new AdminpageCommand());
+    commands.put("searchusers", new SearchUsers());
 }
 
 public Command getCommand(HttpServletRequest request){

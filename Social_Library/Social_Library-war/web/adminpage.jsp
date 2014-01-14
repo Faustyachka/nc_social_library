@@ -29,7 +29,7 @@
 
         <div id="container">
 
-            <div id="header" align="center"><h1>Global Library</h1></div>
+            <div id="header" align="center"><h1>User management page</h1></div>
 
 
 <div id="wrapper">
@@ -38,7 +38,19 @@
     <%
         User current_user = (User)request.getSession().getAttribute("user");
         AdminPage bizLog = new AdminPage();
-        List<User> users = bizLog.getAllUsers();
+        //List<User> users = bizLog.getAllUsers();
+
+        int count_of_pages = 0;//new LibraryActions().countBooksByParameter("WORKFLOW", "4")/10+1;
+        List<User> users = (List<User>) request.getAttribute("users_list");
+        count_of_pages = (Integer) request.getAttribute("count_of_pages");
+        int i=0;
+        try {
+            i = Integer.parseInt(request.getParameter("page"));
+        }
+        catch(NumberFormatException e) {
+            e.printStackTrace();
+        }
+        i=i<1?1:i>count_of_pages?count_of_pages-1:i;
 /*        boolean isSearch = Boolean.valueOf(request.getParameter("search"));
         if(isSearch)
             users = bizLog.getSearch_users_result();
@@ -68,7 +80,7 @@
                 </tr>
                 <tr bgcolor="#ffffd0">
                     <td>Gender:&nbsp;</td>
-                    <td><%=user.getFirstName()%></td>
+                    <td><%=user.getGender()%></td>
                 </tr>
                 <tr>
                     <td>Registration date:&nbsp;</td>
@@ -103,7 +115,27 @@
     <%
         }
     %>
+
+    <center>
+        <%
+        int min_page = i-4;
+        min_page = min_page>0?min_page:1;
+        int max_page = i+4;
+       // int count_of_pages = new LibraryActions().countBooksByParameter("WORKFLOW", "4")/10+1;
+        max_page = max_page<count_of_pages?max_page:count_of_pages;
+        for(int k = min_page; k<max_page+1; k++)
+        {
+            String linkStyle="";
+            if(k==i) linkStyle="text-decoration:none; color:#007700;";
+        %>
+        <a style="<%=linkStyle%>" href="Controller?command=adminpage&page=<%=k%>"><b><%=k%></b></a>
+        <%
+        }
+        %>
+        </center>
 </div>
+
+      
 
 <div id="rightblock">
     <p>
@@ -119,6 +151,6 @@
 
 </div>
 
-
+        </div>
     </body>
 </html>

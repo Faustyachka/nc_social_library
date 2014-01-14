@@ -5,8 +5,10 @@
 
 package com.sociallibrary.controller;
 
+import com.sociallibrary.entity.User;
 import com.sociallibrary.model.AdminPage;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,9 +23,13 @@ public class SearchUsers implements Command {
 
         String search_request = request.getParameter("search_users");
         new AdminPage().searchUsers(search_request);
+        List<User> users = AdminPage.getSearch_users_result();
+        request.setAttribute("users_list", users);
+        request.setAttribute("count_of_pages", 1);
+        
 
 //        return ConfigurationManager.ADMIN_SEARCH_PAGE;
-        return null;
+        return ConfigurationManager.ADMIN_PAGE_USER_MANAGE;
     }
 
 }

@@ -14,23 +14,23 @@ import java.util.List;
  *
  * @author Антон
  */
-public class GlobalLibrary {
+public class LocalLibrary {
 
-    public List<Library> getPublished(){
+    public List<Library> getPublished(long user_id){
 
         LibraryActions lib = new LibraryActions();
 
-        List<Library> libs= lib.searchBooksByParameter(LibraryActions.workflow, LibraryActions.workflowInprogres);
+        List<Library> libs= new LibraryActions().getAllLocalBooksByUser(user_id);
 
         return libs ;
 
     }
 
-    public List<Library> getPublishedOnPage(int page){
+    public List<Library> getPublishedOnPage(long user_id, int page){
 
         LibraryActions lib = new LibraryActions();
 
-        List<Library> libs= lib.searchBooksByParameter(LibraryActions.workflow, LibraryActions.workflowInprogres);
+        List<Library> libs= getPublished(user_id);
         int from=0,to=0;
         from = (page-1)*10;
         to=page*10;
@@ -39,13 +39,13 @@ public class GlobalLibrary {
 
     }
 
-    public long countPages(){
+    public long countPages(long user_id){
 
         LibraryActions lib = new LibraryActions();
 
-        long count = lib.countAllBooksByWorkflow(LibraryActions.workflowPublished);
+        long count = lib.countAllLocalBooksByUser(user_id);
         count = count/10 + count%10>0?1:0;
-        
+
         return  count;
 
     }

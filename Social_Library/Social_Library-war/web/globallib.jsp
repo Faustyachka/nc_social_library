@@ -14,6 +14,7 @@
 <%@page import="com.sociallibrary.actions.*" %>
 <%@page import="com.sociallibrary.model.*" %>
 
+    <p>
         <%
         User current_user = (User) request.getSession().getAttribute("user");
         long user_id = current_user.getId();
@@ -65,7 +66,7 @@
                             <input type="hidden" name="book_id" value="<%=book.getId()%>"/>
                             <input type="hidden" name="user_id" value="<%=user_id%>"/>
                             <input type="hidden" id="rate_value_<%=book.getId()%>" name="rate" value=""/>
-                            <input type="hidden" name="redirect" value="locallib.jsp"/>
+                            <input type="hidden" name="redirect" value="globallib.jsp"/>
                             <input type="hidden" name="command" value="rating"/>
                             <div style="z-index:1; width:125px; position:absolute;">
                             <%
@@ -98,8 +99,8 @@
                         <form name="addToLocal" method="post" action="Controller">
                             <input type="hidden" name="book_id" value="<%=book.getId()%>"/>
                             <input type="hidden" name="user_id" value="<%=user_id%>"/>
-                            <input type="hidden" name="command" value="removefromlocal"/>
-                            <input align="right" type="submit" value="Remove from my library" />
+                            <input type="hidden" name="command" value="addtolocal"/>
+                            <input align="right" type="submit" value="Add to my library" />
                         </form>
                     </td>
                 </tr>
@@ -115,14 +116,13 @@
         int min_page = i-4;
         min_page = min_page>0?min_page:1;
         int max_page = i+4;
-       // int count_of_pages = new LibraryActions().countBooksByParameter("WORKFLOW", "4")/10+1;
         max_page = max_page<count_of_pages?max_page:count_of_pages;
         for(int k = min_page; k<max_page; k++)
         {
             String linkStyle="";
             if(k==i) linkStyle="text-decoration:none; color:#007700;";
         %>
-        <a style="<%=linkStyle%>" href="Controller?command=locallib&page=<%=k%>"><b><%=k%></b></a>
+        <a style="<%=linkStyle%>" href="Controller?command=globallib&page=<%=k%>"><b><%=k%></b></a>
         <%
         }
         %>

@@ -10,6 +10,7 @@ import com.sociallibrary.crud.RoleCRUD;
 import com.sociallibrary.crud.UserCRUD;
 import com.sociallibrary.entity.Role;
 import com.sociallibrary.entity.User;
+import com.sun.jmx.snmp.UserAcl;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,9 +43,29 @@ public class AdminPage {
         return last_search_users_result;
     }
 
-    public List<User> getAllUsers(){
-        return new UsersActions().getAllUsers();
+//    public List<User> getAllUsers(){
+//        return new UsersActions().getAllUsers();
+//    }
+
+    public List<User> getUsersFromTo(long id_from, long id_to){
+        return new UsersActions().getUsersFromTo(id_from, id_to);
     }
+
+    public List<User> getUsersOnPage(int page){
+        long id_from = (page-1)*10;
+        long id_to = page*10;
+        long count = new UsersActions().countAllUsers();
+        id_to=id_to<count?id_to:count-1;
+        return new UsersActions().getUsersFromTo(id_from, id_to);
+    }
+
+    public int countPages(){
+        long count_users = new UsersActions().countAllUsers();
+        int count_pages = (int) count_users/10;
+        count_pages = count_pages + (count_users%10>0?1:0);
+        return count_pages;
+    }
+
 
     public boolean isAdmin(User user){
         for(Role role : user.getRoles())

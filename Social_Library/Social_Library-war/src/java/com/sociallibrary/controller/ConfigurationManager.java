@@ -24,6 +24,8 @@ public class ConfigurationManager {
     public static final String NOCOMMAND_PAGE = "nocommand";
     public static final String DASHBOARD_PAGE = "dashboard";
     public static final String MAIN_PAGE = "mainpage";
+    public static final String GLOBAL_LIB = "/globallib.jsp";
+    public static final String ADMIN_PAGE_USER_MANAGE = "/adminpage.jsp";
 
     public static synchronized ConfigurationManager getInstance() {
         if (instance == null) {

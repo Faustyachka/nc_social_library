@@ -20,7 +20,7 @@ public class Dashboard {
 
         List<Library> libs = 
                 new LibraryActions().searchBooksByParameter(LibraryActions.workflow,
-                                                                LibraryActions.workflowPublished);
+                                                                LibraryActions.workflowInprogres);
 
         return libs ;
 
