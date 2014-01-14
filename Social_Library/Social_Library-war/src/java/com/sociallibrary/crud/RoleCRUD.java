@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.entity.Role;
-import com.sociallibrary.icrud.IRoleCRUD;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 /**

@@ -35,11 +35,7 @@ public class SignIn implements Command {
                 List<Role> roles = user.getRoles();
                 session.setAttribute("role", roles.get(0).getId());
                 role= (Integer)session.getAttribute("role");
-                page=ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE+role);
-                
-
-
-               
+                page=ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE+role);         
             } else {
                 page = ConfigurationManager.INDEX_PAGE;
             }

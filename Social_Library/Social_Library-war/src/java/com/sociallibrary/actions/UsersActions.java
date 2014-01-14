@@ -7,7 +7,6 @@ package com.sociallibrary.actions;
 import com.sociallibrary.entity.*;
 import com.sociallibrary.crud.*;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.iactions.IUsersActions;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

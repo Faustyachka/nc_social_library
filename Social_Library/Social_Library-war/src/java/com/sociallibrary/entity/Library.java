@@ -10,8 +10,9 @@ import java.util.List;
 
 /**
  *
- * @author Антон
+ * @author Pavlova Nastya
  */
+
 public class Library {
     private long id;
     private String isbn;
@@ -31,7 +32,7 @@ public class Library {
                 description + " " + pages;// + " "+user;//+" "+workflow;
     }
 
-    public List<String> toStringList(){
+    /*public List<String> toStringList(){
         List<String> result = new ArrayList<String>();
         result.add(String.valueOf(id));
         result.add(isbn);
@@ -43,7 +44,7 @@ public class Library {
        // result.add(String.valueOf(workflow.getId()));
 
         return result;
-    }
+    }*/
 
     public Library(long id) {
         this.id = id;

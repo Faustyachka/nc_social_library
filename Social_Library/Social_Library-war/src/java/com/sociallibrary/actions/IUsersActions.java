@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.sociallibrary.iactions;
+package com.sociallibrary.actions;
 
 import com.sociallibrary.entity.User;
 import java.util.List;
