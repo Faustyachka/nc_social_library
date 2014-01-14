@@ -2,7 +2,7 @@ package com.sociallibrary.crud;
 
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.entity.*;
-import com.sociallibrary.icrud.*;
+//import com.sociallibrary.icrud.*;
 import org.apache.log4j.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

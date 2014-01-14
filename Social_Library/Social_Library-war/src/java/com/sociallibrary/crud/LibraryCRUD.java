@@ -11,18 +11,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.entity.*;
-import com.sociallibrary.icrud.ILibraryCRUD;
 import org.apache.log4j.*;
+
 /**
  *
- * @author Антон
+ * @author Pavlova Nastya
  */
+
 public class LibraryCRUD implements ILibraryCRUD {
 
     private Connection connection;
     public static final Logger log = Logger.getLogger(LibraryCRUD.class);
 
-    public LibraryCRUD() {
+    public LibraryCRUD()
+    {
         connection = ConnectionProvider.getConnection();
     }
     
@@ -100,14 +102,14 @@ public class LibraryCRUD implements ILibraryCRUD {
                         "DESCRIPTION='?',PAGES=?,USERs=?,WORKFLOW=? WHERE ID=?";
              PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
-             String[] libraryParams = new String[8];
-             libraryParams = library.toStringList().toArray(libraryParams);
-             for(int i=1; i < 8; i++)
-                ps.setString(i, libraryParams[i]);
-            ps.setString(8, libraryParams[0]);
+            // String[] libraryParams = new String[8];
+           //  libraryParams = library.toStringList().toArray(libraryParams);
+             //for(int i=1; i < 8; i++)
+            //    ps.setString(i, libraryParams[i]);
+            //ps.setString(8, libraryParams[0]);
 
-            ps.executeUpdate();
-            connection.prepareStatement("commit").executeUpdate();
+           // ps.executeUpdate();
+           // connection.prepareStatement("commit").executeUpdate();
 
             ps.close();
 

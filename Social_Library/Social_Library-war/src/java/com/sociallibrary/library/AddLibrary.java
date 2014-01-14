@@ -5,7 +5,6 @@
 
 package com.sociallibrary.library;
 
-//import com.sociallibrary.constants.Const;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -14,6 +13,9 @@ import com.google.api.services.books.BooksRequestInitializer;
 import com.google.api.services.books.Books.Volumes.List;
 import com.google.api.services.books.model.Volume;
 import com.google.api.services.books.model.Volumes;
+import com.sociallibrary.entity.*;
+//import com.sociallibrary.icrud.*;
+import com.sociallibrary.crud.*;
 
 import java.io.IOException;
 
@@ -21,12 +23,12 @@ import java.io.IOException;
  *
  * @author mazafaka
  */
-public class AddLibrary //implements Command
+public class AddLibrary
 {
     private static final String APPLICATION_NAME = "Social_Library";
-    public static final String API_KEY ="AIzaSyCZsI9e4CfhOOOKQrBXaYB3OkXdu_Qq-3Q";
+    private static final String API_KEY ="AIzaSyCZsI9e4CfhOOOKQrBXaYB3OkXdu_Qq-3Q";
 
-    public static void execute(JsonFactory jsonFactory, String query)
+    public static void queryGoogleBooks(JsonFactory jsonFactory, String query)
             throws Exception
     {
         // Set up Books client.
@@ -114,7 +116,7 @@ public class AddLibrary //implements Command
         }
         try
         {
-        execute(jsonFactory, query);
+        queryGoogleBooks(jsonFactory, query);
         return;
         }
         catch (IOException e)

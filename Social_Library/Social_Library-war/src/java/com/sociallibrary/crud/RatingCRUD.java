@@ -1,7 +1,6 @@
 package com.sociallibrary.crud;
 
 import com.sociallibrary.entity.Rating;
-import com.sociallibrary.icrud.IRatingCRUD;
 import com.sociallibrary.connection.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
