@@ -31,7 +31,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="index.jsp">Sign In</a></li>
                         <li><a href="Registration.jsp">Registration</a></li>
-                        <li><a href="Controller?command=nocommand">Add</a></li>
+                        <li><a href="AddLibrary.jsp">Add</a></li>
 
 
                     </ul>
