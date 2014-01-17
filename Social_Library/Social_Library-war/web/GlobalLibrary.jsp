@@ -14,7 +14,6 @@
 <%@page import="com.sociallibrary.entity.*" %>
 <%@page import="com.sociallibrary.crud.*"%>
 <%@page import="com.sociallibrary.actions.*" %>
-<%@page import="com.sociallibrary.library.*" %>
 
 <html>
     <head>

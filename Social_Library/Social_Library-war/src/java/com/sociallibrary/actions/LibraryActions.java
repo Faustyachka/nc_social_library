@@ -26,7 +26,7 @@ public class LibraryActions implements ILibraryActions
 
 {
 
-      public static String workflow = "workflow";
+    public static String workflow = "workflow";
     public static String workflowInprogres = "1";
     public static int workflowPublished = 4;
     private static Connection connection;

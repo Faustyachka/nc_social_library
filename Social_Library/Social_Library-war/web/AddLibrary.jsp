@@ -16,6 +16,9 @@
 <%@page import="com.google.api.services.books.model.Volume"%>
 <%@page import=" com.google.api.services.books.model.Volumes"%>
 <%@page import="java.io.IOException"%>
+<%@page import="com.sociallibrary.entity.*" %>
+<%@page import="com.sociallibrary.crud.*"%>
+<%@page import="com.sociallibrary.actions.*" %>
 
 <html>
     <head>
@@ -55,6 +58,7 @@
         <th>Cover:</th>
         <th>Author</th>
         <th>Description:</th>
+        <th>Add:</th>
         </tr>
         <tr>
     <%
@@ -88,11 +92,8 @@
         .build();
 
         List volumesList = books.volumes().list(query);
-       // volumesList.setFilter("books");
-
-        // Execute the query.
         Volumes volumes = volumesList.execute();
-       
+
         for (Volume volume : volumes.getItems())
         {
             Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
@@ -119,16 +120,29 @@
             {
                 %>
                 </td><td><%=volumeInfo.getDescription() %></td>
-                </tr>
+                
                 <%
                 
             }
-            volumeInfo=null;
-        return;
+            %>
+            </tr>
+            <%
+            //code for add book to library
+            LibraryCRUD ob=new LibraryCRUD();
+            Library library=new Library();
+            library.setTitle(volumeInfo.getTitle());
+            library.setIsbn(volume.getVolumeInfo().getIndustryIdentifiers().get(0).getIdentifier());
+            library.setCover("http://bks3.books.google.com/books?id=volume.getId()&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api/SmallThumbnail.jpg");
+            library.setDescription(volumeInfo.getDescription());
+            library.setPages(volumeInfo.getPageCount());
+            //set author
+            //set genre
+            //library.setWorkflow(workflow)
+            ob.createLibrary(library);
+
+            return;
 
         }
-        volumesList=null;
-        volumes=null;
         
         }
         catch (IOException e)
