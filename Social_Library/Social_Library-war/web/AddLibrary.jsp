@@ -23,6 +23,21 @@
         <title>JSP Page</title>
     </head>
     <body>
+          <div id="content">
+              Maybe you meaned:
+              <br>
+              <script>
+              function handleResponse(response) {
+              for (var i = 0; i < response.items.length; i++) {
+              var item = response.items[i];
+              document.getElementById("content").innerHTML += "<br>" + item.volumeInfo.title ;
+              }
+              }
+              </script>
+              <script src="https://www.googleapis.com/books/v1/volumes?q=<%=request.getParameter("title")%>&callback=handleResponse"></script>
+          </div>
+    
+
         <form action="AddLibrary.jsp" method="POST">
             <p>Title||Author||ISBN:
             <input type="text" name="title"/>
@@ -33,7 +48,8 @@
         <tbody>
         <tr>
         <th>Title:</th>
-        <th>ISBN:</th>
+        <th>ISBN_10:</th>
+        <th>ISBN_13:</th>
         <th>Pages:</th>
         <th>Genre</th>
         <th>Cover:</th>
@@ -72,7 +88,7 @@
         .build();
 
         List volumesList = books.volumes().list(query);
-        volumesList.setFilter("ebooks");
+       // volumesList.setFilter("books");
 
         // Execute the query.
         Volumes volumes = volumesList.execute();
@@ -82,27 +98,27 @@
             Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
             %>
             <td><%=volumeInfo.getTitle() %></td>
-
-            <td><%=volume.getVolumeInfo().getIndustryIdentifiers().toString()%></td>
+            <td><%=volume.getVolumeInfo().getIndustryIdentifiers().get(0).getIdentifier() %></td>
+            <td><%=volume.getVolumeInfo().getIndustryIdentifiers().get(1).getIdentifier() %></td>
             <td><%=volumeInfo.getPageCount() %></td>
             <td><%=volumeInfo.getCategories() %></td>
             <td><img src="http://bks3.books.google.com/books?id=<%=volume.getId()%>&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api/SmallThumbnail.jpg%>"/></td>
+            <td>
             <%
             java.util.List<String> authors = volumeInfo.getAuthors();
             if (authors != null && !authors.isEmpty())
             {
-               //volume.getVolumeInfo().getIndustryIdentifiers().toString();
                 for (int i = 0; i < authors.size(); ++i)
                 {
                     %>
-                    <td><%=authors.get(i) %></td>
+                    <%=authors.get(i)%>
                     <%
                 }
             }
             if (volumeInfo.getDescription() != null && volumeInfo.getDescription().length() > 0)
             {
                 %>
-                <td><%=volumeInfo.getDescription() %></td>
+                </td><td><%=volumeInfo.getDescription() %></td>
                 </tr>
                 <%
                 
