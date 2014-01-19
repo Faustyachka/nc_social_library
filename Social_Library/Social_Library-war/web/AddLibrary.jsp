@@ -128,14 +128,30 @@
             </tr>
             <%
             //code for add book to library
-            LibraryCRUD ob=new LibraryCRUD();
+            ILibraryCRUD ob=new LibraryCRUD();
             Library library=new Library();
+            User user=new User();
+            IUserCRUD ob1=new UserCRUD();
+
+            //install values for book workflow
+            BookWorkflow workflow=new BookWorkflow();
+            IBookWorkflowCRUD ob2=new BookWorkflowCRUD();
+            workflow.setId((int)library.getId());
+            workflow.setWorkflow("New");
+            ob2.createBookWorkflow(workflow);
+            
             library.setTitle(volumeInfo.getTitle());
             library.setIsbn(volume.getVolumeInfo().getIndustryIdentifiers().get(0).getIdentifier());
             library.setCover("http://bks3.books.google.com/books?id=volume.getId()&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api/SmallThumbnail.jpg");
             library.setDescription(volumeInfo.getDescription());
             library.setPages(volumeInfo.getPageCount());
+            library.setUser(ob1.readUser(user.getId()));
+            library.setWorkflow(ob2.readBookWorkflow(workflow.getId()));
+
             //set author
+            Author author=new Author();
+            author.setAuthor(authors.get(0));
+            
             //set genre
             //library.setWorkflow(workflow)
             ob.createLibrary(library);

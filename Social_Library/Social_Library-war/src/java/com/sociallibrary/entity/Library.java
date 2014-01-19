@@ -5,12 +5,9 @@
 
 package com.sociallibrary.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
- * @author Pavlova Nastya
+ * @author Anton
  */
 
 public class Library {
@@ -26,11 +23,11 @@ public class Library {
     public Library() {
     }
 
-    @Override
-    public String toString(){
-        return id + " " + isbn + " " + title + " " + cover + " " +
-                description + " " + pages;// + " "+user;//+" "+workflow;
-    }
+   // @Override
+ //   public String toString(){
+  //      return id + " " + isbn + " " + title + " " + cover + " " +
+  //              description + " " + pages;// + " "+user;//+" "+workflow;
+   // }
 
     /*public List<String> toStringList(){
         List<String> result = new ArrayList<String>();
@@ -46,9 +43,10 @@ public class Library {
         return result;
     }*/
 
-    public Library(long id) {
-        this.id = id;
-    }
+    //public Library(long id) {
+    //    this.id = id;
+    //}
+
 
     public String getCover() {
         return cover;
@@ -98,14 +96,6 @@ public class Library {
         this.title = title;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public BookWorkflow getWorkflow() {
         return workflow;
     }
@@ -114,6 +104,13 @@ public class Library {
         this.workflow = workflow;
     }
 
-    
+    public User getUser()
+    {
+        return user;
+    }
 
+    public void setUser(User user)
+    {
+        this.user=user;
+    }
 }

@@ -119,6 +119,7 @@ public class RatingActions implements IRatingActions
     }
 
      public boolean addRating(long book_id, long user_id, int rate)
+             throws SQLException
      {
 
         Library book = new LibraryCRUD().readLibrary(book_id);

@@ -19,10 +19,14 @@ import org.apache.log4j.Logger;
 public class BookWorkflowCRUD implements IBookWorkflowCRUD{
     
     private Connection connection;
+    private PreparedStatement insertStmt;
     public static final Logger log = Logger.getLogger(BookWorkflowCRUD.class);
 
-    public BookWorkflowCRUD() {
+    public BookWorkflowCRUD() 
+            throws SQLException
+    {
         connection = ConnectionProvider.getConnection();
+        insertStmt=connection.prepareStatement("INSERT INTO Book_Workflow (workflow)  values('?')");
     }
 
     public void createBookWorkflow(BookWorkflow bookWorkflow) 
@@ -30,15 +34,9 @@ public class BookWorkflowCRUD implements IBookWorkflowCRUD{
         BasicConfigurator.configure();
         try 
         {
-            String sqlRequest ="INSERT INTO Book_Workflow (ID, workflow)  values(?, '?')";
-            PreparedStatement ps = connection.prepareStatement(sqlRequest);
-
-            ps.setInt(1, bookWorkflow.getId());
-            ps.setString(2, bookWorkflow.getWorkflow());
-            ps.executeUpdate();
-
-            ps.close();
-
+            insertStmt.setString(1, bookWorkflow.getWorkflow());
+            insertStmt.executeUpdate();
+            insertStmt.close();
         }
          catch (SQLException e)
         {

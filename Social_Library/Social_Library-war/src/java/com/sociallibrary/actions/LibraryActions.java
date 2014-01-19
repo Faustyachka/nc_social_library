@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  *
- * @author Nastya Pavlova
+ * @author Anton
  */
 public class LibraryActions implements ILibraryActions
 
@@ -38,6 +38,7 @@ public class LibraryActions implements ILibraryActions
     }
 
      public List<Library> getAllBooks(int from, int to)
+             throws SQLException
      {
          List<Library> libraries = new ArrayList<Library>();
          for(int i = from; i<to; i++)
@@ -78,6 +79,7 @@ public class LibraryActions implements ILibraryActions
     }
 
      public boolean addBookToLocal(long book_id, long user_id)
+             throws SQLException
      {
 
         Library book = new LibraryCRUD().readLibrary(book_id);

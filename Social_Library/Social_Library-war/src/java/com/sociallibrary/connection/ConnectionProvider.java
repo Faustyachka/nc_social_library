@@ -16,7 +16,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import oracle.jdbc.pool.OracleDataSource;
 
 public class ConnectionProvider {
 
@@ -27,12 +26,6 @@ public class ConnectionProvider {
     public /*synchronized*/static Connection getConnection()
     {
         try {
-//            OracleDataSource ods = new OracleDataSource();
-//            String url = "jdbc:oracle:thin:@localhost:1521:xe";
-//            ods.setURL(url);
-//            ods.setUser("mazafaka");
-//            ods.setPassword("mazafaka");
-//            con = ods.getConnection();
             
             if ((con == null)||(con.isClosed())) {
                 Locale.setDefault(Locale.ENGLISH);
