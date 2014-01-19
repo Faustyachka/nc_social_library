@@ -79,9 +79,9 @@ public class LibraryActions implements ILibraryActions
     }
 
      public boolean addBookToLocal(long book_id, long user_id)
-             throws SQLException
      {
-
+     try
+     {
         Library book = new LibraryCRUD().readLibrary(book_id);
         User user = new UserCRUD().readUser(user_id);
         if(book!=null)
@@ -95,7 +95,12 @@ public class LibraryActions implements ILibraryActions
 
                 return true;
             }
-
+     }
+     catch(SQLException e)
+     {
+         e.printStackTrace();
+         log.error("SQLException:" + e);
+     }
         return false;
     }
 

@@ -32,7 +32,7 @@ public class AuthorCRUD implements IAuthorCRUD {
         BasicConfigurator.configure();
             try {
                 insertStmt.setString(1, author.getAuthor());
-
+                insertStmt.executeUpdate();
                 insertStmt.close();
             }
 

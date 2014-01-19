@@ -8,50 +8,46 @@ package com.sociallibrary.crud;
 import com.sociallibrary.entity.*;
 import org.apache.log4j.*;
 import com.sociallibrary.connection.ConnectionProvider;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
  *
  * @author mazafaka
  */
-public class BookAuthorCRUD implements IBookAuthorCRUD
-{
-    private PreparedStatement insertStmt;
+public class BookGenreCRUD implements IBookGenreCRUD{
     private Connection connection;
-    Library book;
-    Author author;
-    public static final Logger log = Logger.getLogger( BookAuthorCRUD.class);
+    private PreparedStatement insertStmt;
+    private Library book;
+    private Genre genre;
+    public static final Logger log = Logger.getLogger(BookGenreCRUD.class);
 
-    public BookAuthorCRUD()
+    public BookGenreCRUD()
             throws SQLException
     {
         connection = ConnectionProvider.getConnection();
         book=new Library();
-        author=new Author();
-        insertStmt=connection.prepareStatement("INSERT INTO BOOK_AUTHOR (BOOK,AUTHOR) " +
-                "values(?,? )");
+        genre=new Genre();
+        insertStmt=connection.prepareStatement("INSERT INTO BOOK_GENRE (BOOK,GENRE) " +
+                "values(?,?)");
     }
 
-    public void createBookAuthor(BookAuthor bookauthor)
+    public void createBookGenre(BookGenre bookgenre)
     {
         BasicConfigurator.configure();
-        try
-        {
-            insertStmt.setLong(1,book.getId());
-            insertStmt.setLong(2, author.getId());
+        try {
+            insertStmt.setLong(1, book.getId());
+            insertStmt.setLong(2, genre.getId());
             insertStmt.executeUpdate();
-
             insertStmt.close();
 
         }
         catch (SQLException e)
         {
-            log.error("SQLException:" + e);
-            e.printStackTrace();
+                e.printStackTrace();
+                log.error("SQLException:" + e);
         }
-
     }
 }

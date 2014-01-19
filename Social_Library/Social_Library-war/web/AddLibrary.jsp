@@ -147,7 +147,7 @@
             library.setPages(volumeInfo.getPageCount());
             library.setUser(ob1.readUser(user.getId()));
             library.setWorkflow(ob2.readBookWorkflow(workflow.getId()));
-
+            ob.createLibrary(library);
             //set author
             Author author=new Author();
             IAuthorCRUD ob3=new AuthorCRUD();
@@ -160,8 +160,16 @@
             bookauthor.setAuthor_id(author.getId());
             ob4.createBookAuthor(bookauthor);
             //set genre
-            //library.setWorkflow(workflow)
-            ob.createLibrary(library);
+            Genre genre=new Genre();
+            IGenreCRUD ob5=new GenreCRUD();
+            genre.setGenre(volumeInfo.getCategories().get(0));
+            ob5.createGenre(genre);
+
+            IBookGenreCRUD ob6=new BookGenreCRUD();
+            BookGenre bookgenre=new BookGenre();
+            bookgenre.setBook_id(library.getId());
+            bookgenre.setGenre_id(genre.getId());
+            ob6.createBookGenre(bookgenre);
 
             return;
 
