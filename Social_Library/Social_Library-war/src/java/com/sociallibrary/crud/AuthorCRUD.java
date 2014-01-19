@@ -17,22 +17,23 @@ public class AuthorCRUD implements IAuthorCRUD {
     public static final Logger log = Logger.getLogger(AuthorCRUD.class);
     private static final String selectQuery = "SELECT * FROM author WHERE id=?";
     private static final String deleteQuery = "DELETE FROM author WHERE id =?";
-    private static final String insertAuthorQuery = "INSERT INTO author VALUES ( author_id.nextval , ?)";
     private static final String updateAuthorQuery = "UPDATE author SET author=? WHERE id=?";
-
+    private PreparedStatement insertStmt;
+    
     public  AuthorCRUD()
+            throws SQLException
     {
         connection = ConnectionProvider.getConnection();
+        insertStmt=connection.prepareStatement("INSERT INTO AUTHOR (AUTHOR) " +
+                "values('?' )");
     }
 
     public void createAuthor(Author author) {
         BasicConfigurator.configure();
             try {
-                PreparedStatement pstmt = connection.prepareStatement(insertAuthorQuery);
-                pstmt.setString(1, author.getAuthor());
-                pstmt.executeUpdate();
+                insertStmt.setString(1, author.getAuthor());
 
-                pstmt.close();
+                insertStmt.close();
             }
 
           catch (SQLException e)

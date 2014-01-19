@@ -16,10 +16,6 @@ public class Author {
     public Author() {
     }
 
-    public Author(long id) {
-        this.id = id;
-    }
-
     public String getAuthor() {
         return author;
     }

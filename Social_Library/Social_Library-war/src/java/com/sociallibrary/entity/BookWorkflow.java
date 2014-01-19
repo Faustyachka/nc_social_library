@@ -12,7 +12,8 @@ import java.util.List;
  *
  * @author Антон
  */
-public class BookWorkflow {
+public class BookWorkflow
+{
 
     private int id;
     private String workflow;

@@ -150,8 +150,15 @@
 
             //set author
             Author author=new Author();
+            IAuthorCRUD ob3=new AuthorCRUD();
             author.setAuthor(authors.get(0));
-            
+            ob3.createAuthor(author);
+
+            IBookAuthorCRUD ob4=new BookAuthorCRUD();
+            BookAuthor bookauthor=new BookAuthor();
+            bookauthor.setBook_id(library.getId());
+            bookauthor.setAuthor_id(author.getId());
+            ob4.createBookAuthor(bookauthor);
             //set genre
             //library.setWorkflow(workflow)
             ob.createLibrary(library);
