@@ -19,14 +19,14 @@ import java.util.List;
 
 /**
  *
- * @author Nastya Pavlova
+ * @author Anton
  */
 public class LibraryActions implements ILibraryActions
 
 
 {
 
-      public static String workflow = "workflow";
+    public static String workflow = "workflow";
     public static String workflowInprogres = "1";
     public static int workflowPublished = 4;
     private static Connection connection;
@@ -38,6 +38,7 @@ public class LibraryActions implements ILibraryActions
     }
 
      public List<Library> getAllBooks(int from, int to)
+             throws SQLException
      {
          List<Library> libraries = new ArrayList<Library>();
          for(int i = from; i<to; i++)
@@ -79,7 +80,8 @@ public class LibraryActions implements ILibraryActions
 
      public boolean addBookToLocal(long book_id, long user_id)
      {
-
+     try
+     {
         Library book = new LibraryCRUD().readLibrary(book_id);
         User user = new UserCRUD().readUser(user_id);
         if(book!=null)
@@ -93,7 +95,12 @@ public class LibraryActions implements ILibraryActions
 
                 return true;
             }
-
+     }
+     catch(SQLException e)
+     {
+         e.printStackTrace();
+         log.error("SQLException:" + e);
+     }
         return false;
     }
 

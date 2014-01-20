@@ -7,17 +7,13 @@ package com.sociallibrary.entity;
 
 /**
  *
- * @author Антон
+ * @author mazafaka
  */
 public class Genre {
-    private int id;
+    private long id;
     private String genre;
 
     public Genre() {
-    }
-
-    public Genre(int id) {
-        this.id = id;
     }
 
     public String getGenre() {
@@ -28,7 +24,7 @@ public class Genre {
         this.genre = genre;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
