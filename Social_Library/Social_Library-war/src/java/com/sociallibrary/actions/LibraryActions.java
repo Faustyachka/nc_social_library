@@ -7,9 +7,7 @@ package com.sociallibrary.actions;
 
 import com.sociallibrary.entity.*;
 import com.sociallibrary.crud.*;
-import com.sociallibrary.icrud.*;
 import org.apache.log4j.*;
-import com.sociallibrary.iactions.ILibraryActions;
 import com.sociallibrary.connection.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -535,6 +533,22 @@ public class LibraryActions implements ILibraryActions
         if(ratings.size()>0)
             return rate/ratings.size();
         return 0;
+    }
+
+    public List<Library> BooksList(int from, int to, int workflow) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void AddToLocal(long book_id, long user_id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void RemoveFromLocal(long book_id, long user_id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean CheckLocal(long book_id, long user_id) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
      

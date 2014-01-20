@@ -9,8 +9,6 @@ import com.sociallibrary.controller.Command;
 import com.sociallibrary.controller.ConfigurationManager;
 import com.sociallibrary.entity.Library;
 import com.sociallibrary.entity.User;
-import com.sociallibrary.model.Dashboard;
-import com.sociallibrary.model.GlobalLibrary;
 import com.sociallibrary.model.LocalLibrary;
 import java.io.IOException;
 import java.util.List;
