@@ -13,6 +13,8 @@
     <head>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="javascripts/validator.js"></script>
         <link href="signin.css" rel="stylesheet">
         <title>TEMPLATE Page</title>
     </head>
@@ -81,6 +83,12 @@
                             </tr>
                             <tr>
                                 <td>
+                                    Confirm password
+                                </td>
+                                <td><input name="cpassword" type="password"></td>
+                            </tr>
+                            <tr>
+                                <td>
                                     Gender:
                                 </td>
                                 <td>
@@ -108,10 +116,6 @@
                     <br>
                     <input type="Submit">
                 </form>
-                <%--<fb:registration redirect_uri=<%=Const.HOST%>Registration.jsp fields="name,first_name,last_name,email,gender,password" />--%>
-                <a href="https://www.facebook.com/dialog/oauth?client_id=<%=Const.FB_APP_ID%>&redirect_uri=<%=Const.HOST%>Controller?command=fbLogin&response_type=code">FB</a>
-                <a href="https://accounts.google.com/o/oauth2/auth?redirect_uri=<%=Const.HOST%>tester&response_type=code&client_id=<%=Const.G_APP_ID%>&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile">GOOGLE</a>
-                <a href="http://oauth.vk.com/authorize?client_id=4114473&redirect_uri=<%=Const.HOST%>tester&response_type=code" title="vk">VK</a>
             </div>
 
            

@@ -19,11 +19,9 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,7 +41,7 @@ import org.json.JSONObject;
  *
  * @author Костя
  */
-public class googleLogin implements Command {
+public class gLogin implements Command {
 
     private String firstName;
     private String lastName;
@@ -53,9 +51,11 @@ public class googleLogin implements Command {
     private String page = ConfigurationManager.INDEX_PAGE;
     private String access_token;
     private String data;
+    private String code;
 
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, UnsupportedEncodingException {
         response.setContentType("text/html;charset=UTF-8");
+        code = request.getParameter("code");
         String req = "https://accounts.google.com/o/oauth2/token";
         URL url = new URL(req);
         URLConnection urlConn = url.openConnection();
@@ -67,7 +67,7 @@ public class googleLogin implements Command {
 
         DataOutputStream cgiInput = new DataOutputStream(urlConn.getOutputStream());
 
-        String content = "code=" + request.getParameter("code") + "&client_id=" +
+        String content = "code=" + code + "&client_id=" +
                 Const.G_APP_ID + "&client_secret=" + Const.G_APP_SECRET + "&redirect_uri=" +
                 Const.HOST + "tester&grant_type=authorization_code";
 
@@ -110,6 +110,12 @@ public class googleLogin implements Command {
             firstName = json.getString("given_name");
             lastName = json.getString("family_name");
             gender = json.getString("gender");
+            if (email.equals("")) {
+                email = "noEmail" + g_id;
+            }
+            if (gender.equals("")) {
+                gender = "male";
+            }
         } catch (JSONException e) {
 
         }
@@ -132,29 +138,29 @@ public class googleLogin implements Command {
             user.setLogin(g_id);
             user.setNotify(false);
             user.setBanned(false);
+            user.setEmail(email);
             String pass = SecurityHash.getPass(8, 12);
-            if (email.equals("")){
-                user.setEmail("noEmail"+g_id);
+            if (email.equals("noEmail"+g_id)) {
                 user.setPassword(pass);
-            }else{
-            try {
-                user.setPassword(SecurityHash.getMd5(pass));
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(fbLogin.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                       String mailSub = "Registration on Social Library via Facebook";
-            String mailText = "Welcom to '" + Const.HOST + "'!\n" +
-                    "You have register now using Google+.\n" +
-                    "You can login in our site using this data without connection to Google+:\n" +
-                    "Login: " + user.getLogin() + " \n" +
-                    "Password: " + pass + " \n";
-            String mail[] = new String[1];
-            mail[0] = user.getEmail();
-            try {
-                EmailSender.sendEmail(mail, mailSub, mailText);
-            } catch (MessagingException ex) {
-                Logger.getLogger(fbLogin.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } else {
+                try {
+                    user.setPassword(SecurityHash.getMd5(pass));
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(fbLogin.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                String mailSub = "Registration on Social Library via Facebook";
+                String mailText = "Welcom to '" + Const.HOST + "'!\n" +
+                        "You have register now using Google+.\n" +
+                        "You can login in our site using this data without connection to Google+:\n" +
+                        "Login: " + user.getLogin() + " \n" +
+                        "Password: " + pass + " \n";
+                String mail[] = new String[1];
+                mail[0] = user.getEmail();
+                try {
+                    EmailSender.sendEmail(mail, mailSub, mailText);
+                } catch (MessagingException ex) {
+                    Logger.getLogger(fbLogin.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             user.setConfirmed(true);
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -164,11 +170,11 @@ public class googleLogin implements Command {
             user.setRoles(rList);
             new UserCRUD().createUser(user);
             user = new UsersActions().searchUserByLogin(user.getLogin());
- 
+
             session.setAttribute("user", user);
             int role = rList.get(0).getId();
             session.setAttribute("role", role);
-            page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE + role);
+            page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE + 3);
         } else {
             session.setAttribute("user", user);
             int role = user.getRoles().get(0).getId();

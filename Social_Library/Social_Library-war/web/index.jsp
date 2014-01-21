@@ -31,7 +31,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="index.jsp">Sign In</a></li>
                         <li><a href="Registration.jsp">Registration</a></li>
-                        <li><a href="Controller?command=nocommand">Add</a></li>
+                        <li><a href="AddLibrary.jsp">Add</a></li>
 
 
                     </ul>
@@ -78,7 +78,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="https://accounts.google.com/o/oauth2/auth?redirect_uri=<%=Const.HOST%>Controller?command=googleLogin&response_type=code&client_id=<%=Const.G_APP_ID%>&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile">
+                  <a href="https://accounts.google.com/o/oauth2/auth?redirect_uri=<%=Const.HOST%>Controller?command=gLogin&response_type=code&client_id=<%=Const.G_APP_ID%>&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile">
                                             <img src="images/googleplus.png"/>
                                         </a>
                                     </td>

@@ -5,13 +5,11 @@
 
 package com.sociallibrary.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
- * @author Антон
+ * @author Anton
  */
+
 public class Library {
     private long id;
     private String isbn;
@@ -25,13 +23,13 @@ public class Library {
     public Library() {
     }
 
-    @Override
-    public String toString(){
-        return id + " " + isbn + " " + title + " " + cover + " " +
-                description + " " + pages;// + " "+user;//+" "+workflow;
-    }
+   // @Override
+ //   public String toString(){
+  //      return id + " " + isbn + " " + title + " " + cover + " " +
+  //              description + " " + pages;// + " "+user;//+" "+workflow;
+   // }
 
-    public List<String> toStringList(){
+    /*public List<String> toStringList(){
         List<String> result = new ArrayList<String>();
         result.add(String.valueOf(id));
         result.add(isbn);
@@ -43,11 +41,12 @@ public class Library {
        // result.add(String.valueOf(workflow.getId()));
 
         return result;
-    }
+    }*/
 
-    public Library(long id) {
-        this.id = id;
-    }
+    //public Library(long id) {
+    //    this.id = id;
+    //}
+
 
     public String getCover() {
         return cover;
@@ -97,14 +96,6 @@ public class Library {
         this.title = title;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public BookWorkflow getWorkflow() {
         return workflow;
     }
@@ -113,6 +104,13 @@ public class Library {
         this.workflow = workflow;
     }
 
-    
+    public User getUser()
+    {
+        return user;
+    }
 
+    public void setUser(User user)
+    {
+        this.user=user;
+    }
 }

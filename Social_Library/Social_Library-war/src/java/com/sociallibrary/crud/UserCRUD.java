@@ -20,7 +20,6 @@ import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.entity.Gender;
 import com.sociallibrary.entity.Role;
 import com.sociallibrary.entity.User;
-import com.sociallibrary.icrud.IUserCRUD;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.BasicConfigurator;

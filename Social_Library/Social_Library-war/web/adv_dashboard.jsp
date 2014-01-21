@@ -4,11 +4,6 @@
     Author     : Pavel
 --%>
 
-
-
 <jsp:include page="adv_menu.jsp" />
 
 <jsp:include page="dashboard.jsp" />
-</div>
-</body>
-</html>

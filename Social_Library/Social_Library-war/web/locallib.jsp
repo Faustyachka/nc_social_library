@@ -1,72 +1,36 @@
 <%--
     Document   : newjsp
-    Created on : 5 січ 2014, 0:39:48
-    Author     : mazafaka
+    Created on : 5 ??? 2014, 0:39:48
+    Author     : Anton
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page import="java.util.UUID"%>
 <%@page import="java.util.Collection"%>
 <%@page import="com.sociallibrary.entity.*" %>
-<%@page import="com.sociallibrary.icrud.*"%>
 <%@page import="com.sociallibrary.crud.*"%>
-<%@page import="com.sociallibrary.iactions.*" %>
 <%@page import="com.sociallibrary.actions.*" %>
 <%@page import="com.sociallibrary.model.*" %>
 
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="style.css" type="text/css" rel="stylesheet" />
-
-        <title>Global Library</title>
-        <script language="javascript">
-            function radio_click(n, book_id){
-                for(var i = 1; i<6; i++){
-                    if(i<=n) document.getElementById("radio_rate_"+i+"_"+book_id).checked=true;//setAttribute("checked", "");
-                    else document.getElementById("radio_rate_"+i+"_"+book_id).checked=false; //document.getElementById('radio_rate_'+i).attributes.removeAttribute("checked");
-                }
-                document.getElementById("rate_value"+"_"+book_id).setAttribute("value", n);
-            }
-        </script>
-    </head>
-    <body>
-
-        <div id="container">
-
-            <div id="header" align="center"><h1>Local Library</h1></div>
-
-
-<div id="wrapper">
-
-<div id="content">
-    <p>
         <%
-        HttpSession httpSession = request.getSession(false);
-        User current_user = (User) request.getSession(false).getAttribute("user");
+        User current_user = (User) request.getSession().getAttribute("user");
         long user_id = current_user.getId();
+/*        User current_user = new UserCRUD().readUsers(5);
+        long user_id = 5;
+*/      int count_of_pages = 0;//new LibraryActions().countBooksByParameter("WORKFLOW", "4")/10+1;
+        List<Library> all_required_books =  new LibraryActions().getAllLocalBooksByUser(user_id);//(List<Library>) request.getAttribute("published");
+        count_of_pages = (int) new LibraryActions().countAllLocalBooksByUser(user_id); //(Integer) request.getAttribute("count_of_pages");
         int i=0;
-        List<Library> all_required_books = new LibraryActions().getAllLocalBooksByUser(user_id);
-        int count_of_pages = all_required_books.size()/10+1;
         try {
-            i = Integer.parseInt(request.getParameter("i"));
+            i = Integer.parseInt(request.getParameter("page"));
         }
         catch(NumberFormatException e) {
             e.printStackTrace();
         }
         i=i<1?1:i>count_of_pages?count_of_pages-1:i;
-        
-        int from = (i-1)*10;
-        int to = i*10;
-        to=to<all_required_books.size()?to:all_required_books.size();
-        List<Library> libraries = all_required_books.subList(from, to);
+
+        List<Library> libraries = all_required_books;//.subList(from, to);
         //List<Library> libraries = ob.getBooksByIdInInterval(10*i, 10*(i+1));
-        //out.println("Hello, "+current_user.getFirstName()+"!");
         out.println("Hello, "+current_user.getFirstName()+"!");
         for(Library book:libraries)
         {
@@ -103,8 +67,9 @@
                             <input type="hidden" name="command" value="rating"/>
                             <div style="z-index:1; width:125px; position:absolute;">
                             <%
-                            float average_rate = new RatingActions().getAverageRatingByBookId(book.getId());
-                            int my_rating = new RatingActions().getRatingByBookAndUserId(book.getId(), user_id).getRate();
+                            LocalLibrary localLibrary = new LocalLibrary();
+                            float average_rate = localLibrary.getAverageRatingByBookId(book.getId());
+                            int my_rating = localLibrary.getRatingByBookAndUserId(book.getId(), user_id);
                             String checked = "";
                                 for(int r = 1; r<6; r++){
                                     if(r < my_rating+1) checked = "checked";
@@ -155,64 +120,8 @@
             String linkStyle="";
             if(k==i) linkStyle="text-decoration:none; color:#007700;";
         %>
-        <a style="<%=linkStyle%>" href="?i=<%=k%>"><b><%=k%></b></a>
+        <a style="<%=linkStyle%>" href="Controller?command=locallib&page=<%=k%>"><b><%=k%></b></a>
         <%
         }
         %>
         </center>
-</div>
-
-</div>
-
-
-<div id="leftblock">
-    <br>
-    <a href="globallib.jsp">Global library</a><br/><br/>
-    <%
-        boolean isModerator = false;
-        boolean isAdvanced = false;
-        for(Role r : current_user.getRoles())
-            if(r.getId()==1) isModerator = true;
-            else if(r.getId()==2) isAdvanced = true;
-    %>
-
-    <%
-        if(isAdvanced||isModerator){
-    %>
-    <a href="dashboard.jsp">Dashboard Publish</a><br/><br/>
-    <%
-        }
-        if(isModerator){
-    %>
-    <a href="dashboardApp.jsp">Dashboard Approve</a>
-    <%
-        }
-    %>
-    <%
-        if(new AdminPage().isAdmin(current_user)){
-    %>
-    <br/><br/><a href="adminpage.jsp">Admin page</a>
-    <%
-        }
-    %>
-
-
-</div>
-
-<div id="rightblock">
-        <p>
-       <form name="form1" method="post" action="Controller">
-        <input type="text" name="search_request" value="">
-        <input type="hidden" name="command" value="searchinlocal"/>
-        <input name="search" type="submit" value="Search">
-       </form>
-    </p>
-</div>
-
-<div id="footer"><p>Blue One</p></div>
-
-</div>
-
-
-    </body>
-</html>

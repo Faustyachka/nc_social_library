@@ -12,9 +12,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Collection"%>
 <%@page import="com.sociallibrary.entity.*" %>
-<%@page import="com.sociallibrary.icrud.*"%>
 <%@page import="com.sociallibrary.crud.*"%>
-<%@page import="com.sociallibrary.iactions.*" %>
 <%@page import="com.sociallibrary.actions.*" %>
 
 <html>
@@ -65,7 +63,7 @@
            e.printStackTrace();
         }
         LibraryActions ob=new LibraryActions();
-        List<Library> libraries = ob.getAllBooksByWorkflow(4).subList(i*10, (i+1)*10);
+        List<Library> libraries = ob.BooksList(i*10, (i+1)*10,4);
 
         for(Library book:libraries)
         {
@@ -115,8 +113,8 @@
 </div>
 
 <div id="rightblock">
-    <p><form name="form1" method="post" action="SearchInGloballib">
-        <input type="text" name="text">
+    <p><form name="form1" method="post" action="AddLibrary">
+        <input type="text" name="genre">
 	<input name="search" type="button" value="Search">
         </form>
    </p>

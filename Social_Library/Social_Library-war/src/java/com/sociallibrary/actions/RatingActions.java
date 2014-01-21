@@ -9,7 +9,6 @@ import com.sociallibrary.entity.*;
 import com.sociallibrary.crud.*;
 import org.apache.log4j.*;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.iactions.IRatingActions;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -120,8 +119,10 @@ public class RatingActions implements IRatingActions
     }
 
      public boolean addRating(long book_id, long user_id, int rate)
+             
      {
-
+     try
+     {
         Library book = new LibraryCRUD().readLibrary(book_id);
         User user = new UserCRUD().readUser(user_id);
         if(book!=null)
@@ -143,7 +144,12 @@ public class RatingActions implements IRatingActions
 
                 return true;
             }
-
+     }
+     catch(SQLException e)
+     {
+         e.printStackTrace();
+         log.error("SQLException:" + e);
+     }
         return false;
     }
 

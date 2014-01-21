@@ -7,6 +7,7 @@ package com.sociallibrary.commands;
 import com.sociallibrary.controller.*;
 import com.sociallibrary.actions.RatingActions;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

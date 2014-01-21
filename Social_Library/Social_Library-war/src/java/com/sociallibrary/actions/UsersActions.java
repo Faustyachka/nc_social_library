@@ -7,7 +7,6 @@ package com.sociallibrary.actions;
 import com.sociallibrary.entity.*;
 import com.sociallibrary.crud.*;
 import com.sociallibrary.connection.ConnectionProvider;
-import com.sociallibrary.iactions.IUsersActions;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -72,7 +71,66 @@ public class UsersActions implements IUsersActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        
+
+        return users;
+    }
+
+    public long countAllUsers()
+     {
+        BasicConfigurator.configure();
+        long count = 0;
+        try
+        {
+            String sqlRequest ="SELECT count(id) FROM Users";
+            PreparedStatement ps = connection.prepareStatement(sqlRequest);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next())
+            {
+                count = rs.getLong(1);
+            }
+
+            rs.close();
+            ps.close();
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+
+        return count;
+    }
+
+    public List<User> getUsersFromTo(long id_from, long id_to)
+     {
+        BasicConfigurator.configure();
+        List<User> users = new ArrayList<User>();
+        try
+        {
+            String sqlRequest ="SELECT id FROM Users WHERE id>=? AND id<?";
+            PreparedStatement ps = connection.prepareStatement(sqlRequest);
+
+            ps.setLong(1, id_from);
+            ps.setLong(2, id_to);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next())
+            {
+                User user = new UserCRUD().readUser(rs.getLong(1));
+                users.add(user);
+            }
+
+            rs.close();
+            ps.close();
+        }
+        catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+
         return users;
     }
 
@@ -83,7 +141,7 @@ public class UsersActions implements IUsersActions
         List<User> users = new ArrayList<User>();
         try
         {
-            String sqlRequest ="SELECT * FROM Users WHERE "+param+" like '?'";
+            String sqlRequest ="SELECT * FROM Users WHERE "+param+" like ?";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
             ps.setString(1, value);
             ResultSet rs = ps.executeQuery();
@@ -103,6 +161,11 @@ public class UsersActions implements IUsersActions
                 user.setRegistrationDate(rs.getString("REGISTRATION_DATE"));
                 user.setNotify(rs.getInt("NOTIFY")==1);
                 //user.setRoles(new RoleCRUD().getRolesByUserId(rs.getLong("id")));
+                List<Role> roles = new ArrayList<Role>();
+                List<Integer> integers = new RolesActions().getRolesIdByUserId(user.getId());
+                for(int i : integers)
+                    roles.add(new RoleCRUD().readRole(i));
+                user.setRoles(roles);
                 users.add(user);
             }
 
@@ -124,7 +187,7 @@ public class UsersActions implements IUsersActions
         User user = null;
         try
         {
-            String sqlRequest ="SELECT id FROM Users WHERE login='?' AND password='?'";
+            String sqlRequest ="SELECT id FROM Users WHERE login=? AND password=?";
             PreparedStatement ps = connection.prepareStatement(sqlRequest);
             ps.setString(1, login);
             ps.setString(2, password);

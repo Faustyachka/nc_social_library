@@ -1,7 +1,6 @@
 package com.sociallibrary.crud;
 
 import com.sociallibrary.entity.*;
-import com.sociallibrary.icrud.*;
 import org.apache.log4j.*;
 import com.sociallibrary.connection.ConnectionProvider;
 import java.sql.Connection;
@@ -12,29 +11,27 @@ import java.sql.SQLException;
 public class GenreCRUD implements IGenreCRUD {
 
     private Connection connection;
+    private PreparedStatement insertStmt;
     public static final Logger log = Logger.getLogger(GenreCRUD.class);
     private static final String selectQuery = "SELECT * FROM book_genre WHERE id=?";
     private static final String deleteQuery = "DELETE FROM book_genre WHERE id =?";
-    private static final String insertBookGenreQuery = "INSERT INTO book_genre VALUES (book_genre_id.nextval, ?, ?)";
     private static final String updateBookGenreQuery = "UPDATE book_genre SET book=?, genre=? WHERE id=?";
-    private Genre bookGenre;
 
      public  GenreCRUD()
+             throws SQLException
     {
         connection = ConnectionProvider.getConnection();
+        insertStmt=connection.prepareStatement("INSERT INTO GENRE (GENRE) " +
+                "values('?')");
     }
 
      public void createGenre(Genre genre) {
          BasicConfigurator.configure();
         try {
-            PreparedStatement pstmt = connection.prepareStatement(insertBookGenreQuery);
-
-           // pstmt.setLong(1, bookGenre.getBook().getId());
-            //pstmt.setInt(2, bookGenre.getGenre().getId());
-
-            pstmt.executeUpdate();
-
-            pstmt.close();
+            insertStmt.setString(1, genre.getGenre());
+            insertStmt.executeUpdate();
+            insertStmt.close();
+            
         }
         catch (SQLException e)
         {
@@ -46,8 +43,8 @@ public class GenreCRUD implements IGenreCRUD {
 
     public Genre readGenre(int id)
     {
-        BasicConfigurator.configure();
-        bookGenre = new Genre();
+       BasicConfigurator.configure();
+       Genre bookGenre = new Genre();
         try {
             PreparedStatement stmt = connection.prepareStatement(selectQuery);
             stmt.setLong(1, id);
@@ -96,7 +93,7 @@ public class GenreCRUD implements IGenreCRUD {
         try {
             PreparedStatement stmt = connection.prepareStatement(deleteQuery);
 
-            stmt.setLong(1, bookGenre.getId());
+            stmt.setLong(1, genre.getId());
 
             stmt.executeUpdate();
 

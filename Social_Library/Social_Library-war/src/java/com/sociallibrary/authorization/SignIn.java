@@ -22,20 +22,21 @@ public class SignIn implements Command {
 
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, UnsupportedEncodingException {
-        String page =null;
-         Integer role =null;
+        String page = null;
+        Integer role = null;
         response.setContentType("text/html;charset=UTF-8");
         User user = new UsersActions().searchUserByLogin(request.getParameter("login"));
-
         try {
-            if (user.getPassword().equals(SecurityHash.getMd5(request.getParameter("password"))) && user.isConfirmed() && !user.isBanned()) {
+            if (user != null) {
+                if (user.getPassword().equals(SecurityHash.getMd5(request.getParameter("password"))) && user.isConfirmed() && !user.isBanned()) {
 
-                HttpSession session = request.getSession(true);
-                session.setAttribute("user", user);
-                List<Role> roles = user.getRoles();
-                session.setAttribute("role", roles.get(0).getId());
-                role= (Integer)session.getAttribute("role");
-                page=ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE+role);
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("user", user);
+                    List<Role> roles = user.getRoles();
+                    session.setAttribute("role", roles.get(0).getId());
+                    role = (Integer) session.getAttribute("role");
+                    page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE + role);
+                
             } else {
                 page = ConfigurationManager.INDEX_PAGE;
             }
@@ -45,6 +46,7 @@ public class SignIn implements Command {
             request.setAttribute("error_log", ex);
 
         }
+
         return page;
     }
 }

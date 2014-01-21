@@ -11,19 +11,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.sociallibrary.connection.ConnectionProvider;
 import com.sociallibrary.entity.*;
-import com.sociallibrary.icrud.ILibraryCRUD;
 import org.apache.log4j.*;
+
 /**
  *
- * @author Антон
+ * @author Pavlova Nastya
  */
+
 public class LibraryCRUD implements ILibraryCRUD {
 
     private Connection connection;
+    //private PreparedStatement selectStmt;
+    private PreparedStatement insertStmt;
+    //private PreparedStatement updateStmt;
+   // private PreparedStatement deleteStmt;
+    private User user;
+    private BookWorkflow workflow;
+
     public static final Logger log = Logger.getLogger(LibraryCRUD.class);
 
-    public LibraryCRUD() {
+    public LibraryCRUD() throws SQLException
+    {
         connection = ConnectionProvider.getConnection();
+        user=new User();
+        workflow=new BookWorkflow();
+        insertStmt=connection.prepareStatement("INSERT INTO LIBRARY (ISBN,TITLE,COVER,DESCRIPTION,PAGES,USER,WORKFLOW) " +
+                "values('?','?','?','?',?, ?, ?  )");
     }
     
     public void createLibrary(Library library)
@@ -31,22 +44,17 @@ public class LibraryCRUD implements ILibraryCRUD {
         BasicConfigurator.configure();
         try 
         {
-            String sqlRequest = "INSERT INTO LIBRARY (ID,ISBN,TITLE,COVER,DESCRIPTION,PAGES,USERs,WORKFLOW) " +
-                        "values(?,'?','?','?','?', ?, ?, ?)";
+            insertStmt.setString(1, library.getIsbn());
+            insertStmt.setString(2, library.getTitle());
+            insertStmt.setString(3, library.getCover());
+            insertStmt.setString(4, library.getDescription());
+            insertStmt.setInt(5, library.getPages());
+            insertStmt.setLong(6,user.getId() );
+            insertStmt.setInt(7, workflow.getId());
+            insertStmt.executeUpdate();
 
-            PreparedStatement ps = connection.prepareStatement(sqlRequest);
+            insertStmt.close();
 
-            ps.setLong(1, library.getId());
-            ps.setString(2, library.getIsbn());
-            ps.setString(3, library.getTitle());
-            ps.setString(4, library.getCover());
-            ps.setString(5, library.getDescription());
-            ps.setInt(6, library.getPages());
-            ps.setLong(7, library.getUser().getId());
-           // ps.setInt(8, library.getWorkflow().getId());
-            ps.executeUpdate();
-
-            ps.close();
         }
         catch (SQLException e)
         {
@@ -100,14 +108,14 @@ public class LibraryCRUD implements ILibraryCRUD {
                         "DESCRIPTION='?',PAGES=?,USERs=?,WORKFLOW=? WHERE ID=?";
              PreparedStatement ps = connection.prepareStatement(sqlRequest);
 
-             String[] libraryParams = new String[8];
-             libraryParams = library.toStringList().toArray(libraryParams);
-             for(int i=1; i < 8; i++)
-                ps.setString(i, libraryParams[i]);
-            ps.setString(8, libraryParams[0]);
+            // String[] libraryParams = new String[8];
+           //  libraryParams = library.toStringList().toArray(libraryParams);
+             //for(int i=1; i < 8; i++)
+            //    ps.setString(i, libraryParams[i]);
+            //ps.setString(8, libraryParams[0]);
 
-            ps.executeUpdate();
-            connection.prepareStatement("commit").executeUpdate();
+           // ps.executeUpdate();
+           // connection.prepareStatement("commit").executeUpdate();
 
             ps.close();
 

@@ -20,7 +20,6 @@
             <th>PAGES</th>
             <th>RATING</th>
             <th>MY RATING</th>
-            <th>DELETE</th>
 
         </tr>
     </thead>
@@ -28,7 +27,7 @@
         <%
             User current_user = (User) request.getSession().getAttribute("user");
             long user_id = current_user.getId();
-            List<Library> lib = new LibraryActions().getAllLocalBooksByUser(user_id);
+            List<Library> lib = new LibraryActions().searchBooksByParameter("workflow", "4");
             for (Library temp : lib) {
 
         %>
@@ -53,15 +52,6 @@
                     <input type="radio" name="rate" value="5" onclick="this.form.submit()">
                 </form>
             </td>
-            <td>
-                <form name="form" action="Controller" method="POST">
-                    <input type="hidden" name="command" value="locDel" />
-                    <input type="hidden" name="book" value="<%out.print(temp.getId());%>" />
-                    <input type="hidden" name="user" value="<%out.print(user_id);%>"/>
-                    <input type="submit"  class="btn btn-danger" value="Delete!" />
-                </form>
-            </td>
-
         </tr>
         <%}%>
     </tbody>

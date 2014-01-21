@@ -19,11 +19,18 @@ class ScoreCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = null;
 
+//                HttpSession session=request.getSession(true);
+//                session.setAttribute("name", "Pavel!!!");
+//         page= ConfigurationManager.SCORE_PAGE;
+//        return page;
+
          // TO DO
-        long user_id = Long.parseLong(request.getParameter("user_id"));
-        long book_id = Long.parseLong(request.getParameter("book_id"));
+        HttpSession session = request.getSession(true);
+        long user_id = Long.parseLong(request.getParameter("user"));
+        long book_id = Long.parseLong(request.getParameter("book"));
         int rate = Integer.parseInt(request.getParameter("rate"));
         new RatingActions().addRating(book_id, user_id, rate);
-        return page;
+        Integer role = (Integer) session.getAttribute("role");
+        return ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE + role);
     }
 }

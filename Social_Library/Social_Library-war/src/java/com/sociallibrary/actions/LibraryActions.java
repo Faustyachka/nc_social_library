@@ -7,9 +7,7 @@ package com.sociallibrary.actions;
 
 import com.sociallibrary.entity.*;
 import com.sociallibrary.crud.*;
-import com.sociallibrary.icrud.*;
 import org.apache.log4j.*;
-import com.sociallibrary.iactions.ILibraryActions;
 import com.sociallibrary.connection.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,16 +19,16 @@ import java.util.List;
 
 /**
  *
- * @author Nastya Pavlova
+ * @author Anton
  */
 public class LibraryActions implements ILibraryActions
 
 
 {
 
-      public static String workflow = "workflow";
+    public static String workflow = "workflow";
     public static String workflowInprogres = "1";
-    public static String workflowPublished = "4";
+    public static int workflowPublished = 4;
     private static Connection connection;
     public static final Logger log = Logger.getLogger(LibraryActions.class);
 
@@ -40,6 +38,7 @@ public class LibraryActions implements ILibraryActions
     }
 
      public List<Library> getAllBooks(int from, int to)
+             throws SQLException
      {
          List<Library> libraries = new ArrayList<Library>();
          for(int i = from; i<to; i++)
@@ -55,9 +54,10 @@ public class LibraryActions implements ILibraryActions
      {
          List<Author> authors = new ArrayList<Author>();
          BasicConfigurator.configure();
-        String selectParametr = "select id from author where id in " +
-                                    "(select author from book_author where book in " +
-                                        "(select id from library where id=?))";
+        String selectParametr = "select author.id from author " +
+                                    "inner join book_author on book_author.author=author.id " +
+                                    "inner join library on library.id=book_author.book " +
+                                    "where library.id == ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setLong(1, book_id);
@@ -80,7 +80,8 @@ public class LibraryActions implements ILibraryActions
 
      public boolean addBookToLocal(long book_id, long user_id)
      {
-
+     try
+     {
         Library book = new LibraryCRUD().readLibrary(book_id);
         User user = new UserCRUD().readUser(user_id);
         if(book!=null)
@@ -94,7 +95,12 @@ public class LibraryActions implements ILibraryActions
 
                 return true;
             }
-
+     }
+     catch(SQLException e)
+     {
+         e.printStackTrace();
+         log.error("SQLException:" + e);
+     }
         return false;
     }
 
@@ -155,9 +161,10 @@ public class LibraryActions implements ILibraryActions
      {
         BasicConfigurator.configure();
         List<Author> authors = new ArrayList<Author>();
-        String selectParametr = "select id from author where id in " +
-                                    "(select author from book_author where book in " +
-                                        "(select id from library where id=?))";
+        String selectParametr = "select author.id from author " +
+                                    "inner join book_author on book_author.author=author.id " +
+                                    "inner join library on library.id=book_author.book " +
+                                    "where library.id == ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setLong(1, book_id);
@@ -202,8 +209,32 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        
+
         return libraries;
+    }
+
+     public long countAllBooksByWorkflow(int workflow)
+     {
+        BasicConfigurator.configure();
+        long count = 0;
+        String selectParametr = "select count(id) from library where workflow = ? order by id";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setInt(1, workflow);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                count = rs.getLong(1);
+            }
+            rs.close();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+
+        return count;
     }
 
      public List<Library> searchBooksByAuthor(String author_name)
@@ -211,12 +242,13 @@ public class LibraryActions implements ILibraryActions
         BasicConfigurator.configure();
         Library library = new Library();
         List<Library> libraries = new ArrayList<Library>();
-        String selectParametr = "select id from library where id in" +
-                                    "(select book from book_author where book_author.author in" +
-                                        "(select id from author where upper(author) like upper(?)))";
+        String selectParametr = "select library.id from library " +
+                                    "inner join book_author on book_author.book=library.id " +
+                                    "inner join author on author.id=book_author.author " +
+                                    "where upper(author.author) like upper('%'||?||'%');";
         try {
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
-            stmt.setString(1, "%"+author_name+"%");
+            stmt.setString(1, author_name);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 library = new LibraryCRUD().readLibrary(rs.getLong("id"));
@@ -239,12 +271,13 @@ public class LibraryActions implements ILibraryActions
         BasicConfigurator.configure();
         Library library = new Library();
         List<Library> libraries = new ArrayList<Library>();
-        String selectParametr = "select id from library where id in " +
-                                    "(select book from book_genre where book_genre.genre in " +
-                                        "(select id from genre where upper(genre) like upper(?)));";
+        String selectParametr = "select library.id from library " +
+                                    "inner join book_genre on book_genre.book=library.id " +
+                                    "inner join genre on genre.id=book_genre.genre " +
+                                    "where upper(genre.genre) like upper('%'||?||'%')";
         try {
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
-            stmt.setString(1, "%"+genre+"%");
+            stmt.setString(1, genre);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 library = new LibraryCRUD().readLibrary(rs.getLong("id"));
@@ -337,8 +370,32 @@ public class LibraryActions implements ILibraryActions
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        
+
         return libraries;
+    }
+
+     public long countAllLocalBooksByUser(long user_id)
+     {
+        BasicConfigurator.configure();
+        long count = 0;
+        String selectParametr = "SELECT count(Book) FROM Catalog WHERE users=?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setLong(1, user_id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                count = rs.getLong(1);
+            }
+            rs.close();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+        }
+
+        return count;
     }
 
     public List<Library> searchBooksByParameter(String where, String what)
@@ -483,6 +540,22 @@ public class LibraryActions implements ILibraryActions
         if(ratings.size()>0)
             return rate/ratings.size();
         return 0;
+    }
+
+    public List<Library> BooksList(int from, int to, int workflow) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void AddToLocal(long book_id, long user_id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void RemoveFromLocal(long book_id, long user_id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean CheckLocal(long book_id, long user_id) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
      
