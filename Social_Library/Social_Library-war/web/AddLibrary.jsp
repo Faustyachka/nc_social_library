@@ -128,10 +128,12 @@
             </tr>
             <%
             //code for add book to library
-            ILibraryCRUD ob=new LibraryCRUD();
             Library library=new Library();
             User user=new User();
-            IUserCRUD ob1=new UserCRUD();
+            library.setIsbn(volume.getVolumeInfo().getIndustryIdentifiers().get(0).getIdentifier());
+            library.setTitle(volumeInfo.getTitle());
+            library.setCover("http://bks3.books.google.com/books?id="+volume.getId()+"&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api/SmallThumbnail.jpg");
+            
 
             //install values for book workflow
             BookWorkflow workflow=new BookWorkflow();

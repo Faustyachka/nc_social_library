@@ -33,7 +33,6 @@
 
         %>
         <tr>
-
             <td><%out.print(temp.getIsbn());%></td>
             <td><%out.print(temp.getTitle());%></td>
             <td><%out.print(temp.getDescription());%></td>
