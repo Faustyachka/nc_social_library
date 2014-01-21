@@ -1,60 +1,68 @@
-<%-- 
-    Document   : locallibrary
-    Created on : 30 груд 2013, 3:35:21
-    Author     : mazafaka
---%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Collection"%>
+<%@page import="com.sociallibrary.entity.*" %>
+<%@page import="com.sociallibrary.crud.*"%>
+<%@page import="com.sociallibrary.actions.*" %>
+<%@page import="com.sociallibrary.model.*" %>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="TransferObject.Catalog"%>
-<%@page import="TransferObject.Library"%>
-<%@page import="OracleDAO.OracleCatalogDAO"%>
-<%@page import="TransferObjectInterface.CatalogDAO"%>
-<%@page import="TransferObject.Users" %>
-<%@page import="java.util.Collection;" %>
 
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Library</title>
-    </head>
-    <body>
+
+
+
+<table   class="table table-hover">
+    <thead>
+        <tr>
+
+            <th>ISBN</th>
+            <th>TITLE</th>
+            <th>DISCRIPTION</th>
+            <th>PAGES</th>
+            <th>RATING</th>
+            <th>MY RATING</th>
+            <th>DELETE</th>
+
+        </tr>
+    </thead>
+    <tbody>
         <%
-          Library library=new Library();
-          //LibraryDAO dao=new OracleLibraryDAO();
-          Users user=new Users();
-          Catalog book=new Catalog();
-        %>
+            User current_user = (User) request.getSession().getAttribute("user");
+            long user_id = current_user.getId();
+            List<Library> lib = new LibraryActions().getAllLocalBooksByUser(user_id);
+            for (Library temp : lib) {
 
-        <table border="1">
-        <tbody>
+        %>
         <tr>
-        <th>Id:</th>
-        <th>ISBN:</th>
-        <th>Title:</th>
-        <th>Cover:</th>
-        <th>Description:</th>
-        <th>Pages:</th>
+
+            <td><%out.print(temp.getIsbn());%></td>
+            <td><%out.print(temp.getTitle());%></td>
+            <td><%out.print(temp.getDescription());%></td>
+            <td><%out.print(temp.getPages());%></td>
+            <td>
+                <%out.print(new RatingActions().getAverageRatingByBookId(temp.getId()));%>
+            </td>
+            <td>
+                <form action="Controller" method="POST">
+                    <input type="hidden" name="command" value="rating">
+                    <input type="hidden" name="book" value="<%out.print(temp.getId());%>" />
+                    <input type="hidden" name="user" value="<%out.print(user_id);%>"/>
+                    <input type="radio" name="rate" value="1" onclick="this.form.submit()">
+                    <input type="radio" name="rate" value="2" onclick="this.form.submit()">
+                    <input type="radio" name="rate" value="3" onclick="this.form.submit()">
+                    <input type="radio" name="rate" value="4" onclick="this.form.submit()">
+                    <input type="radio" name="rate" value="5" onclick="this.form.submit()">
+                </form>
+            </td>
+            <td>
+                <form name="form" action="Controller" method="POST">
+                    <input type="hidden" name="command" value="locDel" />
+                    <input type="hidden" name="book" value="<%out.print(temp.getId());%>" />
+                    <input type="hidden" name="user" value="<%out.print(user_id);%>"/>
+                    <input type="submit"  class="btn btn-danger" value="Delete!" />
+                </form>
+            </td>
+
         </tr>
-        <tr>
-            <%
-              Collection<Catalog> books = user.getCatalogCollection();
-              while(book.getId()!=null)
-              {
-              for(Catalog catalog : books)
-            %>
-        <td><input type="text" name="id" readonly="readonly" value="<%=library.getId()%>"></td>
-        <td><input type="text" name="isbn" readonly="readonly" value="<%=library.getIsbn()%>"></td>
-        <td><input type="text" name="title" readonly="readonly" value="<%=library.getTitle()%>"></td>
-        <td><input type="text" name="cover" readonly="readonly" value="<%=library.getCover()%>"></td>
-        <td><input type="text" name="description" readonly="readonly" value="<%=library.getDescription()%>"></td>
-        <td><input type="text" name="description" readonly="readonly" value="<%=library.getPages()%>"></td>
-            <%
-              }
-            %>
-        </tr>
-        </tbody>
-        </table>
-    </body>
-</html>
+        <%}%>
+    </tbody>
+</table>

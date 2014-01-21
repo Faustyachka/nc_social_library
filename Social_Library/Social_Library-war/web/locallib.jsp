@@ -8,9 +8,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Collection"%>
 <%@page import="com.sociallibrary.entity.*" %>
-<%@page import="com.sociallibrary.icrud.*"%>
 <%@page import="com.sociallibrary.crud.*"%>
-<%@page import="com.sociallibrary.iactions.*" %>
 <%@page import="com.sociallibrary.actions.*" %>
 <%@page import="com.sociallibrary.model.*" %>
 
@@ -19,9 +17,9 @@
         long user_id = current_user.getId();
 /*        User current_user = new UserCRUD().readUsers(5);
         long user_id = 5;
-*/        int count_of_pages = 0;//new LibraryActions().countBooksByParameter("WORKFLOW", "4")/10+1;
-        List<Library> all_required_books = (List<Library>) request.getAttribute("published");
-        count_of_pages = (Integer) request.getAttribute("count_of_pages");
+*/      int count_of_pages = 0;//new LibraryActions().countBooksByParameter("WORKFLOW", "4")/10+1;
+        List<Library> all_required_books =  new LibraryActions().getAllLocalBooksByUser(user_id);//(List<Library>) request.getAttribute("published");
+        count_of_pages = (int) new LibraryActions().countAllLocalBooksByUser(user_id); //(Integer) request.getAttribute("count_of_pages");
         int i=0;
         try {
             i = Integer.parseInt(request.getParameter("page"));

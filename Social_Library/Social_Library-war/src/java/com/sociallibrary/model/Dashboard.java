@@ -26,8 +26,8 @@ public class Dashboard {
 
     public boolean changeReject(String id) {
 
-        boolean temp = new LibraryActions().changeWorkflow(LibraryActions.workflowRejected, id);
-
+//        boolean temp = new LibraryActions().changeWorkflow(LibraryActions.workflowRejected, id);
+        boolean temp = true;
 
         return temp;
 
@@ -35,8 +35,8 @@ public class Dashboard {
 
     public boolean changeApproved(String id) {
 
-        boolean temp = new LibraryActions().changeWorkflow(LibraryActions.workflowApproved, id);
-
+//        boolean temp = new LibraryActions().changeWorkflow(LibraryActions.workflowApproved, id);
+        boolean temp = true;
 
         return temp;
 
@@ -44,8 +44,8 @@ public class Dashboard {
 
      public boolean changePublished(String id){
 
-        boolean temp =  new LibraryActions().changeWorkflow(LibraryActions.workflowPublished,id);
-
+//        boolean temp =  new LibraryActions().changeWorkflow(LibraryActions.workflowPublished,id);
+        boolean temp = true;
 
         return temp;
 

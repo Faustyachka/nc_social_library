@@ -46,6 +46,8 @@ private RequestHandler(){
     commands.put("locallib", new LocalLibCommand());
     commands.put("adminpage", new AdminpageCommand());
     commands.put("searchusers", new SearchUsers());
+    commands.put("publish", new BookPublish());
+    commands.put("locDel",new BoolDelFromLocal());
 }
 
 public Command getCommand(HttpServletRequest request){
