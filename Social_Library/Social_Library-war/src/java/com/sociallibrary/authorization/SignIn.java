@@ -40,6 +40,7 @@ public class SignIn implements Command {
             } else {
                 page = ConfigurationManager.INDEX_PAGE;
             }
+            }
         } catch (NoSuchAlgorithmException ex) {
 
             Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);

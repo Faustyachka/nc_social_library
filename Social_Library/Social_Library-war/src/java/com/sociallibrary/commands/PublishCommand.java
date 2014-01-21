@@ -29,9 +29,9 @@ public class PublishCommand implements Command{
         String page = null;
         Dashboard dashboard = new Dashboard();
 
-        dashboard.changePublished((String)request.getAttribute("reject"));
-        List<Library> lib = dashboard.getInProgress();
-        request.setAttribute("inprogress", lib);
+        dashboard.changePublished((String)request.getParameter("publish"));
+        List<Library> libs = dashboard.getInProgress();
+        request.setAttribute("inprogress", libs);
 
 
         HttpSession session = request.getSession();

@@ -10,6 +10,9 @@ import com.sociallibrary.authorization.fbLogin;
 import com.sociallibrary.authorization.gLogin;
 import com.sociallibrary.authorization.twitterLogin;
 import com.sociallibrary.authorization.vkLogin;
+import com.sociallibrary.commands.ApproveCommand;
+import com.sociallibrary.commands.PublishCommand;
+import com.sociallibrary.commands.RejectCommand;
 /**
  *
  * @author Pavel
@@ -45,8 +48,12 @@ private RequestHandler(){
     commands.put("locallib", new LocalLibCommand());
     commands.put("adminpage", new AdminpageCommand());
     commands.put("searchusers", new SearchUsers());
-    commands.put("publish", new BookPublish());
-    commands.put("locDel",new BoolDelFromLocal());
+    commands.put("reject", new PublishCommand());
+    commands.put("publish", new ApproveCommand());
+    commands.put("approve", new RejectCommand());
+
+   // commands.put("publish", new BookPublish());
+    //commands.put("locDel",new BoolDelFromLocal());
 }
 
     public Command getCommand(HttpServletRequest request) {
