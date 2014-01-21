@@ -22,8 +22,8 @@ import javax.servlet.http.HttpSession;
 public class DashboardCommand implements Command {
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         Integer role = null;
-        String page = null;
         Dashboard dashboard = new Dashboard();
         List<Library> lib = dashboard.getInProgress();
         request.setAttribute("inprogress", lib);
@@ -38,10 +38,10 @@ public class DashboardCommand implements Command {
         } else {
             role = 4;
         }
-        page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.DASHBOARD_PAGE + role);
 
 
 
-        return page;
+
+        return ConfigurationManager.getInstance().getProperty(ConfigurationManager.DASHBOARD_PAGE + role);
     }
 }

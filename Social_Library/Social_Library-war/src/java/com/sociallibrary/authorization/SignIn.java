@@ -16,10 +16,10 @@ import javax.servlet.http.*;
 
 /**
  *
- * @author Костя
+ * @author РљРѕСЃС‚СЏ
  */
 public class SignIn implements Command {
-   
+
 
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, UnsupportedEncodingException {
         String page =null;
@@ -36,10 +36,6 @@ public class SignIn implements Command {
                 session.setAttribute("role", roles.get(0).getId());
                 role= (Integer)session.getAttribute("role");
                 page=ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE+role);
-                
-
-
-               
             } else {
                 page = ConfigurationManager.INDEX_PAGE;
             }

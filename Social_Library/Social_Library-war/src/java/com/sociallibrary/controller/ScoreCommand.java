@@ -11,33 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author П
- */
 class ScoreCommand implements Command {
 
-
-
-    public ScoreCommand () {
+    public ScoreCommand() {
     }
 
-
-
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page=null;
-       
-//                HttpSession session=request.getSession(true);
-//                session.setAttribute("name", "Pavel!!!");
-//         page= ConfigurationManager.SCORE_PAGE;
-//        return page;
+        String page = null;
 
-//        page= ConfigurationManager.LAST_PAGE;
+         // TO DO
         long user_id = Long.parseLong(request.getParameter("user_id"));
         long book_id = Long.parseLong(request.getParameter("book_id"));
         int rate = Integer.parseInt(request.getParameter("rate"));
-         new RatingActions().addRating(book_id, user_id, rate);
+        new RatingActions().addRating(book_id, user_id, rate);
         return page;
     }
-
 }

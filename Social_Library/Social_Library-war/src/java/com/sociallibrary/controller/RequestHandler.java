@@ -1,6 +1,4 @@
-
 package com.sociallibrary.controller;
-
 
 import com.sociallibrary.commands.DashboardCommand;
 import java.util.HashMap;
@@ -12,51 +10,50 @@ import com.sociallibrary.authorization.fbLogin;
 import com.sociallibrary.authorization.googleLogin;
 import com.sociallibrary.authorization.twitterLogin;
 import com.sociallibrary.authorization.vkLogin;
-
-
+/**
+ *
+ * @author Pavel
+ */
 public class RequestHandler {
 
-    private static RequestHandler instance=null;
-    HashMap <String, Command> commands = new HashMap<String,Command>();
+    private static RequestHandler instance = null;
+    HashMap<String, Command> commands = new HashMap<String, Command>();
 
-public static RequestHandler getInstance(){
+    public static RequestHandler getInstance() {
 
-    if(instance==null){
-        instance= new RequestHandler();
-        return instance;
-    }
-    else{
-        return instance;
-    }
+        if (instance == null) {
+            instance = new RequestHandler();
+            return instance;
+        } else {
+            return instance;
+        }
 
     }
 ///Associates a key-object, which executes
-private RequestHandler(){
-    commands.put("rating", new ScoreCommand());
-    commands.put("nocommand", new NoCommand());
-    commands.put("registration", new Registration ());
-    commands.put("confirmUser", new ConfirmUser () );
-    commands.put("dashboard", new DashboardCommand ());
-    commands.put("signin", new SignIn());
-    commands.put("fbLogin", new fbLogin());
-    commands.put("vkLogin", new vkLogin());
-    commands.put("googleLogin", new googleLogin());
-    commands.put("twitterLogin", new twitterLogin());
-}
+    private RequestHandler() {
+        commands.put("rating", new ScoreCommand());
+        commands.put("nocommand", new NoCommand());
+        commands.put("registration", new Registration());
+        commands.put("confirmUser", new ConfirmUser());
+        commands.put("dashboard", new DashboardCommand());
+        commands.put("signin", new SignIn());
+        commands.put("fbLogin", new fbLogin());
+        commands.put("vkLogin", new vkLogin());
+        commands.put("googleLogin", new googleLogin());
+        commands.put("twitterLogin", new twitterLogin());
+    }
 
-public Command getCommand(HttpServletRequest request){
-     String action = request.getParameter("command");
+    public Command getCommand(HttpServletRequest request) {
+        String action = request.getParameter("command");
 
-     Command command = commands.get(action);
-      if(command==null){
+        Command command = commands.get(action);
+        if (command == null) {
 
-          command =new NoCommand();
-      }
+            command = new NoCommand();
+        }
 
-    return command;
-
-
-}
+        return command;
 
 
+    }
 }

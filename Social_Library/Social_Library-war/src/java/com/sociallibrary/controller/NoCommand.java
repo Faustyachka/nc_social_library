@@ -23,12 +23,12 @@ class NoCommand implements Command {
 
 
 
-        Integer role = null;
-        String page = null;
+
+
 
         HttpSession session = request.getSession();
-        role = (Integer) session.getAttribute("role");
-        page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.NOCOMMAND_PAGE + role);
-        return page;
+        Integer role = (Integer) session.getAttribute("role");
+
+        return ConfigurationManager.getInstance().getProperty(ConfigurationManager.NOCOMMAND_PAGE + role);
     }
 }

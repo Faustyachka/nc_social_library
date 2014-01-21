@@ -111,6 +111,7 @@ public class googleLogin implements Command {
             lastName = json.getString("family_name");
             gender = json.getString("gender");
         } catch (JSONException e) {
+
         }
 
         //до этого момента точно забирает данные, проверил отдельно, но выкидует дальше на еррор пейдж, точно так же для ФБ работает...
