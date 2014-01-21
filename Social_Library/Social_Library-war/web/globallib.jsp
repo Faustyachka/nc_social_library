@@ -20,6 +20,7 @@
             <th>PAGES</th>
             <th>RATING</th>
             <th>MY RATING</th>
+            <th>ADD TO LOCAL</th>
 
         </tr>
     </thead>
@@ -28,6 +29,7 @@
             User current_user = (User) request.getSession().getAttribute("user");
             long user_id = current_user.getId();
             List<Library> lib = new LibraryActions().searchBooksByParameter("workflow", "4");
+
             for (Library temp : lib) {
 
         %>
