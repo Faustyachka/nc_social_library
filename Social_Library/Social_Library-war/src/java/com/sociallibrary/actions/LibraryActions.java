@@ -557,6 +557,31 @@ public class LibraryActions implements ILibraryActions
     public boolean CheckLocal(long book_id, long user_id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+       public boolean changeWorkflow(int workflow, String id) {
+        boolean check = true;
+
+        BasicConfigurator.configure();
+
+        String updateworkflow = "update  Library SET WORKFLOW=?    where ID = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(updateworkflow);
+            stmt.setInt(1, workflow);
+            stmt.setString(2, id);
+            ResultSet rs = stmt.executeQuery();
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            log.error("SQLException:" + e);
+            check = false;
+        }
+
+
+        return check;
+
+    }
+
 
      
 }

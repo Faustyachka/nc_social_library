@@ -11,10 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author П
- */
 class ScoreCommand implements Command {
 
     public ScoreCommand() {
@@ -28,7 +24,7 @@ class ScoreCommand implements Command {
 //         page= ConfigurationManager.SCORE_PAGE;
 //        return page;
 
-//        page= ConfigurationManager.LAST_PAGE;
+         // TO DO
         HttpSession session = request.getSession(true);
         long user_id = Long.parseLong(request.getParameter("user"));
         long book_id = Long.parseLong(request.getParameter("book"));

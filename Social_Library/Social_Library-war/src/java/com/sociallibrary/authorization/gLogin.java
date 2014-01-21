@@ -117,6 +117,7 @@ public class gLogin implements Command {
                 gender = "male";
             }
         } catch (JSONException e) {
+
         }
 
         //до этого момента точно забирает данные, проверил отдельно, но выкидует дальше на еррор пейдж, точно так же для ФБ работает...

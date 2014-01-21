@@ -32,6 +32,8 @@ public class UsersActions implements IUsersActions
     public UsersActions()
     {
         connection = ConnectionProvider.getConnection();
+        if(connection==null)log.info("Problem in constructor");
+
     }
 
     public boolean  assignRole(long user_id, int role_id){
@@ -208,12 +210,13 @@ public class UsersActions implements IUsersActions
         return user;
     }
 
-    public User searchUserByLogin(String login) 
+       public User searchUserByLogin(String login)
     {
         BasicConfigurator.configure();
         User user = null;
         String selectParametr = "select id  from users where login = ?";
         try {
+            if (connection==null) log.info("Some message");
             PreparedStatement stmt = connection.prepareStatement(selectParametr);
             stmt.setString(1, login);
             ResultSet rs = stmt.executeQuery();
@@ -222,13 +225,13 @@ public class UsersActions implements IUsersActions
             }
             rs.close();
             stmt.close();
-        } 
+        }
         catch (SQLException e)
         {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
         }
-        
+
         return user;
     }
 

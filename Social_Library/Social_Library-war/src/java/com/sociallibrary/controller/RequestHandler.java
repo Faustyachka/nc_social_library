@@ -1,6 +1,4 @@
-
 package com.sociallibrary.controller;
-
 
 import com.sociallibrary.commands.DashboardCommand;
 import java.util.HashMap;
@@ -12,22 +10,26 @@ import com.sociallibrary.authorization.fbLogin;
 import com.sociallibrary.authorization.gLogin;
 import com.sociallibrary.authorization.twitterLogin;
 import com.sociallibrary.authorization.vkLogin;
-
-
+import com.sociallibrary.commands.ApproveCommand;
+import com.sociallibrary.commands.PublishCommand;
+import com.sociallibrary.commands.RejectCommand;
+/**
+ *
+ * @author Pavel
+ */
 public class RequestHandler {
 
-    private static RequestHandler instance=null;
-    HashMap <String, Command> commands = new HashMap<String,Command>();
+    private static RequestHandler instance = null;
+    HashMap<String, Command> commands = new HashMap<String, Command>();
 
-public static RequestHandler getInstance(){
+    public static RequestHandler getInstance() {
 
-    if(instance==null){
-        instance= new RequestHandler();
-        return instance;
-    }
-    else{
-        return instance;
-    }
+        if (instance == null) {
+            instance = new RequestHandler();
+            return instance;
+        } else {
+            return instance;
+        }
 
     }
 ///Associates a key-object, which executes
@@ -46,23 +48,25 @@ private RequestHandler(){
     commands.put("locallib", new LocalLibCommand());
     commands.put("adminpage", new AdminpageCommand());
     commands.put("searchusers", new SearchUsers());
-    commands.put("publish", new BookPublish());
-    commands.put("locDel",new BoolDelFromLocal());
+    commands.put("reject", new PublishCommand());
+    commands.put("publish", new ApproveCommand());
+    commands.put("approve", new RejectCommand());
+
+   // commands.put("publish", new BookPublish());
+    //commands.put("locDel",new BoolDelFromLocal());
 }
 
-public Command getCommand(HttpServletRequest request){
-     String action = request.getParameter("command");
+    public Command getCommand(HttpServletRequest request) {
+        String action = request.getParameter("command");
 
-     Command command = commands.get(action);
-      if(command==null){
+        Command command = commands.get(action);
+        if (command == null) {
 
-          command =new NoCommand();
-      }
+            command = new NoCommand();
+        }
 
-    return command;
-
-
-}
+        return command;
 
 
+    }
 }

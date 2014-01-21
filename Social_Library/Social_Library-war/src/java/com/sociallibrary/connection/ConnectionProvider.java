@@ -9,22 +9,26 @@ package com.sociallibrary.connection;
  *
  * @author Антон
  */
+import com.sociallibrary.actions.UsersActions;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Locale;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.sql.DataSource;
+import javax.sql.DataSource;import org.apache.log4j.Logger;
 
 public class ConnectionProvider {
 
     private /*volatile*/static Connection con = null;
+     public static final Logger log = Logger.getLogger(UsersActions.class);
 
     private ConnectionProvider(){}
 
     public /*synchronized*/static Connection getConnection()
     {
+        
+             
         try {
             
             if ((con == null)||(con.isClosed())) {
@@ -44,7 +48,7 @@ public class ConnectionProvider {
             e.printStackTrace();
         }
 
-        return con;
+       return con;
     }
         
     }
