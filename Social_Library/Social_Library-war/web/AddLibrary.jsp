@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : AddLibrary
     Created on : 17 січ 2014, 13:57:30
     Author     : mazafaka
@@ -39,7 +39,7 @@
               </script>
               <script src="https://www.googleapis.com/books/v1/volumes?q=<%=request.getParameter("title")%>&callback=handleResponse"></script>
           </div>
-    
+
 
         <form action="AddLibrary.jsp" method="POST">
             <p>Title||Author||ISBN:
@@ -68,7 +68,7 @@
        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
        String prefix = null;
        String query = "--title:"+" "+request.getParameter("title");
-       if ("--title".equals(query)) 
+       if ("--title".equals(query))
         {
           prefix = "intitle:";
         }
@@ -120,9 +120,9 @@
             {
                 %>
                 </td><td><%=volumeInfo.getDescription() %></td>
-                
+
                 <%
-                
+
             }
             %>
             </tr>
@@ -139,7 +139,7 @@
             workflow.setId((int)library.getId());
             workflow.setWorkflow("New");
             ob2.createBookWorkflow(workflow);
-            
+
             library.setTitle(volumeInfo.getTitle());
             library.setIsbn(volume.getVolumeInfo().getIndustryIdentifiers().get(0).getIdentifier());
             library.setCover("http://bks3.books.google.com/books?id=volume.getId()&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api/SmallThumbnail.jpg");
@@ -174,7 +174,7 @@
             return;
 
         }
-        
+
         }
         catch (IOException e)
         {
@@ -185,9 +185,9 @@
             t.printStackTrace();
         }
     %>
-        
+
     </tbody>
         </table>
-        
+
     </body>
 </html>

@@ -21,6 +21,7 @@
             <th>RATING</th>
             <th>MY RATING</th>
             <th>DELETE</th>
+            <th>STATUS</th>
 
         </tr>
     </thead>
@@ -33,7 +34,6 @@
 
         %>
         <tr>
-
             <td><%out.print(temp.getIsbn());%></td>
             <td><%out.print(temp.getTitle());%></td>
             <td><%out.print(temp.getDescription());%></td>
@@ -61,7 +61,33 @@
                     <input type="submit"  class="btn btn-danger" value="Delete!" />
                 </form>
             </td>
+            <td>
+                <form name="form" action="Controller" method="POST">
+                    <input type="hidden" name="command" value="status" />
+                    <input type="hidden" name="book" value="<%out.print(temp.getId());%>" />
+                    <input type="hidden" name="user" value="<%out.print(user_id);%>"/>
+                    <select name="status" onchange="this.form.submit();">
+                        <option <%
+                LibraryActions libra = new LibraryActions();
+                if (libra.checkStatus(temp.getId(), user_id, 0)) {
+                    out.print("selected");
+                }
+                            %> value="0" >Planed</option>
+                        <option <%
 
+                if (libra.checkStatus(temp.getId(), user_id, 1)) {
+                    out.print("selected");
+                }
+                            %>  value="1">Now reading</option>
+                        <option <%
+                if (libra.checkStatus(temp.getId(), user_id, 2)) {
+                    out.print("selected");
+                }
+                            %> value="2">Finished</option>
+                    </select>
+
+                </form>
+            </td>
         </tr>
         <%}%>
     </tbody>

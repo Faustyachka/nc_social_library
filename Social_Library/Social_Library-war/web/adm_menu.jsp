@@ -27,7 +27,7 @@
             <div class="navbar navbar-default" role="navigation">
                 <div class="navbar-header">
 
-                    <a class="navbar-brand" >Social Library</a>
+                    <a class="navbar-brand" href="globallib.jsp" >Social Library</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">

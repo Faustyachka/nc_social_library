@@ -36,7 +36,7 @@ public class LibraryCRUD implements ILibraryCRUD {
         user=new User();
         workflow=new BookWorkflow();
         insertStmt=connection.prepareStatement("INSERT INTO LIBRARY (ISBN,TITLE,COVER,DESCRIPTION,PAGES,USER,WORKFLOW) " +
-                "values('?','?','?','?',?, ?, ?  )");
+                "values(LIBRARY_ID.nextval,'?','?','?','?',?, ?, ?  )");
     }
     
     public void createLibrary(Library library)

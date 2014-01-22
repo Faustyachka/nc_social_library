@@ -26,7 +26,7 @@
             <div class="navbar navbar-default" role="navigation">
                 <div class="navbar-header">
 
-                    <a class="navbar-brand" >Social Libary</a>
+                    <a class="navbar-brand" href="beg_global.jsp">Social Libary</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">

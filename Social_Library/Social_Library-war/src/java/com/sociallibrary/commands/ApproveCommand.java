@@ -27,7 +27,7 @@ public class ApproveCommand implements Command {
         String page = null;
         Dashboard dashboard = new Dashboard();
 
-        dashboard.changeApproved((String)request.getAttribute("reject"));
+        dashboard.changeApproved((String)request.getParameter("approve"));
         List<Library> lib = dashboard.getInProgress();
         request.setAttribute("inprogress", lib);
 

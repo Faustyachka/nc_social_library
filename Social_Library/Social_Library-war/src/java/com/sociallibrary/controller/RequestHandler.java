@@ -13,6 +13,7 @@ import com.sociallibrary.authorization.vkLogin;
 import com.sociallibrary.commands.ApproveCommand;
 import com.sociallibrary.commands.PublishCommand;
 import com.sociallibrary.commands.RejectCommand;
+
 /**
  *
  * @author Pavel
@@ -33,28 +34,30 @@ public class RequestHandler {
 
     }
 ///Associates a key-object, which executes
-private RequestHandler(){
-    commands.put("rating", new ScoreCommand());
-    commands.put("nocommand", new NoCommand());
-    commands.put("registration", new Registration ());
-    commands.put("confirmUser", new ConfirmUser () );
-    commands.put("dashboard", new DashboardCommand ());
-    commands.put("signin", new SignIn());
-    commands.put("fbLogin", new fbLogin());
-    commands.put("vkLogin", new vkLogin());
-    commands.put("gLogin", new gLogin());
-    commands.put("twitterLogin", new twitterLogin());
-    commands.put("globallib", new GlobalLibCommand());
-    commands.put("locallib", new LocalLibCommand());
-    commands.put("adminpage", new AdminpageCommand());
-    commands.put("searchusers", new SearchUsers());
-    commands.put("reject", new RejectCommand());
-    commands.put("publish", new PublishCommand());
-    commands.put("approve", new ApproveCommand());
 
-   // commands.put("publish", new BookPublish());
-    //commands.put("locDel",new BoolDelFromLocal());
-}
+    private RequestHandler() {
+        commands.put("rating", new ScoreCommand());
+        commands.put("nocommand", new NoCommand());
+        commands.put("registration", new Registration());
+        commands.put("confirmUser", new ConfirmUser());
+        commands.put("dashboard", new DashboardCommand());
+        commands.put("signin", new SignIn());
+        commands.put("fbLogin", new fbLogin());
+        commands.put("vkLogin", new vkLogin());
+        commands.put("gLogin", new gLogin());
+        commands.put("twitterLogin", new twitterLogin());
+        commands.put("globallib", new GlobalLibCommand());
+        commands.put("locallib", new LocalLibCommand());
+        commands.put("adminpage", new AdminpageCommand());
+        commands.put("searchusers", new SearchUsers());
+        commands.put("reject", new PublishCommand());
+        commands.put("publish", new ApproveCommand());
+        commands.put("approve", new RejectCommand());
+        commands.put("add", new add());
+        commands.put("status", new changeBookStatus());
+        // commands.put("publish", new BookPublish());
+        //commands.put("locDel",new BoolDelFromLocal());
+    }
 
     public Command getCommand(HttpServletRequest request) {
         String action = request.getParameter("command");
