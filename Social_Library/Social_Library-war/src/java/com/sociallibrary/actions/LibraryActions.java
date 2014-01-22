@@ -104,6 +104,61 @@ public class LibraryActions implements ILibraryActions
         return false;
     }
 
+     public boolean checkStatus (long book_id, long user_id, int status)
+     {
+                 boolean result = true;
+        BasicConfigurator.configure();
+        String selectParametr = "SELECT id FROM CATALOG"+
+                "WHERE status=? AND users=? AND book=?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setInt(1, status);
+            stmt.setLong(2, user_id);
+            stmt.setLong(3, book_id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()){
+                result = true;
+            } else {
+                result = false;
+            }
+            rs.close();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+                result = false;
+        }
+
+        return result;
+     }
+
+     public boolean updateBookFromLocal(long book_id, long user_id, int status)
+     {
+        boolean result = true;
+        BasicConfigurator.configure();
+        String selectParametr = "UPDATE Catalog " +
+                "SET STATUS=? " +
+                "WHERE users=? AND book=?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(selectParametr);
+            stmt.setInt(1, status);
+            stmt.setLong(2, user_id);
+            stmt.setLong(3, book_id);
+            stmt.executeQuery();
+            stmt.close();
+        }
+       catch (SQLException e)
+        {
+                e.printStackTrace();
+                log.error("SQLException:" + e);
+                result = false;
+        }
+
+        return result;
+    }
+
      public boolean removeBookFromLocal(long book_id, long user_id)
      {
         boolean result = true;
@@ -547,7 +602,14 @@ public class LibraryActions implements ILibraryActions
     }
 
     public void AddToLocal(long book_id, long user_id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            Library lib = new LibraryCRUD().readLibrary(book_id);
+            User user = new UserCRUD().readUser(user_id);
+            lib.setUser(user);
+            new LibraryCRUD().createLibrary(lib);
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(LibraryActions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
     }
 
     public void RemoveFromLocal(long book_id, long user_id) {

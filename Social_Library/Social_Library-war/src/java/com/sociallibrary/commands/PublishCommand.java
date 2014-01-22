@@ -5,6 +5,7 @@
 
 package com.sociallibrary.commands;
 
+import com.sociallibrary.actions.LibraryActions;
 import com.sociallibrary.controller.Command;
 import com.sociallibrary.controller.ConfigurationManager;
 import com.sociallibrary.entity.Library;
@@ -28,8 +29,8 @@ public class PublishCommand implements Command{
         Integer role = null;
         String page = null;
         Dashboard dashboard = new Dashboard();
-
-        dashboard.changePublished((String)request.getParameter("publish"));
+        new LibraryActions().changeWorkflow(4, request.getParameter("book"));
+//        dashboard.changePublished((String)request.getParameter("publish"));
         List<Library> libs = dashboard.getInProgress();
         request.setAttribute("inprogress", libs);
 
