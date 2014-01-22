@@ -26,9 +26,11 @@ public class RejectCommand implements Command {
         String page = null;
         Dashboard dashboard = new Dashboard();
 
-        dashboard.changeReject((String) request.getAttribute("reject"));
+        dashboard.changeReject((String) request.getParameter("reject"));
+        
         List<Library> lib = dashboard.getInProgress();
         request.setAttribute("inprogress", lib);
+      
 
 
         HttpSession session = request.getSession();

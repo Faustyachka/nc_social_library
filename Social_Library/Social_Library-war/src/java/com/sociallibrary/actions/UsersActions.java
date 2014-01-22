@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
@@ -230,6 +231,13 @@ public class UsersActions implements IUsersActions
         {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
+        }
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                java.util.logging.Logger.getLogger(UsersActions.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         return user;

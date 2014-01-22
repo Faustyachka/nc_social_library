@@ -48,9 +48,9 @@ private RequestHandler(){
     commands.put("locallib", new LocalLibCommand());
     commands.put("adminpage", new AdminpageCommand());
     commands.put("searchusers", new SearchUsers());
-    commands.put("reject", new PublishCommand());
-    commands.put("publish", new ApproveCommand());
-    commands.put("approve", new RejectCommand());
+    commands.put("reject", new RejectCommand());
+    commands.put("publish", new PublishCommand());
+    commands.put("approve", new ApproveCommand());
 
    // commands.put("publish", new BookPublish());
     //commands.put("locDel",new BoolDelFromLocal());

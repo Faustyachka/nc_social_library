@@ -398,7 +398,7 @@ public class LibraryActions implements ILibraryActions
         return count;
     }
 
-    public List<Library> searchBooksByParameter(String where, String what)
+    public List<Library> searchBooksByParameter(String where, String what) 
     {
         BasicConfigurator.configure();
         Library library = new Library();
@@ -420,6 +420,13 @@ public class LibraryActions implements ILibraryActions
         {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
+        }
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                java.util.logging.Logger.getLogger(LibraryActions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
         }
         
         return libraries;
@@ -557,12 +564,12 @@ public class LibraryActions implements ILibraryActions
     public boolean CheckLocal(long book_id, long user_id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-       public boolean changeWorkflow(int workflow, String id) {
+       public boolean changeWorkflow(int workflow, String id)  {
         boolean check = true;
 
         BasicConfigurator.configure();
 
-        String updateworkflow = "update  Library SET WORKFLOW=?    where ID = ?";
+        String updateworkflow = "update  Library SET WORKFLOW=? where ID = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(updateworkflow);
             stmt.setInt(1, workflow);
@@ -575,6 +582,13 @@ public class LibraryActions implements ILibraryActions
             e.printStackTrace();
             log.error("SQLException:" + e);
             check = false;
+        }
+        finally{
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                java.util.logging.Logger.getLogger(LibraryActions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
         }
 
 
