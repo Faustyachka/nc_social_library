@@ -128,7 +128,6 @@ public class LibraryActions implements ILibraryActions
         {
                 e.printStackTrace();
                 log.error("SQLException:" + e);
-                result = false;
         }
 
         return result;

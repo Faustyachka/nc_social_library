@@ -32,8 +32,8 @@
                     <ul class="nav navbar-nav">
                          <li><a href="Controller?command=nocommand">Pending to approve</a></li>
                         <li><a href="Controller?command=dashboard">Dashboard</a></li>
-                        <li><a href="Controller?command=nocommand">Add</a></li>
-                        <li><a href="Controller?command=nocommand">My library</a></li>
+                        <li><a href="mod_add.jsp">Add</a></li>
+                        <li><a href="mod_mylibrary.jsp">My library</a></li>
 
                     </ul>
 

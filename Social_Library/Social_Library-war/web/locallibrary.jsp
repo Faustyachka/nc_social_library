@@ -77,7 +77,7 @@
 
                 if (libra.checkStatus(temp.getId(), user_id, 1)) {
                     out.print("selected");
-                }
+                }  
                             %>  value="1">Now reading</option>
                         <option <%
                 if (libra.checkStatus(temp.getId(), user_id, 2)) {

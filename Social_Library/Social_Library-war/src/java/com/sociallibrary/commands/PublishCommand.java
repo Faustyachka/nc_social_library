@@ -29,8 +29,8 @@ public class PublishCommand implements Command{
         Integer role = null;
         String page = null;
         Dashboard dashboard = new Dashboard();
-        new LibraryActions().changeWorkflow(4, request.getParameter("book"));
-//        dashboard.changePublished((String)request.getParameter("publish"));
+//        new LibraryActions().changeWorkflow(4, request.getParameter("book"));
+        dashboard.changePublished((String)request.getParameter("publish"));
         List<Library> libs = dashboard.getInProgress();
         request.setAttribute("inprogress", libs);
 

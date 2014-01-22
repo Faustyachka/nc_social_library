@@ -20,7 +20,6 @@
     <tbody>
         <% List<Library> lib = (List<Library>) request.getAttribute("inprogress");
 int i = 0;
-out.print( request.getAttribute("temp"));
 for (Library temp : lib) {
 
         %>
@@ -34,13 +33,13 @@ for (Library temp : lib) {
 
             <td> <form name="form" action="Controller" method="POST">
                     <input type="hidden" name="command" value="publish" />
-                   <input type="hidden" name="publish" value="<% out.print(temp.getId());%>" />
+                   <input type="hidden" name="publish" value="<%=temp.getId()%>" />
                    
                     <input type="submit" class="btn btn-success" value="Publish!" />
                 </form></td>
             <td> <form name="form" action="Controller" method="POST">
                     <input type="hidden" name="command" value="reject" />
-                   <input type="hidden" name="reject" value="<% out.print(temp.getId());%>" />
+                   <input type="hidden" name="reject" value="<%=temp.getId()%>" />
                  
                     <input type="submit"  class="btn btn-danger" value="Reject!" />
                 </form></td>

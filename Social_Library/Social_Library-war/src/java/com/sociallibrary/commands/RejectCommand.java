@@ -25,6 +25,7 @@ public class RejectCommand implements Command {
         Integer role = null;
         String page = null;
         Dashboard dashboard = new Dashboard();
+        request.setAttribute("temp", request.getParameter("reject"));
 
         dashboard.changeReject((String) request.getParameter("reject"));
         

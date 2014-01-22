@@ -31,8 +31,8 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
 
-                        <li><a href="Controller?command=nocommand">Add</a></li>
-                        <li><a href="Controller?command=nocommand">My library</a></li>
+                        <li><a href="beg_add.jsp">Add</a></li>
+                        <li><a href="beg_mylibrary.jsp">My library</a></li>
 
                     </ul>
 
